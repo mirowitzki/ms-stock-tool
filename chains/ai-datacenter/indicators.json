@@ -1,0 +1,139 @@
+{
+  "chain": "ai-datacenter",
+  "created": "2026-06-10",
+  "_usage": "季度 checkpoint（review.py 提醒到期）：派一个联网 agent 把每个指标拉一个新数据点 append 进 series（date/value/source），对照 reading_guide 判读：哪条链判断在兑现/被证伪。只拉数判读、不重做判断；越线才升级为完整复盘。判读结果若构成预测打分，登 reviews/CALIBRATION.md。",
+  "next_checkpoint": "2026-09-30",
+  "cadence": "quarterly",
+  "indicators": [
+    {
+      "id": "transformer-leadtime",
+      "name": "大型变压器（GSU）交期与价格",
+      "node": "transformer-assembly",
+      "linked_judgment": "电力底座·变压器/GOES+燃机整机=短缺租金",
+      "how_to_check": "WebSearch: large power transformer lead time 2026 / GSU transformer price index；厂商财报口径（Hitachi Energy/Eaton/特变）",
+      "baseline": {
+        "value": "标准 128 周 / GSU 144 周（约 2.5-3 年）、部分最长 4 年；价格 2019 起 +77-95%",
+        "as_of": "2025-Q2（Wood Mac，2026-06 核实）"
+      },
+      "reading_guide": "GSU 交期回落到 ≤18-24 个月或价格指数掉头 = 租金回吐开始（判断兑现中）；交期维持 3 年+ 且续涨 = 短缺持续、回吐推迟",
+      "series": []
+    },
+    {
+      "id": "goes-price",
+      "name": "取向硅钢 GOES 价格 / 中国产能投放",
+      "node": "goes-steel",
+      "linked_judgment": "同上（租金侧的材料分量）",
+      "how_to_check": "WebSearch: grain oriented electrical steel price 2026 / 取向硅钢 价格 过剩；宝钢等扩产公告",
+      "baseline": {
+        "value": "中国占全球产量约 56% 且在扩、行业已喊过剩",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "价格回落+中国新产能投产 = 租金回吐；美国区域价差维持 = 贸易错配仍在",
+      "series": []
+    },
+    {
+      "id": "turbine-orderbook",
+      "name": "燃机新订单与订单簿 vs 产能",
+      "node": "gas-turbine-oem",
+      "linked_judgment": "燃机整机=短缺租金（Wood Mac 称 2026 见顶）；LTSA=持久",
+      "how_to_check": "GEV/西门子能源/三菱季报订单数据；WebSearch: gas turbine orders backlog 2026",
+      "baseline": {
+        "value": "订单约 100GW vs 产能 60-70GW；三寡头各扩产 25-35%",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "新订单同比转负 = 见顶判断兑现；订单簿继续膨胀 = 周期更长、但回吐风险后移而非消失",
+      "series": []
+    },
+    {
+      "id": "turbine-price",
+      "name": "燃机裸机 $/kW",
+      "node": "gas-turbine-oem",
+      "linked_judgment": "燃机整机=短缺租金",
+      "how_to_check": "WebSearch: gas turbine price per kW 2026；行业咨询转引",
+      "baseline": {
+        "value": "自 2019 +195%，新单再加价 10-20%",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "$/kW 停涨回落 = 租金顶确认",
+      "series": []
+    },
+    {
+      "id": "blade-supply",
+      "name": "单晶叶片供给格局",
+      "node": "single-crystal-blades",
+      "linked_judgment": "叶片=持久结构护城河",
+      "how_to_check": "WebSearch: single crystal turbine blade casting capacity / 应流 高温合金 叶片 产能 认证；整机厂自建铸造动向",
+      "baseline": {
+        "value": "全球个位数几家、双位数废品率、无有效新增产能",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "出现有效新增产能或整机厂后向一体化 = 护城河判断被侵蚀（要紧）；国产通过认证批量供货 = 格局变化（对 A 股出口逻辑是双刃）",
+      "series": []
+    },
+    {
+      "id": "ltsa-backlog",
+      "name": "燃机服务积压（LTSA backlog）",
+      "node": "turbine-ltsa",
+      "linked_judgment": "服务年金=持久",
+      "how_to_check": "GEV 季报 services backlog；西门子能源服务收入",
+      "baseline": {
+        "value": "随装机滚动增长（基线待首次 checkpoint 录入具体数）",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "服务簿持续增长 = 兑现；SMR/需求崩塌导致装机骤停 = 年金久期受损",
+      "series": []
+    },
+    {
+      "id": "bess-adoption",
+      "name": "BESS 替代 UPS+柴油的采用信号",
+      "node": "ups-powerchain",
+      "linked_judgment": "价值迁移：BESS 釜底抽薪 UPS+柴油（最大暗线）",
+      "how_to_check": "WebSearch: data center BESS replace UPS diesel 2026 / Tesla Megapack data center；超大厂新建项目备电架构",
+      "baseline": {
+        "value": "暗线已识别、尚无主流超大厂规模部署案例",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "出现超大厂标杆项目用大储能替代 UPS+柴油 = 迁移兑现开始（利好电芯/PCS/EMS、利空 UPS/柴油机存量）",
+      "series": []
+    },
+    {
+      "id": "sic-price",
+      "name": "SiC 衬底/器件价格（8 寸冲击）",
+      "node": "power-semis",
+      "linked_judgment": "价值迁移：SiC 是迁入侧但被中国 8 寸压价",
+      "how_to_check": "WebSearch: SiC substrate price 2026 8-inch / 碳化硅 衬底 价格",
+      "baseline": {
+        "value": "中国 8 寸扩产压价进行中",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "价格加速下跌 = 商品化快于预期（迁入侧的占有性要重判）",
+      "series": []
+    },
+    {
+      "id": "capex-revenue-ratio",
+      "name": "AI capex / 直接 AI 收入比",
+      "node": "demand-base",
+      "linked_judgment": "全链需求地基 β（13:1 有可证伪裂缝）",
+      "how_to_check": "四大云厂季报 capex 与 AI 收入披露；WebSearch: AI capex revenue gap 2026",
+      "baseline": {
+        "value": "约 13:1",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "收敛（<8:1）= 需求地基变实、整链 β 上修；恶化/冻结扩散 = 裂缝扩大、整链 Bear 权重上调",
+      "series": []
+    },
+    {
+      "id": "project-cancellation",
+      "name": "数据中心项目延期/取消率 与 并网排队",
+      "node": "demand-base",
+      "linked_judgment": "需求地基 β + 电力是硬约束",
+      "how_to_check": "WebSearch: data center projects delayed cancelled 2026 Sightline / interconnection queue GW",
+      "baseline": {
+        "value": "延期/取消 30-50%（2026 展望，Sightline）；并网排队约 2,060-2,290GW、中位等待约 4.6 年（2023 峰值 2,600GW）",
+        "as_of": "2025-2026（2026-06 核实）"
+      },
+      "reading_guide": "取消率收窄+排队消化 = 约束缓解（利空短缺租金环节、利好落地量）；冻结扩散 = β 风险上升",
+      "series": []
+    }
+  ]
+}

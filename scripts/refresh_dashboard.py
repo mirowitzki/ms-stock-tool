@@ -191,6 +191,20 @@ def scan_chains():
             mh = meta.get("map_html") or str(d / "chain_map.html").replace("\\", "/")
             if Path(mh).exists():
                 pages.append({"title": "查看产业链图谱", "icon": "🗺️", "file": mh})
+        # 值班台数据：季度检查点 + 最近到期的判断/预测（日期判断放浏览器 JS）
+        watch = {}
+        dec_path = d / "chain_decision.json"
+        if dec_path.exists():
+            try:
+                dec = json.loads(dec_path.read_text(encoding="utf-8"))
+                watch["next_checkpoint"] = dec.get("next_checkpoint")
+                dates = [j.get("review_by") for j in dec.get("key_judgments", []) if j.get("review_by")]
+                dates += [p.get("check_by") for p in (dec.get("predictions") or [])
+                          if p.get("status", "open") == "open" and p.get("check_by")]
+                if dates:
+                    watch["nearest_due"] = min(dates)
+            except Exception as e:
+                print(f"⚠ {dec_path} 解析失败（链值班台信息缺失）：{e}")
         out.append({
             "slug": meta.get("slug", d.name),
             "name": meta.get("name", d.name),
@@ -201,6 +215,7 @@ def scan_chains():
             "selected": meta.get("selected"),
             "stats": {"subchains": meta.get("subchains")},
             "pages": pages,
+            "watch": watch,
         })
     return out
 

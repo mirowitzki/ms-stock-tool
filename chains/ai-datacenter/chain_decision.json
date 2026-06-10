@@ -1,46 +1,127 @@
 {
-  "chain": "ai-datacenter",
-  "name": "AI 数据中心",
-  "as_of": "2026-06",
-  "gate1_subchains": ["算力与内存", "连接与网络", "电力底座", "散热", "整机与运营"],
-  "gate2_done": ["电力底座"],
-  "selection_verified": true,
-  "selected_count": 27,
-  "key_judgments": [
-    {
-      "env": "电力底座 · 单晶叶片铸造",
-      "call": "持久结构护城河（供给扩不出来、买方绕不开）",
-      "占位龙头": ["应流603308", "HWM"],
-      "watch": "产能能否被扩出来、买方（整机厂）能否后向一体化、国产高端是否突破",
-      "review_by": "2027-12"
-    },
-    {
-      "env": "电力底座 · 燃机服务年金 LTSA",
-      "call": "持久（装机基数滚动的锁定型现金流）",
-      "占位龙头": ["GEV"],
-      "watch": "装机基数与服务簿增长、是否被 SMR/电网正常化削弱久期",
-      "review_by": "2027-12"
-    },
-    {
-      "env": "电力底座 · 变压器/GOES + 燃机整机",
-      "call": "短缺顶点的周期租金、会回吐（不是护城河）",
-      "watch": "2027–28 产能墙（日立2028/西门子2027新厂、GOES扩产、燃机三寡头扩25–35%）落成后，价格 $/kW 与利润率是否回落",
-      "review_by": "2028-06"
-    },
-    {
-      "env": "电力底座 · 价值迁移",
-      "call": "价值迁向储能电化学 / SiC；BESS 釜底抽薪 UPS+柴油机",
-      "watch": "BESS 是否真替代 UPS+柴油机、价值是否迁到电芯/PCS/EMS；SiC 是否被中国 8 寸扩产压价",
-      "review_by": "2027-12"
-    },
-    {
-      "env": "全链 · 需求地基 β",
-      "call": "capex/收入约 13:1、有可证伪的裂缝",
-      "watch": "2027–28 AI 收入是否跟上、微软冻结/30–50% 项目延期取消是否扩大（决定整条链 β）",
-      "review_by": "2027-06"
-    }
-  ],
-  "open_todo": [
-    "其余 4 条子链（算力与内存/连接与网络/散热/整机与运营）待拆闸门②成本法"
-  ]
+ "chain": "ai-datacenter",
+ "name": "AI 数据中心",
+ "as_of": "2026-06",
+ "gate1_subchains": [
+  "算力与内存",
+  "连接与网络",
+  "电力底座",
+  "散热",
+  "整机与运营"
+ ],
+ "gate2_done": [
+  "电力底座"
+ ],
+ "selection_verified": true,
+ "selected_count": 27,
+ "key_judgments": [
+  {
+   "env": "电力底座 · 单晶叶片铸造",
+   "call": "持久结构护城河（供给扩不出来、买方绕不开）",
+   "占位龙头": [
+    "应流603308",
+    "HWM"
+   ],
+   "watch": "产能能否被扩出来、买方（整机厂）能否后向一体化、国产高端是否突破",
+   "review_by": "2027-12"
+  },
+  {
+   "env": "电力底座 · 燃机服务年金 LTSA",
+   "call": "持久（装机基数滚动的锁定型现金流）",
+   "占位龙头": [
+    "GEV"
+   ],
+   "watch": "装机基数与服务簿增长、是否被 SMR/电网正常化削弱久期",
+   "review_by": "2027-12"
+  },
+  {
+   "env": "电力底座 · 变压器/GOES + 燃机整机",
+   "call": "短缺顶点的周期租金、会回吐（不是护城河）",
+   "watch": "2027–28 产能墙（日立2028/西门子2027新厂、GOES扩产、燃机三寡头扩25–35%）落成后，价格 $/kW 与利润率是否回落",
+   "review_by": "2028-06"
+  },
+  {
+   "env": "电力底座 · 价值迁移",
+   "call": "价值迁向储能电化学 / SiC；BESS 釜底抽薪 UPS+柴油机",
+   "watch": "BESS 是否真替代 UPS+柴油机、价值是否迁到电芯/PCS/EMS；SiC 是否被中国 8 寸扩产压价",
+   "review_by": "2027-12"
+  },
+  {
+   "env": "全链 · 需求地基 β",
+   "call": "capex/收入约 13:1、有可证伪的裂缝",
+   "watch": "2027–28 AI 收入是否跟上、微软冻结/30–50% 项目延期取消是否扩大（决定整条链 β）",
+   "review_by": "2027-06"
+  }
+ ],
+ "open_todo": [
+  "其余 4 条子链（算力与内存/连接与网络/散热/整机与运营）待拆闸门②成本法"
+ ],
+ "next_checkpoint": "2026-09-30",
+ "checkpoint_cadence": "quarterly（只拉 indicators.json 指标判读，越线才完整复盘；打分登 reviews/CALIBRATION.md）",
+ "predictions": [
+  {
+   "id": "C1",
+   "claim": "变压器/GOES 的厚利润是短缺租金、2027-28 产能墙落成回吐",
+   "metric": "GSU 交期与价格（indicators: transformer-leadtime / goes-price）",
+   "threshold": "2028-06-30 前 GSU 交期从约 3 年（144 周）回落到 ≤18-24 个月、或价格/厂商利润率掉头向下",
+   "check_by": "2028-06-30",
+   "source": "行业报道+Hitachi/Eaton/特变财报",
+   "scenario_link": "租金判断兑现",
+   "status": "open"
+  },
+  {
+   "id": "C2",
+   "claim": "燃机整机短缺 2026 前后见顶（Wood Mac 口径）",
+   "metric": "燃机新订单同比与 $/kW（indicators: turbine-orderbook / turbine-price）",
+   "threshold": "2027-06-30 前新订单同比转负、或 $/kW 停涨回落",
+   "check_by": "2027-06-30",
+   "source": "GEV/西门子能源/三菱季报",
+   "scenario_link": "租金判断兑现",
+   "status": "open"
+  },
+  {
+   "id": "C3",
+   "claim": "单晶叶片是持久结构护城河（供给扩不出来、买方绕不开）",
+   "metric": "叶片有效新增产能/整机厂后向一体化/国产认证（indicators: blade-supply）",
+   "threshold": "至 2027-12-31 无有效新增产能、无整机厂自建铸造、国产未批量通过认证 = 兑现；任一发生 = 护城河被侵蚀",
+   "check_by": "2027-12-31",
+   "source": "公告/行业报道",
+   "scenario_link": "护城河判断",
+   "status": "open"
+  },
+  {
+   "id": "C4",
+   "claim": "燃机服务年金是锁定型持久现金流",
+   "metric": "GEV 等服务积压增长（indicators: ltsa-backlog）",
+   "threshold": "至 2027-12-31 服务簿持续增长且未被 SMR/需求崩塌侵蚀",
+   "check_by": "2027-12-31",
+   "source": "GEV/西门子能源季报",
+   "scenario_link": "护城河判断",
+   "status": "open"
+  },
+  {
+   "id": "C5",
+   "claim": "价值迁移：BESS 釜底抽薪 UPS+柴油、价值迁向储能电化学/SiC",
+   "metric": "超大厂 BESS 替代备电的标杆项目（indicators: bess-adoption / sic-price）",
+   "threshold": "2027-12-31 前出现 ≥1 个超大厂规模部署 BESS 替代 UPS+柴油 = 兑现开始；全无 = 迁移判断推迟/存疑",
+   "check_by": "2027-12-31",
+   "source": "项目公告/行业报道",
+   "scenario_link": "迁移判断",
+   "status": "open"
+  },
+  {
+   "id": "C6",
+   "claim": "需求地基 β：capex/收入 13:1 的裂缝是整链最大风险",
+   "metric": "capex/AI收入比、延期取消率（indicators: capex-revenue-ratio / project-cancellation）",
+   "threshold": "2027-06-30 时点：比值收敛至 <8:1 且取消率收窄 = 地基变实（裂缝判断未兑现）；冻结/退租扩散或比值恶化 = 裂缝扩大（兑现）",
+   "check_by": "2027-06-30",
+   "source": "四大云厂季报/Sightline 类追踪",
+   "scenario_link": "整链 β",
+   "status": "open"
+  }
+ ],
+ "knowledge_files": {
+  "nodes": "nodes.json（节点卡真相源）",
+  "indicators": "indicators.json（领先指标与季度数据点）"
+ }
 }

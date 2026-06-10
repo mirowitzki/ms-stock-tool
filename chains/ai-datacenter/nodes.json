@@ -1,0 +1,595 @@
+{
+  "chain": "ai-datacenter",
+  "version": "2026-06-10",
+  "_schema": {
+    "说明": "产业链知识的结构化真相源（2026-06-10 起）：判断和数字先进这里、页面是渲染层。每个数字必须带 as_of + source + confidence（多源/单源/数量级/估算）。更新一个环节=改一张卡，不必重写整页。",
+    "five_layer": "necessity(原理必须?) / capture(凭什么占有+久期) / capital_cycle(四象限) / rent_or_moat(三档判定)",
+    "threat_timeline": "替代威胁 S 曲线：威胁 + 该看到的信号 + 大致时窗",
+    "applicability": "适用边界：这节的价值由哪个市场/什么要素价格撑（中美分叉教训）"
+  },
+  "nodes": [
+    {
+      "id": "single-crystal-blades",
+      "name": "单晶叶片铸造",
+      "subchain": "电力底座",
+      "role": "燃气轮机热端核心部件——全链最硬的工艺卡口",
+      "five_layer": {
+        "necessity": "原理必须（热效率的物理上限件，无替代材料路线临近）",
+        "capture": "持久：几十年工艺/冶金/良率积累，双位数废品率挡住新进入者；铸造装备本身受限；买方（整机厂）难后向一体化",
+        "capital_cycle": "供给受限，非本轮扩产热点",
+        "rent_or_moat": "持久结构护城河（电力底座最硬）"
+      },
+      "players": [
+        {
+          "name": "Howmet Aerospace",
+          "ticker": "HWM",
+          "market": "美股"
+        },
+        {
+          "name": "应流股份",
+          "ticker": "603308",
+          "market": "A股",
+          "note": "对全球整机厂+航发的出口供应商角色（国产高端燃机叶片仍属攻关期）"
+        }
+      ],
+      "key_numbers": [
+        {
+          "metric": "全球具备大型燃机单晶叶片能力的铸造厂",
+          "value": "个位数几家",
+          "as_of": "2026-06",
+          "source": "成本法页综合（闸门②）",
+          "confidence": "数量级"
+        },
+        {
+          "metric": "铸造废品率",
+          "value": "双位数%",
+          "as_of": "2026-06",
+          "source": "成本法页综合",
+          "confidence": "数量级"
+        }
+      ],
+      "threat_timeline": [
+        {
+          "threat": "整机厂后向一体化自建铸造",
+          "watch_signal": "三寡头自建铸造产能的公告/招聘",
+          "horizon": "2028+"
+        },
+        {
+          "threat": "国产高端突破改变供给格局",
+          "watch_signal": "国产叶片通过整机厂认证/批量供货公告",
+          "horizon": "2029+，国家级长期攻关、慢"
+        }
+      ],
+      "linked_indicators": [
+        "blade-supply"
+      ],
+      "applicability": "价值由全球（主要美国）燃机需求撑；对 A 股是出口供应商逻辑、不是中国本土燃机需求（见成本法页适用边界节）",
+      "last_reviewed": "2026-06-10"
+    },
+    {
+      "id": "turbine-ltsa",
+      "name": "燃机服务年金（LTSA）",
+      "subchain": "电力底座",
+      "role": "燃机卖出后几十年的原厂长期服务协议——锁定型现金流",
+      "five_layer": {
+        "necessity": "装机即必须（热端件寿命管理只能用原厂）",
+        "capture": "持久：转换成本极高 + 装机基数滚动越滚越大；属整机 OEM 的附属属性、非独立环节",
+        "capital_cycle": "随装机基数累积、弱周期",
+        "rent_or_moat": "持久（锁定型年金）"
+      },
+      "players": [
+        {
+          "name": "GE Vernova",
+          "ticker": "GEV",
+          "market": "美股"
+        },
+        {
+          "name": "西门子能源",
+          "ticker": "ENR.DE",
+          "market": "欧股"
+        },
+        {
+          "name": "三菱重工",
+          "ticker": "7011.T",
+          "market": "日股"
+        }
+      ],
+      "key_numbers": [
+        {
+          "metric": "本轮新增装机对服务簿的意义",
+          "value": "每台新机=几十年服务现金流入簿",
+          "as_of": "2026-06",
+          "source": "成本法页",
+          "confidence": "结构判断"
+        }
+      ],
+      "threat_timeline": [
+        {
+          "threat": "SMR/电网正常化压缩燃机装机",
+          "watch_signal": "SMR 商业化时间表、并网排队消化速度",
+          "horizon": "2030+"
+        }
+      ],
+      "linked_indicators": [
+        "turbine-orderbook",
+        "ltsa-backlog"
+      ],
+      "applicability": "同叶片：全球（主要美国）需求撑",
+      "last_reviewed": "2026-06-10"
+    },
+    {
+      "id": "gas-turbine-oem",
+      "name": "燃气轮机整机",
+      "subchain": "电力底座",
+      "role": "把燃料变成马上能上的可调度电力（AI 数据中心 2025-28 窗口的边际瓶颈电源）",
+      "five_layer": {
+        "necessity": "窗口期必须（同时满足马上能上+24/7 可调度+GW 级的唯一大规模选项）",
+        "capture": "短缺期定价权强，但本质靠暂时产能不足；三寡头供给纪律是缓冲、不是结构壁垒",
+        "capital_cycle": "扩张顶部（订单 100GW vs 产能 60-70GW、三寡头各扩产 25-35%）",
+        "rent_or_moat": "短缺顶点周期租金为主（真正持久的在其上游叶片与下游服务）"
+      },
+      "players": [
+        {
+          "name": "GE Vernova",
+          "ticker": "GEV",
+          "market": "美股"
+        },
+        {
+          "name": "西门子能源",
+          "ticker": "ENR.DE",
+          "market": "欧股"
+        },
+        {
+          "name": "三菱重工",
+          "ticker": "7011.T",
+          "market": "日股"
+        }
+      ],
+      "key_numbers": [
+        {
+          "metric": "裸机价格 $/kW 自 2019",
+          "value": "+195%，新单再加价 10-20%",
+          "as_of": "2026-06",
+          "source": "成本法页（行业报道综合）",
+          "confidence": "单源量级"
+        },
+        {
+          "metric": "订单 vs 产能",
+          "value": "约 100GW vs 60-70GW",
+          "as_of": "2026-06",
+          "source": "成本法页",
+          "confidence": "单源量级"
+        },
+        {
+          "metric": "见顶预测",
+          "value": "Wood Mackenzie 点名燃机 2026 见顶",
+          "as_of": "2026-06",
+          "source": "Wood Mackenzie（转引）",
+          "confidence": "单源"
+        }
+      ],
+      "threat_timeline": [
+        {
+          "threat": "产能墙落成+需求退潮双杀",
+          "watch_signal": "新订单同比转负、$/kW 停涨回落",
+          "horizon": "2026-2028"
+        }
+      ],
+      "linked_indicators": [
+        "turbine-orderbook",
+        "turbine-price"
+      ],
+      "applicability": "数据中心烧气自发电是美国命题——已独立核实（2026-06-10）：美国燃料成本约 2.4-3.0¢/kWh（气 $3.5/MMBtu）vs 中国 7.5-12.6¢（气 $10-15）且被西部绿电 2-3.6¢ 碾压；中国主流=市电+柴油备用+绿电，燃气三联供仅个别案例。美国实例：xAI 孟菲斯 247MW、Colossus2 约 250MW（规划 1.1GW）、OpenAI Abilene 360MW、Meta 俄亥俄 400MW。详见成本法页适用边界节",
+      "last_reviewed": "2026-06-10"
+    },
+    {
+      "id": "transformer-assembly",
+      "name": "大型变压器组装",
+      "subchain": "电力底座",
+      "role": "升降压把电送进数据中心",
+      "five_layer": {
+        "necessity": "必须",
+        "capture": "弱：中国约 60% 产能、拼价格；短缺期的厚利润大半是租金",
+        "capital_cycle": "扩张顶部（各家 $1B+ 扩产、日立 2028/西门子 2027 新厂投产）",
+        "rent_or_moat": "短缺租金→商品（2027-28 产能墙是反转窗口）"
+      },
+      "players": [
+        {
+          "name": "Hitachi Energy",
+          "market": "日股(母体 6501.T)"
+        },
+        {
+          "name": "Eaton",
+          "ticker": "ETN",
+          "market": "美股"
+        },
+        {
+          "name": "特变电工",
+          "ticker": "600089",
+          "market": "A股"
+        },
+        {
+          "name": "思源电气",
+          "ticker": "002028",
+          "market": "A股"
+        },
+        {
+          "name": "金盘科技",
+          "ticker": "688676",
+          "market": "A股"
+        }
+      ],
+      "key_numbers": [
+        {
+          "metric": "交期",
+          "value": "标准 128 周 / GSU 144 周（约 2.5-3 年）、部分最长 4 年",
+          "as_of": "2025-Q2",
+          "source": "Wood Mackenzie（pv-magazine 转引，2026-06 核实）",
+          "confidence": "多源一致"
+        },
+        {
+          "metric": "GSU 需求 2019→2025",
+          "value": "+274%、价格近 5 年翻倍",
+          "as_of": "2026-06",
+          "source": "成本法页",
+          "confidence": "单源量级"
+        },
+        {
+          "metric": "供给缺口路径",
+          "value": "100%(2025)→<10%(2030)",
+          "as_of": "2026-06",
+          "source": "Wood Mackenzie（转引）",
+          "confidence": "单源预测"
+        },
+        {
+          "metric": "价格涨幅（2019 起）",
+          "value": "+77-95%",
+          "as_of": "2025-Q2",
+          "source": "Wood Mackenzie（2026-06 核实；旧口径'近5年翻倍'相近）",
+          "confidence": "多源一致"
+        }
+      ],
+      "threat_timeline": [
+        {
+          "threat": "固态变压器 SST 替代部分铁芯方案",
+          "watch_signal": "SST 数据中心侧商用项目放量",
+          "horizon": "2028 起"
+        },
+        {
+          "threat": "产能墙：日立 2028 / 西门子 2027 新厂",
+          "watch_signal": "新厂投产、交期回落",
+          "horizon": "2027-2028"
+        }
+      ],
+      "linked_indicators": [
+        "transformer-leadtime",
+        "goes-price"
+      ],
+      "applicability": "美国短缺最尖；中国产能过剩+反倾销+CBAM 围堵出口（A 股逻辑=出口受益的周期租金、非护城河）",
+      "last_reviewed": "2026-06-10"
+    },
+    {
+      "id": "goes-steel",
+      "name": "取向硅钢 GOES",
+      "subchain": "电力底座",
+      "role": "变压器铁芯核心材料",
+      "five_layer": {
+        "necessity": "必须（工频变压器路线下）",
+        "capture": "弱：全球 5+ 家、中国约 56% 产量且在扩、行业已喊过剩；美国短缺是区域/贸易错配",
+        "capital_cycle": "扩产中",
+        "rent_or_moat": "周期租金，短缺一缓解就回吐"
+      },
+      "players": [
+        {
+          "name": "宝钢股份",
+          "ticker": "600019",
+          "market": "A股",
+          "note": "GOES 全球龙头之一"
+        }
+      ],
+      "key_numbers": [
+        {
+          "metric": "中国占全球产量",
+          "value": "约 56% 且在扩",
+          "as_of": "2026-06",
+          "source": "成本法页",
+          "confidence": "单源量级"
+        }
+      ],
+      "threat_timeline": [
+        {
+          "threat": "SST 减少 GOES 用量",
+          "watch_signal": "同 SST",
+          "horizon": "2028+"
+        }
+      ],
+      "linked_indicators": [
+        "goes-price"
+      ],
+      "applicability": "同变压器：美国命题为主、中国是供给方",
+      "last_reviewed": "2026-06-10"
+    },
+    {
+      "id": "switchgear",
+      "name": "开关柜/中压配电",
+      "subchain": "电力底座",
+      "role": "把电安全分配进机房（电气栈中占比约 11%）",
+      "five_layer": {
+        "necessity": "必须",
+        "capture": "中：寡头+一次设备认证有真壁垒，但也在扩产",
+        "capital_cycle": "订单爆满（售罄到 2028）+扩产",
+        "rent_or_moat": "介于租金与护城河之间"
+      },
+      "players": [
+        {
+          "name": "Eaton",
+          "ticker": "ETN",
+          "market": "美股"
+        },
+        {
+          "name": "施耐德",
+          "ticker": "SU.PA",
+          "market": "欧股"
+        }
+      ],
+      "key_numbers": [
+        {
+          "metric": "订单可见性",
+          "value": "售罄到 2028",
+          "as_of": "2026-06",
+          "source": "图谱页",
+          "confidence": "单源量级"
+        }
+      ],
+      "threat_timeline": [],
+      "linked_indicators": [],
+      "applicability": "全球需求，认证壁垒按区域分割",
+      "last_reviewed": "2026-06-10"
+    },
+    {
+      "id": "ups-powerchain",
+      "name": "UPS/机房配电",
+      "subchain": "电力底座",
+      "role": "不间断供电（电气栈占比约 16%）——正被 BESS 架构威胁的现金流",
+      "five_layer": {
+        "necessity": "当下必须，但属当下技术选择（备电架构在迁移）",
+        "capture": "中：总装利润中等，占有在内部功率半导体与寡头渠道",
+        "capital_cycle": "订单爆炸+快加产（偏 FOMO）",
+        "rent_or_moat": "真实但周期性 + 被价值迁移威胁"
+      },
+      "players": [
+        {
+          "name": "Vertiv",
+          "ticker": "VRT",
+          "market": "美股"
+        },
+        {
+          "name": "Eaton",
+          "ticker": "ETN",
+          "market": "美股"
+        },
+        {
+          "name": "施耐德",
+          "ticker": "SU.PA",
+          "market": "欧股"
+        },
+        {
+          "name": "科华数据",
+          "ticker": "002335",
+          "market": "A股"
+        },
+        {
+          "name": "科士达",
+          "ticker": "002518",
+          "market": "A股"
+        }
+      ],
+      "key_numbers": [
+        {
+          "metric": "UPS 占电气栈",
+          "value": "约 16%",
+          "as_of": "2026-06",
+          "source": "成本法页成本栈",
+          "confidence": "估算口径"
+        }
+      ],
+      "threat_timeline": [
+        {
+          "threat": "BESS 釜底抽薪 UPS+柴油备电（AI 突发尖峰负载打破老模型）",
+          "watch_signal": "超大厂新建项目采用大储能替代 UPS+柴油的标杆案例",
+          "horizon": "2026-2028（电力底座最大暗线）"
+        }
+      ],
+      "linked_indicators": [
+        "bess-adoption"
+      ],
+      "applicability": "全球",
+      "last_reviewed": "2026-06-10"
+    },
+    {
+      "id": "power-semis",
+      "name": "功率半导体（IGBT→SiC）",
+      "subchain": "电力底座",
+      "role": "UPS/电源链里的功率转换核心",
+      "five_layer": {
+        "necessity": "必须",
+        "capture": "IGBT 弱（成熟分散、国产价格战）；SiC 中（衬底/工艺壁垒真、但被中国 8 寸扩产压价、自身在被商品化）",
+        "capital_cycle": "IGBT 内卷；SiC 扩产潮",
+        "rent_or_moat": "IGBT=商品化中；SiC=有壁垒但正被侵蚀（价值迁入侧之一）"
+      },
+      "players": [
+        {
+          "name": "Infineon",
+          "ticker": "IFX.DE",
+          "market": "欧股"
+        },
+        {
+          "name": "时代电气",
+          "ticker": "688187",
+          "market": "A股",
+          "note": "代码经核查（曾误写 688008 的教训）"
+        }
+      ],
+      "key_numbers": [
+        {
+          "metric": "SiC TCO vs 硅基",
+          "value": "多数场景已翻正",
+          "as_of": "2026-06",
+          "source": "成本法页",
+          "confidence": "行业共识量级"
+        }
+      ],
+      "threat_timeline": [
+        {
+          "threat": "中国 8 寸 SiC 产能压价",
+          "watch_signal": "8 寸衬底报价、扩产投产节奏",
+          "horizon": "2026-2028"
+        }
+      ],
+      "linked_indicators": [
+        "sic-price"
+      ],
+      "applicability": "全球；国产替代在 IGBT 已是反噬型内卷、在 SiC 是压价方",
+      "last_reviewed": "2026-06-10"
+    },
+    {
+      "id": "bess-cell",
+      "name": "储能电芯/系统（BESS）",
+      "subchain": "电力底座",
+      "role": "削峰/备电——价值迁入的下一站",
+      "five_layer": {
+        "necessity": "渐成必要（AI 负载尖峰+绿电消纳）",
+        "capture": "弱（产能过剩价格战），但是利润池流向的方向；要挑壁垒能立住的细分（电芯一致性/PCS/EMS）",
+        "capital_cycle": "出清中段（中国电芯）",
+        "rent_or_moat": "卷，但方向在变——价值迁入侧"
+      },
+      "players": [
+        {
+          "name": "宁德时代",
+          "ticker": "300750",
+          "market": "A股"
+        },
+        {
+          "name": "比亚迪",
+          "ticker": "002594",
+          "market": "A股"
+        },
+        {
+          "name": "Tesla(Megapack)",
+          "ticker": "TSLA",
+          "market": "美股"
+        }
+      ],
+      "key_numbers": [
+        {
+          "metric": "电芯环节状态",
+          "value": "产能过剩、价格战",
+          "as_of": "2026-06",
+          "source": "成本法页",
+          "confidence": "行业共识"
+        }
+      ],
+      "threat_timeline": [],
+      "linked_indicators": [
+        "bess-adoption"
+      ],
+      "applicability": "中国是供给主导方；需求两岸都在长",
+      "last_reviewed": "2026-06-10"
+    },
+    {
+      "id": "diesel-busbar",
+      "name": "柴油备电/铜铝母线",
+      "subchain": "电力底座",
+      "role": "传统备电与输电载体（柴油机是电气栈最大单桶约 1/5）",
+      "five_layer": {
+        "necessity": "当下必须（柴油备电正被 BESS 威胁）",
+        "capture": "弱（成熟/大宗）",
+        "capital_cycle": "跟随景气",
+        "rent_or_moat": "商品/苦力"
+      },
+      "players": [
+        {
+          "name": "Cummins",
+          "ticker": "CMI",
+          "market": "美股"
+        },
+        {
+          "name": "Caterpillar",
+          "ticker": "CAT",
+          "market": "美股"
+        }
+      ],
+      "key_numbers": [
+        {
+          "metric": "备用柴油机占电气栈",
+          "value": "约 1/5（最大单桶）",
+          "as_of": "2026-06",
+          "source": "成本法页成本栈",
+          "confidence": "估算口径"
+        }
+      ],
+      "threat_timeline": [
+        {
+          "threat": "BESS 替代（同 UPS 暗线）",
+          "watch_signal": "同 bess-adoption",
+          "horizon": "2026-2028"
+        }
+      ],
+      "linked_indicators": [
+        "bess-adoption"
+      ],
+      "applicability": "全球",
+      "last_reviewed": "2026-06-10"
+    },
+    {
+      "id": "demand-base",
+      "name": "需求地基（全链 β）",
+      "subchain": "全链横切",
+      "role": "整条链的需求母数——AI capex 能否被收入消化",
+      "five_layer": {
+        "necessity": "—（横切）",
+        "capture": "—",
+        "capital_cycle": "万亿级 capex 超级周期（2026 四大云厂约 $7,250 亿、+77%）",
+        "rent_or_moat": "—（决定整链 β 的母变量）"
+      },
+      "players": [],
+      "key_numbers": [
+        {
+          "metric": "capex / 直接 AI 收入",
+          "value": "约 13:1",
+          "as_of": "2026-06",
+          "source": "图谱页（多家媒体口径）",
+          "confidence": "量级"
+        },
+        {
+          "metric": "项目延期/取消比例",
+          "value": "30-50%（2026 展望，Sightline；2025 实绩约 36% 未按时）",
+          "as_of": "2026-06",
+          "source": "Sightline（转引 Tom's Hardware）",
+          "confidence": "一级来源（Bloomberg 采用）"
+        },
+        {
+          "metric": "全美并网排队",
+          "value": "约 2,060-2,290GW（2024-25；2023 峰值约 2,600GW）、中位等待约 4.6 年",
+          "as_of": "2025",
+          "source": "LBNL Queued Up 2025（2026-06 核实）",
+          "confidence": "多源一致"
+        }
+      ],
+      "threat_timeline": [
+        {
+          "threat": "2027-28 收入跟不上+新产能落成双反向",
+          "watch_signal": "capex/收入比收敛或恶化、冻结/退租扩散",
+          "horizon": "2027-2028"
+        }
+      ],
+      "linked_indicators": [
+        "capex-revenue-ratio",
+        "project-cancellation"
+      ],
+      "applicability": "全球，但 capex 集中在美国",
+      "last_reviewed": "2026-06-10"
+    }
+  ],
+  "_pending": "其余 4 条子链（算力与内存/连接与网络/散热/整机与运营）的节点卡待各自过闸门②时建——闸门①层面的判断暂在 chain_map.html，不在此重复。"
+}

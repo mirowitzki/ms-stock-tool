@@ -80,7 +80,11 @@ def chains_due():
             print(f"⚠ {dec} 解析失败——这条链不会被提示复盘，请修复：{e}")
             continue
         due_js = [j for j in rec.get("key_judgments", []) if j.get("review_by") and j["review_by"] <= today]
-        out.append((d.name, rec.get("name", d.name), rec.get("as_of", "?"), due_js))
+        ckpt = rec.get("next_checkpoint")
+        ckpt_due = bool(ckpt and ckpt <= today)
+        due_preds = [p for p in (rec.get("predictions") or [])
+                     if p.get("status", "open") == "open" and p.get("check_by", "") and p["check_by"] <= today]
+        out.append((d.name, rec.get("name", d.name), rec.get("as_of", "?"), due_js, ckpt, ckpt_due, due_preds))
     return out
 
 
@@ -159,12 +163,22 @@ def main():
     chs = chains_due()
     if chs:
         print("\n" + "=" * 56)
-        print("【产业链 · 该复盘的判断】到期该回来核的链判断（chain_decision.json）：")
-        for slug, name, asof, due_js in chs:
-            head = f" — {len(due_js)} 条判断到期" if due_js else " — 暂无到期判断"
-            print(f"  ● {name}（{slug}，分析于 {asof}）{head}")
+        print("【产业链 · 该复盘/该检查的】（chain_decision.json）：")
+        for slug, name, asof, due_js, ckpt, ckpt_due, due_preds in chs:
+            bits = []
+            if ckpt_due:
+                bits.append(f"季度检查点到期（{ckpt}）→ 派 agent 拉 indicators.json 指标判读")
+            elif ckpt:
+                bits.append(f"下次检查点 {ckpt}")
+            if due_js:
+                bits.append(f"{len(due_js)} 条判断到期")
+            if due_preds:
+                bits.append(f"{len(due_preds)} 条预测到期待打分")
+            print(f"  ● {name}（{slug}，分析于 {asof}） — " + ("；".join(bits) if bits else "暂无到期"))
             for j in due_js:
                 print(f"      → {j.get('env', '?')}：当时判「{j.get('call', '')}」 · 盯 {j.get('watch', '')}（{j.get('review_by')} 到期）")
+            for p in due_preds:
+                print(f"      → 预测 {p.get('id','?')} {p.get('claim','')[:30]} ｜阈值：{p.get('threshold','')[:44]}（{p.get('check_by')} 到期）")
 
     print("\n下一步：单股复盘见 skills/postmortem.md（盲评先行→打分→误差归类）→ 打分登 reviews/CALIBRATION.md、教训进 reviews/LESSONS.md；")
     print("        产业链复盘见 skills/industry-chain.md『复盘』节 → reviews/CHAIN_LESSONS.md（到期派独立 review agent 对账）。")

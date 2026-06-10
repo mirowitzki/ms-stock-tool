@@ -981,7 +981,11 @@ function renderDutyDesk() {
   const inZone = infos.filter(x => x.w.inZone);
   const due = infos.filter(x => x.w.reviewDue);
   const earn = infos.filter(x => x.w.earnSoon || x.w.earnPast);
+  const chainInfos = (typeof chains !== 'undefined' ? chains : []).map(ch => ({ ch, w: chainWatchInfo(ch) }));
+  const chainDue = chainInfos.filter(x => x.w.ckptDue);
   const lines = [];
+  if (chainDue.length) lines.push('<div class="duty-line"><span class="duty-label">🔗 产业链检查点到期（' + chainDue.length + '）</span>' +
+    chainDue.map(x => '<span class="duty-item"><b>' + escapeHtml(x.ch.name) + '</b>（拉 indicators.json 指标判读）</span>').join('　'));
   if (inZone.length) lines.push('<div class="duty-line"><span class="duty-label">🎯 已进入场观察区（' + inZone.length + '）</span>' +
     inZone.map(x => '<span class="duty-item"><b>' + escapeHtml(x.c.ticker) + '</b> ' + escapeHtml(x.w.zoneText) + '</span>').join('　'));
   if (due.length) lines.push('<div class="duty-line"><span class="duty-label">⏰ 复盘到期（' + due.length + '）</span>' +
@@ -992,9 +996,11 @@ function renderDutyDesk() {
     // 都不到期：给一行"最近节点"，让人知道下一个该回来的日子
     const nextReview = infos.filter(x => x.w.reviewDate).sort((a, b) => a.w.reviewDate < b.w.reviewDate ? -1 : 1)[0];
     const nextEarn = infos.filter(x => x.w.earnDate && !x.w.earnPast).sort((a, b) => a.w.earnDate < b.w.earnDate ? -1 : 1)[0];
+    const nextCkpt = chainInfos.filter(x => x.w.dueSoonDate).sort((a, b) => a.w.dueSoonDate < b.w.dueSoonDate ? -1 : 1)[0];
     const bits = [];
     if (nextReview) bits.push('最近复盘节点 <b>' + escapeHtml(nextReview.c.ticker) + '</b> ' + nextReview.w.reviewDate);
     if (nextEarn) bits.push('最近财报 <b>' + escapeHtml(nextEarn.c.ticker) + '</b> ' + nextEarn.w.earnDate);
+    if (nextCkpt) bits.push('链检查点 <b>' + escapeHtml(nextCkpt.ch.name) + '</b> ' + nextCkpt.w.dueSoonDate);
     lines.push('<div class="duty-line calm"><span class="duty-label">今天没有到期事项。</span><span class="duty-item">' + bits.join('　·　') + '</span>');
   }
   box.innerHTML = lines.map(l => l + '</div>').join('');
@@ -1074,6 +1080,24 @@ function escapeHtml(s) {
 
 // ============= 渲染产业链研究板块 =============
 const chains = DATA.chains || [];
+
+function chainWatchInfo(ch) {
+  const w = ch.watch || {};
+  const out = { chips: [], ckptDue: false, dueSoonDate: null };
+  if (w.next_checkpoint) {
+    const dd = daysFromToday(w.next_checkpoint);
+    if (dd != null && dd <= 0) { out.ckptDue = true; out.chips.push({ cls: 'due', text: '⏰ 季度检查点到期 ' + w.next_checkpoint, title: '跑 python scripts/review.py → 派 agent 拉 indicators.json 指标判读' }); }
+    else if (dd != null && dd <= 14) { out.chips.push({ cls: 'soon', text: '⏰ 检查点临近 ' + w.next_checkpoint + '（' + dd + ' 天）', title: '' }); }
+    else { out.chips.push({ cls: 'info', text: '📋 下次检查点 ' + w.next_checkpoint, title: '季度拉一次领先指标（indicators.json）' }); }
+    out.dueSoonDate = w.next_checkpoint;
+  }
+  if (w.nearest_due) {
+    const dd = daysFromToday(w.nearest_due);
+    if (dd != null && dd <= 0) out.chips.push({ cls: 'due', text: '⏰ 链判断/预测到期 ' + w.nearest_due, title: '' });
+  }
+  return out;
+}
+
 function renderChains() {
   const container = document.getElementById('chains');
   const empty = document.getElementById('chain-empty');
@@ -1104,6 +1128,12 @@ function renderChains() {
           </div>
         </div>
         ${gateChips ? `<div class="chain-gates">${gateChips}</div>` : ''}
+        ${(() => {
+          const wi = chainWatchInfo(ch);
+          if (!wi.chips.length) return '';
+          return `<div class="watch-row">` + wi.chips.map(c =>
+            `<span class="wchip ${c.cls}" title="${escapeHtml(c.title || '')}">${escapeHtml(c.text)}</span>`).join('') + `</div>`;
+        })()}
         <div class="chain-stats">
           ${st.subchains != null ? `<div><span>子链</span><b>${st.subchains}</b></div>` : ''}
           ${ch.selected != null ? `<div><span>选出</span><b>${ch.selected} 家</b></div>` : ''}
