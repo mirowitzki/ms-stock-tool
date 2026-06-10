@@ -459,6 +459,29 @@ body {
 .stat .stat-label { font-size: 10px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.6px; }
 .stat .stat-value { font-size: 14px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; font-family: var(--mono); }
 
+/* 值班台（2026-06-10）：卡片信息行 + 顶部汇总 */
+.watch-row { display: flex; gap: 6px; flex-wrap: wrap; padding: 9px 0 0; }
+.wchip {
+  font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px;
+  border: 1px solid transparent; display: inline-flex; align-items: center; gap: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.wchip.in   { background: rgba(31,143,118,.12); color: var(--success); border-color: rgba(31,143,118,.28); }
+.wchip.near { background: rgba(192,138,45,.12); color: #9a6c14; border-color: rgba(192,138,45,.26); }
+.wchip.far  { background: var(--border-soft); color: var(--text-light); }
+.wchip.due  { background: rgba(196,69,54,.10); color: var(--error); border-color: rgba(196,69,54,.26); }
+.wchip.soon { background: rgba(192,138,45,.12); color: #9a6c14; border-color: rgba(192,138,45,.26); }
+.wchip.info { background: rgba(58,107,166,.10); color: #3a6ba6; border-color: rgba(58,107,166,.22); }
+.dutydesk {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px 18px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px;
+}
+.duty-line { display: flex; align-items: baseline; gap: 10px; font-size: 13px; flex-wrap: wrap; }
+.duty-line .duty-label { font-weight: 700; flex: 0 0 auto; }
+.duty-line.calm { color: var(--text-muted); }
+.duty-item { font-variant-numeric: tabular-nums; }
+.duty-item b { font-weight: 700; }
+
 /* Action buttons */
 .actions {
   display: flex;
@@ -663,6 +686,15 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
     <h3>还没有产业链图谱</h3>
     <p>自上而下：先画一条产业链的完整图谱、定位价值落在哪一节，再端出值得研究的赛道，喂回个股深析。</p>
   </div>
+</section>
+
+<!-- 值班台（2026-06-10）：今天该看什么——价格进观察区 / 复盘到期 / 临近财报 -->
+<section id="dutydesk-section" style="display:none;">
+  <div class="section-header">
+    <h2>🔔 值班台</h2>
+    <span class="count" id="duty-count"></span>
+  </div>
+  <div class="dutydesk" id="dutydesk"></div>
 </section>
 
 <!-- 公司列表 -->
@@ -884,6 +916,93 @@ async function deleteCompany(ticker) {
   }
 }
 
+// ============= 值班台（2026-06-10）=============
+// 数据来自 decision.json(entry_watch/review_by/predictions) + prices.json(月收盘) + next_earnings；
+// 日期判断用浏览器当天日期算，页面每次打开都是新鲜的。
+function daysFromToday(dateStr) {
+  if (!dateStr) return null;
+  const d = new Date(dateStr + 'T00:00:00');
+  if (isNaN(d)) return null;
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  return Math.round((d - today) / 86400000);
+}
+function fmtPx(v) { return v == null ? '—' : (Math.abs(v) >= 100 ? Number(v).toFixed(0) : Number(v).toFixed(2).replace(/\.?0+$/, '')); }
+
+function watchInfo(c) {
+  const w = c.watch || {};
+  const sym = (c.currency && c.currency.symbol) || '$';
+  const out = { chips: [], inZone: false, nearZone: false, reviewDue: false, reviewSoon: false,
+                earnSoon: false, earnPast: false, reviewDate: null, earnDate: null, zoneText: '' };
+  // ① 价格 vs 入场观察区
+  if (w.entry_high != null && w.last_close != null) {
+    const zone = (w.entry_low != null ? sym + fmtPx(w.entry_low) + '–' : '≤' + sym) + fmtPx(w.entry_high);
+    const closeTxt = (w.last_close_month || '') + '收盘 ' + sym + fmtPx(w.last_close);
+    if (w.last_close <= w.entry_high) {
+      out.inZone = true;
+      out.zoneText = closeTxt + ' 已进观察区 ' + zone;
+      out.chips.push({ cls: 'in', text: '🎯 已进观察区 ' + zone + '（' + closeTxt + '）', title: w.entry_note || '' });
+    } else {
+      const prem = (w.last_close - w.entry_high) / w.entry_high * 100;
+      const cls = prem <= 15 ? 'near' : 'far';
+      if (prem <= 15) out.nearZone = true;
+      out.zoneText = closeTxt + ' 高于上沿 +' + prem.toFixed(0) + '%';
+      out.chips.push({ cls: cls, text: '观察区 ' + zone + '｜' + closeTxt + '（高于上沿 +' + prem.toFixed(0) + '%）', title: w.entry_note || '' });
+    }
+  }
+  // ② 复盘到期（review_by 或任一预测 check_by）
+  const dates = [];
+  if (w.review_by) dates.push(w.review_by);
+  (w.pred_dates || []).forEach(d => { if (d) dates.push(d); });
+  if (dates.length) {
+    const minDate = dates.sort()[0];
+    out.reviewDate = minDate;
+    const dd = daysFromToday(minDate);
+    if (dd != null && dd <= 0) { out.reviewDue = true; out.chips.push({ cls: 'due', text: '⏰ 复盘到期 ' + minDate, title: '跑 python scripts/review.py，按 postmortem 流程盲评+打分' }); }
+    else if (dd != null && dd <= 14) { out.reviewSoon = true; out.chips.push({ cls: 'soon', text: '⏰ 复盘临近 ' + minDate + '（' + dd + ' 天）', title: '' }); }
+  }
+  // ③ 下次财报
+  const ne = w.next_earnings || {};
+  if (ne.date) {
+    out.earnDate = ne.date;
+    const dd = daysFromToday(ne.date);
+    const est = ne.estimated ? '（估）' : '';
+    if (dd != null && dd < 0) { out.earnPast = true; out.chips.push({ cls: 'due', text: '📅 财报应已发布 ' + ne.date + est, title: '建议刷新/重分析' }); }
+    else if (dd != null && dd <= 14) { out.earnSoon = true; out.chips.push({ cls: 'soon', text: '📅 财报 ' + ne.date + est + '·还有 ' + dd + ' 天', title: ne.period || '' }); }
+    else if (dd != null && dd <= 45) { out.chips.push({ cls: 'info', text: '📅 财报 ' + ne.date + est, title: ne.period || '' }); }
+  }
+  return out;
+}
+
+function renderDutyDesk() {
+  const section = document.getElementById('dutydesk-section');
+  const box = document.getElementById('dutydesk');
+  if (!section || !box || !companies.length) return;
+  const infos = companies.map(c => ({ c, w: watchInfo(c) }));
+  const inZone = infos.filter(x => x.w.inZone);
+  const due = infos.filter(x => x.w.reviewDue);
+  const earn = infos.filter(x => x.w.earnSoon || x.w.earnPast);
+  const lines = [];
+  if (inZone.length) lines.push('<div class="duty-line"><span class="duty-label">🎯 已进入场观察区（' + inZone.length + '）</span>' +
+    inZone.map(x => '<span class="duty-item"><b>' + escapeHtml(x.c.ticker) + '</b> ' + escapeHtml(x.w.zoneText) + '</span>').join('　'));
+  if (due.length) lines.push('<div class="duty-line"><span class="duty-label">⏰ 复盘到期（' + due.length + '）</span>' +
+    due.map(x => '<span class="duty-item"><b>' + escapeHtml(x.c.ticker) + '</b>（' + x.w.reviewDate + '）</span>').join('　'));
+  if (earn.length) lines.push('<div class="duty-line"><span class="duty-label">📅 财报 14 天内/已过（' + earn.length + '）</span>' +
+    earn.map(x => '<span class="duty-item"><b>' + escapeHtml(x.c.ticker) + '</b>（' + x.w.earnDate + '）</span>').join('　'));
+  if (!lines.length) {
+    // 都不到期：给一行"最近节点"，让人知道下一个该回来的日子
+    const nextReview = infos.filter(x => x.w.reviewDate).sort((a, b) => a.w.reviewDate < b.w.reviewDate ? -1 : 1)[0];
+    const nextEarn = infos.filter(x => x.w.earnDate && !x.w.earnPast).sort((a, b) => a.w.earnDate < b.w.earnDate ? -1 : 1)[0];
+    const bits = [];
+    if (nextReview) bits.push('最近复盘节点 <b>' + escapeHtml(nextReview.c.ticker) + '</b> ' + nextReview.w.reviewDate);
+    if (nextEarn) bits.push('最近财报 <b>' + escapeHtml(nextEarn.c.ticker) + '</b> ' + nextEarn.w.earnDate);
+    lines.push('<div class="duty-line calm"><span class="duty-label">今天没有到期事项。</span><span class="duty-item">' + bits.join('　·　') + '</span>');
+  }
+  box.innerHTML = lines.map(l => l + '</div>').join('');
+  const n = inZone.length + due.length + earn.length;
+  document.getElementById('duty-count').textContent = n > 0 ? n + ' 项待办' : '';
+  section.style.display = 'block';
+}
+
 function renderCompanies() {
   const container = document.getElementById('companies');
   const empty = document.getElementById('empty-state');
@@ -916,6 +1035,14 @@ function renderCompanies() {
           <span class="badge ${s.report_pdf ? 'done' : ''}">深度报告</span>
           <span class="badge ${s.explorer ? 'done' : ''}">交互器</span>
         </div>
+
+        ${(() => {
+          const wi = watchInfo(c);
+          if (!wi.chips.length) return '';
+          return `<div class="watch-row">` + wi.chips.map(ch =>
+            `<span class="wchip ${ch.cls}" title="${escapeHtml(ch.title || '')}">${escapeHtml(ch.text)}</span>`
+          ).join('') + `</div>`;
+        })()}
 
         ${hasStats ? (() => {
           const csym = (c.currency && c.currency.symbol) || '$';
@@ -989,6 +1116,7 @@ function renderChains() {
 
 renderCompanies();
 renderChains();
+renderDutyDesk();
 </script>
 </body>
 </html>

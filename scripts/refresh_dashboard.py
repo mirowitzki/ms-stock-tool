@@ -54,6 +54,7 @@ def scan_company(ticker_dir):
     as_of = None
     stats = {}
     currency_code = None
+    next_earnings = None
     if inputs_json.exists():
         try:
             with inputs_json.open(encoding="utf-8") as f:
@@ -66,8 +67,12 @@ def scan_company(ticker_dir):
                 "market_cap": facts.get("market_cap"),
             }
             currency_code = inputs.get("currency")
-        except Exception:
-            pass
+            ne = inputs.get("next_earnings") or {}
+            if ne.get("date"):
+                next_earnings = {"date": ne.get("date"), "period": ne.get("period"),
+                                 "estimated": bool(ne.get("estimated"))}
+        except Exception as e:
+            print(f"⚠ {inputs_json} 解析失败：{e}")
 
     # 货币：显式 > 6 位代码默认 CNY > USD
     if not currency_code:
@@ -104,6 +109,35 @@ def scan_company(ticker_dir):
         except Exception:
             pass
 
+    # 值班台数据（2026-06-10）：入场观察区距离 + 复盘到期 + 财报倒计时。
+    # 日期相关的判断（到期/倒计时）放浏览器 JS 用当天日期算，这里只注入原始数据。
+    watch = {}
+    dec_path = ticker_dir / "decision.json"
+    if dec_path.exists():
+        try:
+            dec = json.loads(dec_path.read_text(encoding="utf-8"))
+            ew = dec.get("entry_watch") or {}
+            watch["entry_low"] = ew.get("low")
+            watch["entry_high"] = ew.get("high")
+            watch["entry_note"] = (ew.get("note") or "")[:80]
+            watch["review_by"] = dec.get("review_by")
+            watch["pred_dates"] = sorted(p.get("check_by") for p in (dec.get("predictions") or [])
+                                         if p.get("status", "open") == "open" and p.get("check_by"))
+        except Exception as e:
+            print(f"⚠ {dec_path} 解析失败（这家的值班台信息会缺失）：{e}")
+    prices_path = fin_dir / "prices.json"
+    if prices_path.exists():
+        try:
+            pj = json.loads(prices_path.read_text(encoding="utf-8"))
+            pts = pj.get("prices") or []
+            if pts:
+                watch["last_close"] = pts[-1].get("c")
+                watch["last_close_month"] = pts[-1].get("m")
+        except Exception as e:
+            print(f"⚠ {prices_path} 解析失败：{e}")
+    if next_earnings:
+        watch["next_earnings"] = next_earnings
+
     # 用相对路径（让浏览器 file:// 协议也能加载）
     def rel(p):
         return str(p.relative_to(ticker_dir.parent.parent)).replace("\\", "/")
@@ -128,6 +162,7 @@ def scan_company(ticker_dir):
         "files": files,
         "stats": stats,
         "currency": currency,
+        "watch": watch,
     }
 
 
