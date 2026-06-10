@@ -1,0 +1,12 @@
+{
+  "slug": "commercial-space",
+  "name": "商业航天（扩张早期）",
+  "as_of": "2026-06",
+  "tagline": "三态对照第三态：钱在发射与总装堆积、收入只在载荷卖铲人落地——故事已钉成 S1-S6 等里程碑",
+  "gates": ["图谱", "成本法", "选股"],
+  "gates_done": 1,
+  "subchains": 5,
+  "pages": [
+    {"title": "产业链图谱（闸门①）", "icon": "🚀", "file": "chains/commercial-space/space_map.html"}
+  ]
+}

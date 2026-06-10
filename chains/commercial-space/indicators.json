@@ -1,0 +1,139 @@
+{
+  "chain": "commercial-space",
+  "created": "2026-06-10",
+  "_usage": "季度 checkpoint：派联网 agent 每指标拉一个数据点 append 进 series、按 reading_guide 判读；越线才完整复盘。打分登 reviews/CALIBRATION.md。",
+  "next_checkpoint": "2026-09-30",
+  "cadence": "quarterly",
+  "indicators": [
+    {
+      "id": "constellation-pace",
+      "name": "星座组网节奏：千帆/GW 在轨数 vs 目标",
+      "node": "demand-base",
+      "linked_judgment": "S2 组网节奏可信度（全链需求 β 母变量）",
+      "how_to_check": "WebSearch: 千帆星座 在轨 颗 / GW星座 国网 发射；Jonathan McDowell 统计",
+      "baseline": {
+        "value": "千帆 200颗(2026-06-05) vs 2026底目标648（口径性质待核：公司目标 vs ITU义务）；GW 约84颗(2025-12)；ITU 2026-2027 千星级",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "千帆 2026底 ≥400颗=节奏可信（按工程目标口径设；若648实为ITU义务、阈值与后果需上修）；<300颗=系统性跳票",
+      "series": []
+    },
+    {
+      "id": "reusable-milestone",
+      "name": "可回收里程碑（中国 VTVL）",
+      "node": "launch-large-liquid",
+      "linked_judgment": "S1 可回收时间表（成本曲线总开关）",
+      "how_to_check": "WebSearch: 朱雀三号 回收 / 天龙三号 复飞 / 双曲线三号 首飞；发动机先行信号：天兵归零结论、各家发动机长程试车",
+      "baseline": {
+        "value": "零成功：朱雀三号2025-12首飞成功但回收失利（2026Q2再试、Q4目标复用）；天龙三号2026-04首飞失败归零；双曲线三号推迟2026底",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "首家回收成功=S1兑现、降本曲线启动；全部再推迟=链上所有2027+故事顺延、一级估值重定价风险",
+      "series": []
+    },
+    {
+      "id": "launch-price",
+      "name": "发射报价 $/kg（中国商业口径）",
+      "node": "launch-large-liquid",
+      "linked_judgment": "成本曲线与租金坍塌的领先信号",
+      "how_to_check": "WebSearch: 商业火箭 报价 元/kg / 发射服务 合同",
+      "baseline": {
+        "value": "一次性约5-10万元/kg（力箭6-7万、谷神星批采约8万）；猎鹰9报价$2,700/kg；朱雀三号复用目标≤2万元/kg",
+        "as_of": "2025-2026"
+      },
+      "reading_guide": "可回收跑通后报价快速下台阶=租金坍塌开始（利好星座方与载荷需求量、利空发射商定价）；报价坚挺=运力仍稀缺",
+      "series": []
+    },
+    {
+      "id": "funding-ipo-temp",
+      "name": "一级融资潮与 IPO 温度（资本周期反向指标）",
+      "node": "launch-large-liquid",
+      "linked_judgment": "S5 资本周期位置（扩张早期→顶部的过渡信号）",
+      "how_to_check": "WebSearch: 商业航天 融资 / 蓝箭 IPO 进展 估值",
+      "baseline": {
+        "value": "2025行业融资186亿(+32%)；5家火箭IPO辅导、合计估值约855亿-1000亿（全未盈利）；蓝箭 IPO 前750亿、拟募75亿；星际荣耀单笔50.37亿纪录",
+        "as_of": "2026-02"
+      },
+      "reading_guide": "IPO成功且二级买账=泡沫续命（温度更高）；破发/缩量发行/融资潮退坡=资本周期见顶信号；任何一家资金链断裂=出清开始",
+      "series": []
+    },
+    {
+      "id": "tr-leader-orders",
+      "name": "载荷卖铲人订单与收入（T/R 龙头口径）",
+      "node": "payload-components",
+      "linked_judgment": "S4 需求向部件的真实传导",
+      "how_to_check": "铖昌科技季报/订单公告；天银机电星敏出货",
+      "baseline": {
+        "value": "T/R龙头2025营收4.05亿(+91%)/净利+476%；2026在手订单4.36亿+意向1.07亿",
+        "as_of": "2025年报"
+      },
+      "reading_guide": "2026营收同比≥40%且毛利率稳=传导持续；订单/收入失速=组网放缓的最快传导信号（比星座官宣更早）；配合盯客户集中度——若单一大客户占比>60%且该客户宣布自研相控阵，S4 需下修（红队条款）",
+      "series": []
+    },
+    {
+      "id": "sat-cost",
+      "name": "单星成本曲线",
+      "node": "sat-manufacturing",
+      "linked_judgment": "总装苦力化 + 星座经济学可行性",
+      "how_to_check": "WebSearch: 组网卫星 单星成本 / 卫星批产 降本",
+      "baseline": {
+        "value": "200-300kg通信组网星约1200-1500万元；Starlink V2 Mini第三方估算约$100万",
+        "as_of": "2024-2025"
+      },
+      "reading_guide": "单星成本继续下台阶=星座经济账改善+总装价格战风险同步上升；降不动=组网总成本压力传导回财政；配合盯总装产能利用率分化（头部 vs 二线）",
+      "series": []
+    },
+    {
+      "id": "dtc-milestone",
+      "name": "手机直连（DTC）里程碑",
+      "node": "ground-segment",
+      "linked_judgment": "终端形态变局 + 新需求曲线",
+      "how_to_check": "WebSearch: Starlink DTC 用户 / 天通 手机直连 / 低轨直连试验",
+      "baseline": {
+        "value": "Starlink DTC专星650+颗、用户1200万；中国天通直连手机累计1600万台、低轨直连测试中；ASTS 2026底目标45-60颗",
+        "as_of": "2026-04"
+      },
+      "reading_guide": "中国低轨直连商用启动=终端/应用格局重画；DTC用户破5000万级=新需求曲线确认",
+      "series": []
+    },
+    {
+      "id": "application-profit",
+      "name": "应用层盈利拐点（中国样本）",
+      "node": "operators-application",
+      "linked_judgment": "S6 星座经济学闭环",
+      "how_to_check": "长光卫星财务披露/泰伯网；星网/千帆资费与用户口径",
+      "baseline": {
+        "value": "长光卫星持续亏损（2025预测扭亏未确认）；星网/千帆无公开商业收入口径；全球唯一盈利样本=Starlink（2025收入$114亿/EBITDA率63%）",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "中国出现首个应用层规模盈利样本=商业闭环开始；持续纯国资采购=需求上限=财政（β 封顶）",
+      "series": []
+    },
+    {
+      "id": "starlink-benchmark",
+      "name": "Starlink 基准（全球商业闭环的对照系）",
+      "node": "operators-application",
+      "linked_judgment": "中美分叉的美方锚",
+      "how_to_check": "WebSearch: Starlink revenue subscribers / SpaceX launches",
+      "baseline": {
+        "value": "2025收入$114亿（约+48%，S-1口径）、EBITDA $72亿；2026-02活跃用户1200万（宽带+DTC合并）；SpaceX 2025发射167次/2,213吨",
+        "as_of": "2025-2026"
+      },
+      "reading_guide": "Starlink增速放缓=全球LEO商业天花板信号；持续高增=中国版故事的远期可信度上修",
+      "series": []
+    },
+    {
+      "id": "terminal-price",
+      "name": "用户终端价格（相控阵平板）",
+      "node": "ground-segment",
+      "linked_judgment": "地面段第二波承接 + DTC 形态威胁",
+      "how_to_check": "WebSearch: 卫星终端 相控阵 价格 / Starlink dish price",
+      "baseline": {
+        "value": "Starlink 终端 $349（2024）；中国国产终端认证/小批量阶段、无权威公开价（missing）",
+        "as_of": "2024-2025"
+      },
+      "reading_guide": "国产终端出现公开量产价并快速下降=地面段启动信号；DTC 普及则专用终端 TAM 被绕过",
+      "series": []
+    }
+  ]
+}
