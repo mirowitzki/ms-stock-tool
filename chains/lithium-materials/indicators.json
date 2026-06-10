@@ -1,0 +1,166 @@
+{
+  "chain": "lithium-materials",
+  "created": "2026-06-10",
+  "_usage": "季度 checkpoint：派联网 agent 每指标拉一个数据点 append 进 series、按 reading_guide 判读；越线才完整复盘。打分登 reviews/CALIBRATION.md。",
+  "next_checkpoint": "2026-09-30",
+  "cadence": "quarterly",
+  "indicators": [
+    {
+      "id": "li2co3-price",
+      "name": "电池级碳酸锂价格",
+      "node": "lithium-salt",
+      "linked_judgment": "L1 复苏真伪 / 全链成本之锚",
+      "how_to_check": "WebSearch: 碳酸锂 价格 SMM / 期货主力",
+      "baseline": {
+        "value": "约16-17万/吨（2026-06；5月峰20.8万后回落；2022峰60万、2025-06谷5.8万）",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "站稳15万+且停产产能未大规模复产=复苏纪律持续；回落<10万=召回压价、租金剧本重演",
+      "series": []
+    },
+    {
+      "id": "lipf6-price",
+      "name": "六氟磷酸锂价格",
+      "node": "electrolyte-lipf6",
+      "linked_judgment": "L1 复苏真伪（弹性最大环节）",
+      "how_to_check": "WebSearch: 六氟磷酸锂 价格 鑫椤/SMM",
+      "baseline": {
+        "value": "约11-12万/吨（2022初峰59万、2025-07谷4.7-4.9万）",
+        "as_of": "2026-05"
+      },
+      "reading_guide": "维持≥8万=头部单吨盈利可持续；回落<6万=新产能召回、L1证伪方向；新增产能公告潮=领先恶化信号",
+      "series": []
+    },
+    {
+      "id": "graphitization-fee",
+      "name": "石墨化加工费",
+      "node": "anode-graphitization",
+      "linked_judgment": "L2 负极轮动（出清最深环节是否轮到复苏）",
+      "how_to_check": "WebSearch: 石墨化 加工费 / 负极 价格 Mysteel 鑫椤",
+      "baseline": {
+        "value": "约0.975-1.0万/吨（2022峰约2.55万、腰斩后未回升）",
+        "as_of": "2026-02"
+      },
+      "reading_guide": "回升≥1.3万（+30%）=负极复苏轮动开始（对贝特瑞/000009 直接相关）；继续趴1万=出清未完成；配合盯：负极行业融资件数（2024 仅1件）是否回暖",
+      "series": []
+    },
+    {
+      "id": "separator-price",
+      "name": "湿法隔膜基膜价格（9μm）",
+      "node": "separator",
+      "linked_judgment": "隔膜头部定价权 / L3 久期",
+      "how_to_check": "WebSearch: 湿法隔膜 价格 涨价 / 恩捷 星源 提价",
+      "baseline": {
+        "value": "约1.3-1.56元/平米（2025-09谷0.75、两轮提价+30%/+10-15%落地）",
+        "as_of": "2026-03"
+      },
+      "reading_guide": "提价守住+头部满产=定价权恢复确认；价格回吐=供给纪律破裂（恩捷150亿平/星源100亿平规划是隐患）",
+      "series": []
+    },
+    {
+      "id": "copper-foil-fee",
+      "name": "锂电铜箔加工费（6μm）",
+      "node": "copper-foil",
+      "linked_judgment": "出清→复苏初段的确认",
+      "how_to_check": "WebSearch: 锂电铜箔 加工费 提价",
+      "baseline": {
+        "value": "约2.0万/吨（2022-04峰5.3万、2024-09谷1.5万、2026-03首次提价约0.2万）",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "连续提价=出清兑现；复合集流体渗透加速则结构性封顶",
+      "series": []
+    },
+    {
+      "id": "ess-cell-price",
+      "name": "LFP 储能电芯价格",
+      "node": "battery-cell",
+      "linked_judgment": "储能需求强度 + 电芯双轨价",
+      "how_to_check": "WebSearch: 储能电芯 价格 元/Wh 中标",
+      "baseline": {
+        "value": "约0.36-0.43元/Wh（大单0.35-0.37/散单0.38-0.43；2025-11谷0.26-0.28）",
+        "as_of": "2026-05"
+      },
+      "reading_guide": "价格中枢续升=需求真实强；跌回0.3下方=储能需求/去库反噬",
+      "series": []
+    },
+    {
+      "id": "capex-discipline",
+      "name": "全链中游规划投资/Capex 纪律",
+      "node": "battery-cell",
+      "linked_judgment": "L6 供给纪律是否保持（复苏可持续的前提）",
+      "how_to_check": "WebSearch: 锂电 规划投资 / 扩产公告 统计；中游材料 capex 同比",
+      "baseline": {
+        "value": "2024 全链规划投资496亿（同比-64%）、中游材料136亿；铜箔/电解液降幅超90%；capex峰值2021-2022",
+        "as_of": "2024-12"
+      },
+      "reading_guide": "2026 规划投资若随价格反弹大幅回升（如中游材料>300亿）=纪律破裂、回吐前兆；维持低位=复苏纪律可持续",
+      "series": []
+    },
+    {
+      "id": "shipment-vs-install",
+      "name": "储能出货 vs 装机增速差（🚩台账红旗跟踪）",
+      "node": "demand-side",
+      "linked_judgment": "L4 储能口径裂缝",
+      "how_to_check": "EVTank 出货年报 vs BNEF/CNESA 装机口径",
+      "baseline": {
+        "value": "2025 出货651.5GWh(+76%) vs 全球新增装机247GWh（BNEF 全口径，含电网侧/户用/工商业；纯电网侧约84%）——约2.6倍口径缺口（对电网侧约3.1倍）",
+        "as_of": "2025",
+        "note": "口径差含户用工商业/在途/库存，但缺口规模本身是风险信号"
+      },
+      "reading_guide": "2026 出货增速骤降至<20%=渠道去库反噬兑现；装机增速向出货收敛=裂缝弥合、需求真实",
+      "series": []
+    },
+    {
+      "id": "solid-state-milestone",
+      "name": "全固态量产里程碑",
+      "node": "separator",
+      "linked_judgment": "L3 隔膜/电解液久期",
+      "how_to_check": "WebSearch: 全固态电池 量产 GWh 丰田/宁德/三星SDI",
+      "baseline": {
+        "value": "共识时间表：2026示范→2027小批量（丰田/宁德/三星SDI口径）→2030规模商用；半固态已小规模装车",
+        "as_of": "2025-06"
+      },
+      "reading_guide": "盯实际出货GWh而非发布会：2027出现≥10GWh级装车=隔膜/电解液久期重判；持续仅示范级=久期担忧推迟",
+      "series": []
+    },
+    {
+      "id": "composite-foil-penetration",
+      "name": "复合集流体渗透率",
+      "node": "copper-foil",
+      "linked_judgment": "铜箔结构性替代",
+      "how_to_check": "WebSearch: 复合集流体 渗透率 / 复合铜箔 出货",
+      "baseline": {
+        "value": "约10-18.8%（动力约15%/储能约30%）；行业预测2026底破10%→2028破30%",
+        "as_of": "2025-09"
+      },
+      "reading_guide": "渗透加速=传统铜箔复苏被结构性封顶；一步法降本进度是领先信号",
+      "series": []
+    },
+    {
+      "id": "lfp-price",
+      "name": "磷酸铁锂正极价格",
+      "node": "lfp-cathode",
+      "linked_judgment": "正极复苏初段确认（订单排2027、加工费上调落地）",
+      "how_to_check": "WebSearch: 磷酸铁锂 正极 价格 GGII/SMM",
+      "baseline": {
+        "value": "约6.4-6.9万/吨（2022底峰17.3万、2024-12谷3.37万；高压实>7万）",
+        "as_of": "2026-05"
+      },
+      "reading_guide": "价格与加工费续升+头部利用率>80% = 复苏确认；回落且三四线退出停滞 = 复苏夭折；磷化工对磷酸铁成本曲线的制约（暗线待查）",
+      "series": []
+    },
+    {
+      "id": "aidc-bess-shipment",
+      "name": "AI 数据中心 BESS 锂电出货",
+      "node": "demand-side",
+      "linked_judgment": "L6 AI-BESS 增量（与 AI 链 bess-adoption 互为印证）",
+      "how_to_check": "WebSearch: AIDC 储能 锂电 出货 GGII / data center BESS GWh",
+      "baseline": {
+        "value": "2025 约12GWh（占储能出货1.8%）；GGII 路径 2027E 61GWh → 2030E 272GWh",
+        "as_of": "2025-12"
+      },
+      "reading_guide": "2027 达约40GWh+ = L6 兑现方向；停留 <20GWh = 推迟；同时回喂 AI 链 bess-adoption 判读",
+      "series": []
+    }
+  ]
+}
