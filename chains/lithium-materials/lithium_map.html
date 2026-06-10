@@ -115,6 +115,30 @@ table.qt tr:last-child td { border-bottom:none; }
 .flagline { background:rgba(196,69,54,.07); border-left:3px solid #c44536; padding:10px 14px; border-radius:6px; margin-top:10px; font-size:13.5px; line-height:1.7; }
 .bom { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 2px; }
 .bom span { background:#f4ede1; border:1px solid #e3d8c4; border-radius:8px; padding:5px 10px; font-size:12.5px; }
+/* 第一性原理链路图（与 AI 数据中心链同款） */
+.anchor-box { text-align:center; margin:6px 0 18px; }
+.anchor-box .ab { display:inline-block; background:linear-gradient(135deg,var(--gold),#e0a93f); color:#241a06;
+  font-size:14px; font-weight:750; padding:10px 22px; border-radius:30px; box-shadow:0 8px 18px rgba(192,138,45,.32); }
+.anchor-box .abx { font-size:11.5px; color:var(--text-light); margin-top:7px; max-width:640px; margin-left:auto; margin-right:auto; }
+.flow { display:flex; flex-direction:column; }
+.layer { display:flex; align-items:stretch; gap:14px; padding:8px 0; }
+.layer .lk { flex:0 0 92px; display:flex; flex-direction:column; align-items:flex-end; justify-content:center;
+  text-align:right; padding-right:14px; border-right:2px solid var(--border); }
+.layer .lk .lkn { font-size:14px; font-weight:750; color:var(--primary); }
+.layer .lk .lkt { font-size:10px; font-weight:700; padding:1px 7px; border-radius:10px; margin-top:4px; }
+.lkt.rich { background:var(--rich-bg); color:var(--rich); } .lkt.mid { background:var(--mid-bg); color:var(--mid); } .lkt.thin { background:var(--thin-bg); color:var(--thin); }
+.layer .li { flex:1; display:flex; flex-wrap:wrap; gap:7px; align-content:center; padding:2px 0; }
+.chip { font-size:12px; font-weight:600; padding:6px 12px; border-radius:9px; border:1px solid var(--border); background:#fff; color:var(--text); }
+.chip.rich { border-color:rgba(31,143,118,.35); background:var(--rich-bg); color:#15705c; }
+.chip.mid { border-color:rgba(31,111,139,.30); background:var(--mid-bg); color:#185b73; }
+.chip.thin { border-color:var(--border); background:#f7f8fa; color:var(--text-muted); }
+.flow-arrow { padding-left:106px; color:var(--text-light); font-size:13px; line-height:.5; }
+.software-band { margin-top:14px; display:flex; align-items:center; gap:12px; padding:12px 16px;
+  background:linear-gradient(135deg,rgba(192,138,45,.10),rgba(192,138,45,.04)); border:1px dashed rgba(192,138,45,.5); border-radius:12px; }
+.software-band .sbk { font-size:13px; font-weight:750; color:var(--gold); flex:0 0 auto; max-width:120px; }
+.software-band .sbd { font-size:12.5px; color:var(--text-muted); }
+.legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid var(--border-soft); font-size:11.5px; color:var(--text-muted); }
+.legend span { display:inline-flex; align-items:center; gap:5px; } .dot { width:10px; height:10px; border-radius:3px; display:inline-block; }
 </style>
 </head>
 <body>
@@ -136,18 +160,50 @@ table.qt tr:last-child td { border-bottom:none; }
   </section>
 
   <section class="card">
+    <div class="sec-title">🧭 这条链的底色</div>
+    <div class="sec-sub">先理解它和别的产业链不一样的地方，再看图。</div>
+    <p class="lead">把锂电池从锂盐一路拆到电芯，逐节看每 Wh 的钱流到哪、谁能把利润留住。这条链的底色是：<span class="hl">大部分环节是同质化产能 + 加工费模式——一台天生的资本周期机器</span>。2021-22 全链疯狂扩产（capex 顶点）、2023-25 价格崩盘把利润打穿（六氟从 59 万跌到 4.9 万、2024 全链规划投资同比 -64%）、2025Q4-2026Q1 越过拐点翻入复苏早段。它和 AI 数据中心链（人人扩产的顶点）刚好互为镜像——那条链满链被看好、这条链刚被资本抛弃过；按资本周期方法论，这条刚被抛弃过的才是更好的猎场，这正是把它当对照样本研究的原因。</p>
+    <p class="lead">所以这一关的重点是三件事：</p>
+    <div class="points">
+      <div class="point"><div class="pn">其一</div><div class="pt">判每个环节的周期位置</div><div class="pd">复苏不是整链齐步走：六氟与隔膜头部已翻身、负极/石墨化还趴在出清里——掉队者正是轮动的下一个候选。</div></div>
+      <div class="point"><div class="pn">其二</div><div class="pt">分清价格弹性与结构占有</div><div class="pd">涨价的暴利多是租金、产能一回来就吐光；持久价值在格局与成本曲线——弹性属于交易、格局属于投资。</div></div>
+      <div class="point"><div class="pn">其三</div><div class="pt">盯住两把悬顶的刀</div><div class="pd">需求侧出货 vs 装机的缺口（β 风险）+ 技术侧固态电池时间表（久期风险）——任何环节的判断都要先过这两关。</div></div>
+    </div>
+    <div class="beta"><b>底下悬着的 β 风险：</b>储能 2025 出货 651.5GWh vs 全口径装机 247GWh、缺口约 2.6 倍——渠道与在建里堆着量，若 2026 以出货增速坍塌的方式收敛，整链需求要下修（已钉成预测 L4 双向盯）；技术侧全固态 2027 小批量 / 2030 规模化会改写隔膜、电解液、负极的材料体系。纪律：复苏定价按已修复的盈利算、别为"纪律持续"提前付溢价。</div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">⛓️ 第一性原理：这条链在交付什么</div>
+    <div class="sec-sub">从价值锚往上推每一节"没有它成不成"；颜色＝价值占有（利润 / 护城河）的厚薄——注意厚薄不等于 BOM 占比。</div>
+    <div class="anchor-box">
+      <div class="ab">价值锚：每 Wh 成本最低的合格电化学储能</div>
+      <div class="abx">一 Wh 电多少钱、能存多稳、充多快、用多久——动力与储能两个需求端最终都收敛到这道成本×性能题（"合格"是性能门槛：能量密度/快充/寿命/安全，动力高端按性能付溢价、不是纯拼便宜）；谁的成本曲线最低、格局最稳，价值就归谁</div>
+    </div>
+    <div class="flow" id="flow"></div>
+    <div class="software-band">
+      <div class="sbk">横切层 · 加工费定价模式</div>
+      <div class="sbd">贯穿大半条链的利润天花板——正极占 BOM 三到四成却最不赚钱：多数材料环节按"原料成本 + 加工费"定价、技术路线公开同质，BOM 占比大 ≠ 利润厚。利润分配由格局集中度与成本曲线决定——这是为什么电芯双寡头和一体化龙头能把钱留住，而纯加工环节只能赚周期的钱。</div>
+    </div>
+    <div class="software-band" style="margin-top:10px;">
+      <div class="sbk">横切层 · 地缘供需错位</div>
+      <div class="sbd">中国握着供给、欧美握着需求规则——电芯全球口径双雄即中国双雄（约 56%）、材料各环节中国主导，但边际需求的政策开关在对岸：IRA-FEOC 与关税实质封堵整包出口、欧洲 +31% 的增量能否持续存疑。判任何环节的"占有"，先问清是哪个市场口径的占有、需求由谁的政策定（中国占有 ≠ 全球占有）。</div>
+    </div>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--rich)"></i>最肥·结构占有</span>
+      <span><i class="dot" style="background:var(--mid)"></i>中·占有带限定</span>
+      <span><i class="dot" style="background:var(--thin)"></i>苦力·加工费/租金</span>
+      <span class="muted">| 那把刀：原理上必须＝价值稳固；只是当下技术选择＝会被替代 | 档位是本链内相对判级、不跨链比色</span>
+    </div>
+    <div class="bom" style="margin-top:16px;"><span>正极（铁锂/三元）≈ 三到四成</span><span>负极 ≈ 一成多</span><span>隔膜 ≈ 一成</span><span>电解液 ≈ 一成多</span><span>铜箔/铝箔 ≈ 近一成</span><span>制造/折旧/其他 ≈ 两成上下</span></div>
+    <p class="lead muted">（BOM 占比随价格波动大，此处为量级口径；闸门②再做带区间的精确成本栈。）</p>
+    <p class="lead">那把刀——哪些是原理必须、哪些只是当下技术选择：锂离子要在正负极间穿梭（正负极必须）；<b>但"用石墨负极、用湿法隔膜、用液态电解液、用电解铜箔"全部是当下技术选择</b>——全固态（2027 小批量 / 2030 规模化的产业共识口径）一旦兑现，隔膜被取消、液态电解液被替换、石墨负极向硅基/锂金属迁移；复合集流体正在替代传统铜箔（渗透率已 10-18.8%）；钠电在低端啃铁锂。<b>固态是悬在隔膜、电解液、负极头上的总威胁</b>（隔膜与液态电解液最重、石墨负极次之；正极、铜箔、电芯的威胁另有其主——见替代威胁时间表），材料链的久期判断都要先过它——时间表已钉进指标 solid-state-milestone，盯实际装车 GWh、不盯发布会。</p>
+  </section>
+
+  <section class="card">
     <div class="sec-title">🧮 需求台账（两向核算 + 交叉）</div>
     <div class="sec-sub">新规格首秀：自下而上 × 自上而下，对不上一倍即红旗。</div>
     <p class="lead">自上而下：2025 全球锂电出货 2,280.5GWh、同比 +47.6%（动力 1,495 / 储能 651.5 / 小型 133.9；EVTank）；2026E 约 3,016GWh；2030E 各机构 3,000-6,000GWh、取中枢约 4,000-5,000。自下而上交叉：动力侧 2025 全球新能源车约 2,070-2,300 万辆（中国 1,649 万、渗透率 47.9%），按中国单车约 54-57kWh / 欧洲约 70kWh 折算装机口径约千余 GWh——与出货 1,495GWh 的差距约两成（商用车+在途库存+口径差），在合理带内。<b>增长主引擎已从 EV 切换到储能</b>（出货 +76.2%），AI 数据中心 BESS 是其中真实但尚小的增量（2025 约 12GWh → GGII 路径 2030E 272GWh）——与 AI 链"价值迁向储能电化学"的判断互为印证。</p>
     <div class="flagline">🚩 台账红旗（两向交叉抓出来的）：储能 2025 出货 651.5GWh（EVTank）vs 全球新增储能装机 247GWh（BNEF 全口径，含电网侧/户用/工商业；若只对纯电网侧约 84%，缺口约 3.1 倍）——约 2.6 倍缺口。口径差（在途、库存、未并网在建）解释一部分，但缺口规模本身就是风险信号：渠道和在建里堆着量。收敛有两条路径——装机追赶（良性）或出货坍塌（装机滞后于出货意味着出货有前置性）；叠加中国 EV 渗透率 47.9% 已是高位、动力侧边际增量依赖欧洲（+31% 能否持续存疑）与新兴市场。若 2026 以出货增速坍塌的方式收敛，整链需求 β 要下修——已钉成预测 L4（双向阈值）、按季盯。</div>
-  </section>
-
-  <section class="card">
-    <div class="sec-title">⚙️ 拆链：每 Wh 电池的钱流过哪里 + 那把刀</div>
-    <div class="sec-sub">第一性原理：电芯 BOM 的大头与"原理必须 vs 当下技术选择"。</div>
-    <div class="bom"><span>正极（铁锂/三元）≈ 三到四成</span><span>负极 ≈ 一成多</span><span>隔膜 ≈ 一成</span><span>电解液 ≈ 一成多</span><span>铜箔/铝箔 ≈ 近一成</span><span>制造/折旧/其他 ≈ 两成上下</span></div>
-    <p class="lead muted">（BOM 占比随价格波动大，此处为量级口径；闸门②再做带区间的精确成本栈。）</p>
-    <p class="lead">那把刀——哪些是原理必须、哪些只是当下技术选择：锂离子要在正负极间穿梭（正负极必须）；<b>但"用石墨负极、用湿法隔膜、用液态电解液、用电解铜箔"全部是当下技术选择</b>——全固态（2027 小批量 / 2030 规模化的产业共识口径）一旦兑现，隔膜被取消、液态电解液被替换、石墨负极向硅基/锂金属迁移；复合集流体正在替代传统铜箔（渗透率已 10-18.8%）；钠电在低端啃铁锂。<b>固态是悬在整条材料链上的总威胁</b>，每个环节的久期判断都要先过它——时间表已钉进指标 solid-state-milestone，盯实际装车 GWh、不盯发布会。</p>
   </section>
 
   <section class="card">
@@ -193,7 +249,7 @@ table.qt tr:last-child td { border-bottom:none; }
     <div class="sec-sub">每行末列=该盯的领先指标（已全部建进 indicators.json、季度自动提醒）。</div>
     <table class="qt">
       <tr><th>#</th><th>候选赛道</th><th>一句话：为什么值得研究（variant 在哪）</th><th>风险/反方</th><th>领先指标</th></tr>
-      <tr><td>1 ★</td><td>负极/石墨化</td><td>全链唯一还趴在出清里的环节——若资本周期轮动成立，它是下一个；且与单股库 000009（贝特瑞穿透 66%）直接复利</td><td>同质化产能太深、可能"出清完成但无定价权"；固态远期改负极材料体系</td><td>石墨化加工费（≥1.3万=轮动开始）、融资件数</td></tr>
+      <tr><td>1 ★</td><td>负极/石墨化</td><td>全链唯一还趴在出清里的环节——若资本周期轮动成立，它是下一个；且与单股库 000009（贝特瑞穿透 66%）直接复利。按本页公理这属轮动/交易侧研究：进闸门②按租金框架拆时点，不找护城河</td><td>同质化产能太深、可能"出清完成但无定价权"；固态远期改负极材料体系</td><td>石墨化加工费（≥1.3万=轮动开始）、融资件数</td></tr>
       <tr><td>2 ★</td><td>电解液-六氟一体化</td><td>复苏弹性最大+成本曲线是真占有；002091 瑞泰期权直接挂钩 L1</td><td>价格弹性部分是租金、上轮召回剧本（59万→4.9万）随时可重演</td><td>六氟价格、新增产能公告、龙头单吨净利</td></tr>
       <tr><td>3</td><td>隔膜（久期题）</td><td>头部恢复定价权+格局最优，但市场用固态恐惧压着估值——久期判断对了就是 variant</td><td>固态 2027-30 时间表若提前、隔膜是受威胁最大环节；头部自己还在扩产</td><td>隔膜价守不守得住、固态实际装车 GWh、头部投产节奏</td></tr>
       <tr><td>4</td><td>储能电芯/AI-BESS</td><td>需求第二曲线主引擎（+76%）+与 AI 链 bess-adoption 交叉印证</td><td>🚩出货 vs 装机 2.6 倍口径缺口（对纯电网侧约 3.1 倍）——去库反噬是 2026 最大需求风险</td><td>储能电芯价、出货-装机增速差、AIDC BESS 出货（已建独立指标）</td></tr>
@@ -229,6 +285,32 @@ table.qt tr:last-child td { border-bottom:none; }
   </section>
 
 </div>
+<script>
+/* 第一性原理链路图——判级转译自 nodes.json 各节点卡的占有/租金判断（真相源在 JSON、此处是渲染层） */
+const LAYERS = [
+  ["锂资源", "thin", [
+    ["锂盐（碳酸锂/氢氧化锂）","资源租金归矿端·加工环节弱占有","thin"]
+  ]],
+  ["四大主材", "mid", [
+    ["正极·铁锂","加工费薄利·高压实快充是窄分化点","thin"],
+    ["负极/石墨化","中端苦力·仍在出清·轮动候选","thin"],
+    ["隔膜","头部真占有·固态压久期","mid"],
+    ["电解液/六氟","价格弹性是租金·一体化成本曲线是占有","mid"]
+  ]],
+  ["辅材", "thin", [
+    ["锂电铜箔","加工费商品·被复合集流体追杀","thin"]
+  ]],
+  ["电芯", "rich", [
+    ["电芯（动力+储能）","中国装车 CR2 约 65%（全球口径约 56%）·毛利约材料端一倍","rich"]
+  ]],
+];
+document.getElementById("flow").innerHTML = LAYERS.map((L, i) => {
+  const chips = L[2].map(it => `<span class="chip ${it[2]}">${it[0]}<span style="font-size:10.5px;color:var(--text-light);font-weight:500"> · ${it[1]}</span></span>`).join("");
+  const tl = { rich: "最肥", mid: "中", thin: "苦力" }[L[1]];
+  const arrow = i < LAYERS.length - 1 ? `<div class="flow-arrow">↓</div>` : "";
+  return `<div class="layer"><div class="lk"><span class="lkn">${L[0]}</span><span class="lkt ${L[1]}">${tl}</span></div><div class="li">${chips}</div></div>${arrow}`;
+}).join("");
+</script>
 <script id="glossary">
 /* glossary.js —— 产业链研究各页共享：术语浮窗（点带虚线的词看大白话）。
    页面在 body 末尾 <script src=".../glossary.js"><\/script> 即可，自动注入样式 + 给全文加虚线 + 浮窗。 */

@@ -114,6 +114,30 @@ table.qt tr:last-child td { border-bottom:none; }
 .flagline { background:rgba(196,69,54,.07); border-left:3px solid #c44536; padding:10px 14px; border-radius:6px; margin-top:10px; font-size:13.5px; line-height:1.7; }
 .bom { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 2px; }
 .bom span { background:#f4ede1; border:1px solid #e3d8c4; border-radius:8px; padding:5px 10px; font-size:12.5px; }
+/* 第一性原理链路图（与 AI 数据中心链同款） */
+.anchor-box { text-align:center; margin:6px 0 18px; }
+.anchor-box .ab { display:inline-block; background:linear-gradient(135deg,var(--gold),#e0a93f); color:#241a06;
+  font-size:14px; font-weight:750; padding:10px 22px; border-radius:30px; box-shadow:0 8px 18px rgba(192,138,45,.32); }
+.anchor-box .abx { font-size:11.5px; color:var(--text-light); margin-top:7px; max-width:640px; margin-left:auto; margin-right:auto; }
+.flow { display:flex; flex-direction:column; }
+.layer { display:flex; align-items:stretch; gap:14px; padding:8px 0; }
+.layer .lk { flex:0 0 92px; display:flex; flex-direction:column; align-items:flex-end; justify-content:center;
+  text-align:right; padding-right:14px; border-right:2px solid var(--border); }
+.layer .lk .lkn { font-size:14px; font-weight:750; color:var(--primary); }
+.layer .lk .lkt { font-size:10px; font-weight:700; padding:1px 7px; border-radius:10px; margin-top:4px; }
+.lkt.rich { background:var(--rich-bg); color:var(--rich); } .lkt.mid { background:var(--mid-bg); color:var(--mid); } .lkt.thin { background:var(--thin-bg); color:var(--thin); }
+.layer .li { flex:1; display:flex; flex-wrap:wrap; gap:7px; align-content:center; padding:2px 0; }
+.chip { font-size:12px; font-weight:600; padding:6px 12px; border-radius:9px; border:1px solid var(--border); background:#fff; color:var(--text); }
+.chip.rich { border-color:rgba(31,143,118,.35); background:var(--rich-bg); color:#15705c; }
+.chip.mid { border-color:rgba(31,111,139,.30); background:var(--mid-bg); color:#185b73; }
+.chip.thin { border-color:var(--border); background:#f7f8fa; color:var(--text-muted); }
+.flow-arrow { padding-left:106px; color:var(--text-light); font-size:13px; line-height:.5; }
+.software-band { margin-top:14px; display:flex; align-items:center; gap:12px; padding:12px 16px;
+  background:linear-gradient(135deg,rgba(192,138,45,.10),rgba(192,138,45,.04)); border:1px dashed rgba(192,138,45,.5); border-radius:12px; }
+.software-band .sbk { font-size:13px; font-weight:750; color:var(--gold); flex:0 0 auto; max-width:120px; }
+.software-band .sbd { font-size:12.5px; color:var(--text-muted); }
+.legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid var(--border-soft); font-size:11.5px; color:var(--text-muted); }
+.legend span { display:inline-flex; align-items:center; gap:5px; } .dot { width:10px; height:10px; border-radius:3px; display:inline-block; }
 </style>
 </head>
 <body>
@@ -129,9 +153,44 @@ table.qt tr:last-child td { border-bottom:none; }
   </section>
 
   <section class="card howto">
-    <div class="howto-title">这页怎么读 + 基调先立</div>
+    <div class="howto-title">这页怎么读</div>
     <div class="lead">闸门①只回答三件事：价值在链条哪一节、是结构占有还是周期租金、周期现在走到哪。<b>不碰任何个股估值与买卖</b>——提到公司只是结构事实。判断与数字的真相源在 nodes.json / indicators.json / chain_decision.json（本页是渲染层）。</div>
-    <div class="lead" style="margin-top:10px;">基调（诚实先立）：这条链处在故事最性感、收入最稀薄的阶段——历史上这个阶段的星座项目几乎全军覆没（见需求台账的 base rate）。所以本页的发现价值不是找现在买什么，而是三件事：① 找出当下唯一有真实单位经济的卖铲人环节；② 把所有故事钉成带日期的可证伪预测（S1-S6）；③ 等里程碑与温度给出真正的入场时点。</div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">🧭 这条链的底色</div>
+    <div class="sec-sub">先理解它和别的产业链不一样的地方，再看图。</div>
+    <p class="lead">把中国商业航天从发射一路拆到星座运营，逐节看钱流向哪、收入在哪兑现。这条链的底色由一个倒挂决定：<span class="hl">故事的温度远高于收入的温度</span>——2025 年商业航天融资同比 +32%、5 家未盈利火箭公司排队 IPO 合计估值约 855-1000 亿、单笔融资纪录 50.37 亿；而全链真实的商业利润，当下只在载荷与核心部件一处大规模落地。钱在为故事排队、利润还没跟上，这是典型的扩张早期——和 AI 数据中心链（扩张顶部）、锂电材料链（复苏早段）刚好构成资本周期三个不同阶段的活样本。</p>
+    <p class="lead">所以这一关的重点不是给全链排盈利座次（多数环节还没开始赚钱），而是三件事：</p>
+    <div class="points">
+      <div class="point"><div class="pn">其一</div><div class="pt">找已大规模自证单位经济的环节</div><div class="pd">满链故事里，只有载荷卖铲人环节已用订单和利润大规模自证——先把它从概念热度里甄别出来。</div></div>
+      <div class="point"><div class="pn">其二</div><div class="pt">把故事钉成带日期的预测</div><div class="pd">可回收、组网节奏、IPO 现实检验——全部钉成 S1-S6 可证伪里程碑，到期对答案、不跟发布会走。</div></div>
+      <div class="point"><div class="pn">其三</div><div class="pt">等里程碑给出入场时点</div><div class="pd">扩张早期不是价值猎场，是观察清单——里程碑与温度计会告诉你什么时候值得真正下场。</div></div>
+    </div>
+    <div class="beta"><b>底下悬着的 β 风险：</b>历史 base rate 残酷——第一代三大星座（铱星 / Globalstar / Teledesic）首建全部破产、合计毁灭约百亿美元级资本；Starlink 是巨型低轨宽带星座里唯一的盈利样本，且其垂直整合+发射垄断的结构不可复制（铱星重生后能盈利，是债务出清、资产按重置成本重来的另一形态——毁灭的是首建股权）。眼前的节奏缺口同样真实：千帆在轨 200 颗 vs 年底目标 648 颗。纪律：给中国星座商业化定概率，用 base rate、不用发布会。</div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">⛓️ 第一性原理：这条链在交付什么</div>
+    <div class="sec-sub">从价值锚往上推每一节"没有它成不成"；颜色＝价值占有（利润 / 护城河）的厚薄——注意厚薄不等于重要性。</div>
+    <div class="anchor-box">
+      <div class="ab">价值锚：单位质量入轨成本 × 在轨创造的收入</div>
+      <div class="abx">每公斤送上轨道要花多少钱、上去之后能赚回多少——整条链最终都要靠这两个数字成立；可回收是前一个数字的总开关、星座商业闭环是后一个数字的总开关。注意当下买单的还不是这两个数字：国家意志与 ITU 频轨时限在驱动采购、价格近乎无弹性——这正是卖铲人能先于商业闭环赚钱的原因</div>
+    </div>
+    <div class="flow" id="flow"></div>
+    <div class="software-band">
+      <div class="sbk">横切层 · 国家与星座方的双重权力</div>
+      <div class="sbd">贯穿全链的利润再分配器——Starlink 已示范垂直整合把发射到运营的利润全部内化；中国侧星座方是国资采购主体、自带压供应链降本的义务（框架合同降价条款），且有自研载荷的动机（S4 盯）。国家还同时坐在供给侧：五院总装规划 1000 颗/年在本页表里、军品市场由军工体系独立占据——给每个商业节点的天花板封了顶。这是为什么物理上必须的环节未必赚钱、已赚钱的卖铲人久期也被压着。</div>
+    </div>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--rich)"></i>最肥·已兑现的占有</span>
+      <span><i class="dot" style="background:var(--mid)"></i>中·真瓶颈或待验证</span>
+      <span><i class="dot" style="background:var(--thin)"></i>苦力·薄利/未证明</span>
+      <span class="muted">| 那把刀：原理上必须＝价值稳固；只是当下技术选择＝会被替代 | 档位是本链内相对判级、不跨链比色</span>
+    </div>
+    <div class="bom" style="margin-top:16px;"><span>发射：中国一次性 ¥5-10万/kg vs 猎鹰9 报价 $2,700/kg（内部成本第三方估算约 $629/kg）</span><span>单星：中国组网星约 1200-1500 万元 vs Starlink V2 Mini 估算约 $100 万</span><span>载荷 ≈ 单星成本 75%、相控阵 ≈ 载荷 75%、T/R ≈ 天线一半</span></div>
+    <p class="lead" style="margin-top:10px;">那把刀——原理必须 vs 当下技术攻坚：入轨、供电、测控是物理必须；<b>可回收不是必须、但它是成本曲线的总开关</b>——中国入轨级回收至今零成功（朱雀三号 2025-12 首飞成功回收失利、天龙三号 2026-04 首飞失败、双曲线三号推迟 2026 底），对猎鹰9 的时间差约 11 年（SpaceX 从首飞到首次回收用了 5.5 年）。另一把刀在地面段：手机直连（DTC）正在绕过专用终端——Starlink DTC 专星 650+ 颗（活跃用户 1200 万为宽带+DTC 合并口径）；中国天通直连手机已 1600 万台。</p>
+    <p class="lead muted" style="margin-top:10px;">边界论证（为什么这样切五刀）：发射是成本曲线总开关（不解决一切故事顺延）；卫星制造拆成总装与载荷两层是因为价值密度天差地别（总装堆产能、载荷拿利润）；地面段是组网规模化后的第二波承接；运营与应用是价值最终兑现处（也是历史坟场）；需求横切单列是因为星座节奏是全链共同的 β 母变量。漏任何一刀，资本周期定位都会失真。</p>
   </section>
 
   <section class="card">
@@ -140,14 +199,6 @@ table.qt tr:last-child td { border-bottom:none; }
     <p class="lead">计划侧：千帆（G60）2026 年底目标 648 颗、GW 星座规划万颗级（总数待需求专项复核）、ITU 频轨规则要求 2026-2027 达千星级——先占先得的时限是真实的外部约束。实际侧：千帆 2025 底 108 颗 → 2026-06-05 在轨 200 颗（6 月上旬再发两批；防线一核查时 5 月口径 162 颗已过期——数据过期速度快于页面生产速度，正是按季拉数的理由）；GW 2025 底约 84 颗；2025 全国发射 92 次（商业 50 次）、入轨商业卫星 311 颗。美国基准：SpaceX 一家 2025 年 167 次（官方口径）、2,213 吨、占全球入轨质量超 80%；Starlink 2025 收入 $114 亿（约 +48%，IPO S-1 口径）、EBITDA 利润率 63%、2026-02 活跃用户 1200 万（宽带+DTC 合并口径）——这是全球唯一跑通的星座商业闭环。</p>
     <div class="flagline">🚩 台账红旗一（节奏缺口）：千帆 2026-06-05 在轨 200 颗 vs 年底目标 648 颗——剩约 6.8 个月要补约 448 颗（月均需约 66 颗）、按当前节奏明显不够；且 648 的口径性质待核：是公司/工程目标（跳票=商业事件）还是 ITU 频轨义务换算（跳票=丢频段级法律后果）——两者 β 含义完全不同（红队抓出、列为需求专项采集第一优先）；运力侧的铁证是千帆运力采购因投标方不足 3 家两度流标、被迫改规则允许未首飞的期货火箭投标。计划与运力的剪刀差就是全链最大的可证伪张力（已钉成 S2/S3，按季盯）。</div>
     <div class="flagline" style="margin-top:8px;">🚩 台账红旗二（历史 base rate）：第一代三大星座——铱星（$6B）、Globalstar（投入约 $4.3B、累计亏 $5.2B）、Teledesic（终止）——全部破产，合计毁灭约百亿美元级资本；OneWeb 烧 $3.4B 后 2020 年破产重组。Starlink 是历史上第一个盈利的巨型星座、且背后是垂直整合+发射垄断的独有结构。给中国星座商业化定概率时，外部锚是这个、不是发布会。（本条已录入 reviews/BASE_RATES.md。）</div>
-  </section>
-
-  <section class="card">
-    <div class="sec-title">⚙️ 拆链：钱流过哪里 + 那把刀</div>
-    <div class="sec-sub">第一性原理：把质量送入轨道并在轨创造收入——发射成本是整条链的总开关。</div>
-    <div class="bom"><span>发射：中国一次性 ¥5-10万/kg vs 猎鹰9 报价 $2,700/kg（内部成本第三方估算约 $629/kg）</span><span>单星：中国组网星约 1200-1500 万元 vs Starlink V2 Mini 估算约 $100 万</span><span>载荷 ≈ 单星成本 75%、相控阵 ≈ 载荷 75%、T/R ≈ 天线一半</span></div>
-    <p class="lead" style="margin-top:10px;">那把刀——原理必须 vs 当下技术攻坚：入轨、供电、测控是物理必须；<b>可回收不是必须、但它是成本曲线的总开关</b>——中国入轨级回收至今零成功（朱雀三号 2025-12 首飞成功回收失利、天龙三号 2026-04 首飞失败、双曲线三号推迟 2026 底），对猎鹰9 的时间差约 11 年（SpaceX 从首飞到首次回收用了 5.5 年）。另一把刀在地面段：手机直连（DTC）正在绕过专用终端——Starlink DTC 专星 650+ 颗（活跃用户 1200 万为宽带+DTC 合并口径）；中国天通直连手机已 1600 万台。</p>
-    <p class="lead muted" style="margin-top:10px;">边界论证（为什么这样切五刀）：发射是成本曲线总开关（不解决一切故事顺延）；卫星制造拆成总装与载荷两层是因为价值密度天差地别（总装堆产能、载荷拿利润）；地面段是组网规模化后的第二波承接；运营与应用是价值最终兑现处（也是历史坟场）；需求横切单列是因为星座节奏是全链共同的 β 母变量。漏任何一刀，资本周期定位都会失真。</p>
   </section>
 
   <section class="card">
@@ -161,15 +212,15 @@ table.qt tr:last-child td { border-bottom:none; }
       <tr><td>卫星总装</td><td>产能竞赛：格思 500-600 颗/年、银河 150→500、五院海南规划 1000 颗/年——规划合计 >2000 颗/年</td><td>2025 全年入轨商业卫星仅 311 颗——产能/需求比已类锂电 2021</td><td><span class="qpill expand">产能爆堆·苦力化风险最大</span></td></tr>
       <tr><td><b>载荷与核心部件</b></td><td>融资活跃但体量适度（激光终端 2025 下半年 4 轮）</td><td><b>全链唯一已大规模兑现</b>：T/R 龙头 2025 营收 +91%/净利 +476%、在手订单 4.36 亿；星敏毛利约 55%；宇航元器件毛利约 50% 全链最高</td><td><span class="qpill proven">真实收入·卖铲人</span></td></tr>
       <tr><td>地面段（信关站/终端/测运控）</td><td>建设前夜（千帆透明转发架构=信关站密集需求）</td><td>终端市场 2024 约 60.75 亿元；信关站/测运控数据缺口大</td><td><span class="qpill build">第二波承接处·数据待补</span></td></tr>
-      <tr><td>运营与应用</td><td>星网/垣信=国资主体投入期</td><td>中国商业闭环未开始（长光持续亏损撤回 IPO）；全球唯一盈利样本=Starlink</td><td><span class="qpill watch">等闭环证明·历史 base rate 极低</span></td></tr>
+      <tr><td>运营与应用</td><td>星网/垣信=国资主体投入期</td><td>中国商业闭环未开始（长光持续亏损撤回 IPO）；巨型星座唯一盈利样本=Starlink</td><td><span class="qpill watch">等闭环证明·历史 base rate 极低</span></td></tr>
     </table>
-    <p class="lead" style="margin-top:12px;">读法：钱在发射和总装两处汹涌堆积，收入却只在载荷部件一处真实落地——这正是扩张早期的典型形态：故事节点融资最多，卖铲节点闷声赚钱。锂电链 2021 年的产能竞赛剧本，正在总装环节候场重演（跨链判例已记 cross_links）。</p>
+    <p class="lead" style="margin-top:12px;">读法：钱在发射和总装两处汹涌堆积，商业利润却只在载荷部件一处大规模落地——这正是扩张早期的典型形态：故事节点融资最多，卖铲节点闷声赚钱。锂电链 2021 年的产能竞赛剧本，正在总装环节候场重演（跨链判例已记 cross_links）。</p>
   </section>
 
   <section class="card">
     <div class="sec-title">🧲 价值被谁占有（租金三问的落点）</div>
     <p class="lead">当下真实占有（已兑现单位经济）：<b>载荷与核心部件的细分垄断</b>——T/R 组件（商业市占超 80%）、星敏（80%+、微小星近 100%）、宇航级元器件（国产化 90%+、毛利约 50%）——军工资质+宇航可靠性认证是真实壁垒，且是单星价值密度最高点。两个必须挂着的限定：80% 市占是商业卫星口径（军品市场由军工体系独立占据）；最大结构威胁是星座方垂直整合自研（Starlink 已示范，格思绑定千帆约半数份额且自身是总装主体、自研动机强——红队提出、自研进度待采集，已建监测）。</p>
-    <p class="lead">未来占有的候选（取决于里程碑）：<b>可回收成本曲线</b>——谁先跑通谁拿成本差（10-20 倍空间），但今天判持久为时过早；<b>星座运营的网络效应+频轨稀缺</b>——Starlink 已示范，中国版未开始。当下的发射稀缺是租金性质（多家入轨即坍塌）；总装批产能力已不稀缺。一句话：<b>这条链现阶段的持久价值只在卖铲人环节，故事环节的价值要等里程碑把它变成现实</b>。</p>
+    <p class="lead">未来占有的候选（取决于里程碑）：<b>可回收成本曲线</b>——谁先跑通谁拿成本差（10-20 倍空间），但今天判持久为时过早；<b>星座运营的网络效应+频轨稀缺</b>——Starlink 已示范，中国版未开始。当下的发射稀缺是租金性质（多家入轨即坍塌）；总装批产能力已不稀缺。一句话：<b>这条链现阶段已兑现的单位经济只在卖铲人环节——但它的久期被三把刀架着（组网节奏传导、国家采购降价条款、星座方垂直整合自研，S4 盯），"已兑现"不等于"持久"；故事环节的价值则要等里程碑把它变成现实</b>。</p>
   </section>
 
   <section class="card">
@@ -180,7 +231,7 @@ table.qt tr:last-child td { border-bottom:none; }
       <tr><td>中国一级市场（火箭）</td><td>5 家未盈利公司合计估值约 855-1000 亿；蓝箭一年 200 亿→IPO 前 750 亿</td><td>高温——故事已被一级充分定价</td></tr>
       <tr><td>A股 概念板块</td><td>概念股有 2400 倍 PE 案例；研究机构给上游核心配套的合理区间 PE 30-50/PS 8-12；2026-01 板块急刹车一次</td><td>分裂——概念高温、真配套合理区间存在（variant 藏在这个分裂里）</td></tr>
       <tr><td>美股 发射/星座</td><td>RKLB PS 约 117 倍（自家 10 年中位的 5.8 倍）；ASTS 市值约 $363 亿 vs 收入 $7,090 万（PS 千倍级）</td><td>极端高温（RKLB 已在单股库另析）</td></tr>
-      <tr><td>对照锚</td><td>Starlink：唯一盈利样本、2025 EBITDA 率 63%——但它是垂直整合+发射垄断的独有结构、不可类比推广</td><td>用它定上限、别用它定均值</td></tr>
+      <tr><td>对照锚</td><td>Starlink：巨型星座唯一盈利样本、2025 EBITDA 率 63%——但它是垂直整合+发射垄断的独有结构、不可类比推广</td><td>用它定上限、别用它定均值</td></tr>
     </table>
   </section>
 
@@ -202,7 +253,7 @@ table.qt tr:last-child td { border-bottom:none; }
     <table class="qt">
       <tr><th>事项</th><th>现状</th><th>时间表</th><th>影响</th></tr>
       <tr><td>中国可回收跑通</td><td>零成功（朱雀回收失利/天龙首飞失败/双曲线未首飞）</td><td>朱雀三号 2026Q2 再试回收、Q4 目标复用；S1 阈值 2027-06</td><td>成本曲线启动 vs 全链故事顺延</td></tr>
-      <tr><td>千帆/GW 组网节奏</td><td>千帆 162 颗 vs 2026 底目标 648</td><td>S2 阈值：2026 底 ≥400 颗</td><td>需求 β 母变量、载荷订单传导</td></tr>
+      <tr><td>千帆/GW 组网节奏</td><td>千帆 2026-06-05 在轨 200 颗 vs 2026 底目标 648</td><td>S2 阈值：2026 底 ≥400 颗</td><td>需求 β 母变量、载荷订单传导</td></tr>
       <tr><td>IPO 现实检验</td><td>5 家辅导/受理中、蓝箭拟募 75 亿</td><td>S5：2027 底前破发/资金链事件 vs 高价发行成功</td><td>资本周期降温 vs 泡沫续命</td></tr>
       <tr><td>DTC 手机直连</td><td>Starlink 1200 万用户；天通 1600 万台；中国低轨直连测试中</td><td>2027-2030</td><td>地面段终端形态重画</td></tr>
       <tr><td>星座方垂直整合自研载荷</td><td>格思/垣信自研动机强（红队提出、待核）</td><td>2027-2029</td><td>载荷卖铲人久期的最大结构威胁（S4 附加触发已设）</td></tr>
@@ -217,7 +268,7 @@ table.qt tr:last-child td { border-bottom:none; }
 
   <section class="card keyline">
     <div class="sec-title">一句话闸门①结论</div>
-    <p class="lead">商业航天链处在扩张早期：钱在发射与总装两处汹涌堆积（五家未盈利火箭合计估值千亿、总装规划产能超需求数倍），收入只在载荷部件一处真实落地，而历史 base rate 警告星座商业化的成功率极低（第一代全军覆没、Starlink 是唯一例外且结构不可复制）。现阶段这条链上唯一有单位经济的持久价值是载荷卖铲人环节；其余都是带日期的故事——已全部钉成 S1-S6 预测，等里程碑（首家回收成功、组网节奏、IPO 现实检验）把故事变成现实或证伪，温度计自然会给出入场时点。挑哪个候选进闸门②由你定，这一关不替你选股。</p>
+    <p class="lead">商业航天链处在扩张早期：钱在发射与总装两处汹涌堆积（五家未盈利火箭合计估值千亿、总装规划产能超需求数倍），商业利润只在载荷部件一处大规模落地，而历史 base rate 警告星座商业化的成功率极低（第一代首建全军覆没、Starlink 是巨型星座里唯一的盈利样本且结构不可复制）。现阶段这条链上唯一已大规模兑现单位经济的是载荷卖铲人环节——已兑现不等于持久，它的久期被三把刀架着（S4 盯）；其余都是带日期的故事——已全部钉成 S1-S6 预测，等里程碑（首家回收成功、组网节奏、IPO 现实检验）把故事变成现实或证伪，温度计自然会给出入场时点。挑哪个候选进闸门②由你定，这一关不替你选股。</p>
   </section>
 
   <section class="card handoff">
@@ -226,6 +277,38 @@ table.qt tr:last-child td { border-bottom:none; }
   </section>
 
 </div>
+<script>
+/* 第一性原理链路图——判级转译自 nodes.json 各节点卡的占有/租金判断（真相源在 JSON、此处是渲染层） */
+const LAYERS = [
+  ["发射", "mid", [
+    ["大型液体（可回收）","当下最硬瓶颈·租金性质·回收零成功","mid"],
+    ["固体小火箭","已商业化·对万颗组网边际","thin"],
+    ["发射场","公共品·瓶颈在火箭不在工位","thin"]
+  ]],
+  ["卫星总装", "thin", [
+    ["总装批产","规划 >2000 颗/年 vs 入轨 311 颗·偏苦力","thin"]
+  ]],
+  ["载荷部件", "rich", [
+    ["T/R 组件","细分垄断·已大规模兑现利润·久期带刀","rich"],
+    ["星敏/宇航元器件","毛利 50%+ 全链最高","rich"],
+    ["星间激光","单星 600 万+·只有融资证据·早期","mid"]
+  ]],
+  ["地面段", "mid", [
+    ["用户终端","拼成本下降曲线·DTC 形态风险","mid"],
+    ["信关站/测运控","透明转发=密集需求·数据缺口大","mid"]
+  ]],
+  ["运营应用", "thin", [
+    ["星座运营","国资投入期·商业闭环未开始","thin"],
+    ["应用服务","遥感应用上市公司全亏·历史坟场","thin"]
+  ]],
+];
+document.getElementById("flow").innerHTML = LAYERS.map((L, i) => {
+  const chips = L[2].map(it => `<span class="chip ${it[2]}">${it[0]}<span style="font-size:10.5px;color:var(--text-light);font-weight:500"> · ${it[1]}</span></span>`).join("");
+  const tl = { rich: "最肥", mid: "中", thin: "苦力" }[L[1]];
+  const arrow = i < LAYERS.length - 1 ? `<div class="flow-arrow">↓</div>` : "";
+  return `<div class="layer"><div class="lk"><span class="lkn">${L[0]}</span><span class="lkt ${L[1]}">${tl}</span></div><div class="li">${chips}</div></div>${arrow}`;
+}).join("");
+</script>
 <script id="glossary">
 /* glossary.js —— 产业链研究各页共享：术语浮窗（点带虚线的词看大白话）。
    页面在 body 末尾 <script src=".../glossary.js"><\/script> 即可，自动注入样式 + 给全文加虚线 + 浮窗。 */
