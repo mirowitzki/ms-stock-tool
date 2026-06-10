@@ -1,0 +1,143 @@
+{
+  "ticker": "CRCL",
+  "currency": "USD",
+  "default_tax_rate": 0.21,
+  "unit": "原始货币单位（与 financials.csv 一致）",
+  "metrics": {
+    "compounding_engine": {
+      "roic_latest": -0.04224724266489804,
+      "roe_latest": -0.020877492658426162,
+      "roic_trend_delta": null,
+      "roic_series": [
+        {
+          "fy": 2025,
+          "roic": -0.04224724266489804
+        }
+      ],
+      "incremental_roic": null,
+      "reinvestment_rate": null,
+      "implied_sustainable_growth": null,
+      "asset_light": false,
+      "growth_note": null,
+      "roic_distorted": true,
+      "band": "ROIC 口径失真（现金/小分母占比过高，改看 ROE）"
+    },
+    "owner_earnings": {
+      "series": [
+        {
+          "fy": 2025,
+          "fcf": 529697000.0,
+          "fcf_ex_sbc": -36480000.0,
+          "sbc": 566177000.0,
+          "owner_earnings_norm": -5313000.0,
+          "fcf_margin": 0.19285258144308579,
+          "sbc_pct_rev": 0.20613425411830155,
+          "sbc_pct_fcf": 1.068869561277485
+        }
+      ],
+      "latest": {
+        "fy": 2025,
+        "fcf": 529697000.0,
+        "fcf_ex_sbc": -36480000.0,
+        "sbc": 566177000.0,
+        "owner_earnings_norm": -5313000.0,
+        "fcf_margin": 0.19285258144308579,
+        "sbc_pct_rev": 0.20613425411830155,
+        "sbc_pct_fcf": 1.068869561277485
+      },
+      "band": "FCF 为正但 SBC 吞掉大半"
+    },
+    "capital_allocation": {
+      "years": [
+        2025
+      ],
+      "cumulative": {
+        "cfo": 542129000.0,
+        "capex": 12432000.0,
+        "acquisitions": 7734000.0,
+        "buybacks": 0.0,
+        "dividends": 0.0,
+        "debt_repaid": 0.0,
+        "debt_issued": 0.0
+      },
+      "pct_of_cfo": {
+        "capex": 0.02293181143233437,
+        "acquisitions": 0.014265977285848941,
+        "buybacks": 0.0,
+        "dividends": 0.0,
+        "debt_repaid": 0.0
+      },
+      "per_year": [
+        {
+          "fy": 2025,
+          "cfo": 542129000.0,
+          "capex": 12432000.0,
+          "acquisitions": 7734000.0,
+          "buybacks": 0.0,
+          "dividends": null,
+          "debt_repaid": null,
+          "debt_issued": null
+        }
+      ],
+      "shareholder_return_total": 0.0,
+      "shareholder_return_pct_cfo": 0.0,
+      "reinvest_pct_cfo": 0.037197788718183314
+    },
+    "survival": {
+      "fy": 2025,
+      "net_debt": -1526046000.0,
+      "is_net_cash": true,
+      "net_debt_to_ebitda": null,
+      "interest_coverage": null,
+      "current_ratio": 1.0328305415242154,
+      "debt_due_1yr": null,
+      "cash": 1526046000.0,
+      "due_vs_cash_covered": null,
+      "is_burning_cash": false,
+      "cash_runway_years": null,
+      "band": "堡垒（净现金）",
+      "debt_components": {
+        "fy": 2025,
+        "found": {},
+        "missing": [
+          "long_term_noncurrent",
+          "long_term_total_tag",
+          "bonds_payable",
+          "current_portion_ltd",
+          "short_term_borrowings",
+          "debt_current_fallback"
+        ],
+        "note": "应付债券/租赁负债等科目当前取数管道未覆盖；判生存柱前以年报附注的全口径为准"
+      }
+    },
+    "cycle_calibration": {
+      "peak_suspect": false,
+      "roic": null,
+      "operating_margin": null,
+      "note": null
+    },
+    "earnings_quality": {
+      "series": [
+        {
+          "fy": 2025,
+          "net_income": -69508000.0,
+          "cfo": 542129000.0,
+          "accrual_ratio": -8.799519479772112,
+          "revenue": 2746642000.0,
+          "receivables": null,
+          "inventory": null
+        }
+      ],
+      "revenue_cagr_approx": null,
+      "receivable_scissors": null,
+      "inventory_scissors": null,
+      "flags": [],
+      "coverage_missing": [
+        "应收账款（原表缺或取数管道未覆盖）",
+        "存货（原表缺或取数管道未覆盖）"
+      ],
+      "note": "代码初筛非定论；flags 逐项回年报附注核，结论由报告第七章会计可信度节下"
+    }
+  },
+  "_note": "纯代码算出的硬数字 + 粗分档；最终判断由报告结合定性证据下，但须引用这些数字。"
+}

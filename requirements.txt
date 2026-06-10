@@ -1,0 +1,11 @@
+# MS 股票价值分析工具 —— Python 依赖
+# 安装：pip install -r requirements.txt
+# 另需两个非 pip 的外部程序（出 PDF 用），Mac 上用 Homebrew 装：
+#   brew install pandoc
+#   brew install --cask wkhtmltopdf
+requests>=2.31
+beautifulsoup4>=4.12
+lxml>=5.0
+akshare>=1.18        # A 股取数（会自动带上 pandas）
+pypdf>=4.0           # 读招股说明书 PDF
+pywebview>=6.0       # 桌面应用窗口（app.py）；Mac 上走系统 WebKit

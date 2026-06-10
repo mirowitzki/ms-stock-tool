@@ -1,0 +1,1514 @@
+{
+  "by_product": {
+    "2025-12-31": [
+      {
+        "name": "高新制造业商品",
+        "revenue": 18442065810.75,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "生物医药业商品",
+        "revenue": 3884315911.14,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 326448790.86,
+        "cost": 131963893.92,
+        "gross_profit": 194484896.94,
+        "margin": 0.595759
+      },
+      {
+        "name": "其他行业商品",
+        "revenue": 271918325.17,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "房地产行业商品",
+        "revenue": 111526462.78,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2025-09-30": [
+      {
+        "name": "高新技术",
+        "revenue": 13583159900.0,
+        "cost": 10552460900.0,
+        "gross_profit": 3030699000.0,
+        "margin": 0.223122
+      },
+      {
+        "name": "医药",
+        "revenue": 2891758300.0,
+        "cost": 1493782400.0,
+        "gross_profit": 1397975900.0,
+        "margin": 0.483435
+      },
+      {
+        "name": "其他",
+        "revenue": 230951100.0,
+        "cost": 206509600.0,
+        "gross_profit": 24441500.0,
+        "margin": 0.10583
+      },
+      {
+        "name": "房地产",
+        "revenue": 106589000.0,
+        "cost": 92412400.0,
+        "gross_profit": 14176600.0,
+        "margin": 0.133002
+      }
+    ],
+    "2025-06-30": [
+      {
+        "name": "高新制造业商品",
+        "revenue": 8517979476.39,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "生物医药业商品",
+        "revenue": 1965055094.97,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他行业商品",
+        "revenue": 157770734.63,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 137202423.07,
+        "cost": 60513706.79,
+        "gross_profit": 76688716.28,
+        "margin": 0.558946
+      },
+      {
+        "name": "房地产行业商品",
+        "revenue": 61297595.97,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2024-12-31": [
+      {
+        "name": "高新制造业商品",
+        "revenue": 15670312757.79,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "生物医药业商品",
+        "revenue": 3741000058.21,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 337828368.96,
+        "cost": 109417797.67,
+        "gross_profit": 228410571.29,
+        "margin": 0.676114
+      },
+      {
+        "name": "其他行业商品",
+        "revenue": 319325520.03,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "房地产行业商品",
+        "revenue": 159417099.42,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2024-06-30": [
+      {
+        "name": "高新制造业商品",
+        "revenue": 7690756492.71,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "生物医药业商品",
+        "revenue": 1936772753.25,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他行业商品",
+        "revenue": 170762356.35,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 159894005.49,
+        "cost": 58034098.45,
+        "gross_profit": 101859907.04,
+        "margin": 0.637046
+      },
+      {
+        "name": "房地产行业商品",
+        "revenue": 71586090.57,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2023-12-31": [
+      {
+        "name": "高新制造业商品",
+        "revenue": 26535778026.77,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "生物医药业商品",
+        "revenue": 3268425128.7,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 381330527.2,
+        "cost": 141910274.32,
+        "gross_profit": 239420252.88,
+        "margin": 0.627855
+      },
+      {
+        "name": "其他行业商品",
+        "revenue": 271307949.13,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "房地产行业商品",
+        "revenue": 240276470.22,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2023-06-30": [
+      {
+        "name": "高新制造业商品",
+        "revenue": 14077968635.25,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "生物医药业商品",
+        "revenue": 1764033632.32,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他行业商品",
+        "revenue": 171565384.81,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 150324690.89,
+        "cost": 44140243.59,
+        "gross_profit": 106184447.3,
+        "margin": 0.706367
+      },
+      {
+        "name": "房地产行业商品",
+        "revenue": 119025320.08,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2022-12-31": [
+      {
+        "name": "高新制造业商品",
+        "revenue": 27167078483.75,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "生物医药业商品",
+        "revenue": 3874464133.35,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 434675971.11,
+        "cost": 154253398.05,
+        "gross_profit": 280422573.06,
+        "margin": 0.64513
+      },
+      {
+        "name": "其他行业商品",
+        "revenue": 280771255.08,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "房地产行业商品",
+        "revenue": 241731063.37,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2022-06-30": [
+      {
+        "name": "高新技术产业分部",
+        "revenue": 11067153766.91,
+        "cost": 8864369336.19,
+        "gross_profit": 2202784430.72,
+        "margin": 0.199038
+      },
+      {
+        "name": "生物医药产业分部",
+        "revenue": 2123798197.05,
+        "cost": 1272913754.48,
+        "gross_profit": 850884442.57,
+        "margin": 0.400643
+      },
+      {
+        "name": "其他产业分部",
+        "revenue": 190801175.0,
+        "cost": 158817629.58,
+        "gross_profit": 31983545.42,
+        "margin": 0.167628
+      },
+      {
+        "name": "房地产业分部",
+        "revenue": 149883473.01,
+        "cost": 112262104.74,
+        "gross_profit": 37621368.27,
+        "margin": 0.251004
+      }
+    ],
+    "2022-03-31": [
+      {
+        "name": "高新技术产业",
+        "revenue": 4499900400.0,
+        "cost": 3514283800.0,
+        "gross_profit": 985616600.0,
+        "margin": 0.219031
+      },
+      {
+        "name": "生物医药产业",
+        "revenue": 1054364200.0,
+        "cost": 649417700.0,
+        "gross_profit": 404946500.0,
+        "margin": 0.384067
+      },
+      {
+        "name": "其他",
+        "revenue": 82776000.0,
+        "cost": 78574600.0,
+        "gross_profit": 4201400.0,
+        "margin": 0.050756
+      },
+      {
+        "name": "房地产业",
+        "revenue": 46383000.0,
+        "cost": 37650900.0,
+        "gross_profit": 8732100.0,
+        "margin": 0.188261
+      }
+    ],
+    "2021-12-31": [
+      {
+        "name": "高新技术产业分部",
+        "revenue": 12086639036.56,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "生物医药产业分部",
+        "revenue": 3791583779.95,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "房地产业分部",
+        "revenue": 1305028761.98,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他产业分部",
+        "revenue": 458817180.69,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "抵销",
+        "revenue": -35774423.55,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2021-06-30": [
+      {
+        "name": "高新技术产业",
+        "revenue": 4790187970.37,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "生物医药产业",
+        "revenue": 1887282800.34,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "房地产业",
+        "revenue": 1045279195.13,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他行业",
+        "revenue": 199339994.89,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 126231986.55,
+        "cost": 99583347.62,
+        "gross_profit": 26648638.93,
+        "margin": 0.211108
+      },
+      {
+        "name": "其中:材料销售",
+        "revenue": 66352057.81,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其中:服务性",
+        "revenue": 43015588.78,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其中:租金",
+        "revenue": 16583983.23,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其中:其他",
+        "revenue": 280356.73,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2020-12-31": [
+      {
+        "name": "高新技术产业",
+        "revenue": 5725119071.56,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "生物医药产业",
+        "revenue": 3237138514.02,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "房地产业",
+        "revenue": 1146646801.29,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他行业",
+        "revenue": 425587065.23,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他主营业务",
+        "revenue": 59359319.799999,
+        "cost": 6980360221.71,
+        "gross_profit": 3613490550.19,
+        "margin": null
+      }
+    ],
+    "2020-06-30": [
+      {
+        "name": "高新技术产业",
+        "revenue": 2139939797.69,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "生物医药产业",
+        "revenue": 1184943203.52,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "房地产业",
+        "revenue": 438834170.71,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他行业",
+        "revenue": 205345242.53,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 43048490.52,
+        "cost": 28883609.14,
+        "gross_profit": 14164881.38,
+        "margin": 0.329045
+      },
+      {
+        "name": "其中:材料销售",
+        "revenue": 18330185.25,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其中:租金",
+        "revenue": 14780237.15,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其中:服务性",
+        "revenue": 7841543.83,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其中:其他",
+        "revenue": 2096524.29,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2017-12-31": [
+      {
+        "name": "高新技术产业",
+        "revenue": 4170509811.11,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "生物医药产业",
+        "revenue": 1874634428.06,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "房地产业",
+        "revenue": 565484163.28,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他行业",
+        "revenue": 380840849.33,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 79333144.42,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "调整项目",
+        "revenue": -47291178.94,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ]
+  },
+  "by_industry": {
+    "2025-12-31": [
+      {
+        "name": "高新技术行业",
+        "revenue": 18698371280.77,
+        "cost": 14689250345.47,
+        "gross_profit": 4009120935.3,
+        "margin": 0.21441
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 3940978301.06,
+        "cost": 2034340383.86,
+        "gross_profit": 1906637917.2,
+        "margin": 0.483798
+      },
+      {
+        "name": "其他行业",
+        "revenue": 261338349.6,
+        "cost": 263261006.88,
+        "gross_profit": -1922657.28,
+        "margin": -0.007357
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 135587369.27,
+        "cost": 101811015.24,
+        "gross_profit": 33776354.03,
+        "margin": 0.249111
+      }
+    ],
+    "2025-09-30": [
+      {
+        "name": "高新技术",
+        "revenue": 13583159900.0,
+        "cost": 10552460900.0,
+        "gross_profit": 3030699000.0,
+        "margin": 0.223122
+      },
+      {
+        "name": "医药",
+        "revenue": 2891758300.0,
+        "cost": 1493782400.0,
+        "gross_profit": 1397975900.0,
+        "margin": 0.483435
+      },
+      {
+        "name": "其他",
+        "revenue": 230951100.0,
+        "cost": 206509600.0,
+        "gross_profit": 24441500.0,
+        "margin": 0.10583
+      },
+      {
+        "name": "房地产",
+        "revenue": 106589000.0,
+        "cost": 92412400.0,
+        "gross_profit": 14176600.0,
+        "margin": 0.133002
+      }
+    ],
+    "2025-06-30": [
+      {
+        "name": "高新技术行业",
+        "revenue": 8622995580.9,
+        "cost": 6616697794.78,
+        "gross_profit": 2006297786.12,
+        "margin": 0.232668
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 1991122570.28,
+        "cost": 1019168711.81,
+        "gross_profit": 971953858.47,
+        "margin": 0.488144
+      },
+      {
+        "name": "其他行业",
+        "revenue": 152733110.96,
+        "cost": 133584300.12,
+        "gross_profit": 19148810.84,
+        "margin": 0.125374
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 72454062.89,
+        "cost": 61392819.63,
+        "gross_profit": 11061243.26,
+        "margin": 0.152666
+      }
+    ],
+    "2024-12-31": [
+      {
+        "name": "高新技术行业",
+        "revenue": 15888614913.81,
+        "cost": 12191346163.24,
+        "gross_profit": 3697268750.57,
+        "margin": 0.232699
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 3794120716.53,
+        "cost": 2051583108.44,
+        "gross_profit": 1742537608.09,
+        "margin": 0.459273
+      },
+      {
+        "name": "其他行业",
+        "revenue": 318392305.91,
+        "cost": 296060221.48,
+        "gross_profit": 22332084.43,
+        "margin": 0.07014
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 226755868.16,
+        "cost": 171088353.36,
+        "gross_profit": 55667514.8,
+        "margin": 0.245495
+      }
+    ],
+    "2024-06-30": [
+      {
+        "name": "高新技术行业",
+        "revenue": 7813259658.62,
+        "cost": 6091347589.97,
+        "gross_profit": 1721912068.65,
+        "margin": 0.220383
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 1960958627.03,
+        "cost": 1021762633.23,
+        "gross_profit": 939195993.8,
+        "margin": 0.478947
+      },
+      {
+        "name": "其他行业",
+        "revenue": 173914214.29,
+        "cost": 150186178.19,
+        "gross_profit": 23728036.1,
+        "margin": 0.136435
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 81639198.43,
+        "cost": 67330321.44,
+        "gross_profit": 14308876.99,
+        "margin": 0.17527
+      }
+    ],
+    "2023-12-31": [
+      {
+        "name": "高新技术行业",
+        "revenue": 26829475022.6,
+        "cost": 21938693139.89,
+        "gross_profit": 4890781882.71,
+        "margin": 0.182291
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 3333873962.53,
+        "cost": 1941638907.27,
+        "gross_profit": 1392235055.26,
+        "margin": 0.417603
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 267153468.35,
+        "cost": 221917795.75,
+        "gross_profit": 45235672.6,
+        "margin": 0.169325
+      },
+      {
+        "name": "其他行业",
+        "revenue": 266615648.54,
+        "cost": 210545484.6,
+        "gross_profit": 56070163.94,
+        "margin": 0.210303
+      }
+    ],
+    "2023-06-30": [
+      {
+        "name": "高新技术行业",
+        "revenue": 14201144953.22,
+        "cost": 11994558693.87,
+        "gross_profit": 2206586259.35,
+        "margin": 0.155381
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 1778989577.03,
+        "cost": 984288721.04,
+        "gross_profit": 794700855.99,
+        "margin": 0.446715
+      },
+      {
+        "name": "其他行业",
+        "revenue": 176166499.18,
+        "cost": 152879478.44,
+        "gross_profit": 23287020.74,
+        "margin": 0.132188
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 126616633.92,
+        "cost": 104195589.61,
+        "gross_profit": 22421044.31,
+        "margin": 0.177078
+      }
+    ],
+    "2022-12-31": [
+      {
+        "name": "高新技术行业",
+        "revenue": 27522711871.22,
+        "cost": 22967277924.98,
+        "gross_profit": 4555433946.24,
+        "margin": 0.165515
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 3932829621.56,
+        "cost": 2192638045.21,
+        "gross_profit": 1740191576.35,
+        "margin": 0.442478
+      },
+      {
+        "name": "其他行业",
+        "revenue": 290101723.18,
+        "cost": 251695809.75,
+        "gross_profit": 38405913.43,
+        "margin": 0.132388
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 253077690.7,
+        "cost": 206271598.23,
+        "gross_profit": 46806092.47,
+        "margin": 0.184948
+      }
+    ],
+    "2022-06-30": [
+      {
+        "name": "高新技术行业",
+        "revenue": 11067153766.91,
+        "cost": 8864369336.19,
+        "gross_profit": 2202784430.72,
+        "margin": 0.199038
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 2123798197.05,
+        "cost": 1272913754.48,
+        "gross_profit": 850884442.57,
+        "margin": 0.400643
+      },
+      {
+        "name": "其他行业",
+        "revenue": 170572652.58,
+        "cost": 158817629.58,
+        "gross_profit": 11755023.0,
+        "margin": 0.068915
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 149883473.01,
+        "cost": 112262104.74,
+        "gross_profit": 37621368.27,
+        "margin": 0.251004
+      }
+    ],
+    "2022-03-31": [
+      {
+        "name": "高新技术产业",
+        "revenue": 4499900400.0,
+        "cost": 3514283800.0,
+        "gross_profit": 985616600.0,
+        "margin": 0.219031
+      },
+      {
+        "name": "生物医药产业",
+        "revenue": 1054364200.0,
+        "cost": 649417700.0,
+        "gross_profit": 404946500.0,
+        "margin": 0.384067
+      },
+      {
+        "name": "其他",
+        "revenue": 82776000.0,
+        "cost": 78574600.0,
+        "gross_profit": 4201400.0,
+        "margin": 0.050756
+      },
+      {
+        "name": "房地产业",
+        "revenue": 46383000.0,
+        "cost": 37650900.0,
+        "gross_profit": 8732100.0,
+        "margin": 0.188261
+      }
+    ],
+    "2021-12-31": [
+      {
+        "name": "高新技术行业",
+        "revenue": 12084097562.27,
+        "cost": 9052506822.5,
+        "gross_profit": 3031590739.77,
+        "margin": 0.250874
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 3790767722.94,
+        "cost": 2133983631.99,
+        "gross_profit": 1656784090.95,
+        "margin": 0.437058
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 1301186403.23,
+        "cost": 986493679.4,
+        "gross_profit": 314692723.83,
+        "margin": 0.241851
+      },
+      {
+        "name": "其他行业",
+        "revenue": 377367424.27,
+        "cost": 335556375.38,
+        "gross_profit": 41811048.89,
+        "margin": 0.110797
+      }
+    ],
+    "2021-06-30": [
+      {
+        "name": "高新技术产业",
+        "revenue": 4896117075.69,
+        "cost": 3526779823.85,
+        "gross_profit": 1369337251.84,
+        "margin": 0.279678
+      },
+      {
+        "name": "生物医药产业",
+        "revenue": 1899936843.05,
+        "cost": 1062237421.41,
+        "gross_profit": 837699421.64,
+        "margin": 0.440909
+      },
+      {
+        "name": "房地产业",
+        "revenue": 1051052315.34,
+        "cost": 765216183.27,
+        "gross_profit": 285836132.07,
+        "margin": 0.271952
+      },
+      {
+        "name": "其他产业",
+        "revenue": 173767147.55,
+        "cost": 172291945.9,
+        "gross_profit": 1475201.65,
+        "margin": 0.00849
+      }
+    ],
+    "2020-12-31": [
+      {
+        "name": "高新技术行业",
+        "revenue": 5809372266.73,
+        "cost": 4157092864.59,
+        "gross_profit": 1652279402.14,
+        "margin": 0.284416
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 3259214553.14,
+        "cost": 1767665361.87,
+        "gross_profit": 1491549191.27,
+        "margin": 0.457641
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 1150932334.4,
+        "cost": 707793966.07,
+        "gross_profit": 443138368.33,
+        "margin": 0.385026
+      },
+      {
+        "name": "其他行业",
+        "revenue": 374331617.63,
+        "cost": 347808029.18,
+        "gross_profit": 26523588.45,
+        "margin": 0.070856
+      }
+    ],
+    "2020-06-30": [
+      {
+        "name": "高新技术产业分部",
+        "revenue": 2163933190.94,
+        "cost": 1548446704.61,
+        "gross_profit": 615486486.33,
+        "margin": 0.28443
+      },
+      {
+        "name": "生物医药产业分部",
+        "revenue": 1190673355.04,
+        "cost": 554170568.64,
+        "gross_profit": 636502786.4,
+        "margin": 0.534574
+      },
+      {
+        "name": "房地产业分部",
+        "revenue": 440854013.72,
+        "cost": 321318707.45,
+        "gross_profit": 119535306.27,
+        "margin": 0.271145
+      },
+      {
+        "name": "其他产业分部",
+        "revenue": 180534139.96,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2019-12-31": [
+      {
+        "name": "高新技术行业",
+        "revenue": 5900311057.8,
+        "cost": 4194656372.87,
+        "gross_profit": 1705654684.93,
+        "margin": 0.289079
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 3097156723.69,
+        "cost": 1678298397.56,
+        "gross_profit": 1418858326.13,
+        "margin": 0.458116
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 2624213094.8,
+        "cost": 1561628698.77,
+        "gross_profit": 1062584396.03,
+        "margin": 0.404915
+      },
+      {
+        "name": "其他行业",
+        "revenue": 327046330.29,
+        "cost": 319076745.59,
+        "gross_profit": 7969584.7,
+        "margin": 0.024368
+      }
+    ],
+    "2019-06-30": [
+      {
+        "name": "高新技术行业",
+        "revenue": 2750339637.86,
+        "cost": 1956581902.86,
+        "gross_profit": 793757735.0,
+        "margin": 0.288604
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 1521126107.98,
+        "cost": 916056793.23,
+        "gross_profit": 605069314.75,
+        "margin": 0.397777
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 1469463868.49,
+        "cost": 762174092.19,
+        "gross_profit": 707289776.3,
+        "margin": 0.481325
+      },
+      {
+        "name": "其他行业",
+        "revenue": 150725409.17,
+        "cost": 138065423.68,
+        "gross_profit": 12659985.49,
+        "margin": 0.083994
+      }
+    ],
+    "2018-12-31": [
+      {
+        "name": "高新技术行业",
+        "revenue": 5873677359.7,
+        "cost": 4271987551.63,
+        "gross_profit": 1601689808.07,
+        "margin": 0.272689
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 3032572486.14,
+        "cost": 1491012968.75,
+        "gross_profit": 1541559517.39,
+        "margin": 0.508334
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 2480605754.72,
+        "cost": 1289317231.23,
+        "gross_profit": 1191288523.49,
+        "margin": 0.480241
+      },
+      {
+        "name": "其他行业",
+        "revenue": 328691529.79,
+        "cost": 328848684.09,
+        "gross_profit": -157154.3,
+        "margin": -0.000478
+      }
+    ],
+    "2018-06-30": [
+      {
+        "name": "高新技术产业",
+        "revenue": 2312981631.76,
+        "cost": 1691156762.46,
+        "gross_profit": 621824869.3,
+        "margin": 0.268841
+      },
+      {
+        "name": "生物医药产业",
+        "revenue": 1191347880.04,
+        "cost": 622547601.81,
+        "gross_profit": 568800278.23,
+        "margin": 0.477443
+      },
+      {
+        "name": "房地产业",
+        "revenue": 642133594.62,
+        "cost": 315880122.82,
+        "gross_profit": 326253471.8,
+        "margin": 0.508077
+      },
+      {
+        "name": "其他产业",
+        "revenue": 117106893.89,
+        "cost": 108544465.88,
+        "gross_profit": 8562428.01,
+        "margin": 0.073116
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 74297219.18,
+        "cost": 47522753.91,
+        "gross_profit": 26774465.27,
+        "margin": 0.36037
+      }
+    ],
+    "2017-12-31": [
+      {
+        "name": "高新技术行业",
+        "revenue": 4218764134.09,
+        "cost": 3000391460.14,
+        "gross_profit": 1218372673.95,
+        "margin": 0.288798
+      },
+      {
+        "name": "生物医药行业",
+        "revenue": 1889368644.31,
+        "cost": 921058305.73,
+        "gross_profit": 968310338.58,
+        "margin": 0.512505
+      },
+      {
+        "name": "房地产行业",
+        "revenue": 586744388.34,
+        "cost": 414818096.81,
+        "gross_profit": 171926291.53,
+        "margin": 0.293017
+      },
+      {
+        "name": "其他行业",
+        "revenue": 328634050.52,
+        "cost": 319260039.29,
+        "gross_profit": 9374011.23,
+        "margin": 0.028524
+      }
+    ],
+    "2017-06-30": [
+      {
+        "name": "高新技术产业",
+        "revenue": 1587840690.93,
+        "cost": 1109663189.1,
+        "gross_profit": 478177501.83,
+        "margin": 0.30115
+      },
+      {
+        "name": "生物医药产业",
+        "revenue": 840391426.27,
+        "cost": 388950937.2,
+        "gross_profit": 451440489.07,
+        "margin": 0.537179
+      },
+      {
+        "name": "房地产业",
+        "revenue": 329734250.17,
+        "cost": 261458489.4,
+        "gross_profit": 68275760.77,
+        "margin": 0.207063
+      },
+      {
+        "name": "其他产业",
+        "revenue": 132705343.78,
+        "cost": 125481680.88,
+        "gross_profit": 7223662.9,
+        "margin": 0.054434
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 48503563.72,
+        "cost": 31050162.79,
+        "gross_profit": 17453400.93,
+        "margin": 0.359837
+      }
+    ]
+  },
+  "by_region": {
+    "2025-12-31": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 17791344144.94,
+        "cost": 12684007344.73,
+        "gross_profit": 5107336800.21,
+        "margin": 0.287069
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 5244931155.76,
+        "cost": 4404655406.72,
+        "gross_profit": 840275749.04,
+        "margin": 0.160207
+      }
+    ],
+    "2025-06-30": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 8529265738.29,
+        "cost": 5785346448.33,
+        "gross_profit": 2743919289.96,
+        "margin": 0.321706
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 2310039586.74,
+        "cost": 2045497178.01,
+        "gross_profit": 264542408.73,
+        "margin": 0.114519
+      }
+    ],
+    "2024-12-31": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 15620277284.4,
+        "cost": 10427721384.19,
+        "gross_profit": 5192555900.21,
+        "margin": 0.332424
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 4607606520.01,
+        "cost": 4282356462.33,
+        "gross_profit": 325250057.68,
+        "margin": 0.07059
+      }
+    ],
+    "2024-06-30": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 7645416817.86,
+        "cost": 5105384873.43,
+        "gross_profit": 2540031944.43,
+        "margin": 0.332229
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 2384354880.51,
+        "cost": 2225241849.4,
+        "gross_profit": 159113031.11,
+        "margin": 0.066732
+      }
+    ],
+    "2023-12-31": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 25008666235.82,
+        "cost": 18830344099.38,
+        "gross_profit": 6178322136.44,
+        "margin": 0.247047
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 5688451866.2,
+        "cost": 5482451228.13,
+        "gross_profit": 206000638.07,
+        "margin": 0.036214
+      }
+    ],
+    "2023-06-30": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 13401716590.5,
+        "cost": 11356917473.02,
+        "gross_profit": 2044799117.48,
+        "margin": 0.152577
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 2881201072.85,
+        "cost": 1879005009.94,
+        "gross_profit": 1002196062.91,
+        "margin": 0.34784
+      }
+    ],
+    "2022-12-31": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 26308580922.79,
+        "cost": 20713800076.85,
+        "gross_profit": 5594780845.94,
+        "margin": 0.21266
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 5690139983.87,
+        "cost": 4904083301.32,
+        "gross_profit": 786056682.55,
+        "margin": 0.138144
+      }
+    ],
+    "2022-06-30": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 11115391054.35,
+        "cost": 8453969145.65,
+        "gross_profit": 2661421908.7,
+        "margin": 0.239436
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 2396017035.2,
+        "cost": 1954393679.34,
+        "gross_profit": 441623355.86,
+        "margin": 0.184316
+      }
+    ],
+    "2022-03-31": [
+      {
+        "name": "中国境内",
+        "revenue": 4663553800.0,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "中国境外",
+        "revenue": 1019869800.0,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2021-12-31": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 14304602184.97,
+        "cost": 10079136483.43,
+        "gross_profit": 4225465701.54,
+        "margin": 0.295392
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 3248816927.74,
+        "cost": 2429404025.84,
+        "gross_profit": 819412901.9,
+        "margin": 0.252219
+      }
+    ],
+    "2021-06-30": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 6619924702.98,
+        "cost": 4515784416.33,
+        "gross_profit": 2104140286.65,
+        "margin": 0.31785
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 1400948678.65,
+        "cost": 1010740958.1,
+        "gross_profit": 390207720.55,
+        "margin": 0.278531
+      }
+    ],
+    "2020-12-31": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 8357215471.06,
+        "cost": 5580106897.04,
+        "gross_profit": 2777108574.02,
+        "margin": 0.332301
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 2236635300.84,
+        "cost": 1400253324.68,
+        "gross_profit": 836381976.16,
+        "margin": 0.373947
+      }
+    ],
+    "2020-06-30": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 3011351280.22,
+        "cost": 1952410565.29,
+        "gross_profit": 1058940714.93,
+        "margin": 0.35165
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 964643419.44,
+        "cost": 639258656.04,
+        "gross_profit": 325384763.4,
+        "margin": 0.337311
+      }
+    ],
+    "2019-12-31": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 9717907585.89,
+        "cost": 6195222664.74,
+        "gross_profit": 3522684921.15,
+        "margin": 0.362494
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 2230819620.69,
+        "cost": 1558437550.05,
+        "gross_profit": 672382070.64,
+        "margin": 0.301406
+      }
+    ],
+    "2019-06-30": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 4860738046.3,
+        "cost": 3027592828.65,
+        "gross_profit": 1833145217.65,
+        "margin": 0.377133
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 1030916977.2,
+        "cost": 745285383.31,
+        "gross_profit": 285631593.89,
+        "margin": 0.277066
+      }
+    ],
+    "2018-12-31": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 10077899190.75,
+        "cost": 6212449969.71,
+        "gross_profit": 3865449221.04,
+        "margin": 0.383557
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 1637647939.6,
+        "cost": 1168716465.99,
+        "gross_profit": 468931473.61,
+        "margin": 0.286344
+      }
+    ],
+    "2018-06-30": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 3611128477.25,
+        "cost": 2272785137.82,
+        "gross_profit": 1338343339.43,
+        "margin": 0.370616
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 652441523.06,
+        "cost": 465343815.15,
+        "gross_profit": 187097707.91,
+        "margin": 0.286765
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 74297219.18,
+        "cost": 47522753.91,
+        "gross_profit": 26774465.27,
+        "margin": 0.36037
+      }
+    ],
+    "2017-12-31": [
+      {
+        "name": "中国大陆地区",
+        "revenue": 6140553084.1,
+        "cost": 4030446563.88,
+        "gross_profit": 2110106520.22,
+        "margin": 0.343635
+      },
+      {
+        "name": "中国大陆地区以外的国家和地区",
+        "revenue": 882958133.16,
+        "cost": 625081338.09,
+        "gross_profit": 257876795.07,
+        "margin": 0.29206
+      }
+    ]
+  }
+}

@@ -1,0 +1,283 @@
+{
+  "ticker": "SITM",
+  "currency": "USD",
+  "default_tax_rate": 0.21,
+  "unit": "原始货币单位（与 financials.csv 一致）",
+  "metrics": {
+    "compounding_engine": {
+      "roic_latest": -0.04643808313506047,
+      "roe_latest": -0.037107479618260795,
+      "roic_trend_delta": -0.010977013716673978,
+      "roic_series": [
+        {
+          "fy": 2020,
+          "roic": -0.03546106941838649
+        },
+        {
+          "fy": 2021,
+          "roic": 0.05180075723873562
+        },
+        {
+          "fy": 2022,
+          "roic": 0.022703927961852752
+        },
+        {
+          "fy": 2023,
+          "roic": -0.12122808423897484
+        },
+        {
+          "fy": 2024,
+          "roic": -0.13125417199504624
+        },
+        {
+          "fy": 2025,
+          "roic": -0.04643808313506047
+        }
+      ],
+      "incremental_roic": -0.048660957866819766,
+      "reinvestment_rate": null,
+      "implied_sustainable_growth": null,
+      "asset_light": false,
+      "growth_note": null,
+      "roic_distorted": false,
+      "band": "毁灭价值（ROIC<0）"
+    },
+    "owner_earnings": {
+      "series": [
+        {
+          "fy": 2021,
+          "fcf": 28200000.0,
+          "fcf_ex_sbc": -1792000.0,
+          "sbc": 29992000.0,
+          "owner_earnings_norm": 32277000.0,
+          "fcf_margin": 0.1288801140726116,
+          "sbc_pct_rev": 0.13706994259807687,
+          "sbc_pct_fcf": 1.0635460992907801
+        },
+        {
+          "fy": 2022,
+          "fcf": 7959000.0,
+          "fcf_ex_sbc": -49456000.0,
+          "sbc": 57415000.0,
+          "owner_earnings_norm": 23254000.0,
+          "fcf_margin": 0.02806368011847464,
+          "sbc_pct_rev": 0.2024470654607641,
+          "sbc_pct_fcf": 7.213845960547808
+        },
+        {
+          "fy": 2023,
+          "fcf": -889000.0,
+          "fcf_ex_sbc": -77642000.0,
+          "sbc": 76753000.0,
+          "owner_earnings_norm": -73352000.0,
+          "fcf_margin": -0.00617391123179599,
+          "sbc_pct_rev": 0.5330328557638219,
+          "sbc_pct_fcf": null
+        },
+        {
+          "fy": 2024,
+          "fcf": -13027000.0,
+          "fcf_ex_sbc": -105661000.0,
+          "sbc": 92634000.0,
+          "owner_earnings_norm": -93601000.0,
+          "fcf_margin": -0.06426834141600517,
+          "sbc_pct_rev": 0.4570072571375008,
+          "sbc_pct_fcf": null
+        },
+        {
+          "fy": 2025,
+          "fcf": 35126000.0,
+          "fcf_ex_sbc": -68414000.0,
+          "sbc": 103540000.0,
+          "owner_earnings_norm": -42903000.0,
+          "fcf_margin": 0.10753076593399866,
+          "sbc_pct_rev": 0.31696565236025226,
+          "sbc_pct_fcf": 2.947674087570461
+        }
+      ],
+      "latest": {
+        "fy": 2025,
+        "fcf": 35126000.0,
+        "fcf_ex_sbc": -68414000.0,
+        "sbc": 103540000.0,
+        "owner_earnings_norm": -42903000.0,
+        "fcf_margin": 0.10753076593399866,
+        "sbc_pct_rev": 0.31696565236025226,
+        "sbc_pct_fcf": 2.947674087570461
+      },
+      "band": "FCF 为正但 SBC 吞掉大半"
+    },
+    "capital_allocation": {
+      "years": [
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "cumulative": {
+        "cfo": 217230000.0,
+        "capex": 159861000.0,
+        "acquisitions": 39000000.0,
+        "buybacks": 0.0,
+        "dividends": 0.0,
+        "debt_repaid": 0.0,
+        "debt_issued": 0.0
+      },
+      "pct_of_cfo": {
+        "capex": 0.7359066427289048,
+        "acquisitions": 0.17953321364452424,
+        "buybacks": 0.0,
+        "dividends": 0.0,
+        "debt_repaid": 0.0
+      },
+      "per_year": [
+        {
+          "fy": 2021,
+          "cfo": 59078000.0,
+          "capex": 30878000.0,
+          "acquisitions": null,
+          "buybacks": null,
+          "dividends": null,
+          "debt_repaid": null,
+          "debt_issued": null
+        },
+        {
+          "fy": 2022,
+          "cfo": 39752000.0,
+          "capex": 31793000.0,
+          "acquisitions": null,
+          "buybacks": null,
+          "dividends": null,
+          "debt_repaid": null,
+          "debt_issued": null
+        },
+        {
+          "fy": 2023,
+          "cfo": 8056000.0,
+          "capex": 8945000.0,
+          "acquisitions": 39000000.0,
+          "buybacks": null,
+          "dividends": null,
+          "debt_repaid": null,
+          "debt_issued": null
+        },
+        {
+          "fy": 2024,
+          "cfo": 23190000.0,
+          "capex": 36217000.0,
+          "acquisitions": 0.0,
+          "buybacks": null,
+          "dividends": null,
+          "debt_repaid": null,
+          "debt_issued": null
+        },
+        {
+          "fy": 2025,
+          "cfo": 87154000.0,
+          "capex": 52028000.0,
+          "acquisitions": 0.0,
+          "buybacks": null,
+          "dividends": null,
+          "debt_repaid": null,
+          "debt_issued": null
+        }
+      ],
+      "shareholder_return_total": 0.0,
+      "shareholder_return_pct_cfo": 0.0,
+      "reinvest_pct_cfo": 0.9154398563734291
+    },
+    "survival": {
+      "fy": 2025,
+      "net_debt": -16759000.0,
+      "is_net_cash": true,
+      "net_debt_to_ebitda": null,
+      "interest_coverage": null,
+      "current_ratio": 11.300267841199929,
+      "debt_due_1yr": null,
+      "cash": 16759000.0,
+      "due_vs_cash_covered": null,
+      "is_burning_cash": false,
+      "cash_runway_years": null,
+      "band": "堡垒（净现金）",
+      "debt_components": {
+        "fy": 2025,
+        "found": {},
+        "missing": [
+          "long_term_noncurrent",
+          "long_term_total_tag",
+          "bonds_payable",
+          "current_portion_ltd",
+          "short_term_borrowings",
+          "debt_current_fallback"
+        ],
+        "note": "应付债券/租赁负债等科目当前取数管道未覆盖；判生存柱前以年报附注的全口径为准"
+      }
+    },
+    "cycle_calibration": {
+      "peak_suspect": false,
+      "roic": null,
+      "operating_margin": null,
+      "note": null
+    },
+    "earnings_quality": {
+      "series": [
+        {
+          "fy": 2021,
+          "net_income": 32277000.0,
+          "cfo": 59078000.0,
+          "accrual_ratio": -0.8303435883136598,
+          "revenue": 218808000.0,
+          "receivables": null,
+          "inventory": null
+        },
+        {
+          "fy": 2022,
+          "net_income": 23254000.0,
+          "cfo": 39752000.0,
+          "accrual_ratio": -0.7094693386084114,
+          "revenue": 283605000.0,
+          "receivables": null,
+          "inventory": null
+        },
+        {
+          "fy": 2023,
+          "net_income": -80535000.0,
+          "cfo": 8056000.0,
+          "accrual_ratio": -1.1000310424039237,
+          "revenue": 143993000.0,
+          "receivables": null,
+          "inventory": null
+        },
+        {
+          "fy": 2024,
+          "net_income": -93601000.0,
+          "cfo": 23190000.0,
+          "accrual_ratio": -1.2477537633144946,
+          "revenue": 202697000.0,
+          "receivables": null,
+          "inventory": null
+        },
+        {
+          "fy": 2025,
+          "net_income": -42903000.0,
+          "cfo": 87154000.0,
+          "accrual_ratio": -3.0314197142390973,
+          "revenue": 326660000.0,
+          "receivables": null,
+          "inventory": null
+        }
+      ],
+      "revenue_cagr_approx": 0.10537131524389398,
+      "receivable_scissors": null,
+      "inventory_scissors": null,
+      "flags": [],
+      "coverage_missing": [
+        "应收账款（原表缺或取数管道未覆盖）",
+        "存货（原表缺或取数管道未覆盖）"
+      ],
+      "note": "代码初筛非定论；flags 逐项回年报附注核，结论由报告第七章会计可信度节下"
+    }
+  },
+  "_note": "纯代码算出的硬数字 + 粗分档；最终判断由报告结合定性证据下，但须引用这些数字。"
+}

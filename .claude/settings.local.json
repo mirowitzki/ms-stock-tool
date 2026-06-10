@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Skill",
+      "Agent",
+      "WebFetch",
+      "WebSearch",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(python3 -c \"import re;h=open\\('verify_dashboard.html',encoding='utf-8'\\).read\\(\\);m=re.search\\(r'<script>\\(.*\\)</script>',h,re.S\\);open\\('/tmp/dash.js','w',encoding='utf-8'\\).write\\(m.group\\(1\\)\\)\")",
+      "Bash(node --check /tmp/dash.js)",
+      "Bash(curl -s -o /dev/null -w \"  HTTP %{http_code}\\\\n\" http://127.0.0.1:8765/)",
+      "Bash(rm -f /Users/miro/cxl/.claude/launch.json)",
+      "Bash(rmdir /Users/miro/cxl/.claude)"
+    ],
+    "defaultMode": "acceptEdits"
+  }
+}

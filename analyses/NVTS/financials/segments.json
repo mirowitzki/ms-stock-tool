@@ -1,0 +1,35 @@
+{
+  "_note": "Navitas 本质是单一产品类别（GaN + SiC 功率半导体）公司，10-K 不按产品(GaN/SiC)或终端市场披露收入金额，按地区披露占比。口径说明：10-K 有两张地区表——(A) MD&A 按终端客户所在国（公司明确以终端客户而非直接分销商所在地归属收入）：FY2025 中国 47%、美国 28%、欧洲 14%、亚洲除中国 11%；(B) 财报附注按发货地区：FY2025 香港 57%、亚洲其余 21%、美国 10%、中国 9%、欧洲 3%（香港是分销枢纽、反映物流而非终端需求）。此处采用更能反映真实需求地理的 (A) 终端客户口径×全年总营收 $45.9M 折算，原始美元。它本身是个洞察：按终端客户口径中国从 FY2024 的 60% 降到 47%（去中国化 + 中国移动/消费市场下滑，是营收 -45% 的主因）。cost/margin 未按地区披露、留 null，桑基按整体毛利率(约31%)等比例分摊。",
+  "by_region": {
+    "2025-12-31": [
+      {
+        "name": "中国 China",
+        "revenue": 21580000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "美国 United States",
+        "revenue": 12856000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "欧洲 Europe",
+        "revenue": 6428000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "亚洲(除中国) Asia ex-China",
+        "revenue": 5051000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ]
+  }
+}

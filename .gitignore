@@ -1,0 +1,14 @@
+# 缓存 / 日志 / 本机环境
+__pycache__/
+*.pyc
+.DS_Store
+app.log
+.browser-profile/
+
+# 原始年报/招股书/公告全文（体量 ~380M、可用 fetch_a_stocks/fetch_filings 重新抓取）
+# 但保留小体积的公告索引（review.py 的复盘触发要用）
+analyses/*/filings/*
+!analyses/*/filings/announcements_index.json
+
+# 质检中间产物（过关后即弃）
+analyses/*/_check_numbers.txt

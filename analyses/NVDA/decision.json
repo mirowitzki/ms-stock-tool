@@ -1,0 +1,108 @@
+{
+  "ticker": "NVDA",
+  "company": "NVIDIA Corporation",
+  "date": "2026-06-06",
+  "currency": "USD",
+  "note": "decision.json 补建于 2026-06-10（原分析早于此、含 2026-06-06 Computex 近期动作雷达更新；价格与结论取分析时点口径）",
+  "verdict": "贵的好生意·公允偏贵（fair_with_bull）——AI算力垄断者+CUDA生态护城河+堡垒资产负债表近乎完美，但现价已把Bull预期打满（反向DCF隐含增速甚至略超Bull情景16.5%），且当前ROIC处周期高峰（19%→89%→71%垂直拉升）需归一化；Computex两颗CPU（Vera/RTX Spark）强化已被定价的Bull、不构成新的未定价上行",
+  "value_range": {
+    "low": 77,
+    "high": 340,
+    "weighted_center": 166,
+    "unit": "美元/股",
+    "note": "十年口径加权$166.19（−21%）、Bull≈$340（+61%）；五年口径中枢约$114、区间约$77-178（−46%）——差距大=乐观押在第6-10年"
+  },
+  "current_price": 211.4,
+  "market_cap_at_analysis": "约$5.23万亿 · 总股本约247.4亿股 · FY2026营收$215.9B · 净现金（现金$10.6B口径见facts）",
+  "safety_margin_vs_center": "-21%（十年口径）；五年口径约-46%",
+  "entry_watch_zone": "约$120-150（对应约30%安全边际的入场观察区）——好生意等好价格",
+  "entry_watch": {
+    "low": 120.0,
+    "high": 150.0,
+    "unit": "美元/股",
+    "note": "约30%安全边际的观察区；Bull兑现概率≥40%才撑得起现价"
+  },
+  "probabilities": {
+    "bear": 20,
+    "base": 55,
+    "bull": 25
+  },
+  "archetype": [
+    "贵的好生意/完美定价",
+    "周期高峰嫌疑"
+  ],
+  "review_by": "2026-09-15",
+  "thesis_key_variables": [
+    "AI capex持续性：hyperscaler资本开支是否2027见顶——Bear核心驱动、整个故事的宏观前提",
+    "GPU份额与ASIC替代：超大客户自研芯片（Broadcom/Marvell co-design）能否实质蚕食80%份额",
+    "CUDA生态锁定：网络效应+转换成本是护城河大头，盯开发者生态与替代框架进展",
+    "Vera服务器CPU增量成色：FY2027放量多少是真增量（部分已含在NVL72系统口径里、真实增量小于头条$20B）",
+    "RTX Spark与Arm PC：秋季出货6大OEM，重塑PC属6-10年期权、近期高端小众",
+    "周期校准：ROIC 19%→89%→71%垂直拉升=高峰嫌疑旗，别把高峰利润率喂终值"
+  ],
+  "predictions": [
+    {
+      "id": "P1",
+      "claim": "AI capex不见顶是Base成立的前提",
+      "metric": "数据中心收入同比",
+      "threshold": "FY2027（至2027-01）仍≥30%（大幅减速=Bear见顶剧本开启）",
+      "check_by": "2027-03-31",
+      "source": "季报/年报",
+      "scenario_link": "base",
+      "status": "open"
+    },
+    {
+      "id": "P2",
+      "claim": "ASIC替代不实质侵蚀份额",
+      "metric": "数据中心收入环比",
+      "threshold": "2026年内不出现连续两季环比下滑",
+      "check_by": "2027-03-31",
+      "source": "季报",
+      "scenario_link": "bear",
+      "status": "open"
+    },
+    {
+      "id": "P3",
+      "claim": "Vera CPU是真增量而非口径游戏",
+      "metric": "Vera/CPU收入可识别贡献",
+      "threshold": "FY2027可识别贡献达约$10B量级（分析师测$20B的对折线、剔重复口径后）",
+      "check_by": "2027-03-31",
+      "source": "年报/电话会",
+      "scenario_link": "bull",
+      "status": "open"
+    },
+    {
+      "id": "P4",
+      "claim": "RTX Spark如期切入PC",
+      "metric": "出货事件",
+      "threshold": "2026秋季如期随6大OEM出货",
+      "check_by": "2026-12-31",
+      "source": "公告/OEM发布",
+      "scenario_link": "bull",
+      "status": "open"
+    }
+  ],
+  "key_risks": [
+    "周期高峰资本化：当前ROIC/利润率处垂直拉升的高峰，按高峰付全款是经典价值陷阱（最高权重）",
+    "完美定价：现价隐含增速略超Bull、五年口径安全边际约−46%，任何不及完美都触发重估",
+    "ASIC替代与大客户集中：超大云厂既是大客户又在自研替代",
+    "出口管制与地缘：对华限制反复、主权AI需求的政策依赖",
+    "回购价位偏高：大量回购发生在大涨后，资本配置从满分往下拉",
+    "新战线竞争：CPU撞英特尔/AMD、PC撞高通/苹果，胜负未分"
+  ],
+  "in_circle_of_competence": true,
+  "decision": "观察/不在此价位买入。生意近乎完美（极致复利+CUDA生态+堡垒报表），问题从来不在生意、在价格：现价$211已按Bull打满、十年口径−21%、五年口径−46%，且ROIC处周期高峰需归一化。等回落到约$120-150（约30%安全边际）再考虑。关键判断点：Bull概率（AI capex持续超预期+份额守住80%+CUDA不被侵蚀）≥40%才撑得起现价。不给单一目标价。",
+  "odds": {
+    "downside_to_low_pct": -64,
+    "upside_to_high_pct": 61,
+    "to_center_pct": -21,
+    "ratio_up_vs_down": 0.95,
+    "basis": "分析时点现价 211.4 vs value_range（机械推导，代码算）"
+  },
+  "expected_irr_5y": {
+    "to_low_pct_per_year": -18.3,
+    "to_center_pct_per_year": -4.7,
+    "to_high_pct_per_year": 10.0,
+    "note": "机械推导=(价值/现价)^(1/5)−1，假设5年实现该价值；是赔率标尺、不是预测"
+  }
+}

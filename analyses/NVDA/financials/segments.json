@@ -1,0 +1,42 @@
+{
+  "_note": "NVIDIA 按专业市场（end market）的收入拆分，取自 FY2026（截至 2026-01-25）10-K 附注 Note 16『Revenue by specialized markets』，审计披露、原始美元。合计 $215,938M 与总营收一致。NVDA 不按市场平台披露分部成本/毛利（分部口径是 Compute & Networking / Graphics 两个报告分部），故此处 cost/margin 留 null、桑基图按整体毛利率(约 71%)等比例分摊。",
+  "by_market": {
+    "2026-01-25": [
+      {
+        "name": "Data Center 数据中心",
+        "revenue": 193737000000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "Gaming 游戏",
+        "revenue": 16042000000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "Professional Visualization 专业可视化",
+        "revenue": 3191000000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "Automotive 汽车",
+        "revenue": 2349000000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "OEM and Other 其他",
+        "revenue": 619000000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ]
+  }
+}

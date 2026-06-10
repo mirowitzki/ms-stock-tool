@@ -1,0 +1,42 @@
+{
+  "_note": "SiTime 是单一产品线（Precision Timing：振荡器/时钟芯片/谐振器）公司，10-K 不按业务/终端市场披露收入金额（终端市场只定性提及：通讯/数据中心/企业、汽车/工业/航天国防、移动/IoT/消费）。唯一带金额的收入拆分是按地区（发货地），取自 FY2025（截至 2025-12-31）10-K 附注、原始美元。它本身是个洞察：约 90% 发往亚洲，反映客户的代工/供应链集中。cost/margin 未按地区披露、留 null，桑基按整体毛利率等比例分摊。",
+  "by_region": {
+    "2025-12-31": [
+      {
+        "name": "香港 Hong Kong",
+        "revenue": 117082000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "台湾 Taiwan",
+        "revenue": 84517000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他地区 Other",
+        "revenue": 85104000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "美国 United States",
+        "revenue": 22540000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "新加坡 Singapore",
+        "revenue": 17417000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ]
+  }
+}

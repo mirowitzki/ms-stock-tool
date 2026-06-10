@@ -1,0 +1,103 @@
+{
+  "ticker": "002091",
+  "company": "江苏国泰",
+  "date": "2026-05-31",
+  "currency": "CNY",
+  "verdict": "公允偏低·下行托底、上行靠电解液周期；便宜买一个稳健现金牛+一份周期期权",
+  "value_range": {
+    "low": 6.8,
+    "high": 26.3,
+    "weighted_center": 12.2,
+    "unit": "元/股"
+  },
+  "current_price": 8.93,
+  "market_cap_at_analysis": "约145亿元 · PE 11-14倍 · 股息率约5%",
+  "safety_margin_vs_center": "+37%",
+  "entry_watch_zone": "现价(¥8.93)附近风险收益已正向；更强安全边际在 ¥7 以下（接近 Bear 中枢/盈利+净现金托底）",
+  "probabilities": {
+    "bear": 30,
+    "base": 50,
+    "bull": 20
+  },
+  "thesis_key_variables": [
+    "电解液周期拐点（六氟磷酸锂/电解液价格见底回升，决定 Bull 兑现与瑞泰从拖累转利润）",
+    "外贸主业毛利与份额（全球化/海外产能布局成败、关税与需求）",
+    "剔除一次性后的经常性归母盈利水位（扣非约10亿出头，是否稳住）",
+    "大额现金/理财是否被低效占用（约70亿理财 vs 主业回报）",
+    "可转债转股稀释 + 短期借款骤增(38.77亿)的用途与去化"
+  ],
+  "key_risks": [
+    "外贸薄利(毛利16%)被关税/需求/汇率冲击",
+    "电解液产能过剩持续、可能再计提减值",
+    "利润质量：归母含大额一次性处置收益(6.65亿,不可持续)",
+    "合并净利41%归少数股东（大头约7.2亿来自60/40合资贸易子公司，分拆的瑞泰仅约0.68亿），上市公司股东可分享有限",
+    "多层控股、治理复杂，穿透难"
+  ],
+  "in_circle_of_competence": true,
+  "decision": "观察（低估值+5%股息+净现金构成下行托底，电解液周期为上行期权；现价风险收益正向但非极度低估）",
+  "archetype": [
+    "慢牛现金牛+周期期权"
+  ],
+  "review_by": "2026-09-15",
+  "entry_watch": {
+    "low": null,
+    "high": 7.0,
+    "unit": "元/股",
+    "note": "¥7以下安全边际更强（接近Bear中枢、盈利+净现金托底）；现价8.93已属风险收益正向区"
+  },
+  "predictions": [
+    {
+      "id": "P1",
+      "claim": "外贸现金牛的经常性盈利稳住",
+      "metric": "2026全年扣非归母",
+      "threshold": "不低于2025（约10亿出头）的九成（≈9亿）",
+      "check_by": "2027-04-30",
+      "source": "年报",
+      "scenario_link": "base",
+      "status": "open"
+    },
+    {
+      "id": "P2",
+      "claim": "电解液周期期权开始兑现",
+      "metric": "瑞泰盈利/电解液价格",
+      "threshold": "2026年内瑞泰扭亏、或电解液价格较2025低点回升超20%",
+      "check_by": "2027-04-30",
+      "source": "年报分部/行业价格数据",
+      "scenario_link": "bull",
+      "status": "open"
+    },
+    {
+      "id": "P3",
+      "claim": "分红是托底的一部分",
+      "metric": "2026年度分红",
+      "threshold": "每股派息不低于上年（维持约5%股息率水平）",
+      "check_by": "2027-06-30",
+      "source": "利润分配预案",
+      "scenario_link": "base",
+      "status": "open"
+    },
+    {
+      "id": "P4",
+      "claim": "短借骤增需要去化或解释",
+      "metric": "短期借款余额",
+      "threshold": "2026年报较38.77亿明显下降、或披露清晰用途",
+      "check_by": "2027-04-30",
+      "source": "年报负债附注",
+      "scenario_link": "bear",
+      "status": "open"
+    }
+  ],
+  "odds": {
+    "downside_to_low_pct": -24,
+    "upside_to_high_pct": 195,
+    "to_center_pct": 37,
+    "ratio_up_vs_down": 8.12,
+    "basis": "分析时点现价 8.93 vs value_range（机械推导，代码算）"
+  },
+  "expected_irr_5y": {
+    "to_low_pct_per_year": -5.3,
+    "to_center_pct_per_year": 6.4,
+    "to_high_pct_per_year": 24.1,
+    "note": "机械推导=(价值/现价)^(1/5)−1，假设5年实现该价值；是赔率标尺、不是预测"
+  }
+}

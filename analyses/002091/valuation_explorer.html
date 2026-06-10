@@ -1,0 +1,3510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>价值分析交互器</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --text-muted: #5a6471;
+  --border: #e1e4e8;
+  --primary: #264653;
+  --accent: #1a5490;
+  --bear: #e63946;
+  --base: #1d6fb8;
+  --bull: #2a9d8f;
+  --pos: #2a9d8f;
+  --neg: #e63946;
+  --warn: #d4a017;
+  --grid: #ebedf0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "微软雅黑", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  font-size: 14px;
+  padding: 24px 16px 80px;
+}
+.container { max-width: 1280px; margin: 0 auto; }
+
+/* Header */
+header { margin-bottom: 24px; }
+header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+header .subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+header .ticker-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-right: 8px;
+  font-size: 13px;
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.card h2 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+.card-note { font-size: 12px; color: var(--text-muted); font-weight: 400; }
+
+/* Facts grid */
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+}
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fact label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+.fact input {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 14px;
+  font-family: inherit;
+  background: #fafbfc;
+}
+.fact input:focus { outline: none; border-color: var(--accent); background: #fff; }
+.fact .unit { font-size: 11px; color: var(--text-muted); }
+.unit-hint { font-size: 10px; color: var(--text-muted); font-weight: 500; letter-spacing: 0; }
+.derived {
+  background: linear-gradient(135deg, #f0f4f8 0%, #e1e9f0 100%);
+  border-radius: 6px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--accent);
+}
+.derived .value { font-size: 17px; font-weight: 700; color: var(--primary); }
+
+/* Scenarios layout */
+.scenarios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+@media (max-width: 900px) { .scenarios { grid-template-columns: 1fr; } }
+
+.scenario {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 4px solid;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+.scenario.bear { border-top-color: var(--bear); }
+.scenario.base { border-top-color: var(--base); }
+.scenario.bull { border-top-color: var(--bull); }
+
+.scenario-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.scenario-name { font-size: 16px; font-weight: 700; }
+.scenario.bear .scenario-name { color: var(--bear); }
+.scenario.base .scenario-name { color: var(--base); }
+.scenario.bull .scenario-name { color: var(--bull); }
+
+.scenario-result {
+  background: #f6f8fa;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+.scenario-result .label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.scenario-result .value-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.scenario-result .per-share {
+  font-size: 26px;
+  font-weight: 700;
+}
+.scenario-result .delta {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.delta.pos { background: rgba(42, 157, 143, 0.12); color: var(--pos); }
+.delta.neg { background: rgba(230, 57, 70, 0.12); color: var(--neg); }
+
+/* 情景卡：故事 + 治理为主，数字为辅 */
+.scenario-result .per-share { font-size: 19px; }
+.scenario-result .label { font-size: 11px; }
+.scenario-story {
+  font-size: 12.5px; line-height: 1.75; color: var(--text);
+  background: #f7f9fb; border-radius: 6px; padding: 10px 12px; margin-bottom: 10px;
+}
+.scenario-gov {
+  font-size: 12.5px; line-height: 1.75; color: var(--text); margin-bottom: 10px;
+  padding: 10px 12px; border-radius: 6px; background: #f2f7f4; border-left: 3px solid var(--bull);
+}
+.scenario.bear .scenario-gov { border-left-color: var(--bear); background: #fdf4f3; }
+.scenario.base .scenario-gov { border-left-color: var(--base); background: #f3f6fb; }
+.scenario-gov .gov-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+  color: var(--text-muted); margin-bottom: 4px;
+}
+.assump-range {
+  font-size: 11px; color: var(--text-muted); margin-bottom: 4px;
+  display: flex; flex-wrap: wrap; gap: 4px 14px;
+}
+.assump-range b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+details.scenario-adv { margin-top: 8px; border-top: 1px dashed var(--border); padding-top: 6px; }
+details.scenario-adv > summary {
+  cursor: pointer; font-size: 11.5px; color: var(--text-muted); font-weight: 600;
+  list-style: none; user-select: none; padding: 3px 0;
+}
+details.scenario-adv > summary::-webkit-details-marker { display: none; }
+details.scenario-adv > summary::before { content: "▶ "; font-size: 9px; }
+details.scenario-adv[open] > summary::before { content: "▼ "; }
+
+/* Sliders */
+.slider-group { margin-bottom: 10px; }
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.slider-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  flex: 0 0 auto;
+  min-width: 88px;
+}
+.slider-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 0 0 auto;
+  min-width: 56px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 3px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.scenario.bear input[type="range"]::-webkit-slider-thumb { background: var(--bear); }
+.scenario.base input[type="range"]::-webkit-slider-thumb { background: var(--base); }
+.scenario.bull input[type="range"]::-webkit-slider-thumb { background: var(--bull); }
+.scenario.bear input[type="range"]::-moz-range-thumb { background: var(--bear); }
+.scenario.base input[type="range"]::-moz-range-thumb { background: var(--base); }
+.scenario.bull input[type="range"]::-moz-range-thumb { background: var(--bull); }
+
+/* Summary band */
+.summary-band {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.summary-card {
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.summary-card .summary-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.summary-card .summary-value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+.summary-card .summary-detail { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.summary-card.weighted { border-left: 4px solid var(--accent); }
+.summary-card.current { border-left: 4px solid var(--primary); }
+.summary-card.safety { border-left: 4px solid var(--warn); }
+
+/* Probability sliders */
+.prob-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+.prob-cell { display: flex; flex-direction: column; gap: 4px; }
+.prob-cell .prob-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+}
+.prob-cell .prob-bear { color: var(--bear); }
+.prob-cell .prob-base { color: var(--base); }
+.prob-cell .prob-bull { color: var(--bull); }
+.prob-cell .prob-sum-warning {
+  font-size: 11px;
+  color: var(--warn);
+  margin-top: 4px;
+  display: none;
+}
+
+/* Charts */
+.chart-container { width: 100%; overflow-x: auto; position: relative; }
+.chart-container svg { display: block; max-width: 100%; height: auto; }
+.chart-container .hover-overlay { cursor: crosshair; }
+/* 桑基图：悬停高亮（放到一条流/一个节点上，相关的高亮、其余淡出） */
+.chart-container .sk-flow { transition: fill-opacity .18s ease; cursor: pointer; }
+.chart-container .sk-flow.sk-hi { fill-opacity: 0.66 !important; }
+.chart-container .sk-flow.sk-dim { fill-opacity: 0.07 !important; }
+.chart-container .sk-flow-loss.sk-hi { fill-opacity: 0.32 !important; }
+.chart-container .sk-node { transition: opacity .18s ease; cursor: pointer; }
+.chart-container .sk-node.sk-node-dim { opacity: 0.28; }
+
+/* Hover tooltip（线图） */
+.chart-tooltip {
+  position: absolute;
+  background: rgba(26, 26, 26, 0.96);
+  color: #fff;
+  border-radius: 7px;
+  padding: 10px 13px;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 100;
+  min-width: 200px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.22);
+  line-height: 1.5;
+  transition: opacity 0.1s;
+}
+.chart-tooltip .tt-x {
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.18);
+}
+.chart-tooltip .tt-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 3px 0;
+  font-variant-numeric: tabular-nums;
+}
+.chart-tooltip .tt-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex: 0 0 auto;
+}
+.chart-tooltip .tt-swatch.dashed {
+  background: transparent !important;
+  height: 0;
+  border-top: 2px dashed currentColor;
+}
+.chart-tooltip .tt-label {
+  flex: 1;
+  color: #c5cbd1;
+  font-weight: 500;
+}
+.chart-tooltip .tt-value {
+  font-weight: 700;
+  color: #fff;
+}
+.chart-tooltip .tt-value.neg { color: #ff8b94; }
+.chart-tooltip .tt-value.pos { color: #6dd5c1; }
+.legend {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  font-size: 12px;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-swatch { width: 14px; height: 3px; border-radius: 2px; }
+
+/* 利润表流向图诚实提示 */
+.income-note {
+  font-size: 12.5px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #fbf6ea;
+  border-left: 3px solid var(--warn);
+  border-radius: 6px;
+  line-height: 1.65;
+  color: var(--text);
+}
+.income-note b { color: var(--neg); }
+
+/* 价值判断仪表盘 */
+.cycle-banner {
+  display: flex; align-items: flex-start; gap: 8px;
+  background: #fff7e6; border: 1px solid #f3d98a; border-left: 4px solid #d99a2e;
+  border-radius: 8px; padding: 10px 14px; margin-bottom: 14px;
+  font-size: 13px; line-height: 1.6; color: #7a5a12;
+}
+.cycle-banner .ci { flex: 0 0 auto; font-size: 15px; }
+.earnings-banner {
+  display: flex; align-items: flex-start; gap: 8px;
+  border-radius: 8px; padding: 10px 14px; margin: 0 0 16px;
+  font-size: 13px; line-height: 1.6;
+}
+.earnings-banner .eb-icon { flex: 0 0 auto; font-size: 15px; }
+.earnings-banner.eb-info { background: #eef4fb; border: 1px solid #cfe0f1; border-left: 4px solid #3b7dd8; color: #1f4d80; }
+.earnings-banner.eb-soon { background: #fff7e6; border: 1px solid #f3d98a; border-left: 4px solid #d99a2e; color: #7a5a12; }
+.earnings-banner.eb-overdue { background: #fdecec; border: 1px solid #f3b4b4; border-left: 4px solid #d24747; color: #8a2020; }
+.earnings-banner b { font-weight: 750; }
+.safety-headline {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px;
+  padding: 14px 18px; border-radius: 10px; margin-bottom: 16px;
+  background: linear-gradient(135deg, #f3f6f9 0%, #e9eef3 100%);
+  border: 1px solid var(--border);
+}
+.safety-headline .sh-label { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+.safety-headline .sh-pct { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+.safety-headline .sh-pct.pos { color: var(--pos); }
+.safety-headline .sh-pct.neg { color: var(--neg); }
+.safety-headline .sh-nums { font-size: 13px; color: var(--text); font-family: var(--mono); }
+.safety-headline .sh-note { flex-basis: 100%; font-size: 13px; color: var(--text); margin-top: 2px; }
+.gauges { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media (max-width: 820px) { .gauges { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 460px) { .gauges { grid-template-columns: 1fr; } }
+.gauge {
+  border: 1px solid var(--border); border-radius: 10px; padding: 13px 14px;
+  background: #fff; border-top: 3px solid var(--border);
+  display: flex; flex-direction: column; gap: 5px;
+}
+.gauge.g-green { border-top-color: #2a9d8f; }
+.gauge.g-yellow { border-top-color: #d99a2e; }
+.gauge.g-red { border-top-color: #d64550; }
+.gauge.g-gray { border-top-color: #9aa7b2; }
+.gauge .g-name { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: .3px; text-transform: uppercase; }
+.gauge .g-band { font-size: 15px; font-weight: 750; line-height: 1.25; }
+.gauge.g-green .g-band { color: #1f8f76; }
+.gauge.g-yellow .g-band { color: #b9831a; }
+.gauge.g-red .g-band { color: var(--neg); }
+.gauge.g-gray .g-band { color: var(--text); }
+.gauge .g-nums { font-size: 12.5px; font-family: var(--mono); color: var(--text); }
+.gauge .g-note { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+.gauge .g-explain { margin-top: 3px; }
+.gauge .g-explain > summary {
+  font-size: 11px; color: var(--accent); cursor: pointer; list-style: none;
+  user-select: none; padding: 3px 0; font-weight: 600;
+}
+.gauge .g-explain > summary::-webkit-details-marker { display: none; }
+.gauge .g-explain[open] > summary { color: var(--text-light); }
+.gauge .g-explain-body {
+  font-size: 11.5px; color: var(--text-muted); line-height: 1.62;
+  background: #f6f8fa; border-radius: 6px; padding: 9px 11px; margin-top: 4px;
+}
+.gauge .g-explain-body .ex-h { color: var(--text); font-weight: 700; }
+/* 通用内联讲解（安全边际头条 / 周期警告复用） */
+.inline-explain { margin-top: 6px; flex-basis: 100%; }
+.inline-explain > summary {
+  font-size: 11.5px; color: var(--accent); cursor: pointer; list-style: none;
+  user-select: none; font-weight: 600;
+}
+.inline-explain > summary::-webkit-details-marker { display: none; }
+.inline-explain[open] > summary { color: var(--text-light); }
+.inline-explain .ie-body {
+  font-size: 12px; line-height: 1.65; color: var(--text-muted);
+  background: rgba(255,255,255,.6); border-radius: 6px; padding: 9px 11px; margin-top: 5px;
+}
+.cycle-banner .inline-explain .ie-body { background: rgba(255,255,255,.55); }
+.inline-explain.on-card .ie-body { background: #f6f8fa; }
+.inline-explain .ie-body .ex-h { color: var(--text); font-weight: 700; }
+
+/* Heatmap */
+.heatmap-wrap { display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.heatmap-wrap .controls { display: flex; flex-direction: column; gap: 8px; min-width: 180px; }
+.heatmap-wrap select {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 13px;
+  background: #fafbfc;
+}
+
+/* Collapsible */
+details.advanced {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  padding: 0;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+details.advanced summary {
+  cursor: pointer;
+  padding: 14px 20px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--primary);
+  user-select: none;
+  list-style: none;
+}
+details.advanced summary::-webkit-details-marker { display: none; }
+details.advanced summary::before { content: "▶ "; font-size: 11px; margin-right: 6px; transition: transform 0.2s; display: inline-block; }
+details.advanced[open] summary::before { transform: rotate(90deg); }
+details.advanced .details-body { padding: 0 20px 20px; }
+
+/* Reverse DCF 解读卡 */
+.rev-verdict {
+  margin: 12px 0 18px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  border-left: 5px solid var(--accent);
+  background: linear-gradient(180deg, #fafbfc 0%, #f4f6f8 100%);
+}
+.rev-verdict.red { border-left-color: var(--neg); background: linear-gradient(180deg, #fef5f5 0%, #fde8e8 100%); }
+.rev-verdict.orange { border-left-color: #f4a261; background: linear-gradient(180deg, #fef9f3 0%, #fdf1e3 100%); }
+.rev-verdict.yellow { border-left-color: var(--warn); background: linear-gradient(180deg, #fffaeb 0%, #fdf3d3 100%); }
+.rev-verdict.green { border-left-color: var(--pos); background: linear-gradient(180deg, #f3faf9 0%, #e3f3f1 100%); }
+.rev-verdict-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: rgba(0,0,0,0.04);
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.rev-verdict.red .rev-verdict-tag { background: rgba(230, 57, 70, 0.12); color: var(--neg); }
+.rev-verdict.orange .rev-verdict-tag { background: rgba(244, 162, 97, 0.18); color: #c97a3c; }
+.rev-verdict.yellow .rev-verdict-tag { background: rgba(212, 160, 23, 0.15); color: #a07a0e; }
+.rev-verdict.green .rev-verdict-tag { background: rgba(42, 157, 143, 0.15); color: var(--pos); }
+.rev-verdict-headline { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 10px; line-height: 1.5; }
+.rev-verdict-story { font-size: 14px; line-height: 1.8; color: var(--text); margin-bottom: 10px; }
+.rev-verdict-points { margin: 0 0 10px; padding-left: 1.4em; }
+.rev-verdict-points li { font-size: 13px; line-height: 1.7; margin: 4px 0; color: var(--text); }
+.rev-verdict-summary {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0,0,0,0.08);
+  font-size: 12.5px;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Reverse DCF */
+.reverse-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 700px) { .reverse-grid { grid-template-columns: 1fr; } }
+.reverse-cell { padding: 14px; background: #f6f8fa; border-radius: 6px; }
+.reverse-cell h4 { font-size: 13px; margin-bottom: 8px; color: var(--primary); }
+.reverse-cell .implied {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  margin: 6px 0;
+}
+.reverse-cell .interpretation {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Reset 按钮（每个模块右上角） */
+.reset-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+.reset-btn:hover {
+  background: #fff;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.reset-btn:active { transform: scale(0.96); }
+.reset-btn.flash {
+  background: rgba(42, 157, 143, 0.15);
+  border-color: var(--pos);
+  color: var(--pos);
+}
+
+/* Top nav */
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.topnav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.topnav a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+.topnav a.primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: #fff;
+  border-color: transparent;
+}
+.topnav a.primary:hover { color: #fff; box-shadow: var(--shadow-lg); }
+
+/* Footer */
+footer { margin-top: 24px; padding: 16px; text-align: center; color: var(--text-muted); font-size: 12px; }
+footer a { color: var(--accent); text-decoration: none; }
+
+/* Utility */
+.muted { color: var(--text-muted); }
+.mono { font-variant-numeric: tabular-nums; }
+.flex-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.spacer-sm { height: 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav class="topnav">
+  <a href="../../dashboard.html">← 返回仪表盘</a>
+  <a href="#" id="nav-pdf" class="primary" style="display: none;">📄 完整报告 (PDF)</a>
+</nav>
+
+<header>
+  <h1><span class="ticker-badge" id="ticker-badge">TICKER</span><span id="company-name">价值分析交互器</span></h1>
+  <p class="subtitle" id="subtitle">情景前瞻 DCF + 反向 DCF</p>
+</header>
+
+<!-- ========================= 下一份财报提醒 ========================= -->
+<div id="earnings-banner" class="earnings-banner" style="display:none;"></div>
+
+<!-- ========================= 基础事实 ========================= -->
+<section class="card">
+  <h2>
+    <span>基础事实 <span class="card-note">可调整，下方所有计算实时更新</span></span>
+    <button class="reset-btn" onclick="resetSection('facts')" title="恢复到默认值">↻ 重置基础事实</button>
+  </h2>
+  <div class="facts-grid">
+    <div class="fact">
+      <label id="lbl-revenue">当前营收</label>
+      <input type="number" id="fact-revenue" step="10">
+    </div>
+    <div class="fact">
+      <label id="lbl-cash">现金</label>
+      <input type="number" id="fact-cash" step="10">
+    </div>
+    <div class="fact">
+      <label id="lbl-debt">债务</label>
+      <input type="number" id="fact-debt" step="1">
+    </div>
+    <div class="fact">
+      <label id="lbl-marketcap">市值</label>
+      <input type="number" id="fact-marketcap" step="100">
+    </div>
+    <div class="fact">
+      <label id="lbl-shares">完全稀释股数</label>
+      <input type="number" id="fact-shares-today" step="1">
+    </div>
+    <div class="fact derived">
+      <label>隐含每股价格</label>
+      <div class="value mono" id="derived-price">$0.00</div>
+      <div class="unit">市值 ÷ 股数</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= 价值判断仪表盘（四柱 + 周期 + 安全边际）========================= -->
+<section class="card" id="section-gauges" style="display:none;">
+  <h2>价值判断 · 一眼看清 <span class="card-note">四柱硬数字来自 financials/metrics.json（代码算）；一句话是判断</span></h2>
+  <div id="cycle-banner" class="cycle-banner" style="display:none;"></div>
+  <div id="safety-headline" class="safety-headline"></div>
+  <div class="gauges" id="gauges"></div>
+</section>
+
+<!-- ========================= 股价走势（近 5 年·月）========================= -->
+<section class="card" id="section-price" style="display:none;">
+  <h2>股价走势 <span class="card-note" id="price-note">近 5 年 · 月度收盘</span></h2>
+  <div class="chart-container" id="chart-price"></div>
+</section>
+
+<!-- ========================= 历史利润表 ========================= -->
+<section class="card">
+  <h2>历史财务可视化 <span class="card-note">直接读取 financials.csv</span></h2>
+  <div class="chart-container" id="chart-history"></div>
+  <div class="legend" id="legend-history"></div>
+</section>
+
+<!-- ========================= 最新年报 · 业务板块与利润流向（桑基图） ========================= -->
+<section class="card" id="section-sankey" style="display:none;">
+  <h2><span id="sankey-title">业务板块 → 利润流向</span> <span class="card-note" id="sankey-subtitle"></span></h2>
+  <p class="muted" style="font-size:12px; margin-bottom:6px;" id="sankey-desc">
+    左边是各项业务板块（条越粗＝营收越大），汇成营业收入后，一路分流成成本、各项费用，最后剩下净利润。
+  </p>
+  <div class="chart-container" id="chart-sankey"></div>
+  <div class="income-note" id="sankey-note" style="display:none;"></div>
+  <div class="legend" id="legend-sankey"></div>
+</section>
+
+<!-- ========================= 三情景 ========================= -->
+<section>
+  <div class="card" style="margin-bottom: 16px;">
+    <h2>三个情景：故事 + 管理层应对 + 价值区间 <span class="card-note">看懂故事和治理，比盯数字更重要</span></h2>
+    <p class="muted" style="font-size: 12px; margin-bottom: 4px;">
+      每个情景先是一个<b>自洽的故事</b>——公司会变成什么样、管理层该怎么应对——再挂一个<b>毛估的价值区间</b>。
+      价值<b>以 5 年显性为头条口径</b>（更在能力圈内、可证伪性强），并<b>并列标出延伸至 10 年的参考值</b>——
+      两者差距，就是市场把多少乐观押在了最难看清的第 6–10 年。数字是模糊的方向、不是精确预测；想自己拨假设，展开每张卡片底部的"高级"即可。
+    </p>
+  </div>
+  <div class="scenarios">
+    <!-- Bear -->
+    <div class="scenario bear" data-scenario="bear">
+      <div class="scenario-header">
+        <span class="scenario-name">悲观（Bear）</span>
+        <button class="reset-btn" onclick="resetSection('bear')" title="重置悲观情景">↻</button>
+      </div>
+      <div class="scenario-result">
+        <div class="label">每股内在价值 · 5 年口径毛估区间</div>
+        <div class="value-row">
+          <span class="per-share mono" id="result-bear-price">—</span>
+          <span class="delta" id="result-bear-delta">—</span>
+        </div>
+        <div class="muted mono" style="font-size:11px" id="result-bear-equity"></div>
+      </div>
+      <div class="scenario-story" id="story-bear"></div>
+      <div class="scenario-gov" id="gov-bear" style="display:none;">
+        <div class="gov-label">管理层应对 / 治理</div>
+        <div id="gov-bear-text"></div>
+      </div>
+      <div class="assump-range" id="assump-bear"></div>
+      <details class="scenario-adv">
+        <summary>高级 · 手动微调假设（数字只是毛估，看故事就够）</summary>
+        <h3>营收路径</h3>
+        <div class="slider-group">
+          <div class="slider-row"><span class="slider-label">Y1 营收</span><input type="range" id="bear-revY1" min="0" max="2000000" step="100"><span class="slider-value mono" id="bear-revY1-val">$0M</span></div>
+          <div class="slider-row"><span class="slider-label">Y10 营收</span><input type="range" id="bear-revY10" min="0" max="3000000" step="100"><span class="slider-value mono" id="bear-revY10-val">$0M</span></div>
+          <div class="slider-row"><span class="slider-label">营收 CAGR（年化）</span><span class="slider-value mono" id="bear-cagr-val" style="margin-left:auto; min-width: 56px;">—</span></div>
+        </div>
+        <h3>FCF 利润率路径</h3>
+        <div class="slider-group">
+          <div class="slider-row"><span class="slider-label">Y1 FCF %</span><input type="range" id="bear-mY1" min="-60" max="40" step="1"><span class="slider-value mono" id="bear-mY1-val">0%</span></div>
+          <div class="slider-row"><span class="slider-label">Y10 FCF %</span><input type="range" id="bear-mY10" min="-30" max="60" step="1"><span class="slider-value mono" id="bear-mY10-val">0%</span></div>
+        </div>
+        <h3>其他</h3>
+        <div class="slider-group">
+          <div class="slider-row"><span class="slider-label">折现率</span><input type="range" id="bear-disc" min="6" max="20" step="0.5"><span class="slider-value mono" id="bear-disc-val">0%</span></div>
+          <div class="slider-row"><span class="slider-label">永续增长</span><input type="range" id="bear-tg" min="0" max="5" step="0.25"><span class="slider-value mono" id="bear-tg-val">0%</span></div>
+          <div class="slider-row"><span class="slider-label" data-label-shares>未来股数</span><input type="range" id="bear-shares" min="10" max="50000" step="10"><span class="slider-value mono" id="bear-shares-val">0M</span></div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Base -->
+    <div class="scenario base" data-scenario="base">
+      <div class="scenario-header">
+        <span class="scenario-name">中性（Base）</span>
+        <button class="reset-btn" onclick="resetSection('base')" title="重置中性情景">↻</button>
+      </div>
+      <div class="scenario-result">
+        <div class="label">每股内在价值 · 5 年口径毛估区间</div>
+        <div class="value-row">
+          <span class="per-share mono" id="result-base-price">—</span>
+          <span class="delta" id="result-base-delta">—</span>
+        </div>
+        <div class="muted mono" style="font-size:11px" id="result-base-equity"></div>
+      </div>
+      <div class="scenario-story" id="story-base"></div>
+      <div class="scenario-gov" id="gov-base" style="display:none;">
+        <div class="gov-label">管理层应对 / 治理</div>
+        <div id="gov-base-text"></div>
+      </div>
+      <div class="assump-range" id="assump-base"></div>
+      <details class="scenario-adv">
+        <summary>高级 · 手动微调假设（数字只是毛估，看故事就够）</summary>
+        <h3>营收路径</h3>
+        <div class="slider-group">
+          <div class="slider-row"><span class="slider-label">Y1 营收</span><input type="range" id="base-revY1" min="0" max="2000000" step="100"><span class="slider-value mono" id="base-revY1-val">$0M</span></div>
+          <div class="slider-row"><span class="slider-label">Y10 营收</span><input type="range" id="base-revY10" min="0" max="3000000" step="100"><span class="slider-value mono" id="base-revY10-val">$0M</span></div>
+          <div class="slider-row"><span class="slider-label">营收 CAGR（年化）</span><span class="slider-value mono" id="base-cagr-val" style="margin-left:auto; min-width: 56px;">—</span></div>
+        </div>
+        <h3>FCF 利润率路径</h3>
+        <div class="slider-group">
+          <div class="slider-row"><span class="slider-label">Y1 FCF %</span><input type="range" id="base-mY1" min="-60" max="40" step="1"><span class="slider-value mono" id="base-mY1-val">0%</span></div>
+          <div class="slider-row"><span class="slider-label">Y10 FCF %</span><input type="range" id="base-mY10" min="-30" max="60" step="1"><span class="slider-value mono" id="base-mY10-val">0%</span></div>
+        </div>
+        <h3>其他</h3>
+        <div class="slider-group">
+          <div class="slider-row"><span class="slider-label">折现率</span><input type="range" id="base-disc" min="6" max="20" step="0.5"><span class="slider-value mono" id="base-disc-val">0%</span></div>
+          <div class="slider-row"><span class="slider-label">永续增长</span><input type="range" id="base-tg" min="0" max="5" step="0.25"><span class="slider-value mono" id="base-tg-val">0%</span></div>
+          <div class="slider-row"><span class="slider-label">未来股数 (M)</span><input type="range" id="base-shares" min="10" max="50000" step="10"><span class="slider-value mono" id="base-shares-val">0M</span></div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Bull -->
+    <div class="scenario bull" data-scenario="bull">
+      <div class="scenario-header">
+        <span class="scenario-name">乐观（Bull）</span>
+        <button class="reset-btn" onclick="resetSection('bull')" title="重置乐观情景">↻</button>
+      </div>
+      <div class="scenario-result">
+        <div class="label">每股内在价值 · 5 年口径毛估区间</div>
+        <div class="value-row">
+          <span class="per-share mono" id="result-bull-price">—</span>
+          <span class="delta" id="result-bull-delta">—</span>
+        </div>
+        <div class="muted mono" style="font-size:11px" id="result-bull-equity"></div>
+      </div>
+      <div class="scenario-story" id="story-bull"></div>
+      <div class="scenario-gov" id="gov-bull" style="display:none;">
+        <div class="gov-label">管理层应对 / 治理</div>
+        <div id="gov-bull-text"></div>
+      </div>
+      <div class="assump-range" id="assump-bull"></div>
+      <details class="scenario-adv">
+        <summary>高级 · 手动微调假设（数字只是毛估，看故事就够）</summary>
+        <h3>营收路径</h3>
+        <div class="slider-group">
+          <div class="slider-row"><span class="slider-label">Y1 营收</span><input type="range" id="bull-revY1" min="0" max="2000000" step="100"><span class="slider-value mono" id="bull-revY1-val">$0M</span></div>
+          <div class="slider-row"><span class="slider-label">Y10 营收</span><input type="range" id="bull-revY10" min="0" max="3000000" step="100"><span class="slider-value mono" id="bull-revY10-val">$0M</span></div>
+          <div class="slider-row"><span class="slider-label">营收 CAGR（年化）</span><span class="slider-value mono" id="bull-cagr-val" style="margin-left:auto; min-width: 56px;">—</span></div>
+        </div>
+        <h3>FCF 利润率路径</h3>
+        <div class="slider-group">
+          <div class="slider-row"><span class="slider-label">Y1 FCF %</span><input type="range" id="bull-mY1" min="-60" max="40" step="1"><span class="slider-value mono" id="bull-mY1-val">0%</span></div>
+          <div class="slider-row"><span class="slider-label">Y10 FCF %</span><input type="range" id="bull-mY10" min="-30" max="60" step="1"><span class="slider-value mono" id="bull-mY10-val">0%</span></div>
+        </div>
+        <h3>其他</h3>
+        <div class="slider-group">
+          <div class="slider-row"><span class="slider-label">折现率</span><input type="range" id="bull-disc" min="6" max="20" step="0.5"><span class="slider-value mono" id="bull-disc-val">0%</span></div>
+          <div class="slider-row"><span class="slider-label">永续增长</span><input type="range" id="bull-tg" min="0" max="5" step="0.25"><span class="slider-value mono" id="bull-tg-val">0%</span></div>
+          <div class="slider-row"><span class="slider-label">未来股数 (M)</span><input type="range" id="bull-shares" min="10" max="50000" step="10"><span class="slider-value mono" id="bull-shares-val">0M</span></div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<div class="spacer-sm"></div>
+
+<!-- ========================= 汇总 + 概率分布 ========================= -->
+<section class="card">
+  <h2>结果汇总 <span class="card-note">基于上面三情景 + 你的概率分布</span></h2>
+  <div class="summary-band">
+    <div class="summary-card current">
+      <div class="summary-label">当前价</div>
+      <div class="summary-value mono" id="summary-current">$0.00</div>
+      <div class="summary-detail">市值 ÷ 完全稀释股数</div>
+    </div>
+    <div class="summary-card weighted">
+      <div class="summary-label">概率加权期望每股价值</div>
+      <div class="summary-value mono" id="summary-weighted">$0.00</div>
+      <div class="summary-detail" id="summary-weighted-detail">P(Bear)·Bear + P(Base)·Base + P(Bull)·Bull</div>
+    </div>
+    <div class="summary-card safety">
+      <div class="summary-label">相对加权期望的"安全边际"</div>
+      <div class="summary-value mono" id="summary-safety">0%</div>
+      <div class="summary-detail" id="summary-safety-detail">负值 = 当前价高于内在价值</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 16px; display: flex; align-items: center; justify-content: space-between;">
+    <span>概率分布 <span class="muted" style="font-weight:400">三个加起来应该 = 100%</span></span>
+    <button class="reset-btn" onclick="resetSection('probabilities')" title="重置概率分布">↻ 重置</button>
+  </h3>
+  <div class="prob-grid">
+    <div class="prob-cell">
+      <div class="prob-header"><span class="prob-bear">P(悲观)</span><span class="mono" id="prob-bear-val">0%</span></div>
+      <input type="range" id="prob-bear" min="0" max="100" step="5">
+    </div>
+    <div class="prob-cell">
+      <div class="prob-header"><span class="prob-base">P(中性)</span><span class="mono" id="prob-base-val">0%</span></div>
+      <input type="range" id="prob-base" min="0" max="100" step="5">
+    </div>
+    <div class="prob-cell">
+      <div class="prob-header"><span class="prob-bull">P(乐观)</span><span class="mono" id="prob-bull-val">0%</span></div>
+      <input type="range" id="prob-bull" min="0" max="100" step="5">
+    </div>
+  </div>
+  <div id="prob-sum-warning" class="prob-sum-warning"></div>
+</section>
+
+<!-- ========================= 叠加对比图 ========================= -->
+<section class="card">
+  <h2>三情景叠加对比图</h2>
+  <h3>营收路径（前 5 年实线＝显性期 · 延伸至 10 年虚线＝参考）</h3>
+  <div class="chart-container" id="chart-revenue"></div>
+  <div class="legend">
+    <span class="legend-item"><span class="legend-swatch" style="background: var(--bear)"></span>悲观</span>
+    <span class="legend-item"><span class="legend-swatch" style="background: var(--base)"></span>中性</span>
+    <span class="legend-item"><span class="legend-swatch" style="background: var(--bull)"></span>乐观</span>
+  </div>
+  <h3>自由现金流路径（前 5 年实线＝显性期 · 延伸至 10 年虚线＝参考）</h3>
+  <div class="chart-container" id="chart-fcf"></div>
+  <div class="legend">
+    <span class="legend-item"><span class="legend-swatch" style="background: var(--bear)"></span>悲观</span>
+    <span class="legend-item"><span class="legend-swatch" style="background: var(--base)"></span>中性</span>
+    <span class="legend-item"><span class="legend-swatch" style="background: var(--bull)"></span>乐观</span>
+    <span class="legend-item"><span class="legend-swatch" style="background: #888; height: 1px; border-top: 1px dashed #888;"></span>零线</span>
+  </div>
+</section>
+
+<!-- ========================= 反向 DCF ========================= -->
+<section class="card">
+  <h2>反向 DCF：当前市值已经在 price-in 什么</h2>
+  <p class="muted" style="font-size: 12.5px; margin-top: -4px; margin-bottom: 4px;">
+    把问题倒过来——固定一个变量、反解市场必须相信什么才能撑住当前市值。
+  </p>
+  <details class="inline-explain on-card" style="margin-bottom: 10px;">
+    <summary>什么是反向 DCF ▾</summary>
+    <div class="ie-body">
+      <span class="ex-h">什么是反向 DCF ·</span> 正常估值是从假设算出价值；反向 DCF 把它倒过来——固定一个变量，反解出现在的股价到底假设了什么。它不算价值，而是检验市场的预期合不合理、是不是已经按完美定价。
+      <br><span class="ex-h">怎么读 ·</span> 模式 A 固定利润率、反解营收要多快增长才撑得住现价；模式 B 反过来固定增速、反解要多高利润率。隐含数字越离谱（如未来 5 年还要每年增长 87%），说明现价把红利付得越满、安全边际越薄——这时买的是预期，不是价值。并列的 5 年 / 10 年口径，差距越大＝越多乐观押在最难看清的远期。
+    </div>
+  </details>
+
+  <!-- AI 分析卡（由 inputs.json 的 reverse_dcf_commentary 驱动，无则不显示） -->
+  <div id="rev-commentary" class="rev-verdict" style="display: none;">
+    <div class="rev-verdict-tag" id="rev-commentary-tag">我的判断</div>
+    <div class="rev-verdict-story" id="rev-commentary-story" style="display:none;"></div>
+    <div class="rev-verdict-headline" id="rev-commentary-headline"></div>
+    <ul class="rev-verdict-points" id="rev-commentary-points"></ul>
+    <div class="rev-verdict-summary" id="rev-commentary-summary"></div>
+  </div>
+</section>
+
+<details class="advanced" open>
+  <summary>反向 DCF · 交互式反解（拖滑块调假设、看隐含数字）</summary>
+  <div class="details-body">
+    <p class="muted" style="font-size: 13px; margin-bottom: 12px;">
+      固定一个变量，反解市场必须相信的另一个值。"我的判断"卡的结论就是基于下面这两组数字。
+    </p>
+    <div class="reverse-grid">
+      <div class="reverse-cell">
+        <h4>模式 A：固定成熟期 FCF 利润率，反解必须的营收 CAGR</h4>
+        <div class="slider-row">
+          <span class="slider-label">FCF 率</span>
+          <input type="range" id="rev-fix-margin" min="5" max="40" step="1" value="15">
+          <span class="slider-value mono" id="rev-fix-margin-val">15%</span>
+        </div>
+        <div class="slider-row">
+          <span class="slider-label">折现率</span>
+          <input type="range" id="rev-disc-A" min="6" max="18" step="0.5" value="12">
+          <span class="slider-value mono" id="rev-disc-A-val">12%</span>
+        </div>
+        <div class="implied" id="rev-implied-cagr">—</div>
+        <div class="interpretation" id="rev-interp-cagr"></div>
+      </div>
+      <div class="reverse-cell">
+        <h4>模式 B：固定营收 CAGR，反解必须的成熟期 FCF 利润率</h4>
+        <div class="slider-row">
+          <span class="slider-label">CAGR</span>
+          <input type="range" id="rev-fix-cagr" min="0" max="60" step="1" value="20">
+          <span class="slider-value mono" id="rev-fix-cagr-val">20%</span>
+        </div>
+        <div class="slider-row">
+          <span class="slider-label">折现率</span>
+          <input type="range" id="rev-disc-B" min="6" max="18" step="0.5" value="12">
+          <span class="slider-value mono" id="rev-disc-B-val">12%</span>
+        </div>
+        <div class="implied" id="rev-implied-margin">—</div>
+        <div class="interpretation" id="rev-interp-margin"></div>
+      </div>
+    </div>
+  </div>
+</details>
+
+<footer>
+  <p><span id="footer-ticker">—</span> · 生成时间 <span id="footer-time">—</span></p>
+  <p>由 <a href="#">ms-stock-tool</a> 自动生成 · 假设全部可拖动调整 · 关闭后下次打开会保留你的调整</p>
+</footer>
+
+</div><!-- /container -->
+
+<!-- =====================================================
+     INITIAL DATA: by render_explorer.py 注入
+     ===================================================== -->
+<!-- RENDER_DATA_START -->
+<script id="initial-data" type="application/json">
+{
+  "ticker": "002091",
+  "company_name": "江苏国泰",
+  "as_of": "2025-12-31",
+  "generated_at": "2026-06-10 13:11:28",
+  "facts": {
+    "revenue_today": 39440,
+    "cash": 7000,
+    "debt": 4300,
+    "market_cap": 14530,
+    "diluted_shares_today": 1627.7
+  },
+  "history": [
+    {
+      "year": 2003,
+      "revenue": 2290.0,
+      "gross_profit": null,
+      "operating_income": 95.97,
+      "net_income": 69.93,
+      "fcf": -111.16
+    },
+    {
+      "year": 2004,
+      "revenue": 2378.0,
+      "gross_profit": null,
+      "operating_income": 85.52,
+      "net_income": 60.25,
+      "fcf": 327.78
+    },
+    {
+      "year": 2005,
+      "revenue": 2748.0,
+      "gross_profit": null,
+      "operating_income": 94.56,
+      "net_income": 58.03,
+      "fcf": 61.44
+    },
+    {
+      "year": 2006,
+      "revenue": 3147.0,
+      "gross_profit": null,
+      "operating_income": 124.0,
+      "net_income": 73.96,
+      "fcf": 78.44
+    },
+    {
+      "year": 2007,
+      "revenue": 3029.0,
+      "gross_profit": null,
+      "operating_income": 133.0,
+      "net_income": 80.54,
+      "fcf": -15.48
+    },
+    {
+      "year": 2008,
+      "revenue": 3127.0,
+      "gross_profit": null,
+      "operating_income": 157.0,
+      "net_income": 128.0,
+      "fcf": 149.36
+    },
+    {
+      "year": 2009,
+      "revenue": 2648.0,
+      "gross_profit": null,
+      "operating_income": 198.0,
+      "net_income": 148.0,
+      "fcf": 23.37
+    },
+    {
+      "year": 2010,
+      "revenue": 3961.0,
+      "gross_profit": null,
+      "operating_income": 229.0,
+      "net_income": 177.0,
+      "fcf": -75.02
+    },
+    {
+      "year": 2011,
+      "revenue": 4511.0,
+      "gross_profit": null,
+      "operating_income": 265.0,
+      "net_income": 197.0,
+      "fcf": 102.93
+    },
+    {
+      "year": 2012,
+      "revenue": 4829.0,
+      "gross_profit": null,
+      "operating_income": 244.0,
+      "net_income": 191.0,
+      "fcf": 231.99
+    },
+    {
+      "year": 2013,
+      "revenue": 5608.0,
+      "gross_profit": null,
+      "operating_income": 221.0,
+      "net_income": 169.0,
+      "fcf": 81.48
+    },
+    {
+      "year": 2014,
+      "revenue": 6061.0,
+      "gross_profit": null,
+      "operating_income": 274.0,
+      "net_income": 204.0,
+      "fcf": -13.53
+    },
+    {
+      "year": 2015,
+      "revenue": 27750.0,
+      "gross_profit": null,
+      "operating_income": 942.0,
+      "net_income": 422.0,
+      "fcf": 283.44
+    },
+    {
+      "year": 2016,
+      "revenue": 29738.0,
+      "gross_profit": null,
+      "operating_income": 1347.0,
+      "net_income": 541.0,
+      "fcf": 1018.26
+    },
+    {
+      "year": 2017,
+      "revenue": 34549.0,
+      "gross_profit": null,
+      "operating_income": 1481.0,
+      "net_income": 774.0,
+      "fcf": -520.28
+    },
+    {
+      "year": 2018,
+      "revenue": 36860.0,
+      "gross_profit": null,
+      "operating_income": 2241.0,
+      "net_income": 1016.0,
+      "fcf": 1169.72
+    },
+    {
+      "year": 2019,
+      "revenue": 39326.0,
+      "gross_profit": null,
+      "operating_income": 1887.0,
+      "net_income": 945.0,
+      "fcf": 1459.9
+    },
+    {
+      "year": 2020,
+      "revenue": 30138.0,
+      "gross_profit": null,
+      "operating_income": 1952.0,
+      "net_income": 978.0,
+      "fcf": 2817.17
+    },
+    {
+      "year": 2021,
+      "revenue": 39393.0,
+      "gross_profit": null,
+      "operating_income": 2313.0,
+      "net_income": 1236.0,
+      "fcf": -1137.73
+    },
+    {
+      "year": 2022,
+      "revenue": 42832.0,
+      "gross_profit": null,
+      "operating_income": 3460.0,
+      "net_income": 1724.0,
+      "fcf": 2533.85
+    },
+    {
+      "year": 2023,
+      "revenue": 37186.0,
+      "gross_profit": null,
+      "operating_income": 3461.0,
+      "net_income": 1604.0,
+      "fcf": 1248.94
+    },
+    {
+      "year": 2024,
+      "revenue": 38956.0,
+      "gross_profit": null,
+      "operating_income": 2536.0,
+      "net_income": 1106.0,
+      "fcf": 263.21
+    },
+    {
+      "year": 2025,
+      "revenue": 39440.0,
+      "gross_profit": null,
+      "operating_income": 3002.0,
+      "net_income": 1294.0,
+      "fcf": 1279.52
+    }
+  ],
+  "income_statement": {
+    "year": 2025,
+    "steps": [
+      {
+        "label": "营业总收入",
+        "kind": "start",
+        "value": 39440.0,
+        "running": 39440.0,
+        "pct": 100.0
+      },
+      {
+        "label": "营业成本",
+        "kind": "out",
+        "value": 32998.0,
+        "running": 6442.0,
+        "pct": 83.7
+      },
+      {
+        "label": "销售费用",
+        "kind": "out",
+        "value": 2188.0,
+        "running": 4254.0,
+        "pct": 5.5
+      },
+      {
+        "label": "管理费用",
+        "kind": "out",
+        "value": 1255.0,
+        "running": 2999.0,
+        "pct": 3.2
+      },
+      {
+        "label": "研发费用",
+        "kind": "out",
+        "value": 71.58,
+        "running": 2927.42,
+        "pct": 0.2
+      },
+      {
+        "label": "税金及附加",
+        "kind": "out",
+        "value": 110.0,
+        "running": 2817.42,
+        "pct": 0.3
+      },
+      {
+        "label": "财务费用",
+        "kind": "out",
+        "value": 266.0,
+        "running": 2551.42,
+        "pct": 0.7
+      },
+      {
+        "label": "投资收益及其他(净)",
+        "kind": "in",
+        "value": 450.58,
+        "running": 3002.0,
+        "pct": 1.1,
+        "note": "投资收益、公允价值变动、其他收益、资产处置、减值损失等的净额"
+      },
+      {
+        "label": "营业利润",
+        "kind": "subtotal",
+        "value": 3002.0,
+        "running": 3002.0,
+        "pct": 7.6
+      },
+      {
+        "label": "营业外及其他(净)",
+        "kind": "in",
+        "value": 12.0,
+        "running": 3014.0,
+        "pct": 0.0
+      },
+      {
+        "label": "所得税",
+        "kind": "out",
+        "value": 804.0,
+        "running": 2210.0,
+        "pct": 2.0
+      },
+      {
+        "label": "净利润",
+        "kind": "final",
+        "value": 2210.0,
+        "running": 2210.0,
+        "pct": 5.6
+      }
+    ],
+    "revenue": 39440.0,
+    "operating_income": 3002.0,
+    "net_income": 2210.0,
+    "net_income_parent": 1294.0
+  },
+  "sankey": {
+    "year": 2025,
+    "seg_period": "2025-12-31",
+    "seg_dim": "按产品",
+    "nodes": [
+      {
+        "id": "rev",
+        "col": 1,
+        "order": 0,
+        "label": "营业收入",
+        "value": 39440.0,
+        "kind": "revenue"
+      },
+      {
+        "id": "seg0",
+        "col": 0,
+        "order": 0,
+        "label": "纺织服装、玩具等出口贸易",
+        "value": 32601.77,
+        "kind": "segment",
+        "margin": 17.2
+      },
+      {
+        "id": "seg1",
+        "col": 0,
+        "order": 1,
+        "label": "纺织服装、玩具等进口及国内贸易",
+        "value": 4662.82,
+        "kind": "segment",
+        "margin": 8.6
+      },
+      {
+        "id": "seg2",
+        "col": 0,
+        "order": 2,
+        "label": "化工产品",
+        "value": 2051.05,
+        "kind": "segment",
+        "margin": 17.9
+      },
+      {
+        "id": "seg3",
+        "col": 0,
+        "order": 3,
+        "label": "其他",
+        "value": 69.75,
+        "kind": "segment",
+        "margin": 1.1
+      },
+      {
+        "id": "gross",
+        "col": 2,
+        "order": 0,
+        "label": "毛利",
+        "value": 6442.0,
+        "kind": "gross"
+      },
+      {
+        "id": "cost",
+        "col": 2,
+        "order": 1,
+        "label": "营业成本",
+        "value": 32998.0,
+        "kind": "cost"
+      },
+      {
+        "id": "core",
+        "col": 3,
+        "order": 1,
+        "label": "主营经营盈余",
+        "value": 2551.42,
+        "kind": "flow"
+      },
+      {
+        "id": "exp0",
+        "col": 3,
+        "order": 2,
+        "label": "销售费用",
+        "value": 2188.0,
+        "kind": "expense"
+      },
+      {
+        "id": "exp1",
+        "col": 3,
+        "order": 3,
+        "label": "管理费用",
+        "value": 1255.0,
+        "kind": "expense"
+      },
+      {
+        "id": "exp2",
+        "col": 3,
+        "order": 4,
+        "label": "研发费用",
+        "value": 71.58,
+        "kind": "expense"
+      },
+      {
+        "id": "exp3",
+        "col": 3,
+        "order": 5,
+        "label": "税金及附加",
+        "value": 110.0,
+        "kind": "expense"
+      },
+      {
+        "id": "exp4",
+        "col": 3,
+        "order": 6,
+        "label": "财务费用",
+        "value": 266.0,
+        "kind": "expense"
+      },
+      {
+        "id": "op",
+        "col": 4,
+        "order": 0,
+        "label": "营业利润",
+        "value": 3002.0,
+        "kind": "op"
+      },
+      {
+        "id": "invest",
+        "col": 3,
+        "order": 0,
+        "label": "投资收益及其他(净)",
+        "value": 450.58,
+        "kind": "external",
+        "note": "投资收益、公允价值变动、其他收益、净利息收入等非主营项目"
+      },
+      {
+        "id": "net",
+        "col": 5,
+        "order": 0,
+        "label": "净利润",
+        "value": 2210.0,
+        "kind": "net"
+      },
+      {
+        "id": "tax",
+        "col": 5,
+        "order": 1,
+        "label": "所得税及其他",
+        "value": 792.0,
+        "kind": "cost"
+      }
+    ],
+    "links": [
+      {
+        "source": "seg0",
+        "target": "rev",
+        "value": 32601.77
+      },
+      {
+        "source": "seg1",
+        "target": "rev",
+        "value": 4662.82
+      },
+      {
+        "source": "seg2",
+        "target": "rev",
+        "value": 2051.05
+      },
+      {
+        "source": "seg3",
+        "target": "rev",
+        "value": 69.75
+      },
+      {
+        "source": "rev",
+        "target": "gross",
+        "value": 6442.0
+      },
+      {
+        "source": "rev",
+        "target": "cost",
+        "value": 32998.0
+      },
+      {
+        "source": "gross",
+        "target": "core",
+        "value": 2551.42
+      },
+      {
+        "source": "gross",
+        "target": "exp0",
+        "value": 2188.0
+      },
+      {
+        "source": "gross",
+        "target": "exp1",
+        "value": 1255.0
+      },
+      {
+        "source": "gross",
+        "target": "exp2",
+        "value": 71.58
+      },
+      {
+        "source": "gross",
+        "target": "exp3",
+        "value": 110.0
+      },
+      {
+        "source": "gross",
+        "target": "exp4",
+        "value": 266.0
+      },
+      {
+        "source": "core",
+        "target": "op",
+        "value": 2551.42
+      },
+      {
+        "source": "invest",
+        "target": "op",
+        "value": 450.58
+      },
+      {
+        "source": "op",
+        "target": "net",
+        "value": 2210.0
+      },
+      {
+        "source": "op",
+        "target": "tax",
+        "value": 792.0
+      }
+    ],
+    "totals": {
+      "revenue": 39440.0,
+      "gross": 6442.0,
+      "operating_income": 3002.0,
+      "net_income": 2210.0,
+      "invest_other": 450.58
+    }
+  },
+  "scenarios": {
+    "bear": {
+      "story": "全球关税与需求疲软压住外贸主业，营收停滞甚至微降，薄利被进一步挤压；电解液行业产能过剩持续，瑞泰继续微利甚至再计提减值，化工这块从期权变成长期拖累；一次性处置收益退潮后，归属国泰股东的经常性盈利回落到 8–10 亿一线。十年后它还是一家低增长、薄利、靠贸易现金流和分红维持的成熟外贸公司——电解液的故事基本落空。",
+      "governance": "这个情景下管理层该做的是『守住现金、收敛扩张』：别再为电解液加产能、对过剩资产果断减值出清；把贸易主业的全球化布局和周转效率做扎实、守住毛利；用充裕现金维持高分红回报股东，而不是去追风口。治理上比的是『不在周期底部追加错误投入』的纪律。",
+      "revY1": 38500,
+      "revY10": 42000,
+      "mY1": 2.0,
+      "mY10": 2.2,
+      "discount": 11,
+      "terminal_growth": 2,
+      "future_shares": 1700
+    },
+    "base": {
+      "story": "外贸主业靠海外产能布局守住份额、温和增长，毛利率稳定；电解液周期在未来两三年触底回稳、瑞泰恢复微利、不再大额减值；公司继续稳定高分红、资本运作克制。归属国泰股东的经常性盈利稳定在 10–13 亿一线、略有增长。十年后它是一家更全球化、更稳健的薄利外贸集团 + 一块走出底部的电解液业务——好生意、合理价。",
+      "governance": "管理层该做的是『稳主业、等周期、善用现金』：把全球供应链布局做成真正的护城河（海外基地、客户深耕），守住贸易毛利；对电解液保持耐心、等周期回暖而非盲目扩产；用充裕现金做友好回报（分红/回购）和有纪律的产业整合，别让账上理财长期低效躺着。",
+      "revY1": 39500,
+      "revY10": 54000,
+      "mY1": 2.5,
+      "mY10": 3.0,
+      "discount": 10,
+      "terminal_growth": 2.5,
+      "future_shares": 1680
+    },
+    "bull": {
+      "story": "电解液周期明确反转、价格和利润率回升，瑞泰凭技术和客户结构重回高毛利、贡献显著利润；同时外贸主业借全球化布局抢到更多份额、规模和毛利双升。归属国泰股东的经常性盈利上一个台阶。十年后它是一家『稳健外贸现金牛 + 重回景气的电解液龙头之一』的组合——两条腿都跑起来。",
+      "governance": "就算周期反转，管理层也得讲纪律：电解液回暖时按回报底线扩产、别再造成下一轮过剩；把贸易和化工两块的现金高效配置（回报股东 + 精准整合），把『账上一大堆低收益理财』变成真正创造回报的资产；管好可转债转股的稀释。治理上比的是『景气期不重蹈产能过剩覆辙、把现金用在刀刃上』。",
+      "revY1": 40500,
+      "revY10": 70000,
+      "mY1": 2.8,
+      "mY10": 4.0,
+      "discount": 9,
+      "terminal_growth": 3,
+      "future_shares": 1650
+    }
+  },
+  "probabilities": {
+    "bear": 30,
+    "base": 50,
+    "bull": 20
+  },
+  "currency": {
+    "code": "CNY",
+    "symbol": "￥"
+  },
+  "reverse_dcf_commentary": {
+    "verdict": "fair_with_base",
+    "verdict_color": "green",
+    "verdict_label": "公允偏低 · 下行有托底、上行靠周期",
+    "market_story": "以约 145 亿市值、11–14 倍市盈率、约 5% 股息率，市场把江苏国泰定价成一个『低增长的薄利外贸盘 + 一块还困在周期底部的电解液』——它几乎没有为任何高增长买单。要让今天的价格显得贵，你得相信贸易主业会持续萎缩、电解液继续恶化；反过来，只要主业靠全球化布局守住、电解液周期回暖，今天的价格不仅有安全边际，还留着一份不小的向上期权。这和那些『要求复制奇迹增长』的高估标的，是完全相反的定价结构。",
+    "key_points": [
+      "当前约 145 亿市值，对应剔除一次性后的经常性归母盈利（扣非约 10 亿出头）约 14 倍 PE、对应报告归母 12.94 亿约 11 倍 PE，并不贵。",
+      "约 5% 的股息率 + 经营现金流常年为正，构成实打实的下行托底；这不是讲故事的标的。",
+      "向上期权来自电解液周期反转（瑞泰），这是不确定但赔率不错的一面——Bull 情景下每股价值可达当前价的两倍上下。",
+      "下行风险来自贸易薄利被外部冲击 + 电解液继续拖累；但即便 Bear，公司仍盈利、分红、净现金，跌幅可控（非永久性毁灭）。",
+      "提醒：账面 230 亿现金+理财不能全当净现金——贸易主业需要大量周转资金；本估值已对现金做保守口径处理，FCF 利润率也按『归属国泰股东（已扣少数股东）』口径设定。",
+      "纠正一个常见误读：合并净利 41% 归少数股东，但大头（约 7.2 亿）来自几家 60/40 合资的贸易子公司，分拆上市的瑞泰其实只占约 0.68 亿（国泰持瑞泰约 70.91%）——真正把利润分走的是合资外贸子公司、而非市场常以为的电解液平台。这也意味着国泰对瑞泰价值的捕获率比一般认知更高（SOTP 里瑞泰股权按市值×70.91%×折价单列）。"
+    ],
+    "summary": "我的判断：在约 145 亿市值上，江苏国泰对基本面投资者大致『公允偏低』——下行由盈利、分红、净现金托住，向上由电解液周期和贸易份额打开。它的风险收益结构与高估的成长泡沫相反：不是单押一个奇迹，而是『便宜买一个稳健现金牛 + 一份周期期权』。真正要持续盯的，是经常性归母盈利的真实水位、电解液周期拐点、以及那一大堆现金/理财会不会被低效占用。毛估方向：当前价附近到略低于毛估价值区间，安全边际中性偏正；不给单一目标价。"
+  },
+  "metrics": {
+    "ticker": "002091",
+    "currency": "CNY",
+    "default_tax_rate": 0.25,
+    "unit": "原始货币单位（与 financials.csv 一致）",
+    "metrics": {
+      "compounding_engine": {
+        "roic_latest": 0.46424895596966037,
+        "roe_latest": 0.056928400433873295,
+        "roic_trend_delta": -0.2937528206327226,
+        "roic_series": [
+          {
+            "fy": 2020,
+            "roic": 0.758001776602383
+          },
+          {
+            "fy": 2021,
+            "roic": 3.0567344830910743
+          },
+          {
+            "fy": 2022,
+            "roic": 2.020852558024061
+          },
+          {
+            "fy": 2023,
+            "roic": 1.2634572983201056
+          },
+          {
+            "fy": 2024,
+            "roic": 0.4804658157149149
+          },
+          {
+            "fy": 2025,
+            "roic": 0.46424895596966037
+          }
+        ],
+        "incremental_roic": 0.23706620704797568,
+        "reinvestment_rate": 0.5751884112291961,
+        "implied_sustainable_growth": 0.13635773498805678,
+        "asset_light": false,
+        "growth_note": null,
+        "roic_distorted": false,
+        "band": "高回报但走弱"
+      },
+      "owner_earnings": {
+        "series": [
+          {
+            "fy": 2021,
+            "fcf": -1137734507.8600001,
+            "fcf_ex_sbc": null,
+            "sbc": null,
+            "owner_earnings_norm": null,
+            "fcf_margin": -0.028881641607899883,
+            "sbc_pct_rev": null,
+            "sbc_pct_fcf": null
+          },
+          {
+            "fy": 2022,
+            "fcf": 2533848756.89,
+            "fcf_ex_sbc": null,
+            "sbc": null,
+            "owner_earnings_norm": null,
+            "fcf_margin": 0.05915784359567613,
+            "sbc_pct_rev": null,
+            "sbc_pct_fcf": null
+          },
+          {
+            "fy": 2023,
+            "fcf": 1248935898.8200002,
+            "fcf_ex_sbc": null,
+            "sbc": null,
+            "owner_earnings_norm": null,
+            "fcf_margin": 0.033586185629538,
+            "sbc_pct_rev": null,
+            "sbc_pct_fcf": null
+          },
+          {
+            "fy": 2024,
+            "fcf": 263213147.22000003,
+            "fcf_ex_sbc": null,
+            "sbc": null,
+            "owner_earnings_norm": null,
+            "fcf_margin": 0.006756677975664854,
+            "sbc_pct_rev": null,
+            "sbc_pct_fcf": null
+          },
+          {
+            "fy": 2025,
+            "fcf": 1279524029.3600001,
+            "fcf_ex_sbc": null,
+            "sbc": null,
+            "owner_earnings_norm": null,
+            "fcf_margin": 0.0324422928336714,
+            "sbc_pct_rev": null,
+            "sbc_pct_fcf": null
+          }
+        ],
+        "latest": {
+          "fy": 2025,
+          "fcf": 1279524029.3600001,
+          "fcf_ex_sbc": null,
+          "sbc": null,
+          "owner_earnings_norm": null,
+          "fcf_margin": 0.0324422928336714,
+          "sbc_pct_rev": null,
+          "sbc_pct_fcf": null
+        },
+        "band": "现金生成中等"
+      },
+      "capital_allocation": {
+        "years": [
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "cumulative": {
+          "cfo": 9923787324.43,
+          "capex": 5736000000.0,
+          "acquisitions": 0.0,
+          "buybacks": 0.0,
+          "dividends": 0.0,
+          "debt_repaid": 0.0,
+          "debt_issued": 0.0
+        },
+        "pct_of_cfo": {
+          "capex": 0.5780051317584501,
+          "acquisitions": 0.0,
+          "buybacks": 0.0,
+          "dividends": 0.0,
+          "debt_repaid": 0.0
+        },
+        "per_year": [
+          {
+            "fy": 2021,
+            "cfo": -446734507.86,
+            "capex": 691000000.0,
+            "acquisitions": null,
+            "buybacks": null,
+            "dividends": null,
+            "debt_repaid": null,
+            "debt_issued": null
+          },
+          {
+            "fy": 2022,
+            "cfo": 3656848756.89,
+            "capex": 1123000000.0,
+            "acquisitions": null,
+            "buybacks": null,
+            "dividends": null,
+            "debt_repaid": null,
+            "debt_issued": null
+          },
+          {
+            "fy": 2023,
+            "cfo": 2681935898.82,
+            "capex": 1433000000.0,
+            "acquisitions": null,
+            "buybacks": null,
+            "dividends": null,
+            "debt_repaid": null,
+            "debt_issued": null
+          },
+          {
+            "fy": 2024,
+            "cfo": 1687213147.22,
+            "capex": 1424000000.0,
+            "acquisitions": null,
+            "buybacks": null,
+            "dividends": null,
+            "debt_repaid": null,
+            "debt_issued": null
+          },
+          {
+            "fy": 2025,
+            "cfo": 2344524029.36,
+            "capex": 1065000000.0,
+            "acquisitions": null,
+            "buybacks": null,
+            "dividends": null,
+            "debt_repaid": null,
+            "debt_issued": null
+          }
+        ],
+        "shareholder_return_total": 0.0,
+        "shareholder_return_pct_cfo": 0.0,
+        "reinvest_pct_cfo": 0.5780051317584501
+      },
+      "survival": {
+        "fy": 2025,
+        "net_debt": -18742000000.0,
+        "is_net_cash": true,
+        "net_debt_to_ebitda": -6.243171219187208,
+        "interest_coverage": 11.285714285714286,
+        "current_ratio": null,
+        "debt_due_1yr": 4059000000.0000005,
+        "cash": 23069000000.0,
+        "due_vs_cash_covered": true,
+        "is_burning_cash": false,
+        "cash_runway_years": null,
+        "band": "堡垒（净现金）",
+        "debt_components": {
+          "fy": 2025,
+          "found": {
+            "long_term_noncurrent": 268000000.00000003,
+            "current_portion_ltd": 182000000.0,
+            "short_term_borrowings": 3877000000.0000005
+          },
+          "missing": [
+            "long_term_total_tag",
+            "bonds_payable",
+            "debt_current_fallback"
+          ],
+          "note": "应付债券/租赁负债等科目当前取数管道未覆盖；判生存柱前以年报附注的全口径为准"
+        }
+      },
+      "cycle_calibration": {
+        "peak_suspect": false,
+        "roic": {
+          "latest": 0.46424895596966037,
+          "baseline": 0.32115740963390615,
+          "ratio": 1.4455495717781108,
+          "spike": false
+        },
+        "operating_margin": {
+          "latest": 0.0761156186612576,
+          "baseline": 0.06278317154725449,
+          "ratio": 1.2123570183766248,
+          "spike": false
+        },
+        "note": null
+      },
+      "earnings_quality": {
+        "series": [
+          {
+            "fy": 2021,
+            "net_income": 1236000000.0,
+            "cfo": -446734507.86,
+            "accrual_ratio": 1.3614356859708738,
+            "revenue": 39393000000.0,
+            "receivables": null,
+            "inventory": null
+          },
+          {
+            "fy": 2022,
+            "net_income": 1723999999.9999998,
+            "cfo": 3656848756.89,
+            "accrual_ratio": -1.1211419703538286,
+            "revenue": 42832000000.0,
+            "receivables": null,
+            "inventory": null
+          },
+          {
+            "fy": 2023,
+            "net_income": 1604000000.0,
+            "cfo": 2681935898.82,
+            "accrual_ratio": -0.672029862107232,
+            "revenue": 37186000000.0,
+            "receivables": null,
+            "inventory": null
+          },
+          {
+            "fy": 2024,
+            "net_income": 1106000000.0,
+            "cfo": 1687213147.22,
+            "accrual_ratio": -0.5255091747016275,
+            "revenue": 38956000000.0,
+            "receivables": null,
+            "inventory": null
+          },
+          {
+            "fy": 2025,
+            "net_income": 1294000000.0,
+            "cfo": 2344524029.36,
+            "accrual_ratio": -0.8118423719938177,
+            "revenue": 39440000000.0,
+            "receivables": null,
+            "inventory": null
+          }
+        ],
+        "revenue_cagr_approx": 0.0002981429831514504,
+        "receivable_scissors": null,
+        "inventory_scissors": null,
+        "flags": [],
+        "coverage_missing": [
+          "应收账款（原表缺或取数管道未覆盖）",
+          "存货（原表缺或取数管道未覆盖）"
+        ],
+        "note": "代码初筛非定论；flags 逐项回年报附注核，结论由报告第七章会计可信度节下"
+      }
+    },
+    "_note": "纯代码算出的硬数字 + 粗分档；最终判断由报告结合定性证据下，但须引用这些数字。"
+  },
+  "pillars": {
+    "headline": "稳健外贸现金牛 + 电解液周期期权，按概率加权公允偏低；定位是稳、不是高成长——软肋是利润率薄、靠周转。",
+    "compounding": "贸易模式现金多致 ROIC 口径失真、改看 ROE 约 5.7%；薄利高周转的稳健生意，不是高回报复利。",
+    "owner_earnings": "FCF 利润率约 3.2%——贸易生意天然薄、现金生成中等；胜在稳、不依赖某个故事。",
+    "capital_allocation_band": "再投为主",
+    "capital_allocation": "近 5 年约 58% 经营现金流再投入（含电解液产能）；稳健配置，把钱投回主业与周期赌注。",
+    "survival": "净现金、利息覆盖 11.3x，外贸现金牛资产负债表扎实，下行保护强。",
+    "details": {
+      "compounding": "002091 算出来的 ROIC 极高是失真——贸易模式现金多、投入资本被现金冲到很小、分母失真，工具已自动标出、改看 ROE 约 5.7%。这告诉你它的定位：一门薄利高周转的外贸生意，赚的是周转的钱、不是高回报复利的钱。它另有一块电解液业务，给了它一个锂电周期的期权。所以发现价值不是把它当成长股，而是当稳健现金牛 + 周期期权来看——估值的天花板和地板都按这个来。",
+      "owner_earnings": "FCF 利润率约 3.2%——贸易生意天然薄，现金生成中等。这决定了它估值不会高，但反过来，它不依赖某个性感故事、现金流可预测、胜在稳。对求稳的投资者，这种朴素的现金牛特性反而是优点。",
+      "capital_allocation": "近 5 年约 58% 经营现金流再投入主业与电解液产能、还股东相对有限——对一家外贸 + 周期品公司，把现金留在手里、投回主业以应对周期波动，是稳健而合理的选择。要盯的是电解液这块周期赌注的回报，以及未来分红是否随现金积累而提升。",
+      "survival": "净现金、利息覆盖 11.3x——外贸现金牛的资产负债表很扎实，下行保护强，不怕周期下行或去库存。这一柱的稳，正是它在公允偏低区间值得关注的底气：你赌的是电解液周期或估值修复，而它的财务很难让你亏到本金。"
+    }
+  },
+  "prices": [
+    {
+      "m": "2021-07",
+      "c": 9.77
+    },
+    {
+      "m": "2021-08",
+      "c": 11.92
+    },
+    {
+      "m": "2021-09",
+      "c": 10.39
+    },
+    {
+      "m": "2021-10",
+      "c": 10.72
+    },
+    {
+      "m": "2021-11",
+      "c": 10.63
+    },
+    {
+      "m": "2021-12",
+      "c": 11.17
+    },
+    {
+      "m": "2022-01",
+      "c": 9.21
+    },
+    {
+      "m": "2022-02",
+      "c": 9.73
+    },
+    {
+      "m": "2022-03",
+      "c": 7.96
+    },
+    {
+      "m": "2022-04",
+      "c": 7.5
+    },
+    {
+      "m": "2022-05",
+      "c": 8.99
+    },
+    {
+      "m": "2022-06",
+      "c": 8.96
+    },
+    {
+      "m": "2022-07",
+      "c": 8.14
+    },
+    {
+      "m": "2022-08",
+      "c": 7.66
+    },
+    {
+      "m": "2022-09",
+      "c": 6.93
+    },
+    {
+      "m": "2022-10",
+      "c": 6.75
+    },
+    {
+      "m": "2022-11",
+      "c": 7.32
+    },
+    {
+      "m": "2022-12",
+      "c": 7.09
+    },
+    {
+      "m": "2023-01",
+      "c": 7.38
+    },
+    {
+      "m": "2023-02",
+      "c": 7.15
+    },
+    {
+      "m": "2023-03",
+      "c": 6.85
+    },
+    {
+      "m": "2023-04",
+      "c": 6.82
+    },
+    {
+      "m": "2023-05",
+      "c": 6.57
+    },
+    {
+      "m": "2023-06",
+      "c": 6.49
+    },
+    {
+      "m": "2023-07",
+      "c": 6.8
+    },
+    {
+      "m": "2023-08",
+      "c": 6.31
+    },
+    {
+      "m": "2023-09",
+      "c": 6.41
+    },
+    {
+      "m": "2023-10",
+      "c": 6.63
+    },
+    {
+      "m": "2023-11",
+      "c": 6.74
+    },
+    {
+      "m": "2023-12",
+      "c": 6.74
+    },
+    {
+      "m": "2024-01",
+      "c": 5.88
+    },
+    {
+      "m": "2024-02",
+      "c": 6.04
+    },
+    {
+      "m": "2024-03",
+      "c": 6.04
+    },
+    {
+      "m": "2024-04",
+      "c": 6.53
+    },
+    {
+      "m": "2024-05",
+      "c": 6.48
+    },
+    {
+      "m": "2024-06",
+      "c": 6.11
+    },
+    {
+      "m": "2024-07",
+      "c": 6.0
+    },
+    {
+      "m": "2024-08",
+      "c": 5.69
+    },
+    {
+      "m": "2024-09",
+      "c": 6.98
+    },
+    {
+      "m": "2024-10",
+      "c": 6.52
+    },
+    {
+      "m": "2024-11",
+      "c": 7.04
+    },
+    {
+      "m": "2024-12",
+      "c": 6.66
+    },
+    {
+      "m": "2025-01",
+      "c": 6.57
+    },
+    {
+      "m": "2025-02",
+      "c": 7.03
+    },
+    {
+      "m": "2025-03",
+      "c": 6.93
+    },
+    {
+      "m": "2025-04",
+      "c": 6.52
+    },
+    {
+      "m": "2025-05",
+      "c": 6.72
+    },
+    {
+      "m": "2025-06",
+      "c": 6.89
+    },
+    {
+      "m": "2025-07",
+      "c": 6.9
+    },
+    {
+      "m": "2025-08",
+      "c": 7.66
+    },
+    {
+      "m": "2025-09",
+      "c": 8.67
+    },
+    {
+      "m": "2025-10",
+      "c": 8.85
+    },
+    {
+      "m": "2025-11",
+      "c": 8.88
+    },
+    {
+      "m": "2025-12",
+      "c": 8.7
+    },
+    {
+      "m": "2026-01",
+      "c": 8.52
+    },
+    {
+      "m": "2026-02",
+      "c": 8.77
+    },
+    {
+      "m": "2026-03",
+      "c": 8.74
+    },
+    {
+      "m": "2026-04",
+      "c": 8.63
+    },
+    {
+      "m": "2026-05",
+      "c": 8.61
+    },
+    {
+      "m": "2026-06",
+      "c": 7.99
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-08-31",
+    "period": "2026 半年报",
+    "estimated": true,
+    "basis": "A 股半年报法定披露截止 8/31；实际日以公司预约披露公告为准"
+  },
+  "links": {
+    "report_pdf": "002091_公司完整报告.pdf"
+  }
+}
+</script>
+<!-- RENDER_DATA_END -->
+
+<script>
+// ============================================================
+// 1. 加载初始数据 + 保留原始快照（用于 reset 按钮）
+// ============================================================
+const DATA = JSON.parse(document.getElementById('initial-data').textContent);
+// 深拷贝一份原始数据，重置时用——必须在 loadSaved() 之前保存，否则被 localStorage 污染
+const ORIGINAL_DATA = JSON.parse(JSON.stringify(DATA));
+const SCENARIOS = ['bear', 'base', 'bull'];
+const SCENARIO_LABELS = { bear: '悲观', base: '中性', bull: '乐观' };
+const SCENARIO_COLORS = { bear: '#e63946', base: '#1d6fb8', bull: '#2a9d8f' };
+
+// 显性预测窗口：头条＝5 年（更在能力圈内、可证伪性强），并列展示延伸至 10 年的参考口径。
+// 轨迹仍由 Y1→Y10 定义；5 年口径＝截取前 5 年做显性期、终值落在第 5 年。
+const PRIMARY_YEARS = 5;
+const REFERENCE_YEARS = 10;
+
+// 尝试从 localStorage 恢复用户上次的调整（按 ticker 分隔）
+const STORAGE_KEY = `ms-stock-tool-explorer-${DATA.ticker}`;
+// 版本戳＝这份渲染的 generated_at。重渲（新分析）后版本变，旧缓存自动失效——
+// 避免"重渲了新分析，却被你浏览器里上次的旧状态盖住、看不到更新"。同一版本内拖动调整照常保留。
+const STORAGE_VERSION = DATA.generated_at || '';
+function loadSaved() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const obj = JSON.parse(saved);
+      if (STORAGE_VERSION && obj._version !== STORAGE_VERSION) {
+        // 渲染数据已更新（或旧版无版本戳），丢弃过期的本地状态，改用最新分析
+        localStorage.removeItem(STORAGE_KEY);
+        return;
+      }
+      Object.assign(DATA.facts, obj.facts || {});
+      for (const sc of SCENARIOS) Object.assign(DATA.scenarios[sc], obj.scenarios?.[sc] || {});
+      Object.assign(DATA.probabilities, obj.probabilities || {});
+    }
+  } catch (e) { console.warn('Failed to load saved state:', e); }
+}
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      _version: STORAGE_VERSION,
+      facts: DATA.facts,
+      scenarios: DATA.scenarios,
+      probabilities: DATA.probabilities,
+    }));
+  } catch (e) {}
+}
+loadSaved();
+
+// ============================================================
+// 2. DCF 数学（与 valuation.py 一致）
+// ============================================================
+function buildRevenuePath(y1, y10, n) {
+  n = n || 10;
+  if (n === 1) return [y10];
+  if (y1 <= 0) y1 = 0.1;
+  const cagr = Math.pow(y10 / y1, 1 / (n - 1));
+  return Array.from({length: n}, (_, t) => y1 * Math.pow(cagr, t));
+}
+function buildMarginPath(m1, m10, n) {
+  n = n || 10;
+  if (n === 1) return [m10];
+  return Array.from({length: n}, (_, t) => m1 + (m10 - m1) * t / (n - 1));
+}
+function cagrOf(y1, y10, n) {
+  n = n || 10;
+  if (y1 <= 0) return null;
+  return Math.pow(y10 / y1, 1 / (n - 1)) - 1;
+}
+function scenarioForwardDCF(params) {
+  const { revenuePath, fcfMarginPath, discountRate, terminalGrowth, terminalFcfMargin, cash, debt, futureShares } = params;
+  const N = revenuePath.length;
+  const tFcfMargin = (terminalFcfMargin != null) ? terminalFcfMargin : fcfMarginPath[N - 1];
+  if (discountRate <= terminalGrowth) return { error: '折现率必须 > 永续增长率' };
+  const explicitFCF = revenuePath.map((r, i) => r * fcfMarginPath[i]);
+  const explicitPV = explicitFCF.map((fcf, i) => fcf / Math.pow(1 + discountRate, i + 1));
+  const explicitPVTotal = explicitPV.reduce((a, b) => a + b, 0);
+  const revenueTerminal = revenuePath[N - 1] * (1 + terminalGrowth);
+  const terminalFCF = revenueTerminal * tFcfMargin;
+  const terminalValue = terminalFCF / (discountRate - terminalGrowth);
+  const terminalPV = terminalValue / Math.pow(1 + discountRate, N);
+  const enterpriseValue = explicitPVTotal + terminalPV;
+  const equityValue = enterpriseValue + cash - debt;
+  const perShareValue = futureShares > 0 ? equityValue / futureShares : null;
+  return { explicitFCF, explicitPV, explicitPVTotal, terminalFCF, terminalValue, terminalPV, enterpriseValue, equityValue, perShareValue };
+}
+
+// 给定情景在 N 年显性窗口下的 DCF。轨迹由 Y1→Y10 定义；截取前 N 年做显性期，
+// 终值落在第 N 年、用成熟 FCF 利润率(mY10)作稳态。N=5 是头条、N=10 是延伸参考。
+// ov 可覆盖 revY10 / mY10 / discount（用于价值区间的不确定带）。
+function horizonDCF(s, f, N, ov) {
+  ov = ov || {};
+  const revY10 = ov.revY10 != null ? ov.revY10 : s.revY10;
+  const mY10 = ov.mY10 != null ? ov.mY10 : s.mY10;
+  const disc = ov.discount != null ? ov.discount : s.discount;
+  const fullRev = buildRevenuePath(s.revY1, revY10, 10);
+  const fullMargin = buildMarginPath(s.mY1 / 100, mY10 / 100, 10);
+  return scenarioForwardDCF({
+    revenuePath: fullRev.slice(0, N),
+    fcfMarginPath: fullMargin.slice(0, N),
+    discountRate: disc / 100,
+    terminalGrowth: s.terminal_growth / 100,
+    terminalFcfMargin: mY10 / 100,
+    cash: f.cash, debt: f.debt, futureShares: s.future_shares,
+  });
+}
+
+// 反向 DCF：二分查找
+function reverseDCF(params) {
+  const { marketCap, revenueToday, discountRate, terminalGrowth, cash, debt, years, solveFor, fixedFcfMargin, fixedCagr, startFcfMargin } = params;
+  const Y = years || 10;
+  const startM = (startFcfMargin != null) ? startFcfMargin : -0.20;
+  const targetEV = marketCap - cash + debt;
+
+  function valueAt(cagr, margin) {
+    const revenuePath = Array.from({length: Y}, (_, t) => revenueToday * Math.pow(1 + cagr, t + 1));
+    const marginPath = buildMarginPath(startM, margin, Y);
+    const r = scenarioForwardDCF({
+      revenuePath, fcfMarginPath: marginPath, discountRate, terminalGrowth,
+      terminalFcfMargin: margin, cash: 0, debt: 0, futureShares: null,
+    });
+    return r.enterpriseValue;
+  }
+
+  if (solveFor === 'cagr') {
+    let lo = -0.20, hi = 1.20;
+    for (let i = 0; i < 80; i++) {
+      const mid = (lo + hi) / 2;
+      if (valueAt(mid, fixedFcfMargin) < targetEV) lo = mid;
+      else hi = mid;
+    }
+    const implied = (lo + hi) / 2;
+    return { implied, mode: 'cagr', hitUpperBound: Math.abs(implied - 1.20) < 0.001 };
+  } else {
+    let lo = -0.50, hi = 1.50;
+    for (let i = 0; i < 80; i++) {
+      const mid = (lo + hi) / 2;
+      if (valueAt(fixedCagr, mid) < targetEV) lo = mid;
+      else hi = mid;
+    }
+    const implied = (lo + hi) / 2;
+    return { implied, mode: 'fcf_margin', hitUpperBound: Math.abs(implied - 1.50) < 0.001 };
+  }
+}
+
+// ============================================================
+// 3. SVG 图表工具
+// ============================================================
+// 货币与单位（由 DATA.currency 决定）
+const CSYM = (DATA.currency && DATA.currency.symbol) || '$';
+const CCODE = (DATA.currency && DATA.currency.code) || 'USD';
+const IS_CNY = CCODE === 'CNY';
+
+// fmtMoney(v) v 的存储单位 = "百万本币"（USD 时为 $M，CNY 时为百万元）
+// USD：自适应输出 M/B/T；CNY：输出 亿/万（中文金融习惯）
+function fmtMoney(v, decimals) {
+  decimals = decimals != null ? decimals : 0;
+  if (v == null || isNaN(v)) return '—';
+  const abs = Math.abs(v);
+  if (IS_CNY) {
+    // v 存储单位是"百万元"。100 = 1 亿；0.01 = 1 万
+    if (abs >= 100) return (v / 100).toFixed(2) + '亿';
+    if (abs >= 0.01) return (v * 100).toFixed(0) + '万';
+    return (v * 1_000_000).toFixed(0) + '元';
+  }
+  if (abs >= 1_000_000) return (v / 1_000_000).toFixed(2) + 'T';
+  if (abs >= 1000) return (v / 1000).toFixed(1) + 'B';
+  return v.toFixed(decimals) + 'M';
+}
+
+// 股数专用（CNY 时用"万股 / 亿股"，USD 时用 "M"）
+function fmtShares(v) {
+  if (v == null || isNaN(v)) return '—';
+  const abs = Math.abs(v);
+  if (IS_CNY) {
+    if (abs >= 100) return (v / 100).toFixed(2) + '亿股';
+    return (v * 100).toFixed(0) + '万股';
+  }
+  return v.toFixed(0) + 'M';
+}
+function fmtPercent(v, decimals) {
+  decimals = decimals != null ? decimals : 1;
+  if (v == null || isNaN(v)) return '—';
+  return (v * 100).toFixed(decimals) + '%';
+}
+function fmtDollar(v, decimals) {
+  decimals = decimals != null ? decimals : 2;
+  if (v == null || isNaN(v)) return '—';
+  return CSYM + v.toFixed(decimals);
+}
+
+function svgEsc(s) { return String(s).replace(/[<>&"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c])); }
+
+// 通用线图（带 hover tooltip + 扫描线）
+function renderLineChart(containerId, datasets, options) {
+  const opts = Object.assign({
+    width: 800, height: 280, margin: {top: 16, right: 70, bottom: 36, left: 60},
+    xTickFormat: x => x, yTickFormat: y => fmtMoney(y),
+    xLabel: '', yLabel: '', showZeroLine: true,
+  }, options || {});
+
+  const allPts = datasets.flatMap(d => d.data);
+  if (allPts.length === 0) {
+    document.getElementById(containerId).innerHTML = '<p class="muted">无数据</p>';
+    return;
+  }
+  const xs = allPts.map(p => p.x);
+  let ys = allPts.map(p => p.y).filter(y => y != null);
+  // 参考带（如内在价值区间）也纳入 y 轴范围，保证它在图内可见
+  const rb = opts.refBand;
+  if (rb) ys = ys.concat([rb.low, rb.high, rb.mid].filter(v => v != null && isFinite(v)));
+  const xMin = Math.min(...xs), xMax = Math.max(...xs);
+  const yRawMin = Math.min(...ys), yRawMax = Math.max(...ys);
+  const yMin = opts.showZeroLine ? Math.min(0, yRawMin) : yRawMin;
+  const yMax = opts.showZeroLine ? Math.max(0, yRawMax) : yRawMax;
+  const yPad = (yMax - yMin) * 0.08 || 1;
+  const yLo = yMin - yPad, yHi = yMax + yPad;
+
+  const W = opts.width, H = opts.height, M = opts.margin;
+  const xScale = x => M.left + (xMax === xMin ? 0 : (x - xMin) / (xMax - xMin)) * (W - M.left - M.right);
+  const yScale = y => H - M.bottom - (yHi === yLo ? 0 : (y - yLo) / (yHi - yLo)) * (H - M.top - M.bottom);
+
+  let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+
+  // 网格线 + y 轴标签（5 段）
+  for (let i = 0; i <= 5; i++) {
+    const y = yLo + (yHi - yLo) * i / 5;
+    const yy = yScale(y);
+    svg += `<line x1="${M.left}" y1="${yy}" x2="${W - M.right}" y2="${yy}" stroke="var(--grid)" stroke-width="1"/>`;
+    svg += `<text x="${M.left - 6}" y="${yy + 4}" text-anchor="end" font-size="10" fill="var(--text-muted)">${svgEsc(opts.yTickFormat(y))}</text>`;
+  }
+
+  // 参考带（内在价值区间）：阴影带 + 中枢虚线 + 标签
+  if (rb) {
+    const col = rb.color || '#2a9d8f';
+    if (rb.low != null && rb.high != null) {
+      const yT = yScale(rb.high), yB = yScale(rb.low);
+      svg += `<rect x="${M.left}" y="${yT.toFixed(1)}" width="${(W - M.left - M.right).toFixed(1)}" height="${Math.abs(yB - yT).toFixed(1)}" fill="${col}" opacity="0.12"/>`;
+    }
+    if (rb.mid != null) {
+      const yM = yScale(rb.mid);
+      svg += `<line x1="${M.left}" y1="${yM.toFixed(1)}" x2="${W - M.right}" y2="${yM.toFixed(1)}" stroke="${col}" stroke-width="1.5" stroke-dasharray="5 3"/>`;
+      svg += `<text x="${M.left + 4}" y="${(yM - 4).toFixed(1)}" font-size="10" font-weight="600" fill="${col}">${svgEsc(rb.label || '')}</text>`;
+    }
+  }
+
+  // x 轴标签（opts.maxXTicks 设了就抽稀，避免月度数据 60 个标签挤成一团）
+  const uniqueXs = Array.from(new Set(xs)).sort((a, b) => a - b);
+  let tickXs = uniqueXs;
+  if (opts.maxXTicks && uniqueXs.length > opts.maxXTicks) {
+    const step = (uniqueXs.length - 1) / (opts.maxXTicks - 1);
+    tickXs = Array.from({length: opts.maxXTicks}, (_, i) => uniqueXs[Math.round(i * step)]);
+    tickXs = Array.from(new Set(tickXs));
+  }
+  for (const x of tickXs) {
+    const xx = xScale(x);
+    svg += `<text x="${xx}" y="${H - M.bottom + 16}" text-anchor="middle" font-size="10" fill="var(--text-muted)">${svgEsc(opts.xTickFormat(x))}</text>`;
+  }
+
+  // 零线
+  if (opts.showZeroLine && yLo < 0 && yHi > 0) {
+    const zy = yScale(0);
+    svg += `<line x1="${M.left}" y1="${zy}" x2="${W - M.right}" y2="${zy}" stroke="#666" stroke-width="1" stroke-dasharray="3 3"/>`;
+  }
+
+  // 线条 + 数据点（数据点带 data-* 以便 hover 高亮）
+  // opts.splitDashAfter：若设，则 x≤该值的段画实线（显性期），x≥该值的段画虚线（延伸参考期）
+  const splitX = opts.splitDashAfter;
+  const mkPath = arr => arr.map((p, i) => `${i === 0 ? 'M' : 'L'} ${xScale(p.x).toFixed(1)} ${yScale(p.y).toFixed(1)}`).join(' ');
+  for (let di = 0; di < datasets.length; di++) {
+    const d = datasets[di];
+    const pts = d.data.filter(p => p.y != null);
+    if (pts.length === 0) continue;
+    if (splitX != null) {
+      const solidPts = pts.filter(p => p.x <= splitX);
+      const dashPts = pts.filter(p => p.x >= splitX);  // 含分割点，使两段相连
+      if (solidPts.length) {
+        svg += `<path d="${mkPath(solidPts)}" fill="none" stroke="${d.color}" stroke-width="${d.strokeWidth || 2}" stroke-linejoin="round" stroke-linecap="round"/>`;
+      }
+      if (dashPts.length > 1) {
+        svg += `<path d="${mkPath(dashPts)}" fill="none" stroke="${d.color}" stroke-width="${d.strokeWidth || 2}" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 3" opacity="0.7"/>`;
+      }
+    } else {
+      svg += `<path d="${mkPath(pts)}" fill="none" stroke="${d.color}" stroke-width="${d.strokeWidth || 2}" stroke-linejoin="round" stroke-linecap="round"`;
+      if (d.dashed) svg += ` stroke-dasharray="5 3"`;
+      svg += `/>`;
+    }
+    for (const p of pts) {
+      const isExt = (splitX != null && p.x > splitX);
+      svg += `<circle class="data-dot" data-series="${di}" data-x="${p.x}" cx="${xScale(p.x).toFixed(1)}" cy="${yScale(p.y).toFixed(1)}" r="3" fill="${d.color}"${isExt ? ' opacity="0.6"' : ''}/>`;
+    }
+    // 末端标签
+    const last = pts[pts.length - 1];
+    svg += `<text x="${(xScale(last.x) + 6).toFixed(1)}" y="${(yScale(last.y) + 4).toFixed(1)}" font-size="10" font-weight="600" fill="${d.color}">${svgEsc(d.label || '')}</text>`;
+  }
+  // 显性/延伸分割竖线 + 标注
+  if (splitX != null) {
+    const sx = xScale(splitX);
+    svg += `<line x1="${sx.toFixed(1)}" y1="${M.top}" x2="${sx.toFixed(1)}" y2="${H - M.bottom}" stroke="#b9c2cc" stroke-width="1" stroke-dasharray="2 3"/>`;
+    svg += `<text x="${(sx - 4).toFixed(1)}" y="${M.top + 10}" text-anchor="end" font-size="9" fill="var(--text-light)">显性</text>`;
+    svg += `<text x="${(sx + 4).toFixed(1)}" y="${M.top + 10}" text-anchor="start" font-size="9" fill="var(--text-light)">延伸参考</text>`;
+  }
+
+  // 扫描线 + 鼠标捕获 overlay（一定要在所有静态内容之后）
+  svg += `<line class="scrub-line" x1="0" y1="${M.top}" x2="0" y2="${H - M.bottom}" stroke="#999" stroke-width="1" stroke-dasharray="3 3" style="display: none" pointer-events="none"/>`;
+  svg += `<rect class="hover-overlay" x="${M.left}" y="${M.top}" width="${W - M.left - M.right}" height="${H - M.top - M.bottom}" fill="transparent"/>`;
+
+  svg += `</svg>`;
+
+  const container = document.getElementById(containerId);
+  // 移除可能存在的旧 tooltip 节点（避免重复渲染时遗留）
+  const oldTip = container.querySelector('.chart-tooltip');
+  if (oldTip) oldTip.remove();
+  container.innerHTML = svg;
+
+  // 插入 tooltip 元素到容器
+  const tooltip = document.createElement('div');
+  tooltip.className = 'chart-tooltip';
+  tooltip.style.display = 'none';
+  container.appendChild(tooltip);
+
+  // 绑定 hover 行为
+  const svgEl = container.querySelector('svg');
+  const overlay = svgEl.querySelector('.hover-overlay');
+  const scrubLine = svgEl.querySelector('.scrub-line');
+  const dataDots = svgEl.querySelectorAll('.data-dot');
+
+  function handleMove(clientX, clientY) {
+    const rect = svgEl.getBoundingClientRect();
+    const scale = rect.width / W;
+    const svgX = (clientX - rect.left) / scale;
+
+    // 找最近的 x 值
+    let closestX = uniqueXs[0];
+    let minDist = Infinity;
+    for (const x of uniqueXs) {
+      const dist = Math.abs(xScale(x) - svgX);
+      if (dist < minDist) { minDist = dist; closestX = x; }
+    }
+
+    // 移动扫描线
+    const lineX = xScale(closestX);
+    scrubLine.setAttribute('x1', lineX);
+    scrubLine.setAttribute('x2', lineX);
+    scrubLine.style.display = 'block';
+
+    // 高亮被选中的数据点
+    dataDots.forEach(dot => {
+      if (parseFloat(dot.getAttribute('data-x')) === closestX) {
+        dot.setAttribute('r', '5');
+        dot.setAttribute('stroke', '#fff');
+        dot.setAttribute('stroke-width', '2');
+      } else {
+        dot.setAttribute('r', '3');
+        dot.removeAttribute('stroke');
+        dot.removeAttribute('stroke-width');
+      }
+    });
+
+    // 构建 tooltip 内容
+    let html = `<div class="tt-x">${svgEsc(opts.xTickFormat(closestX))}</div>`;
+    for (const d of datasets) {
+      const pt = d.data.find(p => p.x === closestX);
+      if (pt && pt.y != null) {
+        const valStr = opts.yTickFormat(pt.y);
+        const valClass = pt.y < 0 ? 'neg' : (pt.y > 0 ? 'pos' : '');
+        const swatchClass = d.dashed ? 'dashed' : '';
+        const swatchStyle = d.dashed ? `color: ${d.color}` : `background: ${d.color}`;
+        html += `<div class="tt-row">`
+              + `<span class="tt-swatch ${swatchClass}" style="${swatchStyle}"></span>`
+              + `<span class="tt-label">${svgEsc(d.label)}</span>`
+              + `<span class="tt-value ${valClass}">${svgEsc(valStr)}</span>`
+              + `</div>`;
+      }
+    }
+    tooltip.innerHTML = html;
+    tooltip.style.display = 'block';
+
+    // 定位 tooltip：默认 scrub 线右边 14px；如出右边界则翻到左边
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    let tx = (lineX * scale) + 14;
+    if (tx + tooltipRect.width > containerRect.width - 4) {
+      tx = (lineX * scale) - tooltipRect.width - 14;
+    }
+    const ty = Math.max(M.top * scale - 4, 4);
+    tooltip.style.left = tx + 'px';
+    tooltip.style.top = ty + 'px';
+  }
+
+  function handleLeave() {
+    scrubLine.style.display = 'none';
+    tooltip.style.display = 'none';
+    dataDots.forEach(dot => {
+      dot.setAttribute('r', '3');
+      dot.removeAttribute('stroke');
+      dot.removeAttribute('stroke-width');
+    });
+  }
+
+  overlay.addEventListener('mousemove', e => handleMove(e.clientX, e.clientY));
+  overlay.addEventListener('mouseleave', handleLeave);
+  // 移动端：触摸支持
+  overlay.addEventListener('touchmove', e => {
+    if (e.touches.length) {
+      e.preventDefault();
+      handleMove(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, {passive: false});
+  overlay.addEventListener('touchend', handleLeave);
+}
+
+// 热图
+function renderHeatmap(containerId, data, options) {
+  const opts = Object.assign({
+    width: 700, height: 380, margin: {top: 28, right: 16, bottom: 50, left: 60},
+    rowLabels: [], colLabels: [],
+    rowAxisLabel: '', colAxisLabel: '',
+    fmtCell: v => v.toFixed(2),
+    highlightRow: -1, highlightCol: -1,
+    currentPrice: null,
+  }, options || {});
+
+  const R = data.length, C = data[0]?.length || 0;
+  if (R === 0 || C === 0) {
+    document.getElementById(containerId).innerHTML = '<p class="muted">无数据</p>';
+    return;
+  }
+  const flat = data.flat().filter(v => v != null && !isNaN(v));
+  const vMin = Math.min(...flat), vMax = Math.max(...flat);
+  const W = opts.width, H = opts.height, M = opts.margin;
+  const cellW = (W - M.left - M.right) / C;
+  const cellH = (H - M.top - M.bottom) / R;
+
+  // 颜色函数：负值红色，0 黄，正值绿
+  function colorFor(v) {
+    if (v == null || isNaN(v)) return '#eee';
+    const cp = opts.currentPrice;
+    if (cp != null) {
+      // 围绕当前价着色：低于当前价 = 红（被高估）；高于 = 绿（被低估）
+      const ratio = v / cp;
+      if (ratio < 0.3) return '#e63946';
+      if (ratio < 0.6) return '#f4a261';
+      if (ratio < 1.0) return '#fbe7a1';
+      if (ratio < 1.5) return '#a8dadc';
+      if (ratio < 2.5) return '#83c5be';
+      return '#2a9d8f';
+    }
+    if (vMax === vMin) return '#a8dadc';
+    const t = (v - vMin) / (vMax - vMin);
+    const hue = t * 140;
+    return `hsl(${hue.toFixed(0)}, 60%, 65%)`;
+  }
+
+  let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  // 列轴标签（顶部）
+  for (let c = 0; c < C; c++) {
+    const cx = M.left + (c + 0.5) * cellW;
+    svg += `<text x="${cx}" y="${M.top - 8}" text-anchor="middle" font-size="10" fill="var(--text-muted)">${svgEsc(opts.colLabels[c] || c)}</text>`;
+  }
+  svg += `<text x="${M.left + (W - M.left - M.right) / 2}" y="${M.top - 22}" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text)">${svgEsc(opts.colAxisLabel)}</text>`;
+  // 行轴标签（左侧）
+  for (let r = 0; r < R; r++) {
+    const cy = M.top + (r + 0.5) * cellH;
+    svg += `<text x="${M.left - 8}" y="${cy + 4}" text-anchor="end" font-size="10" fill="var(--text-muted)">${svgEsc(opts.rowLabels[r] || r)}</text>`;
+  }
+  svg += `<text x="${(M.left - 50)}" y="${(M.top + (H - M.top - M.bottom) / 2)}" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text)" transform="rotate(-90 ${(M.left - 50)} ${(M.top + (H - M.top - M.bottom) / 2)})">${svgEsc(opts.rowAxisLabel)}</text>`;
+
+  // 单元格
+  for (let r = 0; r < R; r++) {
+    for (let c = 0; c < C; c++) {
+      const x = M.left + c * cellW;
+      const y = M.top + r * cellH;
+      const v = data[r][c];
+      const color = colorFor(v);
+      const isHi = (r === opts.highlightRow && c === opts.highlightCol);
+      svg += `<rect x="${x}" y="${y}" width="${cellW}" height="${cellH}" fill="${color}" stroke="${isHi ? '#1a1a1a' : '#fff'}" stroke-width="${isHi ? 2 : 1}"><title>${svgEsc(opts.rowLabels[r] || '')} × ${svgEsc(opts.colLabels[c] || '')}: ${svgEsc(opts.fmtCell(v))}</title></rect>`;
+      if (cellW > 36 && cellH > 18) {
+        const fontSize = cellW > 60 ? 11 : 10;
+        svg += `<text x="${x + cellW / 2}" y="${y + cellH / 2 + 3}" text-anchor="middle" font-size="${fontSize}" fill="#1a1a1a" font-variant-numeric="tabular-nums">${svgEsc(opts.fmtCell(v))}</text>`;
+      }
+    }
+  }
+  svg += `</svg>`;
+  document.getElementById(containerId).innerHTML = svg;
+}
+
+// ============================================================
+// 4. UI 同步：DATA <-> 滑块/输入框
+// ============================================================
+function setSlider(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.value = value;
+}
+function getSlider(id) {
+  const el = document.getElementById(id);
+  return el ? parseFloat(el.value) : 0;
+}
+function updateValueLabel(id, text) {
+  const el = document.getElementById(id + '-val');
+  if (el) el.textContent = text;
+}
+
+function updateUnitLabels() {
+  // 输入框旁的单位（CNY: 百万元 / USD: $M）
+  const unit = IS_CNY ? '（百万元）' : '（$M）';
+  const sharesUnit = IS_CNY ? '（百万股）' : '（M）';
+  document.getElementById('lbl-revenue').innerHTML = '当前营收 <span class="unit-hint">' + unit + '</span>';
+  document.getElementById('lbl-cash').innerHTML = '现金 <span class="unit-hint">' + unit + '</span>';
+  document.getElementById('lbl-debt').innerHTML = '债务 <span class="unit-hint">' + unit + '</span>';
+  document.getElementById('lbl-marketcap').innerHTML = '市值 <span class="unit-hint">' + unit + '</span>';
+  document.getElementById('lbl-shares').innerHTML = '完全稀释股数 <span class="unit-hint">' + sharesUnit + '</span>';
+  document.querySelectorAll('[data-label-shares]').forEach(el => {
+    el.innerHTML = '未来股数 <span class="unit-hint">' + sharesUnit + '</span>';
+  });
+}
+
+function renderCommentary() {
+  const c = DATA.reverse_dcf_commentary;
+  const el = document.getElementById('rev-commentary');
+  if (!c || (!c.market_story && !c.headline)) { el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  el.classList.remove('red', 'orange', 'yellow', 'green');
+  if (c.verdict_color) el.classList.add(c.verdict_color);
+  const tagMap = {
+    speculative_bubble: '严重高估 · 投机泡沫',
+    stretched: '高估 · 但仍可解释',
+    fair_with_bull: '公允 · 取决于乐观概率',
+    fair_with_base: '公允 · 中性情景已基本兑现',
+    fair: '公允',
+    undervalued: '低估',
+  };
+  document.getElementById('rev-commentary-tag').textContent =
+    c.verdict_label || tagMap[c.verdict] || '我的判断';
+  const storyEl = document.getElementById('rev-commentary-story');
+  const headlineEl = document.getElementById('rev-commentary-headline');
+  const pointsEl = document.getElementById('rev-commentary-points');
+  if (c.market_story) {
+    // 故事优先：讲清"今天的价格在押注一个怎样的未来"，不罗列冷冰冰的 CAGR / rate
+    storyEl.textContent = c.market_story;
+    storyEl.style.display = 'block';
+    headlineEl.style.display = 'none';
+    pointsEl.style.display = 'none';
+  } else {
+    storyEl.style.display = 'none';
+    headlineEl.style.display = '';
+    headlineEl.textContent = c.headline || '';
+    pointsEl.style.display = '';
+    pointsEl.innerHTML = (c.key_points || []).map(p => `<li>${p}</li>`).join('');
+  }
+  document.getElementById('rev-commentary-summary').textContent = c.summary || '';
+}
+
+function loadDataIntoUI() {
+  updateUnitLabels();
+  renderCommentary();
+  // Facts
+  document.getElementById('fact-revenue').value = DATA.facts.revenue_today;
+  document.getElementById('fact-cash').value = DATA.facts.cash;
+  document.getElementById('fact-debt').value = DATA.facts.debt;
+  document.getElementById('fact-marketcap').value = DATA.facts.market_cap;
+  document.getElementById('fact-shares-today').value = DATA.facts.diluted_shares_today;
+  // Scenarios
+  for (const sc of SCENARIOS) {
+    const s = DATA.scenarios[sc];
+    setSlider(`${sc}-revY1`, s.revY1);
+    setSlider(`${sc}-revY10`, s.revY10);
+    setSlider(`${sc}-mY1`, s.mY1);
+    setSlider(`${sc}-mY10`, s.mY10);
+    setSlider(`${sc}-disc`, s.discount);
+    setSlider(`${sc}-tg`, s.terminal_growth);
+    setSlider(`${sc}-shares`, s.future_shares);
+    document.getElementById(`story-${sc}`).textContent = s.story || '';
+    const govEl = document.getElementById(`gov-${sc}`);
+    if (govEl) {
+      if (s.governance) {
+        document.getElementById(`gov-${sc}-text`).textContent = s.governance;
+        govEl.style.display = 'block';
+      } else {
+        govEl.style.display = 'none';
+      }
+    }
+  }
+  // Probabilities
+  setSlider('prob-bear', DATA.probabilities.bear);
+  setSlider('prob-base', DATA.probabilities.base);
+  setSlider('prob-bull', DATA.probabilities.bull);
+  // Header
+  document.getElementById('ticker-badge').textContent = DATA.ticker;
+  document.getElementById('company-name').textContent = DATA.company_name + ' · 价值分析交互器';
+  document.getElementById('footer-ticker').textContent = `${DATA.ticker} · ${DATA.company_name}`;
+  document.getElementById('footer-time').textContent = (DATA.generated_at || new Date().toISOString().slice(0, 19).replace('T', ' '));
+  document.title = `${DATA.ticker} · 价值分析交互器`;
+  // 顶部导航链接（如对应文件存在）
+  const navMap = { 'nav-pdf': 'report_pdf' };
+  for (const [navId, key] of Object.entries(navMap)) {
+    const path = (DATA.links || {})[key];
+    const el = document.getElementById(navId);
+    if (path && el) { el.href = path; el.style.display = 'inline-flex'; }
+  }
+}
+
+function readUIIntoData() {
+  DATA.facts.revenue_today = parseFloat(document.getElementById('fact-revenue').value) || 0;
+  DATA.facts.cash = parseFloat(document.getElementById('fact-cash').value) || 0;
+  DATA.facts.debt = parseFloat(document.getElementById('fact-debt').value) || 0;
+  DATA.facts.market_cap = parseFloat(document.getElementById('fact-marketcap').value) || 0;
+  DATA.facts.diluted_shares_today = parseFloat(document.getElementById('fact-shares-today').value) || 1;
+  for (const sc of SCENARIOS) {
+    const s = DATA.scenarios[sc];
+    s.revY1 = getSlider(`${sc}-revY1`);
+    s.revY10 = getSlider(`${sc}-revY10`);
+    s.mY1 = getSlider(`${sc}-mY1`);
+    s.mY10 = getSlider(`${sc}-mY10`);
+    s.discount = getSlider(`${sc}-disc`);
+    s.terminal_growth = getSlider(`${sc}-tg`);
+    s.future_shares = getSlider(`${sc}-shares`);
+  }
+  DATA.probabilities.bear = getSlider('prob-bear');
+  DATA.probabilities.base = getSlider('prob-base');
+  DATA.probabilities.bull = getSlider('prob-bull');
+}
+
+// ============================================================
+// 5. 主计算 + 视图刷新
+// ============================================================
+
+// 情景价值【区间】：围绕中心假设取一个不确定带，算保守组合 vs 乐观组合
+// （呼应"模糊的正确 > 精准的错误"——给区间、不给单点）
+const RANGE_BAND = { revY10: 0.20, mY10abs: 3, mY10rel: 0.35, discount: 1.5 };  // 营收±20% / 折现率±1.5pp；成熟FCF率取 min(±3pp, ±35%)——薄利公司用相对带，避免把3%利润摆成0~6%
+function _marginBand(m) { return Math.min(RANGE_BAND.mY10abs, Math.abs(m) * RANGE_BAND.mY10rel); }
+function _scenarioPerShare(s, f, revY10, mY10, disc, N) {
+  const r = horizonDCF(s, f, N || PRIMARY_YEARS, { revY10, mY10, discount: disc });
+  return r.perShareValue;
+}
+function scenarioValueRange(s, f, N) {
+  N = N || PRIMARY_YEARS;
+  const mb = _marginBand(s.mY10);
+  const lo = _scenarioPerShare(s, f, s.revY10 * (1 - RANGE_BAND.revY10), s.mY10 - mb, s.discount + RANGE_BAND.discount, N);
+  const hi = _scenarioPerShare(s, f, s.revY10 * (1 + RANGE_BAND.revY10), s.mY10 + mb, s.discount - RANGE_BAND.discount, N);
+  const mid = _scenarioPerShare(s, f, s.revY10, s.mY10, s.discount, N);
+  const vals = [lo, hi, mid].filter(v => v != null);
+  if (!vals.length) return { low: null, high: null, mid: null };
+  return { low: Math.min(...vals), high: Math.max(...vals), mid };
+}
+function assumptionRanges(s) {
+  const cagrLo = cagrOf(s.revY1, s.revY10 * (1 - RANGE_BAND.revY10), 10);
+  const cagrHi = cagrOf(s.revY1, s.revY10 * (1 + RANGE_BAND.revY10), 10);
+  return {
+    cagr: [Math.min(cagrLo, cagrHi), Math.max(cagrLo, cagrHi)],
+    margin: [s.mY10 - _marginBand(s.mY10), s.mY10 + _marginBand(s.mY10)],
+    discount: [s.discount - RANGE_BAND.discount, s.discount + RANGE_BAND.discount],
+  };
+}
+
+function computeAll() {
+  readUIIntoData();
+  const f = DATA.facts;
+  const currentPrice = f.diluted_shares_today > 0 ? f.market_cap / f.diluted_shares_today : 0;
+
+  // 各情景计算
+  const results = {};
+  for (const sc of SCENARIOS) {
+    const s = DATA.scenarios[sc];
+    const revenuePath = buildRevenuePath(s.revY1, s.revY10, 10);   // 完整 10 年轨迹（供图表）
+    const marginPath = buildMarginPath(s.mY1 / 100, s.mY10 / 100, 10);
+    const r = horizonDCF(s, f, PRIMARY_YEARS);        // 头条：5 年显性
+    const rRef = horizonDCF(s, f, REFERENCE_YEARS);   // 参考：延伸至 10 年
+    results[sc] = {
+      revenuePath, marginPath, r, rRef,
+      range: scenarioValueRange(s, f, PRIMARY_YEARS),
+      rangeRef: scenarioValueRange(s, f, REFERENCE_YEARS),
+      cagr: cagrOf(s.revY1, s.revY10, 10),
+    };
+  }
+
+  // 更新各情景显示
+  for (const sc of SCENARIOS) {
+    const s = DATA.scenarios[sc];
+    const { r, rRef, cagr } = results[sc];
+    updateValueLabel(`${sc}-revY1`, CSYM + fmtMoney(s.revY1));
+    updateValueLabel(`${sc}-revY10`, CSYM + fmtMoney(s.revY10));
+    updateValueLabel(`${sc}-mY1`, s.mY1.toFixed(0) + '%');
+    updateValueLabel(`${sc}-mY10`, s.mY10.toFixed(0) + '%');
+    updateValueLabel(`${sc}-disc`, s.discount.toFixed(1) + '%');
+    updateValueLabel(`${sc}-tg`, s.terminal_growth.toFixed(2) + '%');
+    updateValueLabel(`${sc}-shares`, fmtShares(s.future_shares));
+    document.getElementById(`${sc}-cagr-val`).textContent = cagr != null ? (cagr * 100).toFixed(1) + '%' : '—';
+
+    const rng = results[sc].range;
+    const priceEl = document.getElementById(`result-${sc}-price`);
+    const deltaEl = document.getElementById(`result-${sc}-delta`);
+    if (rng.low != null && rng.high != null) {
+      priceEl.textContent = `${CSYM}${rng.low.toFixed(2)} – ${CSYM}${rng.high.toFixed(2)}`;
+      if (currentPrice > 0) {
+        const dLo = (rng.low / currentPrice - 1) * 100, dHi = (rng.high / currentPrice - 1) * 100;
+        deltaEl.textContent = `${dLo >= 0 ? '+' : ''}${dLo.toFixed(0)}% ~ ${dHi >= 0 ? '+' : ''}${dHi.toFixed(0)}%`;
+        const mid = (dLo + dHi) / 2;
+        deltaEl.classList.toggle('pos', mid >= 0);
+        deltaEl.classList.toggle('neg', mid < 0);
+      } else { deltaEl.textContent = '—'; }
+    } else { priceEl.textContent = '—'; deltaEl.textContent = '—'; }
+    const rngRef = results[sc].rangeRef;
+    const extPS = (rngRef && rngRef.mid != null) ? `${CSYM}${rngRef.mid.toFixed(2)}/股` : '—';
+    document.getElementById(`result-${sc}-equity`).innerHTML =
+      `权益价值毛估 ${CSYM}${fmtMoney(r.equityValue)}`
+      + ` <span class="muted">· 若延伸至 10 年 ≈ ${extPS}（参考）</span>`;
+    // 关键假设（毛估区间）
+    const ar = assumptionRanges(s);
+    const pc = v => (v == null ? '—' : (v * 100).toFixed(0));
+    document.getElementById(`assump-${sc}`).innerHTML =
+      `<span>营收CAGR <b>${pc(ar.cagr[0])}–${pc(ar.cagr[1])}%</b></span>`
+      + `<span>成熟FCF率 <b>${ar.margin[0].toFixed(0)}–${ar.margin[1].toFixed(0)}%</b></span>`
+      + `<span>折现率 <b>${ar.discount[0].toFixed(1)}–${ar.discount[1].toFixed(1)}%</b></span>`;
+  }
+
+  // 派生数据 + 汇总
+  document.getElementById('derived-price').textContent = CSYM + currentPrice.toFixed(2);
+  document.getElementById('summary-current').textContent = CSYM + currentPrice.toFixed(2);
+
+  const probs = DATA.probabilities;
+  const probSum = probs.bear + probs.base + probs.bull;
+  updateValueLabel('prob-bear', probs.bear.toFixed(0) + '%');
+  updateValueLabel('prob-base', probs.base.toFixed(0) + '%');
+  updateValueLabel('prob-bull', probs.bull.toFixed(0) + '%');
+  const warningEl = document.getElementById('prob-sum-warning');
+  if (Math.abs(probSum - 100) > 0.5) {
+    warningEl.textContent = `⚠️ 三个概率加起来 = ${probSum.toFixed(0)}%（应为 100%）。计算时会自动归一化。`;
+    warningEl.style.display = 'block';
+  } else {
+    warningEl.style.display = 'none';
+  }
+
+  // 加权期望（归一化）。头条＝5 年口径；另算 10 年延伸参考中枢。
+  const totalProb = Math.max(probSum, 1);
+  const wAt = key => (probs.bear * (results.bear.range[key] || 0)
+                    + probs.base * (results.base.range[key] || 0)
+                    + probs.bull * (results.bull.range[key] || 0)) / totalProb;
+  const wAtRef = key => (probs.bear * (results.bear.rangeRef[key] || 0)
+                       + probs.base * (results.base.rangeRef[key] || 0)
+                       + probs.bull * (results.bull.rangeRef[key] || 0)) / totalProb;
+  const wLow = wAt('low'), wHigh = wAt('high'), weighted = wAt('mid');  // 中心=各情景中心值的概率加权（不用区间中点，避免被DCF右偏长尾拉高）
+  const weightedRef = wAtRef('mid');  // 10 年延伸参考中枢
+  document.getElementById('summary-weighted').textContent = `${CSYM}${wLow.toFixed(2)} – ${CSYM}${wHigh.toFixed(2)}`;
+  document.getElementById('summary-weighted-detail').textContent =
+    `5 年口径·概率加权毛估区间；中心约 ${CSYM}${weighted.toFixed(2)} · 若延伸至 10 年中枢约 ${CSYM}${weightedRef.toFixed(2)}（参考）· 看方向别盯小数点`;
+
+  const safety = currentPrice > 0 ? (weighted / currentPrice - 1) * 100 : 0;
+  const safetyEl = document.getElementById('summary-safety');
+  safetyEl.textContent = (safety >= 0 ? '+' : '') + safety.toFixed(0) + '%';
+  safetyEl.style.color = safety >= 0 ? 'var(--pos)' : 'var(--neg)';
+  document.getElementById('summary-safety-detail').textContent = safety >= 0
+    ? '正值：当前价低于加权期望，理论上有上行空间'
+    : '负值：当前价高于加权期望——内在价值未支持当前价';
+
+  // 价值判断仪表盘（四柱 + 周期 + 安全边际头条）
+  renderGauges(currentPrice, weighted, weightedRef, wLow, wHigh);
+
+  // 历史利润表图
+  renderHistoryChart();
+
+  // 股价走势图（叠加 5 年内在价值区间——和安全边际头条同一组数）
+  renderPriceChart(wLow, wHigh, weighted);
+
+  // 业务板块 → 利润流向 桑基图（静态，不随滑块变）
+  renderSankey();
+
+  // 三情景叠加图
+  renderOverlayCharts(results);
+
+  // 反向 DCF
+  computeReverseDCF(currentPrice);
+
+  // 持久化
+  saveState();
+}
+
+// 价值判断仪表盘：四柱硬数字(metrics.json) + 周期校准 + 安全边际头条 + 我写的一句话(pillars)
+function _gPct(v, d) {
+  return (typeof v === 'number' && isFinite(v)) ? (v * 100).toFixed(d == null ? 0 : d) + '%' : '—';
+}
+// 每股价格格式（不是百万市值！按量级选小数位）
+function _fmtPrice(v) {
+  if (v == null || !isFinite(v)) return '—';
+  const a = Math.abs(v);
+  return CSYM + v.toFixed(a < 10 ? 2 : (a < 100 ? 1 : 0));
+}
+// 四柱的大白话讲解（通用、教概念；展开看）。下面那句 g-note 才是针对本公司的判断。
+const PILLAR_EXPLAIN = {
+  compounding:
+    '<span class="ex-h">衡量什么 ·</span> 这门生意“钱滚钱”的能力。ROIC（投入资本回报率）＝公司用每 100 块本钱、一年能赚回多少；增量 ROIC＝最近新投进去的钱的回报（比存量更能说明现在好不好）。'
+    + '<br><span class="ex-h">怎么看 ·</span> ROIC ＞20% 很强、10–20% 中等、低于资金成本（约 8–10%）算弱、＜0 是在毁价值（投进去打水漂）。再配一条长跑道（还能把利润高回报地投回去）就是复利机器；ROIC 高但没跑道是现金牛。箭头是 5 年趋势。',
+  owner_earnings:
+    '<span class="ex-h">衡量什么 ·</span> 作为股东，这门生意一年真正能给你掏出多少现金。看的是自由现金流（FCF＝经营现金流−资本开支），不是账面利润——利润能被会计修饰，现金不会。'
+    + '<br><span class="ex-h">怎么看 ·</span> FCF 率（FCF÷营收）为正且越高越好。SBC（股权激励）是隐性成本、会稀释你的股份；SBC 占 FCF 越高、现金成色越差（如 SITM 占 295%＝账面现金大半被股权吃掉）。',
+  capital_allocation:
+    '<span class="ex-h">衡量什么 ·</span> 公司赚到的现金，管理层拿去干了什么：再投资扩张、回购/分红还给股东、还是乱并购或堆着不动。会配置资本的持续增厚每股价值，不会的毁价值。'
+    + '<br><span class="ex-h">怎么看 ·</span> 还股东占 CFO＝多少经营现金流以回购+分红还给了你；再投＝多少投回生意。重点看行为、尤其回购价位——便宜时回购增厚每股价值、高位接盘毁价值。',
+  survival:
+    '<span class="ex-h">衡量什么 ·</span> 这家公司扛不扛得住坏日子、会不会被债务或烧钱拖垮、要不要被迫增发稀释你。安全边际的一半是别归零——再好的生意、资产负债表崩了也白搭。'
+    + '<br><span class="ex-h">怎么看 ·</span> 净现金（现金＞有息负债）＝堡垒；净债/EBITDA 越低越稳；利息覆盖越高越安全。烧钱公司看现金跑道（手上现金还够烧几年）——净现金 ≠ 安全。',
+};
+const SAFETY_EXPLAIN =
+  '<span class="ex-h">什么是安全边际 ·</span> ＝保守估计的内在价值 − 现价，衡量“我能看错多少、还不亏本金”。正值＝现价低于内在价值、有上行空间；负值＝现价高于内在价值、买贵了。'
+  + '<br><span class="ex-h">怎么读这行 ·</span> 头条用 5 年显性口径（更在能力圈内、可证伪），并标一个延伸到 10 年的参考值——两者差距越大，说明现价把越多乐观押在了最难看清的第 6–10 年。这是工具的最终落点：好生意 ＋ 留有余地的价，才算好投资。';
+const CYCLE_EXPLAIN =
+  '<span class="ex-h">为什么重要 ·</span> 在超级周期（如这轮 AI）里，当前的 ROIC、利润率往往是周期井喷催出来的高峰、不是常态。把高峰当永久水平去估值，会系统性高估、让你在顶部为完美付全款。'
+  + '<br><span class="ex-h">该怎么办 ·</span> 做中周期归一化（用更低的稳态利润率喂终值），并把“周期转冷/资本开支见顶”写成核心 Bear——承认红利是真的，但不在欢呼时追、不为高峰付全款。';
+function _bandColorClass(band) {
+  if (!band) return 'g-gray';
+  const red = ['毁灭', '烧钱', '脆弱', '投机'];
+  const green = ['强复利', '强现金', '堡垒', '稳健', '还股东', '高回报'];
+  const yellow = ['中等', '走弱', '弱', '承压', '在烧', '吞掉', '失真', '存疑', '小众'];
+  if (red.some(k => band.includes(k))) return 'g-red';
+  if (green.some(k => band.includes(k))) return 'g-green';
+  if (yellow.some(k => band.includes(k))) return 'g-yellow';
+  return 'g-gray';
+}
+function _survivalNums(sv) {
+  const parts = [];
+  if (sv.is_net_cash === true) parts.push('净现金');
+  else if (sv.net_debt_to_ebitda != null) parts.push('净债/EBITDA ' + sv.net_debt_to_ebitda.toFixed(1));
+  if (sv.interest_coverage != null) parts.push('利息覆盖 ' + Math.round(sv.interest_coverage) + 'x');
+  if (sv.cash_runway_years != null) parts.push('跑道 ' + sv.cash_runway_years.toFixed(1) + ' 年');
+  if (sv.current_ratio != null && parts.length < 2) parts.push('流动比 ' + sv.current_ratio.toFixed(1));
+  return parts.join(' · ') || '—';
+}
+function renderGauges(currentPrice, weighted, weightedRef, wLow, wHigh) {
+  const sec = document.getElementById('section-gauges');
+  const M = DATA.metrics && DATA.metrics.metrics;
+  if (!M) { sec.style.display = 'none'; return; }
+  sec.style.display = '';
+  const P = DATA.pillars || {};
+
+  // 周期 banner
+  const cyc = M.cycle_calibration || {};
+  const cb = document.getElementById('cycle-banner');
+  if (cyc.peak_suspect) {
+    const r = cyc.roic || {};
+    cb.style.display = 'flex';
+    cb.style.flexWrap = 'wrap';
+    cb.innerHTML = `<span class="ci">⚠️</span><span style="flex:1; min-width:0;">周期高峰存疑：ROIC 近年从约 ${_gPct(r.baseline)} 拉升到 ${_gPct(r.latest)}。当前很可能是周期高峰，别把它当常态——估值需做中周期归一化、把周期转冷写成核心 Bear。</span>`
+      + `<details class="inline-explain"><summary>为什么这条很重要 ▾</summary><div class="ie-body">${CYCLE_EXPLAIN}</div></details>`;
+  } else { cb.style.display = 'none'; }
+
+  // 安全边际头条
+  const sh = document.getElementById('safety-headline');
+  if (currentPrice > 0 && isFinite(weighted)) {
+    const safety = (weighted / currentPrice - 1) * 100;
+    const cls = safety >= 0 ? 'pos' : 'neg';
+    const note = P.headline ? `<div class="sh-note">${svgEsc(P.headline)}</div>` : '';
+    sh.innerHTML =
+      `<span class="sh-label">安全边际</span>`
+      + `<span class="sh-pct ${cls}">${safety >= 0 ? '+' : ''}${safety.toFixed(0)}%</span>`
+      + `<span class="sh-nums">现价 ${_fmtPrice(currentPrice)} · 5年内在价值 ${_fmtPrice(wLow)}–${_fmtPrice(wHigh)}（中枢 ${_fmtPrice(weighted)}）· 延伸10年参考 ~${_fmtPrice(weightedRef)}</span>`
+      + note
+      + `<details class="inline-explain"><summary>什么是安全边际 ▾</summary><div class="ie-body">${SAFETY_EXPLAIN}</div></details>`;
+  } else { sh.innerHTML = ''; }
+
+  // 四柱
+  const ce = M.compounding_engine || {};
+  const oe = M.owner_earnings || {};
+  const oel = oe.latest || {};
+  const ca = M.capital_allocation || {};
+  const sv = M.survival || {};
+
+  let ceNums;
+  if (ce.roic_distorted) {
+    ceNums = `ROE ${_gPct(ce.roe_latest)}（ROIC 失真）`;
+  } else {
+    const arrow = (ce.roic_trend_delta != null) ? (ce.roic_trend_delta >= 0 ? ' ↑' : ' ↓') : '';
+    ceNums = `ROIC ${_gPct(ce.roic_latest)}${arrow} · 增量 ${_gPct(ce.incremental_roic)}`;
+  }
+
+  const cards = [
+    { key: 'compounding', name: '复利引擎', band: ce.band, nums: ceNums, note: P.compounding || (ce.asset_light ? '轻资产' : '') },
+    { key: 'owner_earnings', name: '所有者盈余', band: oe.band, nums: `FCF率 ${_gPct(oel.fcf_margin)} · SBC占FCF ${_gPct(oel.sbc_pct_fcf)}`, note: P.owner_earnings || '' },
+    { key: 'capital_allocation', name: '资本配置', band: P.capital_allocation_band || '看现金去向', nums: `还股东占CFO ${_gPct(ca.shareholder_return_pct_cfo)} · 再投 ${_gPct(ca.reinvest_pct_cfo)}`, note: P.capital_allocation || '' },
+    { key: 'survival', name: '生存', band: sv.band, nums: _survivalNums(sv), note: P.survival || '' },
+  ];
+  document.getElementById('gauges').innerHTML = cards.map(c =>
+    `<div class="gauge ${_bandColorClass(c.band)}">`
+    + `<div class="g-name">${c.name}</div>`
+    + `<div class="g-band">${svgEsc(c.band || '—')}</div>`
+    + `<div class="g-nums">${c.nums}</div>`
+    + (c.note ? `<div class="g-note">${svgEsc(c.note)}</div>` : '')
+    + (() => {
+        const detail = (P.details && P.details[c.key]) || '';
+        if (detail) return `<details class="g-explain"><summary>这家公司的详细分析 ▾</summary><div class="g-explain-body">${svgEsc(detail)}</div></details>`;
+        if (PILLAR_EXPLAIN[c.key]) return `<details class="g-explain"><summary>指标怎么看 ▾</summary><div class="g-explain-body">${PILLAR_EXPLAIN[c.key]}</div></details>`;
+        return '';
+      })()
+    + `</div>`
+  ).join('');
+}
+
+function renderHistoryChart() {
+  const h = DATA.history.filter(row => row.revenue != null || row.net_income != null);
+  if (h.length === 0) {
+    document.getElementById('chart-history').innerHTML = '<p class="muted">无历史数据</p>';
+    return;
+  }
+  const datasets = [
+    { label: '营收', color: '#264653', data: h.map(r => ({x: r.year, y: r.revenue})), strokeWidth: 2.5 },
+    { label: '毛利', color: '#2a9d8f', data: h.map(r => ({x: r.year, y: r.gross_profit})) },
+    { label: '营业利润', color: '#1d6fb8', data: h.map(r => ({x: r.year, y: r.operating_income})) },
+    { label: '净利润', color: '#e76f51', data: h.map(r => ({x: r.year, y: r.net_income})) },
+    { label: 'FCF', color: '#d4a017', data: h.map(r => ({x: r.year, y: r.fcf})), dashed: true },
+  ];
+  renderLineChart('chart-history', datasets, {
+    width: 1100, height: 320, showZeroLine: true,
+    xTickFormat: x => x.toString(),
+    yTickFormat: y => CSYM + fmtMoney(y),
+  });
+  document.getElementById('legend-history').innerHTML = datasets.map(d =>
+    `<span class="legend-item"><span class="legend-swatch" style="background:${d.color}${d.dashed ? '; height:1px; border-top: 1.5px dashed ' + d.color : ''}"></span>${d.label}</span>`
+  ).join('');
+}
+
+// 股价走势（近 5 年·月度收盘；数据 DATA.prices 来自 fetch_prices.py）
+function renderPriceChart(valLow, valHigh, valMid) {
+  const sec = document.getElementById('section-price');
+  if (!sec) return;
+  const prices = DATA.prices;
+  if (!Array.isArray(prices) || prices.length < 2) { sec.style.display = 'none'; return; }
+  sec.style.display = '';
+  const labels = prices.map(p => p.m);
+  const closes = prices.map(p => p.c);
+  const last = prices[prices.length - 1];
+  const lo = Math.min(...closes), hi = Math.max(...closes);
+  const fmtP = v => CSYM + (Math.abs(v) < 20 ? v.toFixed(2) : Math.round(v));
+  // 内在价值参考带（5年口径，和安全边际头条同一组数）
+  const hasVal = [valLow, valHigh, valMid].every(v => typeof v === 'number' && isFinite(v));
+  const refBand = hasVal ? {
+    low: valLow, high: valHigh, mid: valMid, color: '#2a9d8f',
+    label: `5年内在价值 中枢 ${fmtP(valMid)}`,
+  } : null;
+  document.getElementById('price-note').textContent =
+    `近 ${prices.length} 个月（${prices[0].m} → ${last.m}）· 区间 ${fmtP(lo)} – ${fmtP(hi)} · 最新 ${fmtP(last.c)}`
+    + (hasVal ? ` · 绿带＝5年内在价值毛估区间 ${fmtP(valLow)}–${fmtP(valHigh)}（价线在带上方＝偏贵、跌进带内＝出现安全边际）` : '');
+  renderLineChart('chart-price', [{
+    label: '月收盘', color: '#1f6f8b',
+    data: prices.map((p, i) => ({ x: i, y: p.c })),
+    strokeWidth: 2,
+  }], {
+    width: 1100, height: 300, showZeroLine: false, maxXTicks: 7, refBand,
+    xTickFormat: i => labels[Math.round(i)] || '',
+    yTickFormat: v => CSYM + (Math.abs(v) < 20 ? v.toFixed(1) : Math.round(v)),
+  });
+}
+
+// 业务板块 → 利润流向 桑基图（左边各板块汇成营收，再分流成成本/费用/净利润）
+const SANKEY_KIND_COLOR = {
+  revenue: '#22505f', gross: '#2a9d8f', cost: '#e76f51',
+  expense: '#f4a261', flow: '#5a8fbf', external: '#e9c46a',
+  op: '#3a7ca5', net: '#239485', loss: '#d64545',
+};
+const SANKEY_SEG_COLORS = ['#2a6f97', '#9d4edd', '#52796f', '#e07a5f', '#d4a017', '#118ab2', '#bc6c25'];
+
+function renderSankey() {
+  const sk = DATA.sankey;
+  const section = document.getElementById('section-sankey');
+  if (!section) return;
+  if (!sk || !Array.isArray(sk.nodes) || sk.nodes.length === 0 || !sk.links.length) {
+    section.style.display = 'none';
+    return;
+  }
+  section.style.display = '';
+  const t = sk.totals || {};
+  const hasSeg = !!sk.seg_dim;
+  const isLoss = !!sk.is_loss || (t.net_income != null && t.net_income < 0);
+  // 标题/描述据"有无业务板块层"与"盈亏"动态切换，避免名不副实（美股无分部、亏损另一套措辞）
+  document.getElementById('sankey-title').textContent =
+    hasSeg ? '业务板块 → 利润流向' : '营业收入 → 成本费用流向';
+  document.getElementById('sankey-desc').textContent = isLoss
+    ? (hasSeg
+        ? '这一年是亏损：左边各业务板块汇成营业收入，再加上以自有资金弥补的净亏损（红色虚线），一起覆盖了全部成本和费用。红色虚线越粗＝自掏腰包补的窟窿越大。'
+        : '这一年是亏损：营业收入加上以自有资金弥补的净亏损（红色虚线），一起覆盖了全部成本和费用。红色虚线越粗＝自掏腰包补的窟窿越大。')
+    : (hasSeg
+        ? '左边是各项业务板块（条越粗＝营收越大），汇成营业收入后，一路分流成成本、各项费用，最后剩下净利润。'
+        : '营业收入一路分流成成本、各项费用，最后剩下净利润。');
+  document.getElementById('sankey-subtitle').textContent = isLoss
+    ? `${sk.year} 年度${sk.seg_dim ? ' · ' + sk.seg_dim + '拆分' : ''} · 营收 ${CSYM}${fmtMoney(t.revenue)}，净亏损 ${CSYM}${fmtMoney(Math.abs(t.net_income))}（自有资金弥补）`
+    : `${sk.year} 年度${sk.seg_dim ? ' · ' + sk.seg_dim + '拆分' : ''} · 营收 ${CSYM}${fmtMoney(t.revenue)} → 净利润 ${CSYM}${fmtMoney(t.net_income)}`;
+
+  // ---- 准备节点/连线 ----
+  const nodes = sk.nodes.map(n => ({ ...n }));
+  const links = sk.links.map(l => ({ ...l }));
+  const byId = {};
+  nodes.forEach(n => { byId[n.id] = n; n.in = 0; n.out = 0; n._out = []; n._in = []; });
+  links.forEach(l => {
+    byId[l.source].out += l.value; byId[l.target].in += l.value;
+    byId[l.source]._out.push(l); byId[l.target]._in.push(l);
+  });
+  nodes.forEach(n => { n.flow = Math.max(n.in, n.out, n.value || 0); });
+
+  // 给业务板块分配颜色
+  let segIdx = 0;
+  nodes.forEach(n => {
+    n.color = n.kind === 'segment'
+      ? SANKEY_SEG_COLORS[segIdx++ % SANKEY_SEG_COLORS.length]
+      : (SANKEY_KIND_COLOR[n.kind] || '#888');
+  });
+
+  // ---- 几何布局 ----
+  const cols = [...new Set(nodes.map(n => n.col))].sort((a, b) => a - b);
+  const colNodes = {};
+  cols.forEach(c => { colNodes[c] = nodes.filter(n => n.col === c).sort((a, b) => (a.order || 0) - (b.order || 0)); });
+
+  const W = 1180, nodeW = 15, padTop = 26, padBottom = 12, gap = 16, Hplot = 470;
+  const colSum = c => colNodes[c].reduce((s, n) => s + n.flow, 0);
+  // 全局 值→像素 比例：让"最挤"的列正好放进 Hplot
+  let scale = Infinity;
+  cols.forEach(c => {
+    const cnt = colNodes[c].length;
+    const avail = Hplot - (cnt - 1) * gap;
+    if (avail > 0) scale = Math.min(scale, avail / Math.max(colSum(c), 1e-9));
+  });
+  if (!isFinite(scale)) scale = 0.05;
+
+  const labelGutterL = 200, labelGutterR = 124;
+  const plotLeft = labelGutterL, plotRight = W - labelGutterR;
+  const colX = c => plotLeft + (cols.length === 1 ? 0 : (c - cols[0]) / (cols[cols.length - 1] - cols[0]) * (plotRight - plotLeft - nodeW));
+
+  cols.forEach(c => {
+    const ns = colNodes[c];
+    const totalH = ns.reduce((s, n) => s + Math.max(n.flow * scale, 2), 0) + (ns.length - 1) * gap;
+    let y = padTop + (Hplot - totalH) / 2;
+    const x = colX(c);
+    ns.forEach(n => { n.h = Math.max(n.flow * scale, 2); n.x = x; n.y = y; y += n.h + gap; });
+  });
+
+  // 连线在各节点边缘的堆叠位置（按对端纵向位置排序，减少交叉）
+  nodes.forEach(n => {
+    n._out.sort((a, b) => byId[a.target].y - byId[b.target].y);
+    n._in.sort((a, b) => byId[a.source].y - byId[b.source].y);
+    let oy = n.y; n._out.forEach(l => { l.w = Math.max(l.value * scale, 1); l.sy = oy; oy += l.w; });
+    let iy = n.y; n._in.forEach(l => { l.ty = iy; iy += Math.max(l.value * scale, 1); });
+  });
+
+  const H = padTop + padBottom + Hplot;
+  // 节点柔和投影：让方块从画布上"浮起来"，不再扁平
+  let defs = '<defs>'
+    + '<filter id="sk-node-shadow" x="-30%" y="-30%" width="160%" height="160%">'
+    + '<feDropShadow dx="0" dy="1" stdDeviation="1.1" flood-color="#1a2730" flood-opacity="0.28"/></filter>';
+  let flowSvg = '';
+
+  // 连线（贝塞尔色带：源→目标颜色渐变，比平涂更通透；hover 时高亮、其余淡出）
+  links.forEach((l, i) => {
+    const s = byId[l.source], t = byId[l.target];
+    const xs0 = s.x + nodeW, xt = t.x, xm = (xs0 + xt) / 2;
+    const sy = l.sy, ty = l.ty, w = l.w;
+    const path = `M ${xs0.toFixed(1)} ${sy.toFixed(1)} `
+      + `C ${xm.toFixed(1)} ${sy.toFixed(1)} ${xm.toFixed(1)} ${ty.toFixed(1)} ${xt.toFixed(1)} ${ty.toFixed(1)} `
+      + `L ${xt.toFixed(1)} ${(ty + w).toFixed(1)} `
+      + `C ${xm.toFixed(1)} ${(ty + w).toFixed(1)} ${xm.toFixed(1)} ${(sy + w).toFixed(1)} ${xs0.toFixed(1)} ${(sy + w).toFixed(1)} Z`;
+    const tip = `${s.label} → ${t.label}: ${CSYM}${fmtMoney(l.value)}`;
+    const da = ` data-s="${svgEsc(s.id)}" data-t="${svgEsc(t.id)}"`;
+    if (l.kind === 'loss') {
+      // 净亏损流入：红色 + 虚线描边，一眼看出是"超过营收、自掏腰包补"的窟窿
+      flowSvg += `<path class="sk-flow sk-flow-loss"${da} d="${path}" fill="#d64545" fill-opacity="0.15" stroke="#d64545" stroke-width="1.1" stroke-opacity="0.85" stroke-dasharray="6 4"><title>${svgEsc(tip)}</title></path>`;
+    } else {
+      // 渐变：左端取源节点色、右端取目标节点色，沿流向过渡
+      const gid = `skg${i}`;
+      defs += `<linearGradient id="${gid}" gradientUnits="userSpaceOnUse" x1="${xs0.toFixed(1)}" y1="0" x2="${xt.toFixed(1)}" y2="0">`
+        + `<stop offset="0" stop-color="${s.color}"/><stop offset="1" stop-color="${t.color}"/></linearGradient>`;
+      flowSvg += `<path class="sk-flow"${da} d="${path}" fill="url(#${gid})" fill-opacity="0.42"><title>${svgEsc(tip)}</title></path>`;
+    }
+  });
+  defs += '</defs>';
+  let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">` + defs + flowSvg;
+
+  // 节点 + 标签
+  const lastCol = cols[cols.length - 1];
+  nodes.forEach(n => {
+    const cx = n.x + nodeW / 2, midY = n.y + n.h / 2;
+    const rectExtra = n.kind === 'loss'
+      ? ' fill-opacity="0.55" stroke="#d64545" stroke-width="1.2" stroke-dasharray="4 2"'
+      : '';
+    svg += `<rect class="sk-node" data-id="${svgEsc(n.id)}" x="${n.x.toFixed(1)}" y="${n.y.toFixed(1)}" width="${nodeW}" height="${n.h.toFixed(1)}" rx="3" fill="${n.color}" filter="url(#sk-node-shadow)"${rectExtra}><title>${svgEsc(n.label + ': ' + CSYM + fmtMoney(n.value) + (n.note ? ' · ' + n.note : ''))}</title></rect>`;
+
+    const pct = t.revenue ? ` ${(n.value / t.revenue * 100).toFixed(0)}%` : '';
+    const amt = `${CSYM}${fmtMoney(n.value)}`;
+    let main = n.label, sub = amt;
+    if (n.kind === 'segment') sub = `${amt}${n.margin != null ? ' · 毛利率' + n.margin + '%' : ''}`;
+
+    if (n.col === cols[0] && n.kind === 'segment') {
+      // 左列：标签在左侧，右对齐
+      svg += `<text x="${(n.x - 8).toFixed(1)}" y="${(midY - 2).toFixed(1)}" text-anchor="end" font-size="11.5" font-weight="600" fill="#1a1a1a">${svgEsc(main)}</text>`;
+      svg += `<text x="${(n.x - 8).toFixed(1)}" y="${(midY + 11).toFixed(1)}" text-anchor="end" font-size="10.5" fill="#5a6471">${svgEsc(sub)}</text>`;
+    } else if (n.col === lastCol) {
+      // 右列：标签在右侧
+      svg += `<text x="${(n.x + nodeW + 8).toFixed(1)}" y="${(midY - 2).toFixed(1)}" text-anchor="start" font-size="11.5" font-weight="700" fill="${n.color}">${svgEsc(main)}</text>`;
+      svg += `<text x="${(n.x + nodeW + 8).toFixed(1)}" y="${(midY + 11).toFixed(1)}" text-anchor="start" font-size="10.5" fill="#5a6471">${svgEsc(amt + pct)}</text>`;
+    } else {
+      // 中间列：标签在节点上方（净亏损用红色突出）
+      const weight = (n.kind === 'op' || n.kind === 'gross' || n.kind === 'revenue' || n.kind === 'loss') ? 700 : 500;
+      const mainFill = n.kind === 'loss' ? '#c0392b' : '#1a1a1a';
+      svg += `<text x="${cx.toFixed(1)}" y="${(n.y - 6).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="${weight}" fill="${mainFill}">${svgEsc(main)} <tspan fill="#5a6471" font-weight="400">${svgEsc(amt)}</tspan></text>`;
+    }
+  });
+
+  svg += `</svg>`;
+  document.getElementById('chart-sankey').innerHTML = svg;
+  attachSankeyHover();
+
+  // 诚实提示：营业利润里非主营（投资收益等）占比
+  const noteEl = document.getElementById('sankey-note');
+  const X = t.invest_other || 0, op = t.operating_income || 0;
+  if (op > 0 && X / op >= 0.2) {
+    noteEl.innerHTML = `⚠️ 这一年营业利润 ${CSYM}${fmtMoney(op)} 里，约 <b>${(X / op * 100).toFixed(0)}%</b>（${CSYM}${fmtMoney(X)}）来自投资收益、公允价值变动等<b>非主营项目</b>，不是核心生意赚来的。看主营成色要把这块剔掉。`;
+    noteEl.style.display = 'block';
+  } else {
+    noteEl.style.display = 'none';
+  }
+
+  // 图例（据有无板块层 / 盈亏切换条目；净亏损用红色虚线方块）
+  const legendItems = [];
+  if (hasSeg) legendItems.push(['#2a6f97', '业务板块', false]);
+  legendItems.push([SANKEY_KIND_COLOR.cost, '成本', false], [SANKEY_KIND_COLOR.expense, '费用', false],
+    [SANKEY_KIND_COLOR.external, '投资收益等', false]);
+  legendItems.push(isLoss
+    ? ['#d64545', '净亏损(自有资金弥补)', true]
+    : [SANKEY_KIND_COLOR.net, '净利润', false]);
+  document.getElementById('legend-sankey').innerHTML = legendItems.map(([c, l, dashed]) =>
+    `<span class="legend-item"><span class="legend-swatch" style="${dashed
+      ? 'background:' + c + '22;border:1.3px dashed ' + c + ';height:12px;width:12px;border-radius:2px;box-sizing:border-box;'
+      : 'background:' + c + ';height:12px;width:12px;border-radius:2px;'}"></span>${l}</span>`).join('');
+}
+
+// 桑基图悬停高亮：放到一个节点上 → 它牵连的所有流高亮、不相关的流和节点淡出；
+// 放到一条流上 → 只高亮这条流、淡化其余。纯视觉，鼠标移开即复原。
+function attachSankeyHover() {
+  const root = document.getElementById('chart-sankey');
+  if (!root) return;
+  const flows = Array.from(root.querySelectorAll('.sk-flow'));
+  const nodes = Array.from(root.querySelectorAll('.sk-node'));
+  if (!flows.length) return;
+  const clear = () => {
+    flows.forEach(f => f.classList.remove('sk-hi', 'sk-dim'));
+    nodes.forEach(n => n.classList.remove('sk-node-dim'));
+  };
+  const touches = (f, id) => f.getAttribute('data-s') === id || f.getAttribute('data-t') === id;
+  nodes.forEach(node => {
+    const id = node.getAttribute('data-id');
+    node.addEventListener('mouseenter', () => {
+      const keep = new Set([id]);
+      flows.forEach(f => {
+        const on = touches(f, id);
+        f.classList.toggle('sk-hi', on);
+        f.classList.toggle('sk-dim', !on);
+        if (on) { keep.add(f.getAttribute('data-s')); keep.add(f.getAttribute('data-t')); }
+      });
+      nodes.forEach(n => n.classList.toggle('sk-node-dim', !keep.has(n.getAttribute('data-id'))));
+    });
+    node.addEventListener('mouseleave', clear);
+  });
+  flows.forEach(flow => {
+    flow.addEventListener('mouseenter', () => {
+      const s = flow.getAttribute('data-s'), t = flow.getAttribute('data-t');
+      flows.forEach(g => { const on = g === flow; g.classList.toggle('sk-hi', on); g.classList.toggle('sk-dim', !on); });
+      nodes.forEach(n => { const nid = n.getAttribute('data-id'); n.classList.toggle('sk-node-dim', !(nid === s || nid === t)); });
+    });
+    flow.addEventListener('mouseleave', clear);
+  });
+}
+
+function renderOverlayCharts(results) {
+  // 基准年取自历史末年；前 5 年实线（显性期），延伸到 10 年虚线（参考期）
+  const hist = (DATA.history || []).filter(r => r.year != null);
+  const baseYear = hist.length ? hist[hist.length - 1].year : 2025;
+  const splitYear = baseYear + PRIMARY_YEARS;
+
+  // 营收叠加图（完整 10 年轨迹）
+  const revDatasets = SCENARIOS.map(sc => ({
+    label: SCENARIO_LABELS[sc],
+    color: SCENARIO_COLORS[sc],
+    data: results[sc].revenuePath.map((v, i) => ({x: baseYear + i + 1, y: v})),
+  }));
+  renderLineChart('chart-revenue', revDatasets, {
+    width: 1100, height: 280, showZeroLine: false, splitDashAfter: splitYear,
+    xTickFormat: x => x.toString(),
+    yTickFormat: y => CSYM + fmtMoney(y),
+  });
+
+  // FCF 叠加图（用 10 年延伸口径的逐年 FCF，前 5 年实线、后 5 年虚线）
+  const fcfDatasets = SCENARIOS.map(sc => ({
+    label: SCENARIO_LABELS[sc],
+    color: SCENARIO_COLORS[sc],
+    data: results[sc].rRef.explicitFCF.map((v, i) => ({x: baseYear + i + 1, y: v})),
+  }));
+  renderLineChart('chart-fcf', fcfDatasets, {
+    width: 1100, height: 280, showZeroLine: true, splitDashAfter: splitYear,
+    xTickFormat: x => x.toString(),
+    yTickFormat: y => CSYM + fmtMoney(y),
+  });
+}
+
+function computeReverseDCF(currentPrice) {
+  const f = DATA.facts;
+  const hist = (DATA.history || []).filter(r => r.year != null);
+  const baseYear = hist.length ? hist[hist.length - 1].year : 2025;
+
+  // 模式 A：固定成熟期 FCF 率，反解必须的营收 CAGR。主口径 5 年，并列 10 年参考。
+  const fixMargin = parseFloat(document.getElementById('rev-fix-margin').value);
+  const discA = parseFloat(document.getElementById('rev-disc-A').value);
+  updateValueLabel('rev-fix-margin', fixMargin.toFixed(0) + '%');
+  updateValueLabel('rev-disc-A', discA.toFixed(1) + '%');
+  const argsA = {
+    marketCap: f.market_cap, revenueToday: f.revenue_today,
+    discountRate: discA / 100, terminalGrowth: 0.03,
+    cash: f.cash, debt: f.debt,
+    solveFor: 'cagr', fixedFcfMargin: fixMargin / 100, startFcfMargin: -0.20,
+  };
+  const rA5 = reverseDCF({ ...argsA, years: PRIMARY_YEARS });
+  const rA10 = reverseDCF({ ...argsA, years: REFERENCE_YEARS });
+  const cagrEl = document.getElementById('rev-implied-cagr');
+  const interpA = document.getElementById('rev-interp-cagr');
+  const cagrTxt = r => r.hitUpperBound ? '> 120%' : (r.implied * 100).toFixed(1) + '%';
+  if (rA5.hitUpperBound) {
+    cagrEl.textContent = '> 120%';
+    interpA.innerHTML = `即使把未来 5 年营收 CAGR 设到 120% 都撑不住当前市值——市场必须押在更靠后的远期或更高的 FCF 率上。`
+      + `<br><span class="muted">延伸至 10 年口径：隐含 CAGR ≈ ${cagrTxt(rA10)}。</span>`;
+  } else {
+    cagrEl.textContent = cagrTxt(rA5);
+    const implRev5 = f.revenue_today * Math.pow(1 + rA5.implied, PRIMARY_YEARS);
+    interpA.innerHTML = `市场隐含的预期：未来 5 年营收 CAGR = <strong>${(rA5.implied * 100).toFixed(1)}%</strong>，即 ${baseYear + PRIMARY_YEARS} 年营收 ≈ <strong>${CSYM}${fmtMoney(implRev5)}</strong>。`
+      + `<br><span class="muted">延伸至 10 年口径：隐含 CAGR ≈ ${cagrTxt(rA10)}（到 ${baseYear + REFERENCE_YEARS} 年）——两者差距越大，说明现价把越多乐观押在了最难证伪的 6–10 年。</span>`;
+  }
+
+  // 模式 B：固定营收 CAGR，反解必须的成熟期 FCF 率。主口径 5 年，并列 10 年参考。
+  const fixCagr = parseFloat(document.getElementById('rev-fix-cagr').value);
+  const discB = parseFloat(document.getElementById('rev-disc-B').value);
+  updateValueLabel('rev-fix-cagr', fixCagr.toFixed(0) + '%');
+  updateValueLabel('rev-disc-B', discB.toFixed(1) + '%');
+  const argsB = {
+    marketCap: f.market_cap, revenueToday: f.revenue_today,
+    discountRate: discB / 100, terminalGrowth: 0.03,
+    cash: f.cash, debt: f.debt,
+    solveFor: 'fcf_margin', fixedCagr: fixCagr / 100, startFcfMargin: -0.20,
+  };
+  const rB5 = reverseDCF({ ...argsB, years: PRIMARY_YEARS });
+  const rB10 = reverseDCF({ ...argsB, years: REFERENCE_YEARS });
+  const marginEl = document.getElementById('rev-implied-margin');
+  const interpB = document.getElementById('rev-interp-margin');
+  const mTxt = r => r.hitUpperBound ? '> 150%' : (r.implied * 100).toFixed(1) + '%';
+  if (rB5.hitUpperBound) {
+    marginEl.textContent = '> 150%';
+    interpB.innerHTML = `在该 CAGR 下、5 年口径里没有任何现实的 FCF 利润率能撑住当前市值——市场必须相信增长远高于此。`
+      + `<br><span class="muted">延伸至 10 年口径：隐含成熟 FCF 率 ≈ ${mTxt(rB10)}。</span>`;
+  } else {
+    marginEl.textContent = mTxt(rB5);
+    interpB.innerHTML = `市场隐含的预期：5 年内须达到成熟期 FCF 利润率 = <strong>${(rB5.implied * 100).toFixed(1)}%</strong>。参照：成熟航天 7-10%、苹果 25-28%、优秀消费龙头 12-15%。`
+      + `<br><span class="muted">延伸至 10 年口径：隐含成熟 FCF 率 ≈ ${mTxt(rB10)}——给得越久、要求越低。</span>`;
+  }
+}
+
+// ============================================================
+// 6. 重置按钮：恢复某个模块到原始默认值
+// ============================================================
+function resetSection(section) {
+  if (section === 'facts') {
+    DATA.facts = JSON.parse(JSON.stringify(ORIGINAL_DATA.facts));
+  } else if (section === 'probabilities') {
+    DATA.probabilities = JSON.parse(JSON.stringify(ORIGINAL_DATA.probabilities));
+  } else if (SCENARIOS.includes(section)) {
+    DATA.scenarios[section] = JSON.parse(JSON.stringify(ORIGINAL_DATA.scenarios[section]));
+  } else {
+    return;
+  }
+  loadDataIntoUI();
+  computeAll();
+  // 给点击的按钮一个短暂的"已重置"视觉反馈
+  const btn = event && event.target;
+  if (btn && btn.classList) {
+    btn.classList.add('flash');
+    setTimeout(() => btn.classList.remove('flash'), 600);
+  }
+}
+
+// ============================================================
+// 7. 事件绑定
+// ============================================================
+function bindAll() {
+  const allInputs = [
+    'fact-revenue', 'fact-cash', 'fact-debt', 'fact-marketcap', 'fact-shares-today',
+    'prob-bear', 'prob-base', 'prob-bull',
+  ];
+  for (const sc of SCENARIOS) {
+    for (const sfx of ['revY1', 'revY10', 'mY1', 'mY10', 'disc', 'tg', 'shares']) {
+      allInputs.push(`${sc}-${sfx}`);
+    }
+  }
+  for (const id of allInputs) {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', computeAll);
+  }
+  for (const id of ['rev-fix-margin', 'rev-disc-A', 'rev-fix-cagr', 'rev-disc-B']) {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', () => {
+      const f = DATA.facts;
+      const currentPrice = f.diluted_shares_today > 0 ? f.market_cap / f.diluted_shares_today : 0;
+      computeReverseDCF(currentPrice);
+    });
+  }
+}
+
+// 下一份财报提醒：读 DATA.next_earnings，用今天日期算倒计时；临近变琥珀、过期变红提醒重做分析
+function renderNextEarnings() {
+  const el = document.getElementById('earnings-banner');
+  if (!el) return;
+  const ne = DATA.next_earnings;
+  if (!ne || !ne.date) { el.style.display = 'none'; return; }
+  const target = new Date(ne.date + 'T00:00:00');
+  if (isNaN(target.getTime())) { el.style.display = 'none'; return; }
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const days = Math.round((target - today) / 86400000);
+  const period = ne.period || '下一期财报';
+  const tag = ne.estimated ? '（预计，以公司公告为准）' : '';
+  const asOf = DATA.as_of ? `本分析基于 ${DATA.as_of} 的数据` : '本分析数据';
+  let cls, icon, msg;
+  if (days > 14) {
+    cls = 'eb-info'; icon = '📅';
+    msg = `下一份财报：<b>${ne.date}</b> · ${period}${tag} · 还有 <b>${days}</b> 天。到时回来重新取数、更新这份分析。`;
+  } else if (days >= 0) {
+    cls = 'eb-soon'; icon = '⏳';
+    msg = `下一份财报临近：<b>${ne.date}</b> · ${period}${tag} · 仅剩 <b>${days}</b> 天。准备好财报一出就重新取数、更新分析。`;
+  } else {
+    cls = 'eb-overdue'; icon = '⚠️';
+    msg = `财报预计已发布：<b>${ne.date}</b> · ${period} · 已过 <b>${-days}</b> 天。${asOf}、可能已过时——建议重新跑取数并重做这份分析。`;
+  }
+  el.className = 'earnings-banner ' + cls;
+  el.innerHTML = `<span class="eb-icon">${icon}</span><span class="eb-text">${msg}</span>`;
+  el.style.display = 'flex';
+  if (ne.basis) el.title = ne.basis;
+}
+
+// ============================================================
+// 8. 启动
+// ============================================================
+loadDataIntoUI();
+bindAll();
+computeAll();
+renderNextEarnings();
+</script>
+</body>
+</html>

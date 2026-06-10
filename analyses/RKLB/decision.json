@@ -1,0 +1,105 @@
+{
+  "ticker": "RKLB",
+  "company": "Rocket Lab",
+  "date": "2026-06-05",
+  "currency": "USD",
+  "note": "decision.json 补建于 2026-06-10（原分析为工具早期产物、2026-06-05重渲到五年口径；价格与结论取分析时点口径）",
+  "verdict": "投机性定价·全情景为负——Electron+Space Systems是真实但小的生意，Neutron是二元期权；现价$71.74反向DCF隐含60.9%年化营收CAGR（10年$602M→$70B、复制NVIDIA过去5年的扩张速度），比最乐观Bull还激进一大截；加权期望$6.14（−91%）、连Bull兑现也只值$13.83（−81%）",
+  "value_range": {
+    "low": 0.7,
+    "high": 13.8,
+    "weighted_center": 6.1,
+    "unit": "美元/股",
+    "note": "加权期望$6.14（−91%）、Bull $13.83（−81%）；低端按全情景−99%口径≈$0.7（Bear=小而稳的Electron+组件供应商）"
+  },
+  "current_price": 71.74,
+  "market_cap_at_analysis": "约$446亿 · 总股本约6.217亿股 · FY2025营收$601.8M · 现金$828.7M、债务可忽略",
+  "safety_margin_vs_center": "-91%",
+  "entry_watch_zone": "$3.80-7.90（个位数美元、需跌九成以上）——市场故事与现金流之间是质的脱离",
+  "entry_watch": {
+    "low": 3.8,
+    "high": 7.9,
+    "unit": "美元/股",
+    "note": "毛估价值区间内的观察区；现价到此区间前不构成价值命题"
+  },
+  "probabilities": {
+    "bear": 20,
+    "base": 50,
+    "bull": 30
+  },
+  "archetype": [
+    "烧钱期权/故事股"
+  ],
+  "review_by": "2026-09-15",
+  "thesis_key_variables": [
+    "Neutron首飞与复用：一再跳票还是按表兑现——Bear/Bull的总开关",
+    "上量与订单：首飞后能否两三年内被信任为Falcon 9之外的中型二供（政府长约+商业订单）",
+    "Space Systems压舱石：卫星与组件业务能否持续高增长、提供现金流",
+    "烧钱与稀释：从烧钱到微利的路径、增发节奏",
+    "SpaceX压价：Falcon 9持续压价下的利润空间"
+  ],
+  "predictions": [
+    {
+      "id": "P1",
+      "claim": "Neutron首飞是总开关",
+      "metric": "首飞事件",
+      "threshold": "2026年底前成功首飞（再跳票=Bear强化）",
+      "check_by": "2027-01-31",
+      "source": "公司公告/直播",
+      "scenario_link": "bull",
+      "status": "open"
+    },
+    {
+      "id": "P2",
+      "claim": "首飞后要快速上量才撑得起中型二供叙事",
+      "metric": "Neutron发射次数与订单",
+      "threshold": "首飞后12个月内完成≥3次发射并获新的政府或商业中型订单",
+      "check_by": "2027-12-31",
+      "source": "公告/发射记录",
+      "scenario_link": "bull",
+      "status": "open"
+    },
+    {
+      "id": "P3",
+      "claim": "Space Systems是Base的压舱石",
+      "metric": "Space Systems收入同比",
+      "threshold": "2026仍≥30%",
+      "check_by": "2027-03-31",
+      "source": "10-K分部",
+      "scenario_link": "base",
+      "status": "open"
+    },
+    {
+      "id": "P4",
+      "claim": "烧钱收窄、不靠大额稀释续命",
+      "metric": "经营现金流与增发",
+      "threshold": "2026经营现金流亏损收窄、年内增发摊薄<10%",
+      "check_by": "2027-03-31",
+      "source": "10-K",
+      "scenario_link": "bear",
+      "status": "open"
+    }
+  ],
+  "key_risks": [
+    "估值与价值质的脱离（最高权重）：隐含60.9% CAGR、要求成熟期FCF率>80%（苹果最赚钱时也只有25%）",
+    "Neutron技术与时间表风险：二元事件、一再跳票的历史",
+    "SpaceX碾压：Falcon 9价格与节奏的结构性压制",
+    "烧钱与稀释：盈利路径远、依赖资本市场",
+    "题材情绪波动：太空题材退潮即剧烈回撤"
+  ],
+  "in_circle_of_competence": true,
+  "decision": "观察/不可投资。生意真实但小（$602M营收）、Neutron是值得尊重的二元期权；价格是问题的全部——现价$71.74连最乐观Bull兑现也亏81%，赔率/概率结构对买入者极不利。等价格回落到个位数美元（$3.80-7.90观察区）且Neutron兑现路径清晰，再重新评估。不给单一目标价。",
+  "odds": {
+    "downside_to_low_pct": -99,
+    "upside_to_high_pct": -81,
+    "to_center_pct": -91,
+    "ratio_up_vs_down": null,
+    "basis": "分析时点现价 71.74 vs value_range（机械推导，代码算）"
+  },
+  "expected_irr_5y": {
+    "to_low_pct_per_year": -60.4,
+    "to_center_pct_per_year": -38.9,
+    "to_high_pct_per_year": -28.1,
+    "note": "机械推导=(价值/现价)^(1/5)−1，假设5年实现该价值；是赔率标尺、不是预测"
+  }
+}

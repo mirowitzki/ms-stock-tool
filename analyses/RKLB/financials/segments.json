@@ -1,0 +1,21 @@
+{
+  "_note": "Rocket Lab 两个报告分部的收入拆分，取自 FY2025（截至 2025-12-31）10-K 附注 Note 20『information by reportable segment』，审计披露、原始美元（Products+Services 合并）。合计 $601.8M 与总营收一致。RKLB 披露了分部成本与毛利，故含 margin（毛利率）：发射服务 40.8% 高于航天系统 31.3%。公司整体仍亏损（桑基走亏损模型、净亏损以红色虚线流入）。",
+  "by_product": {
+    "2025-12-31": [
+      {
+        "name": "Space Systems 航天系统",
+        "revenue": 402757000,
+        "cost": 276846000,
+        "gross_profit": 125911000,
+        "margin": 0.3126
+      },
+      {
+        "name": "Launch Services 发射服务",
+        "revenue": 199042000,
+        "cost": 117772000,
+        "gross_profit": 81270000,
+        "margin": 0.4083
+      }
+    ]
+  }
+}

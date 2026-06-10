@@ -1,0 +1,21 @@
+{
+  "_note": "美股按终端市场的收入拆分。SWKS 在 10-K 里是单一报告分部、不披露分板块成本/毛利，此处 Mobile/Broad Markets 的收入按公司季度财报口径估算（FY2025 总收入 $4,086.9M；Mobile 约 64%、Broad Markets 约 36%，与 Q1 FY25 的 67/33 及全年 Broad Markets 回升、并购备考口径 SWKS 端 Broad Markets 约 $1.45-1.5B 一致）；cost/margin 因未披露留空、桑基图按整体毛利率等比例分摊。单位为原始美元。",
+  "by_market": {
+    "2025-10-03": [
+      {
+        "name": "Mobile 手机射频",
+        "revenue": 2617000000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "Broad Markets 广泛市场",
+        "revenue": 1470000000,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ]
+  }
+}

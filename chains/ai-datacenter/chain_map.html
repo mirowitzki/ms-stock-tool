@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 数据中心产业链图谱（闸门①）· MS 股票价值分析工具</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cg stroke='%23D99A2E' stroke-width='30' stroke-linecap='round'%3E%3Cline x1='128' y1='96' x2='128' y2='416'/%3E%3Cline x1='256' y1='96' x2='256' y2='416'/%3E%3Cline x1='384' y1='96' x2='384' y2='416'/%3E%3C/g%3E%3Cg fill='%23D99A2E'%3E%3Crect x='90' y='280' width='76' height='110' rx='22'/%3E%3Crect x='218' y='180' width='76' height='130' rx='22'/%3E%3Crect x='346' y='120' width='76' height='116' rx='22'/%3E%3C/g%3E%3C/svg%3E">
+<style id="chain-ui">
+/* chain_ui.css —— 产业链研究页面共享主题（闸门①图谱、闸门②成本法等都 link 它） */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f3f5f8; --bg-pattern: #e8edf2; --card: #ffffff;
+  --ink: #0e2230; --text: #1f2a33; --text-muted: #5b6775; --text-light: #93a0ad;
+  --border: #e4e8ee; --border-soft: #eef1f5;
+  --primary: #0f2e3d; --accent: #1f6f8b; --accent-light: #2a93b0;
+  --gold: #c08a2d;
+  --rich: #1f8f76; --rich-bg: rgba(31,143,118,.10);
+  --mid: #1f6f8b; --mid-bg: rgba(31,111,139,.10);
+  --thin: #93a0ad; --thin-bg: rgba(147,160,173,.12);
+  --good: #1f8f76; --caution: #c8901a; --hot: #d64550;
+  --radius: 16px; --radius-sm: 10px;
+  --mono: "SF Mono","JetBrains Mono","Consolas",ui-monospace,monospace;
+  --shadow-sm: 0 1px 2px rgba(16,34,48,.05), 0 1px 3px rgba(16,34,48,.04);
+  --shadow: 0 4px 14px rgba(16,34,48,.07), 0 2px 6px rgba(16,34,48,.04);
+  --shadow-lg: 0 14px 36px rgba(16,34,48,.12), 0 6px 14px rgba(16,34,48,.06);
+  --shadow-xl: 0 24px 50px rgba(16,34,48,.16), 0 8px 18px rgba(16,34,48,.08);
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  background: linear-gradient(180deg, var(--bg-pattern) 0%, var(--bg) 440px);
+  color: var(--text); line-height: 1.62; font-size: 14px; min-height: 100vh;
+  padding: 28px 18px 90px; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+.container { max-width: 1140px; margin: 0 auto; }
+a { color: var(--accent); }
+
+.topbar { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom: 14px; flex-wrap:wrap; }
+.back-link { font-size:13px; font-weight:600; color:var(--text-muted); text-decoration:none;
+  background:#fff; border:1px solid var(--border); padding:7px 14px; border-radius:20px; box-shadow:var(--shadow-sm); }
+.back-link:hover { color:var(--accent); border-color:var(--accent); }
+.asof-pill { font-size:12px; color:var(--text-muted); font-weight:600; background:#fff; border:1px solid var(--border);
+  padding:6px 13px; border-radius:20px; font-variant-numeric:tabular-nums; }
+
+.hero { position:relative; display:flex; align-items:center; gap:18px; margin:0 0 12px; padding:26px 30px;
+  border-radius:20px; background:linear-gradient(135deg,#0f2e3d 0%,#16465a 55%,#1d6076 100%); color:#eaf2f5;
+  box-shadow:var(--shadow-xl); overflow:hidden; }
+.hero::after { content:""; position:absolute; right:-70px; top:-90px; width:280px; height:280px;
+  background:radial-gradient(circle, rgba(42,147,176,.40), rgba(42,147,176,0) 70%); pointer-events:none; }
+.hero .brand-icon { position:relative; z-index:1; width:54px; height:54px; flex:0 0 auto;
+  background:linear-gradient(135deg,var(--gold) 0%,#e0a93f 100%); border-radius:15px;
+  display:flex; align-items:center; justify-content:center; box-shadow:0 10px 22px rgba(192,138,45,.40); }
+.hero .hero-text { position:relative; z-index:1; min-width:0; }
+.hero h1 { font-size:24px; font-weight:750; color:#fff; letter-spacing:-0.4px; line-height:1.2; }
+.hero .tagline { font-size:13px; color:#b9cdd6; margin-top:4px; }
+.hero .gate-pill { display:inline-block; margin-top:8px; font-size:11.5px; font-weight:700; color:#ffe6b8;
+  background:rgba(192,138,45,.22); border:1px solid rgba(224,169,63,.4); padding:3px 11px; border-radius:20px; }
+
+.card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:24px 26px; margin:16px 0; box-shadow:var(--shadow); }
+.sec-title { font-size:18px; font-weight:750; color:var(--primary); letter-spacing:-0.3px; margin-bottom:4px; }
+.sec-sub { font-size:12.5px; color:var(--text-muted); margin-bottom:18px; }
+.lead { font-size:14.5px; color:var(--text); line-height:1.72; }
+.lead + .lead { margin-top:12px; }
+.muted { color:var(--text-muted); } .hl { color:var(--gold); font-weight:700; }
+.card b, .lead b { color:var(--primary); }
+
+/* 总览三点 + β 提示 */
+.points { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:18px 0 4px; }
+.point { background:linear-gradient(180deg,#f7fafb,#f1f5f7); border:1px solid var(--border-soft);
+  border-radius:12px; padding:15px 16px; position:relative; }
+.point::before { content:""; position:absolute; left:0; top:13px; bottom:13px; width:3px; border-radius:3px;
+  background:linear-gradient(180deg,var(--accent),var(--accent-light)); }
+.point .pn { font-size:10px; font-weight:800; color:var(--accent); letter-spacing:.6px; }
+.point .pt { font-size:13.5px; font-weight:700; color:var(--ink); margin:3px 0; }
+.point .pd { font-size:12px; color:var(--text-muted); line-height:1.55; }
+.beta { margin-top:18px; padding:13px 16px; background:rgba(214,69,80,.06); border-left:3px solid var(--hot);
+  border-radius:8px; font-size:12.5px; color:var(--text); line-height:1.6; }
+.beta b { color:var(--hot); }
+
+/* 新手指引卡（howto） */
+.howto { background:linear-gradient(135deg,#fbf7ee,#f6f0e2); border-color:#ecdcb8; }
+.howto-title { font-size:15px; font-weight:750; color:#7a5a18; margin-bottom:13px; display:flex; align-items:center; gap:8px; }
+.howto-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; font-size:12.5px; color:var(--text); line-height:1.62; }
+.howto-grid > div { background:rgba(255,255,255,.55); border:1px solid #ecdcb8; border-radius:11px; padding:13px 15px; }
+.howto-grid b { color:var(--primary); display:block; margin-bottom:4px; font-size:13px; }
+
+/* 可折叠 */
+details { background:#fff; border:1px solid var(--border); border-radius:12px; margin:12px 0; overflow:hidden; }
+details summary { cursor:pointer; padding:14px 18px; font-size:14px; font-weight:700; color:var(--primary); list-style:none;
+  display:flex; align-items:center; justify-content:space-between; }
+details summary::-webkit-details-marker { display:none; }
+details summary::after { content:"▸"; color:var(--text-light); transition:transform .2s; }
+details[open] summary::after { transform:rotate(90deg); }
+details .dc { padding:2px 18px 18px; font-size:13px; color:var(--text-muted); line-height:1.7; }
+details .dc ol, details .dc ul { padding-left:20px; } details .dc li { margin:7px 0; }
+details .dc b { color:var(--text); }
+
+footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--border); text-align:center; color:var(--text-light); font-size:12px; }
+
+@media (max-width: 720px) {
+  .points, .howto-grid { grid-template-columns:1fr; }
+}
+
+</style>
+<style>
+/* 第一性原理链路图 */
+.anchor-box { text-align:center; margin:6px 0 18px; }
+.anchor-box .ab { display:inline-block; background:linear-gradient(135deg,var(--gold),#e0a93f); color:#241a06;
+  font-size:14px; font-weight:750; padding:10px 22px; border-radius:30px; box-shadow:0 8px 18px rgba(192,138,45,.32); }
+.anchor-box .abx { font-size:11.5px; color:var(--text-light); margin-top:7px; }
+.flow { display:flex; flex-direction:column; }
+.layer { display:flex; align-items:stretch; gap:14px; padding:8px 0; }
+.layer .lk { flex:0 0 92px; display:flex; flex-direction:column; align-items:flex-end; justify-content:center;
+  text-align:right; padding-right:14px; border-right:2px solid var(--border); }
+.layer .lk .lkn { font-size:14px; font-weight:750; color:var(--primary); }
+.layer .lk .lkt { font-size:10px; font-weight:700; padding:1px 7px; border-radius:10px; margin-top:4px; }
+.lkt.rich { background:var(--rich-bg); color:var(--rich); } .lkt.mid { background:var(--mid-bg); color:var(--mid); } .lkt.thin { background:var(--thin-bg); color:var(--thin); }
+.layer .li { flex:1; display:flex; flex-wrap:wrap; gap:7px; align-content:center; padding:2px 0; }
+.chip { font-size:12px; font-weight:600; padding:6px 12px; border-radius:9px; border:1px solid var(--border); background:#fff; color:var(--text); }
+.chip.rich { border-color:rgba(31,143,118,.35); background:var(--rich-bg); color:#15705c; }
+.chip.mid { border-color:rgba(31,111,139,.30); background:var(--mid-bg); color:#185b73; }
+.chip.thin { border-color:var(--border); background:#f7f8fa; color:var(--text-muted); }
+.flow-arrow { padding-left:106px; color:var(--text-light); font-size:13px; line-height:.5; }
+.software-band { margin-top:14px; display:flex; align-items:center; gap:12px; padding:12px 16px;
+  background:linear-gradient(135deg,rgba(192,138,45,.10),rgba(192,138,45,.04)); border:1px dashed rgba(192,138,45,.5); border-radius:12px; }
+.software-band .sbk { font-size:13px; font-weight:750; color:var(--gold); flex:0 0 auto; }
+.software-band .sbd { font-size:12.5px; color:var(--text-muted); }
+.legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid var(--border-soft); font-size:11.5px; color:var(--text-muted); }
+.legend span { display:inline-flex; align-items:center; gap:5px; } .dot { width:10px; height:10px; border-radius:3px; display:inline-block; }
+
+/* 可钻的子链卡 */
+.drill-cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(330px,1fr)); gap:16px; }
+.drill-card { position:relative; background:#fff; border:1px solid var(--border); border-radius:14px; padding:18px 19px 16px;
+  box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:11px; overflow:hidden;
+  transition:transform .15s, box-shadow .15s, border-color .15s; }
+.drill-card::before { content:""; position:absolute; left:0; top:0; bottom:0; width:4px; }
+.drill-card.rich::before { background:linear-gradient(180deg,var(--rich),#2aa88c); }
+.drill-card.mid::before { background:linear-gradient(180deg,var(--mid),var(--accent-light)); }
+.drill-card.thin::before { background:linear-gradient(180deg,var(--thin),#aab4c0); }
+.drill-card.done { border-color:rgba(192,138,45,.5); box-shadow:0 0 0 1px rgba(192,138,45,.22), var(--shadow-sm); }
+.drill-card.done::before { background:linear-gradient(180deg,var(--gold),#e0a93f); }
+.drill-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lg); }
+.dh { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+.dname { font-size:16px; font-weight:750; color:var(--primary); }
+.dcov { font-size:11px; color:var(--text-light); margin-top:2px; }
+.drill-status { flex:0 0 auto; font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:20px; white-space:nowrap; }
+.drill-status.s-done { color:#9a6c14; background:rgba(192,138,45,.14); border:1px solid rgba(192,138,45,.35); }
+.drill-status.s-todo { color:var(--text-light); background:var(--border-soft); border:1px solid var(--border); }
+.dwhy { font-size:12.5px; color:var(--text); line-height:1.6; flex:1; }
+.dbtn { display:flex; align-items:center; justify-content:space-between; padding:10px 13px; border-radius:var(--radius-sm);
+  font-size:13px; font-weight:700; text-decoration:none; transition:all .15s; }
+.dbtn.go { background:linear-gradient(135deg,var(--gold),#d89b34); color:#241a06; box-shadow:0 6px 16px rgba(192,138,45,.26); }
+.dbtn.go:hover { transform:translateY(-2px); box-shadow:var(--shadow-lg); }
+.dbtn.todo { background:#f6f7f9; color:var(--text-light); border:1px dashed var(--border); cursor:default; }
+
+.recs { display:flex; flex-direction:column; gap:11px; }
+.rec { display:flex; gap:13px; padding:13px 15px; background:linear-gradient(135deg,rgba(31,111,139,.06),rgba(31,111,139,.02));
+  border:1px solid rgba(31,111,139,.2); border-radius:12px; }
+.rec .rk { flex:0 0 auto; font-size:12px; font-weight:800; color:var(--accent); align-self:center; }
+.rec .rb { font-size:12.5px; color:var(--text); line-height:1.6; } .rec .rb b { color:var(--primary); }
+@media (max-width:720px){ .layer .lk { flex-basis:72px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="topbar">
+    <a class="back-link" href="../../dashboard.html">← 返回仪表盘</a>
+    <span class="asof-pill">数据时点 2026-06</span>
+  </div>
+
+  <section class="hero">
+    <div class="brand-icon">
+      <svg viewBox="0 0 32 32" width="30" height="30" fill="none">
+        <g stroke="#1a1205" stroke-width="2" stroke-linecap="round"><line x1="9" y1="6.5" x2="9" y2="25.5"/><line x1="16" y1="6.5" x2="16" y2="25.5"/><line x1="23" y1="6.5" x2="23" y2="25.5"/></g>
+        <rect x="6.6" y="17" width="4.8" height="6.5" rx="1.4" fill="#1a1205"/><rect x="13.6" y="11.5" width="4.8" height="8" rx="1.4" fill="#1a1205"/><rect x="20.6" y="8" width="4.8" height="7" rx="1.4" fill="#1a1205"/>
+      </svg>
+    </div>
+    <div class="hero-text">
+      <h1>AI 数据中心产业链图谱</h1>
+      <div class="tagline">从算力到电力，第一性原理全链拆解 · 找出值得钻的子链</div>
+      <span class="gate-pill">闸门① · 产业链图谱（只论产业链、不碰个股）</span>
+    </div>
+  </section>
+
+  <section class="card howto">
+    <div class="howto-title">📖 怎么读这页（看不懂的地方先看这里）</div>
+    <div class="howto-grid">
+      <div><b>① 这一关只找价值在哪一节</b>闸门只在产业链上找真正的价值在哪、是否持久；个股贵不贵、买不买，是第一阶段单股工具的事。这里完全不碰个股。</div>
+      <div><b>② 颜色＝赚钱厚薄</b>绿色＝最赚钱、护城河最硬；蓝色＝中等；灰色＝苦力薄利。看图时颜色越绿，越是值得留意的好环节。</div>
+      <div><b>③ 子链卡点进去钻</b>下面每张子链卡，点一下就钻进它的成本法（闸门②）——把这一节拆开，看价值具体落在哪一块、是护城河还是短缺租金。带<span class="term-demo">虚线</span>的词点一下看大白话。</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">🧭 这条链的底色</div>
+    <div class="sec-sub">先理解它和别的产业链不一样的地方，再看图。</div>
+    <p class="lead">把 AI 数据中心这门生意，从最上游的芯片一路拆到最下游的电力，拆成一节一节，逐个看哪一节最赚钱、护城河最硬、价值正往哪流。2026 是第一个万亿美元 compute 资本开支年——四大云厂光买 AI 设备、建数据中心就要花 capex 约 <span class="hl">7250 亿美元</span>、比去年多约 77%。这笔史无前例的大钱决定了底色：人人看好 AI、钱拼命涌入，几乎每一节的价值都已被市场看见。</p>
+    <p class="lead">所以这一关的重点不是找谁是好生意（满链都是），而是三件事：</p>
+    <div class="points">
+      <div class="point"><div class="pn">其一</div><div class="pt">护城河最硬且不靠周期</div><div class="pd">供给扩不出来、不靠短缺涨价的环节，价值才持久。</div></div>
+      <div class="point"><div class="pn">其二</div><div class="pt">价值正往哪一节迁</div><div class="pd">利润池会移动——发现价值不能只看现在，要看它往哪流。</div></div>
+      <div class="point"><div class="pn">其三</div><div class="pt">哪些厚利润只是短缺租金</div><div class="pd">看着最肥的环节，常是周期顶点的租金，产能一补就回吐。</div></div>
+    </div>
+    <div class="beta"><b>底下悬着的 β 风险：</b>需求地基有裂缝——capex 与直接 AI 收入约 13:1、微软冻结部分自建、Sightline 估 2026 年 30–50% 数据中心延期或取消。这不是有没有泡沫的二元题，是回本能不能跑赢 3–5 年折旧的赔率题。纪律：中周期归一化、别把短缺顶点当常态。</div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">⛓️ 第一性原理：这条链在交付什么</div>
+    <div class="sec-sub">从价值锚往上推每一节没有它成不成。颜色＝价值占有（利润 / 护城河）的厚薄。</div>
+    <div class="anchor-box">
+      <div class="ab">价值锚：单位成本最低的有效算力</div>
+      <div class="abx">每美元能算多少有用的训练 / 推理 token —— 整条链都为这个目标存在</div>
+    </div>
+    <div class="flow" id="flow"></div>
+    <div class="software-band">
+      <div class="sbk">软件层 · CUDA 生态</div>
+      <div class="sbd">贯穿全链的真护城河——英伟达的城墙在软件锁定（约 400 万开发者），不在 GPU 制造本身；正被 ASIC 从推理端商品化。这是利润为什么不按物理重要性分配的关键。</div>
+    </div>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--rich)"></i>最肥·护城河硬</span>
+      <span><i class="dot" style="background:var(--mid)"></i>中·好生意</span>
+      <span><i class="dot" style="background:var(--thin)"></i>苦力·薄利/重资产</span>
+      <span class="muted">| 那把刀：原理上必须＝价值稳固；只是当下技术选择＝价值脆弱会被替代</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">🎯 值得钻的子链（点进去看成本法）</div>
+    <div class="sec-sub">把全链分成几条子链。每张卡给一句结构性的为什么值得钻，点进去就是它的成本法（闸门②）——拆开看价值落在哪一块、是护城河还是短缺租金。不碰个股。</div>
+    <div class="drill-cards" id="drill"></div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">⭐ 先钻哪个（我的判断）</div>
+    <div class="sec-sub">在产业链层面，哪条子链最值得先拆——结构性理由，不涉及个股。</div>
+    <div class="recs">
+      <div class="rec"><div class="rk">已示范</div><div class="rb"><b>电力底座</b>——当下真正的硬约束（卡数据中心落地的不是芯片、是电），而且价值正从算力往这迁。已经拆完做了示范：拆出来真正持久的价值在单晶叶片铸造和燃机服务年金，不在涨价最猛的变压器。</div></div>
+      <div class="rec"><div class="rk">接着钻</div><div class="rb"><b>散热</b>——价值迁移最快的一段（GPU 越强、液冷价值量越高），适合用成本法验证价值是留在系统集成还是上游部件。<b>连接与网络</b>——中国厂全球领先，但价值在往上游光芯片集中，拆开看组装薄在哪、上游肥在哪。</div></div>
+      <div class="rec"><div class="rk">理解为主</div><div class="rb"><b>算力与内存</b>——全链价值最厚最持久（CUDA、HBM 寡头、台积电近独家），但也是最拥挤、最被市场看透的一段；钻它更多是为了理解价值为什么这么集中，而不是找便宜。</div></div>
+    </div>
+  </section>
+
+  <details>
+    <summary>📐 这一关怎么判断价值（方法论）</summary>
+    <div class="dc"><ol>
+      <li><b>拆链</b>：从功能倒推，分清原理上必须（价值稳固）vs 当下技术选择（价值脆弱会被替代）。</li>
+      <li><b>创造 vs 占有</b>：一节对整条链多重要（创造）≠ 它自己能赚到多少（占有）。要找既重要、又能把利润留住的环节。</li>
+      <li><b>护城河能不能守住</b>：必要 + 稀缺 + 可占有三者同时且持久，才是真护城河。</li>
+      <li><b>资本周期</b>：看着最肥的环节往往正在周期顶点；卡脖子常是短缺租金、不是护城河，产能一补就回吐。</li>
+      <li><b>价值往哪迁</b>：利润池会移动，要同时看现在在哪、和正往哪流。</li>
+    </ol>
+    <p>这一关的产出止于"价值在哪个子链 / 哪一节、是否持久"。个股的估值、贵不贵、买不买，是第一阶段单股工具的活——你过完闸门、锁定环节，再把那一节的公司送进去深析。完整方法论见 skills/industry-chain.md。</p></div>
+  </details>
+
+  <details>
+    <summary>🔍 数据诚实交底（免费联网的边界）</summary>
+    <div class="dc"><ul>
+      <li>结构判断（哪节卡脖子、利润往哪迁、谁有护城河）可信度高；具体数字（份额、产能、交期）来自 2026 上半年公开来源，仅作量级，进成本法深拆时要逐一回查。</li>
+      <li>免费联网替代不了付费数据底座（卫星 + 许可证实时追踪）。我们搬的是分析纪律，不是那套数据底座；查不到的明说、不假装覆盖全。</li>
+      <li>提到公司只为说清这一节由谁占据、集中度如何，不含任何估值与买卖判断——那些在第一阶段单股工具里做。</li>
+    </ul></div>
+  </details>
+
+  <footer>MS 股票价值分析工具 · 产业链研究 · 闸门① 产业链图谱 · Designed by Miro Sun</footer>
+
+</div>
+
+<script>
+const LAYERS = [
+  ["算力", "rich", [["逻辑芯片 GPU/ASIC","英伟达·CUDA 生态","rich"],["国产算力","寒武纪/海光/昇腾","mid"]]],
+  ["内存", "rich", [["高带宽内存 HBM","三家寡头·最紧缺","rich"],["国产 CXMT","落后约 3–4 年","mid"]]],
+  ["制造·封装", "rich", [["晶圆代工","台积电·近独家","rich"],["先进封装 CoWoS","瓶颈但在扩产","rich"]]],
+  ["连接", "mid", [["光芯片 EML","卡脖子中的卡脖子","rich"],["光模块","中国占全球七席","mid"],["交换芯片","博通主导","mid"],["铜连接 / CPO","机柜内 / 下一代","mid"]]],
+  ["供电", "rich", [["发电·燃气轮机","三寡头·供给纪律","rich"],["变压器","上游 GOES 卡脖子","rich"],["并网","2600GW 排队·真瓶颈","rich"],["机房配电 UPS","功率半导体在里面","mid"]]],
+  ["散热", "mid", [["液冷 冷板/CDU","价值迁移主战场","mid"],["浸没","下一代","mid"]]],
+  ["物理空间", "thin", [["数据中心建设 / 机柜","工程属性·价值占有低","thin"]]],
+  ["整机", "thin", [["服务器 ODM","毛利 5–10%·苦力","thin"]]],
+  ["运营", "thin", [["IDC / 数据中心运营","重资产·低回报","thin"]]],
+];
+document.getElementById("flow").innerHTML = LAYERS.map((L, i) => {
+  const chips = L[2].map(it => `<span class="chip ${it[2]}">${it[0]}<span style="font-size:10.5px;color:var(--text-light);font-weight:500"> · ${it[1]}</span></span>`).join("");
+  const tl = { rich: "最肥", mid: "中", thin: "苦力" }[L[1]];
+  const arrow = i < LAYERS.length - 1 ? `<div class="flow-arrow">↓</div>` : "";
+  return `<div class="layer"><div class="lk"><span class="lkn">${L[0]}</span><span class="lkt ${L[1]}">${tl}</span></div><div class="li">${chips}</div></div>${arrow}`;
+}).join("");
+
+const SUBCHAINS = [
+  { name:"算力与内存", cov:"GPU/ASIC · HBM · 先进封装 · 晶圆代工", tier:"rich", why:"全链价值最厚、最持久的一段——CUDA 软件生态、HBM 三家寡头、台积电先进制程近独家。但也是全市场最拥挤、最被定价的地方。钻进去看价值在代工 / HBM / 光芯片哪一块最守得住。", status:"todo" },
+  { name:"连接与网络", cov:"光模块 · 光芯片 EML · 交换芯片 · 铜 · CPO", tier:"mid", why:"中国厂全球领先的一段（光模块占全球七席）。但组装薄、价值在往上游光芯片 EML 集中。钻进去看价值是留在组装、还是上游器件。", status:"todo" },
+  { name:"电力底座", cov:"发电 · 变压器 · 并网 · 机房配电 · 储能", tier:"rich", why:"AI 数据中心当下真正的硬约束——卡落地的不是芯片、是电（全美并网排队约 2600GW）。价值正从算力往电力迁。已拆：真正持久的价值在单晶叶片铸造和燃机服务年金，不在涨价最猛的变压器。", status:"done", href:"cost_power.html" },
+  { name:"散热", cov:"液冷 冷板 / CDU · 浸没", tier:"mid", why:"价值迁移的主战场——GPU 越强、液冷价值量越高（单柜从 $84k 涨到 $100k）。但十家涌入、国内内卷。钻进去看价值是留在系统集成、还是上游部件。", status:"todo" },
+  { name:"整机与运营", cov:"服务器 ODM · IDC / 数据中心", tier:"thin", why:"服务器组装毛利 5–10%、IDC 重资产低回报——典型的价值占有低、苦力段。钻进去确认哪里还有占有得住的细分。", status:"todo" },
+];
+document.getElementById("drill").innerHTML = SUBCHAINS.map(s => {
+  const cls = s.status === "done" ? `${s.tier} done` : s.tier;
+  const badge = s.status === "done"
+    ? `<span class="drill-status s-done">闸门② 已拆</span>`
+    : `<span class="drill-status s-todo">待拆解</span>`;
+  const btn = s.status === "done"
+    ? `<a class="dbtn go" href="${s.href}"><span>钻进电力底座成本法</span><span>→</span></a>`
+    : `<div class="dbtn todo"><span>成本法待拆解（点电力底座看示范）</span></div>`;
+  return `<div class="drill-card ${cls}">
+    <div class="dh"><div><div class="dname">${s.name}</div><div class="dcov">${s.cov}</div></div>${badge}</div>
+    <div class="dwhy">${s.why}</div>${btn}</div>`;
+}).join("");
+</script>
+<script id="glossary">
+/* glossary.js —— 产业链研究各页共享：术语浮窗（点带虚线的词看大白话）。
+   页面在 body 末尾 <script src=".../glossary.js"><\/script> 即可，自动注入样式 + 给全文加虚线 + 浮窗。 */
+(function () {
+  const GLOSSARY = {
+    "capex": "资本开支——公司为扩产花的大钱，比如买地、建厂、买设备。云厂的 capex 主要是买 AI 芯片和建数据中心。",
+    "compute": "算力，也就是计算能力——衡量能跑多少 AI 运算。",
+    "被定价": "好消息已经反映进股价了。一个好生意如果人人都知道好、股价已经涨上去，再买就赚不到便宜。",
+    "认知差": "你对一家公司的判断和市场主流看法不一样、而且很可能是你对。价值投资真正赚大钱靠的就是这个差。",
+    "variant perception": "认知差——你的判断和市场主流不一样、而且可能是你对。",
+    "β 风险": "贝塔风险——不是某一家公司自己的问题，而是整条链、整个板块一起涨跌的大环境风险。万一 AI 投资退潮，相关股票会一起跌。",
+    "护城河": "一家公司或一个环节长期挡住竞争对手、保住高利润的本事，比如独家工艺、专利、客户离不开它。护城河越深，好日子越能持续。",
+    "结构护城河": "靠工艺/IP/良率/关系筑起、产能想扩也扩不出来的持久壁垒——能穿越周期，是真护城河。",
+    "周期租金": "只是因为眼下短缺、产能暂时不够才赚到的暴利。产能一补上就回吐，不持久。和结构护城河相对。",
+    "利润池": "整条链赚到的钱不是平均分的。利润池就是看这笔总利润堆在哪几个环节、各分到多少——堆得最多的地方最值得研究。",
+    "卡脖子": "整条链里供不应求、谁也绕不开的那个环节。卡脖子的环节最有定价权——但要分清是结构护城河还是周期租金。",
+    "资本周期": "一个行业景气时大家拼命扩产，导致产能过剩、价格崩、利润垮，再减产、又紧缺的循环。看供给（谁在扩产）往往比看需求更能提前判断利润拐点。",
+    "供给受限": "想扩产也扩不出来（技术太难、建设周期太长、或寡头不愿扩）。供给受限的环节超额利润能维持更久。",
+    "扩张顶部": "全行业都在疯狂砸钱扩产的时刻——往往利润最好、但也最危险，因为新产能一投产就会把价格打下来。",
+    "价值占有": "一个环节实际能从整条链里拿走多少利润。和价值创造（对整条链有多重要）常常是两回事。",
+    "价值创造": "一个环节给整条链帮了多大忙、有多重要。重要不等于能赚到钱（要看价值占有）。",
+    "ROIC": "投入资本回报率——每投 1 块钱能赚回多少。长期高于借钱成本，才是真正在创造价值的好生意。",
+    "WACC": "加权平均资本成本——公司融到这笔钱的平均代价。赚的（ROIC）要比这个高，才算创造了价值。",
+    "反向 DCF": "正常估值是用假设算公司值多少钱；反向 DCF 反过来——从现在的股价倒推出市场假设了它未来要增长多快，再判断这个假设是不是已经太乐观。",
+    "中周期归一化": "不要用景气最高峰那年的暴利去估值（那不可持续），而是用一个跨越好年和坏年的平均水平来算，避免在山顶上按最贵的价买。",
+    "毛利率": "卖一件东西、扣掉直接成本后还剩多少比例的钱。毛利率高通常意味着有定价权、有技术含量。",
+    "毛利": "卖一件东西、扣掉直接成本后赚的那部分。占售价的比例（毛利率）高，通常意味着有定价权。",
+    "渗透率": "新技术替代老技术的进度。比如液冷渗透率＝多少比例的数据中心已经从风冷换成了液冷。",
+    "国产替代": "原来靠进口的零件或材料，改用国产的。既是国产厂商的机会，也常因为一拥而上变成价格内卷。",
+    "寡头": "整个市场只被极少数几家公司把持的格局，通常有很强的定价权。",
+    "议价权": "谈价格时谁更有底气。是供应商求着客户买（议价权弱），还是客户排队求供应（议价权强）。",
+    "backlog": "在手订单——已签约、还没交货的订单量。backlog 越厚、锁得越远，未来几年收入越有保障。",
+    "book-to-bill": "新接订单 ÷ 当期出货。大于 1 表示订单比出货还多、需求在加速。",
+    "BOM": "物料清单——一个产品由哪些零件、各花多少钱拼成的成本明细表。成本法就是拆这张表。",
+    "成本栈": "把一件大工程的总花费，按各个部分拆开、看每部分占多少钱的结构表。",
+    "Bear": "熊市情景——分析时假设的最差那种情况（需求转冷、价格下跌），用来检验万一不顺时会亏多少。",
+    "attach 率": "配套比例。比如每张 GPU 平均要配几个光模块，这个比例越高、需求越大。",
+    "折旧": "贵重设备会逐年损耗、分摊成本。AI 芯片折旧按几年摊，直接影响账面利润——摊得慢、利润就显得高。",
+    "循环融资": "我投资你、你再回头买我的东西，形成的资金闭环。比如英伟达投资客户、客户再用这笔钱买英伟达芯片——好看但脆弱。",
+    "安全边际": "用保守估值减去现在的价格留出的缓冲。安全边际厚，意味着就算看错了也不容易亏本金。",
+    "GPU": "图形处理器——英伟达做的那种 AI 算力芯片，是训练大模型的主力。",
+    "ASIC": "为某一种活儿定制的专用芯片。云厂自研 ASIC（谷歌 TPU、亚马逊 Trainium）就是想绕开英伟达、降成本。",
+    "CUDA": "英伟达的软件生态（开发工具加代码库）。全世界 AI 程序员都习惯用它，换别家芯片要重写代码——这是英伟达真正的护城河。",
+    "HBM": "高带宽内存——紧贴 AI 芯片、负责高速喂数据的特种内存。被 SK 海力士等三家垄断，是当前最紧缺、最赚钱的环节之一。",
+    "CoWoS": "台积电的一种先进封装工艺，把 AI 芯片和 HBM 内存拼装在一起。产能卡死、供不应求，是过去两年的头号瓶颈。",
+    "先进封装": "把多块芯片高密度拼装在一起的工艺（CoWoS 就是其中一种），决定了 AI 芯片能不能做出来。",
+    "晶圆代工": "替别人制造芯片的工厂，台积电是绝对龙头。几乎所有 AI 芯片都在它那里生产。",
+    "EML": "光模块里负责发光的激光芯片。全球只有几家能做、英伟达砸钱锁产能，是卡脖子中的卡脖子。",
+    "光模块": "数据中心里把电信号转成光、让成千上万张 GPU 互相高速通信的器件。中国厂商（中际旭创等）全球领先。",
+    "DSP": "光模块里做信号处理的芯片，被博通和 Marvell 两家垄断，国产几乎是空白。",
+    "CPO": "共封装光学——下一代把光直接封进交换芯片的技术，2028 年后可能颠覆现在用的可插拔光模块。",
+    "硅光": "用硅基工艺做光器件的技术路线，被看作光通信的未来方向之一。",
+    "NVLink": "英伟达自家的高速互联技术，让一个机柜里的多张 GPU 像一块大芯片一样协同。",
+    "燃气轮机": "烧天然气发电的大型设备。数据中心要能马上供上的电，燃气轮机是当前唯一能大规模快速供电的来源。",
+    "单晶叶片": "燃气轮机里承受上千度高温的涡轮叶片，用单晶镍基高温合金整体铸造，全球极少数厂能做，是燃气轮机最贵、最难仿、最卡脖子的零件。",
+    "高温合金": "能在上千度高温下不变形的特种金属，用来做燃气轮机叶片、航空发动机，工艺极难、供应极集中。",
+    "LTSA": "长期服务协议——卖出燃气轮机后签的几十年维护保养合同。利润比卖设备本身还高（约两倍）、年年收、抗周期，是燃气轮机真正的利润池。",
+    "服务年金": "设备卖出后，靠几十年维保合同年年收的稳定现金流。像年金一样可预测、抗周期。",
+    "GOES": "取向硅钢——做变压器铁芯的特种钢材，全球极少数厂能产（美国只有一家），是变压器的卡脖子原料之一。",
+    "取向硅钢": "做变压器铁芯的特种钢材（英文 GOES），冶炼工艺极难、产地极少，是变压器的卡脖子原料。",
+    "变压器": "把电网的高压电升压/降压、再送进数据中心的关键设备。现在全球短缺、交期长达数年。",
+    "变电站": "把高压电网的电降压、再分配给数据中心的设施。新建一座要 5–10 年审批建设，是落地最大瓶颈之一。",
+    "并网": "新建的电厂或数据中心接入电网。美国现在并网排队要等 4–7 年，是 AI 数据中心落地的最大物理瓶颈。",
+    "开关柜": "把电分配、保护、通断的成套电气设备，数据中心中压配电的关键一环，现在交期很长。",
+    "UPS": "不间断电源——市电断了也能瞬间顶上、保证数据中心不停机的设备，里面大量用功率半导体和电池。",
+    "IGBT": "一种功率半导体开关器件，是 UPS、变频、电源里控制大电流的核心芯片。市场成熟、分散，国产已价格战。",
+    "SiC": "碳化硅——新一代功率半导体材料，比传统 IGBT 更高效省电，正在高端 UPS 和电源里替代 IGBT。",
+    "功率半导体": "专门控制大电流大电压的芯片（IGBT、SiC 等），是电源、UPS、变频的心脏。",
+    "BESS": "电池储能系统——用一堆电池给数据中心储电、削峰、备电，正在抢传统 UPS 和柴油机的活。",
+    "PCS": "储能变流器——储能系统里把电池的直流电和电网的交流电互相转换的设备。",
+    "EMS": "能量管理系统——储能 / 配电系统里负责调度、控制的软件与设备。",
+    "LFP": "磷酸铁锂——目前储能电池的主流路线，便宜、安全、循环寿命长，被宁德时代等中国厂主导。",
+    "柴油发电机": "市电断了时启动供电的备用柴油发电机组。占数据中心电气投资比例不小，但技术门槛相对低。",
+    "母线": "工厂预制的大电流导体排（铜或铝），把电从变压器送到机柜。成本几乎全是金属（铜/铝）。",
+    "能源孤岛": "数据中心不等漫长的电网排队，自己在旁边建电厂直接供电。贵，但能早几年通电——在 AI 竞赛里这几年值几十亿。",
+    "固态变压器": "用功率电子（SiC 等）替代传统铜+硅钢铁芯的新型变压器，英文 SST，2028 年后放量，是对传统变压器的远端威胁。",
+    "联合循环": "燃气发电的一种高效方式，先用燃气轮机发电、再用余热烧锅炉带蒸汽轮机再发一次电。",
+    "速度到电": "从立项到真正通上电要多久。AI 竞赛里谁先通电谁先赚钱，所以宁可多花钱也要快。",
+    "覆铜板": "做电路板（PCB）的基础材料，英文缩写 CCL。高端 AI 服务器板用的高速覆铜板是卡脖子材料。",
+    "ODM": "代工厂——按客户要求把零件组装成整机（如服务器）。活儿重要但毛利薄，是典型的搬砖环节。",
+    "IDC": "数据中心（机房）运营商，提供机柜、电力、网络给云厂和企业租用，是重资产生意。",
+    "液冷": "用液体而不是风给高功率 AI 芯片散热。新一代 AI 机柜太热、风冷散不掉，只能上液冷。"
+  };
+
+  const css = ".term{border-bottom:1px dashed #1f6f8b;cursor:help}.term:hover{color:#1f6f8b}"
+    + ".term-pop{display:none;position:absolute;z-index:80;max-width:340px;background:#0f2e3d;color:#eaf2f5;"
+    + "font-size:12.5px;line-height:1.64;padding:12px 15px;border-radius:11px;"
+    + "box-shadow:0 24px 50px rgba(16,34,48,.28);border:1px solid rgba(255,255,255,.08)}"
+    + ".term-pop::before{content:'\\1F4A1 \\5927\\767D\\8BDD';display:block;font-size:10.5px;font-weight:700;color:#ffd98a;letter-spacing:.5px;margin-bottom:5px}"
+    + ".term-demo{border-bottom:1px dashed #1f6f8b;color:#1f6f8b}";
+  const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
+
+  const pop = document.createElement("div"); pop.className = "term-pop"; document.body.appendChild(pop);
+  let pinned = false;
+  function place(el) {
+    pop.style.display = "block";
+    const r = el.getBoundingClientRect(), pw = pop.offsetWidth, ph = pop.offsetHeight;
+    let left = Math.min(r.left + window.scrollX, window.scrollX + document.documentElement.clientWidth - pw - 16);
+    left = Math.max(left, window.scrollX + 10);
+    let top = r.bottom + window.scrollY + 8;
+    if (r.bottom + 8 + ph > window.innerHeight && r.top - 8 - ph > 0) top = r.top + window.scrollY - ph - 8;
+    pop.style.left = left + "px"; pop.style.top = top + "px";
+  }
+  function show(el) { pop.textContent = el.getAttribute("data-def") || ""; place(el); }
+  document.addEventListener("mouseover", e => { const t = e.target.closest(".term"); if (t && !pinned) show(t); });
+  document.addEventListener("mouseout", e => { const t = e.target.closest(".term"); if (t && !pinned) pop.style.display = "none"; });
+  document.addEventListener("click", e => {
+    const t = e.target.closest(".term");
+    if (t) { pinned = true; show(t); e.stopPropagation(); } else { pinned = false; pop.style.display = "none"; }
+  });
+
+  try {
+    const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const keys = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
+    const parts = keys.map(k => /^[\x00-\x7f]+$/.test(k) ? "(?<![A-Za-z0-9])" + esc(k) + "(?![A-Za-z0-9])" : esc(k));
+    const RE = new RegExp(parts.join("|"), "g");
+    const SKIP = "script,style,summary,h1,.sec-title,.term,.term-pop,.term-demo,.lkt,.pill,.tier-pill,.drill-status,.gate-pill,.howto-title,.dname,.flag";
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode(n) {
+        const p = n.parentElement;
+        if (!p || p.closest(SKIP)) return NodeFilter.FILTER_REJECT;
+        if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = []; let wn; while (wn = walker.nextNode()) nodes.push(wn);
+    nodes.forEach(tn => {
+      const txt = tn.nodeValue; RE.lastIndex = 0;
+      if (!RE.test(txt)) return; RE.lastIndex = 0;
+      const frag = document.createDocumentFragment(); let last = 0, m;
+      while (m = RE.exec(txt)) {
+        const term = m[0], i = m.index;
+        if (i > last) frag.appendChild(document.createTextNode(txt.slice(last, i)));
+        const span = document.createElement("span");
+        span.className = "term"; span.tabIndex = 0;
+        span.setAttribute("data-def", GLOSSARY[term] || "");
+        span.textContent = term;
+        frag.appendChild(span); last = i + term.length;
+        if (m.index === RE.lastIndex) RE.lastIndex++;
+      }
+      if (last < txt.length) frag.appendChild(document.createTextNode(txt.slice(last)));
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  } catch (err) { /* 老浏览器不支持 lookbehind 时静默跳过 */ }
+})();
+
+</script>
+</body>
+</html>
