@@ -2,11 +2,11 @@
   "slug": "lithium-materials",
   "name": "锂电材料（出清→复苏）",
   "as_of": "2026-06",
-  "tagline": "AI 链的对照样本：出清后的复苏早段，分化极大——负极还趴着、六氟已翻倍",
+  "tagline": "走出产能出清、进入复苏早段，环节分化极大：六氟与隔膜头部已强劲回暖，负极石墨化还趴在底部",
   "gates": ["图谱", "成本法", "选股"],
   "gates_done": 1,
   "subchains": 5,
   "pages": [
-    {"title": "产业链图谱（闸门①）", "icon": "🔋", "file": "chains/lithium-materials/lithium_map.html"}
+    {"title": "产业链全景图", "icon": "🔋", "file": "chains/lithium-materials/lithium_map.html"}
   ]
 }

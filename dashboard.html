@@ -412,35 +412,6 @@ body {
 .company-card:hover .card-delete { opacity: 1; }
 .card-delete:hover { background: var(--error); border-color: var(--error); color: #fff; opacity: 1; }
 
-/* Status badges */
-.status-row {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.badge {
-  font-size: 11px;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background: var(--border-soft);
-  color: var(--text-light);
-  border: 1px solid transparent;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-.badge.done {
-  background: rgba(31, 143, 118, 0.10);
-  color: var(--success);
-  border-color: rgba(31, 143, 118, 0.22);
-}
-.badge::before {
-  content: "○";
-  font-size: 9px;
-}
-.badge.done::before { content: "✓"; font-weight: 700; }
-
 /* Stats line */
 .stats-line {
   display: flex;
@@ -536,45 +507,6 @@ body {
 .empty-state h3 { font-size: 16px; color: var(--text); margin-bottom: 6px; font-weight: 700; }
 .empty-state p { font-size: 13px; color: var(--text-muted); max-width: 440px; margin: 0 auto; }
 
-/* Workflow explanation */
-.workflow {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 22px 24px;
-  margin-bottom: 26px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-}
-.workflow h2 { font-size: 15px; color: var(--primary); margin-bottom: 16px; font-weight: 700; }
-.workflow-steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 12px;
-}
-.workflow-step {
-  position: relative;
-  padding: 14px 16px;
-  background: linear-gradient(180deg, #f7fafb 0%, #f1f5f7 100%);
-  border-radius: 12px;
-  border: 1px solid var(--border-soft);
-}
-.workflow-step::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 12px; bottom: 12px;
-  width: 3px; border-radius: 3px;
-  background: linear-gradient(180deg, var(--accent), var(--accent-2));
-}
-.workflow-step .step-num {
-  font-size: 10px;
-  font-weight: 800;
-  color: var(--accent);
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-}
-.workflow-step .step-name { font-size: 14px; font-weight: 700; color: var(--ink); margin: 3px 0; }
-.workflow-step .step-desc { font-size: 11.5px; color: var(--text-muted); line-height: 1.5; }
-
 /* ============= 产业链研究板块（第二阶段） ============= */
 .chains { display:grid; grid-template-columns:repeat(auto-fill, minmax(360px,1fr)); gap:16px; }
 .chain-card {
@@ -596,11 +528,6 @@ body {
 .chain-stats b { font-size:15px; font-weight:700; color:var(--ink); font-family:var(--mono); }
 .action.gold { background:linear-gradient(135deg, var(--gold) 0%, #d89b34 100%); color:#241a06; border-color:transparent; box-shadow:0 6px 16px rgba(192,138,45,.28); }
 .action.gold:hover { color:#241a06; transform:translateY(-2px); box-shadow:var(--shadow-lg); }
-.chain-gates { display:flex; align-items:center; flex-wrap:wrap; gap:5px; }
-.chain-gate { font-size:10.5px; font-weight:700; padding:2px 9px; border-radius:20px; white-space:nowrap; }
-.chain-gate.done { background:rgba(31,143,118,.12); color:var(--success); border:1px solid rgba(31,143,118,.25); }
-.chain-gate.todo { background:var(--border-soft); color:var(--text-light); border:1px solid var(--border); }
-.chain-gate-arrow { color:var(--text-light); font-size:11px; margin:0 1px; }
 .chain-actions { display:flex; flex-direction:column; gap:7px; }
 
 /* Footer */
@@ -683,8 +610,8 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
   <div class="chains" id="chains"></div>
   <div id="chain-empty" class="empty-state" style="display: none;">
     <div class="emoji">🔗</div>
-    <h3>还没有产业链图谱</h3>
-    <p>自上而下：先画一条产业链的完整图谱、定位价值落在哪一节，再端出值得研究的赛道，喂回个股深析。</p>
+    <h3>还没有产业链研究</h3>
+    <p>在 Claude Code 对话区说"研究 ×× 产业链"，研究成果会出现在这里。</p>
   </div>
 </section>
 
@@ -707,7 +634,7 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
   <div id="empty-state" class="empty-state" style="display: none;">
     <div class="emoji">📈</div>
     <h3>还没有任何分析</h3>
-    <p>在上面输入框输入第一只股票代码，按"开始分析"，Claude 会自动跑完整条流水线。</p>
+    <p>在上面输入框输入第一只股票代码加入队列，分析完成后会出现在这里。</p>
   </div>
 </section>
 
@@ -728,7 +655,7 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
 <!-- DASHBOARD_DATA_START -->
 <script id="dashboard-data" type="application/json">
 {
-  "scanned_at": "2026-06-10 22:17:05",
+  "scanned_at": "2026-06-10 23:21:47",
   "tool_version": "0.2",
   "companies": [
     {
@@ -1214,7 +1141,7 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
       "slug": "ai-datacenter",
       "name": "AI 数据中心",
       "as_of": "2026-06",
-      "tagline": "从算力到电力，第一性原理全链拆解 · 电力底座已走完三关",
+      "tagline": "从算力到电力的全链拆解 · 电力底座最持久的价值在单晶叶片铸造与燃机长约服务，变压器等涨价多属周期性短缺",
       "gates": [
         "图谱",
         "成本法",
@@ -1227,12 +1154,12 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
       },
       "pages": [
         {
-          "title": "产业链图谱（闸门①）",
+          "title": "产业链全景图",
           "icon": "🗺️",
           "file": "chains/ai-datacenter/chain_map.html"
         },
         {
-          "title": "电力底座 · 成本法 + 选股",
+          "title": "电力底座 · 成本拆解与公司清单",
           "icon": "🧮",
           "file": "chains/ai-datacenter/cost_power.html"
         }
@@ -1246,7 +1173,7 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
       "slug": "commercial-space",
       "name": "商业航天（扩张早期）",
       "as_of": "2026-06",
-      "tagline": "三态对照第三态：钱在发射与总装堆积、收入只在载荷卖铲人落地——故事已钉成 S1-S6 等里程碑",
+      "tagline": "扩张早期：钱涌向发射与总装，眼下真正赚钱的只有卫星载荷配套环节；可回收火箭谁先跑通是最大变量",
       "gates": [
         "图谱",
         "成本法",
@@ -1259,7 +1186,7 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
       },
       "pages": [
         {
-          "title": "产业链图谱（闸门①）",
+          "title": "产业链全景图",
           "icon": "🚀",
           "file": "chains/commercial-space/space_map.html"
         }
@@ -1273,7 +1200,7 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
       "slug": "lithium-materials",
       "name": "锂电材料（出清→复苏）",
       "as_of": "2026-06",
-      "tagline": "AI 链的对照样本：出清后的复苏早段，分化极大——负极还趴着、六氟已翻倍",
+      "tagline": "走出产能出清、进入复苏早段，环节分化极大：六氟与隔膜头部已强劲回暖，负极石墨化还趴在底部",
       "gates": [
         "图谱",
         "成本法",
@@ -1286,7 +1213,7 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
       },
       "pages": [
         {
-          "title": "产业链图谱（闸门①）",
+          "title": "产业链全景图",
           "icon": "🔋",
           "file": "chains/lithium-materials/lithium_map.html"
         }
@@ -1524,8 +1451,8 @@ function watchInfo(c) {
     const minDate = dates.sort()[0];
     out.reviewDate = minDate;
     const dd = daysFromToday(minDate);
-    if (dd != null && dd <= 0) { out.reviewDue = true; out.chips.push({ cls: 'due', text: '⏰ 复盘到期 ' + minDate, title: '跑 python scripts/review.py，按 postmortem 流程盲评+打分' }); }
-    else if (dd != null && dd <= 14) { out.reviewSoon = true; out.chips.push({ cls: 'soon', text: '⏰ 复盘临近 ' + minDate + '（' + dd + ' 天）', title: '' }); }
+    if (dd != null && dd <= 0) { out.reviewDue = true; out.chips.push({ cls: 'due', text: '⏰ 该回头检验了 ' + minDate, title: '当时的判断到了检验时点，让 Claude 对照最新进展复查一遍' }); }
+    else if (dd != null && dd <= 14) { out.reviewSoon = true; out.chips.push({ cls: 'soon', text: '⏰ 临近检验时点 ' + minDate + '（' + dd + ' 天）', title: '' }); }
   }
   // ③ 下次财报
   const ne = w.next_earnings || {};
@@ -1551,11 +1478,11 @@ function renderDutyDesk() {
   const chainInfos = (typeof chains !== 'undefined' ? chains : []).map(ch => ({ ch, w: chainWatchInfo(ch) }));
   const chainDue = chainInfos.filter(x => x.w.ckptDue);
   const lines = [];
-  if (chainDue.length) lines.push('<div class="duty-line"><span class="duty-label">🔗 产业链检查点到期（' + chainDue.length + '）</span>' +
-    chainDue.map(x => '<span class="duty-item"><b>' + escapeHtml(x.ch.name) + '</b>（拉 indicators.json 指标判读）</span>').join('　'));
+  if (chainDue.length) lines.push('<div class="duty-line"><span class="duty-label">🔗 产业链数据待更新（' + chainDue.length + '）</span>' +
+    chainDue.map(x => '<span class="duty-item"><b>' + escapeHtml(x.ch.name) + '</b></span>').join('　'));
   if (inZone.length) lines.push('<div class="duty-line"><span class="duty-label">🎯 已进入场观察区（' + inZone.length + '）</span>' +
     inZone.map(x => '<span class="duty-item"><b>' + escapeHtml(x.c.ticker) + '</b> ' + escapeHtml(x.w.zoneText) + '</span>').join('　'));
-  if (due.length) lines.push('<div class="duty-line"><span class="duty-label">⏰ 复盘到期（' + due.length + '）</span>' +
+  if (due.length) lines.push('<div class="duty-line"><span class="duty-label">⏰ 判断该回头检验（' + due.length + '）</span>' +
     due.map(x => '<span class="duty-item"><b>' + escapeHtml(x.c.ticker) + '</b>（' + x.w.reviewDate + '）</span>').join('　'));
   if (earn.length) lines.push('<div class="duty-line"><span class="duty-label">📅 财报 14 天内/已过（' + earn.length + '）</span>' +
     earn.map(x => '<span class="duty-item"><b>' + escapeHtml(x.c.ticker) + '</b>（' + x.w.earnDate + '）</span>').join('　'));
@@ -1565,9 +1492,9 @@ function renderDutyDesk() {
     const nextEarn = infos.filter(x => x.w.earnDate && !x.w.earnPast).sort((a, b) => a.w.earnDate < b.w.earnDate ? -1 : 1)[0];
     const nextCkpt = chainInfos.filter(x => x.w.dueSoonDate).sort((a, b) => a.w.dueSoonDate < b.w.dueSoonDate ? -1 : 1)[0];
     const bits = [];
-    if (nextReview) bits.push('最近复盘节点 <b>' + escapeHtml(nextReview.c.ticker) + '</b> ' + nextReview.w.reviewDate);
+    if (nextReview) bits.push('最近的判断检验 <b>' + escapeHtml(nextReview.c.ticker) + '</b> ' + nextReview.w.reviewDate);
     if (nextEarn) bits.push('最近财报 <b>' + escapeHtml(nextEarn.c.ticker) + '</b> ' + nextEarn.w.earnDate);
-    if (nextCkpt) bits.push('链检查点 <b>' + escapeHtml(nextCkpt.ch.name) + '</b> ' + nextCkpt.w.dueSoonDate);
+    if (nextCkpt) bits.push('产业链数据更新 <b>' + escapeHtml(nextCkpt.ch.name) + '</b> ' + nextCkpt.w.dueSoonDate);
     lines.push('<div class="duty-line calm"><span class="duty-label">今天没有到期事项。</span><span class="duty-item">' + bits.join('　·　') + '</span>');
   }
   box.innerHTML = lines.map(l => l + '</div>').join('');
@@ -1603,11 +1530,7 @@ function renderCompanies() {
           </div>
         </div>
 
-        <div class="status-row">
-          <span class="badge ${s.filings ? 'done' : ''}">取数</span>
-          <span class="badge ${s.report_pdf ? 'done' : ''}">深度报告</span>
-          <span class="badge ${s.explorer ? 'done' : ''}">交互器</span>
-        </div>
+        ${(!s.report_pdf && !s.explorer) ? `<div class="watch-row"><span class="wchip soon">⏳ 分析中，报告还没出来</span></div>` : ''}
 
         ${(() => {
           const wi = watchInfo(c);
@@ -1653,14 +1576,14 @@ function chainWatchInfo(ch) {
   const out = { chips: [], ckptDue: false, dueSoonDate: null };
   if (w.next_checkpoint) {
     const dd = daysFromToday(w.next_checkpoint);
-    if (dd != null && dd <= 0) { out.ckptDue = true; out.chips.push({ cls: 'due', text: '⏰ 季度检查点到期 ' + w.next_checkpoint, title: '跑 python scripts/review.py → 派 agent 拉 indicators.json 指标判读' }); }
-    else if (dd != null && dd <= 14) { out.chips.push({ cls: 'soon', text: '⏰ 检查点临近 ' + w.next_checkpoint + '（' + dd + ' 天）', title: '' }); }
-    else { out.chips.push({ cls: 'info', text: '📋 下次检查点 ' + w.next_checkpoint, title: '季度拉一次领先指标（indicators.json）' }); }
+    if (dd != null && dd <= 0) { out.ckptDue = true; out.chips.push({ cls: 'due', text: '⏰ 行业数据该更新了 ' + w.next_checkpoint, title: '到了季度更新时点，让 Claude 拉一轮最新行业数据、检验这条链的判断' }); }
+    else if (dd != null && dd <= 14) { out.chips.push({ cls: 'soon', text: '⏰ 临近季度更新 ' + w.next_checkpoint + '（' + dd + ' 天）', title: '' }); }
+    else { out.chips.push({ cls: 'info', text: '📋 下次数据更新 ' + w.next_checkpoint, title: '每季度更新一轮行业关键数据，检验这条链的判断' }); }
     out.dueSoonDate = w.next_checkpoint;
   }
   if (w.nearest_due) {
     const dd = daysFromToday(w.nearest_due);
-    if (dd != null && dd <= 0) out.chips.push({ cls: 'due', text: '⏰ 链判断/预测到期 ' + w.nearest_due, title: '' });
+    if (dd != null && dd <= 0) out.chips.push({ cls: 'due', text: '⏰ 链判断待检验 ' + w.nearest_due, title: '' });
   }
   return out;
 }
@@ -1673,14 +1596,7 @@ function renderChains() {
   empty.style.display = 'none';
   container.innerHTML = chains.map(ch => {
     const st = ch.stats || {};
-    const gates = ch.gates || [];
-    const gatesDone = ch.gates_done || 0;
     const pages = ch.pages || [];
-    const gateChips = gates.map((g, i) => {
-      const done = i < gatesDone;
-      const arrow = i < gates.length - 1 ? '<span class="chain-gate-arrow">→</span>' : '';
-      return `<span class="chain-gate ${done ? 'done' : 'todo'}">${done ? '✓ ' : ''}${escapeHtml(g)}</span>${arrow}`;
-    }).join('');
     const buttons = pages.map((p, i) =>
       `<a class="action ${i === 0 ? 'gold' : ''}" href="${p.file}" target="_blank">
          <span class="icon">${p.icon || '📄'}</span><span class="label">${escapeHtml(p.title)}</span><span class="arrow">→</span>
@@ -1694,7 +1610,6 @@ function renderChains() {
             ${ch.tagline ? `<div class="chain-tagline">${escapeHtml(ch.tagline)}</div>` : ''}
           </div>
         </div>
-        ${gateChips ? `<div class="chain-gates">${gateChips}</div>` : ''}
         ${(() => {
           const wi = chainWatchInfo(ch);
           if (!wi.chips.length) return '';

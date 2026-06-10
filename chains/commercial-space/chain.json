@@ -2,11 +2,11 @@
   "slug": "commercial-space",
   "name": "商业航天（扩张早期）",
   "as_of": "2026-06",
-  "tagline": "三态对照第三态：钱在发射与总装堆积、收入只在载荷卖铲人落地——故事已钉成 S1-S6 等里程碑",
+  "tagline": "扩张早期：钱涌向发射与总装，眼下真正赚钱的只有卫星载荷配套环节；可回收火箭谁先跑通是最大变量",
   "gates": ["图谱", "成本法", "选股"],
   "gates_done": 1,
   "subchains": 5,
   "pages": [
-    {"title": "产业链图谱（闸门①）", "icon": "🚀", "file": "chains/commercial-space/space_map.html"}
+    {"title": "产业链全景图", "icon": "🚀", "file": "chains/commercial-space/space_map.html"}
   ]
 }

@@ -2,13 +2,13 @@
   "slug": "ai-datacenter",
   "name": "AI 数据中心",
   "as_of": "2026-06",
-  "tagline": "从算力到电力，第一性原理全链拆解 · 电力底座已走完三关",
+  "tagline": "从算力到电力的全链拆解 · 电力底座最持久的价值在单晶叶片铸造与燃机长约服务，变压器等涨价多属周期性短缺",
   "subchains": 5,
   "selected": 27,
   "gates": ["图谱", "成本法", "选股"],
   "gates_done": 3,
   "pages": [
-    {"title": "产业链图谱（闸门①）", "icon": "🗺️", "file": "chains/ai-datacenter/chain_map.html", "primary": true},
-    {"title": "电力底座 · 成本法 + 选股", "icon": "🧮", "file": "chains/ai-datacenter/cost_power.html"}
+    {"title": "产业链全景图", "icon": "🗺️", "file": "chains/ai-datacenter/chain_map.html", "primary": true},
+    {"title": "电力底座 · 成本拆解与公司清单", "icon": "🧮", "file": "chains/ai-datacenter/cost_power.html"}
   ]
 }
