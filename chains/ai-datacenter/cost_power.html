@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>电力底座 · 成本法（闸门②）· AI 数据中心产业链</title>
+<title>电力底座 · 成本拆解 · AI 数据中心产业链</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cg stroke='%23D99A2E' stroke-width='30' stroke-linecap='round'%3E%3Cline x1='128' y1='96' x2='128' y2='416'/%3E%3Cline x1='256' y1='96' x2='256' y2='416'/%3E%3Cline x1='384' y1='96' x2='384' y2='416'/%3E%3C/g%3E%3Cg fill='%23D99A2E'%3E%3Crect x='90' y='280' width='76' height='110' rx='22'/%3E%3Crect x='218' y='180' width='76' height='130' rx='22'/%3E%3Crect x='346' y='120' width='76' height='116' rx='22'/%3E%3C/g%3E%3C/svg%3E">
 <style id="chain-ui">
 /* chain_ui.css —— 产业链研究页面共享主题（闸门①图谱、闸门②成本法等都 link 它） */
@@ -177,7 +177,7 @@ table.t tr td:last-child { border-right:1px solid var(--border-soft); border-rad
 <div class="container">
 
   <div class="topbar">
-    <a class="back-link" href="chain_map.html">← 返回产业链图谱（闸门①）</a>
+    <a class="back-link" href="chain_map.html">← 返回产业链全景图</a>
     <span class="asof-pill">数据时点 2026-06</span>
   </div>
 
@@ -191,14 +191,14 @@ table.t tr td:last-child { border-right:1px solid var(--border-soft); border-rad
     <div class="hero-text">
       <h1>电力底座 · 成本法</h1>
       <div class="tagline">钻进电力子链，看价值在叶片 / 服务 / 材料 / 芯片哪一块、是护城河还是租金</div>
-      <span class="gate-pill">闸门② · 成本法（环节层，不碰个股）</span>
+      <span class="gate-pill">成本拆解 · 环节层，不碰个股</span>
     </div>
   </section>
 
   <section class="card howto">
     <div class="howto-title">📖 这一关在干嘛</div>
     <div class="howto-grid">
-      <div><b>① 从闸门①钻进来</b>你在图谱里点了电力底座这一节，这一关把它拆开，看一座 AI 数据中心的电是怎么供上的、钱花在哪、价值留在哪。</div>
+      <div><b>① 从全景图钻进来</b>你在全景图里点了电力底座这一节，这页把它拆开，看一座 AI 数据中心的电是怎么供上的、钱花在哪、价值留在哪。</div>
       <div><b>② 找持久价值，不碰个股</b>这一关只判断价值在电力子链的哪一块、是否持久。个股贵不贵、买不买，留给第一阶段单股工具。</div>
       <div><b>③ 带<span class="term-demo">虚线下划线</span>的词点一下</b>专业词都加了大白话解释，鼠标移上去或手机点一下就能看。</div>
     </div>
@@ -289,11 +289,11 @@ table.t tr td:last-child { border-right:1px solid var(--border-soft); border-rad
   <!-- 闸门③ 交接：送进第一阶段 -->
   <section class="card handoff">
     <div class="sec-title">🚀 据此该深析哪几家（送进第一阶段）</div>
-    <div class="sec-sub">闸门只判环节、不判个股贵贱。下面按"价值最持久的环节 → 占着它的上市公司"列出（A股 + 美股；已过一道独立 agent 核查：补全龙头、剔除错配、核对代码）。点任一公司即复制「分析 &lt;代码&gt;」，粘进 Claude Code 跑第一阶段单股深析、由它判贵不贵。★ = 该环节龙头。这是闸门的下游交接，不是闸门在选股。</div>
+    <div class="sec-sub">这页只判环节、不判个股贵贱。下面按"价值最持久的环节 → 占着它的上市公司"列出（A股 + 美股；名单经独立核查：补全龙头、剔除错配、核对代码）。点任一公司即复制「分析 &lt;代码&gt;」，粘进 Claude Code 启动单股深度分析、由它判贵不贵。★ = 该环节龙头。这是往下游的交接，不是这页在选股。</div>
     <div id="handoff"></div>
   </section>
 
-  <footer>MS 股票价值分析工具 · 产业链研究 · 闸门② 成本法 · Designed by Miro Sun</footer>
+  <footer>MS 股票价值分析工具 · 产业链研究 · 电力底座成本拆解 · Designed by Miro Sun</footer>
 
 </div>
 
@@ -331,7 +331,7 @@ document.getElementById("rentmoat").innerHTML = RM.map(r =>
 
 // 闸门③ 交接：经独立 agent 核查 + 代码复核的完整占位者清单（A股+美股）。点公司 → 复制"分析 <代码>"送进第一阶段
 const PICKS = [
-  { tier: "持久结构价值", tierNote: "供给扩不出来的卡口——闸门②判这两个环节价值最持久、最值得深析。", tag: "moat", envs: [
+  { tier: "持久结构价值", tierNote: "供给扩不出来的卡口——本页判这两个环节价值最持久、最值得深析。", tag: "moat", envs: [
     { env: "单晶 / 燃机高温合金叶片", note: "全链最硬的护城河。要分清做整体叶片 vs 只做上游母合金材料。", items: [
       { n: "应流股份", c: "603308", m: "A", lead: true, r: "A股燃机叶片真龙头：西门子 F 级热端独家、H 级研制，订单排到 2028" },
       { n: "万泽股份", c: "000534", m: "A", lead: false, r: "中小型燃机(2–40MW)叶片已批产、单晶全流程自主（双主业含医药）" },
@@ -345,7 +345,7 @@ const PICKS = [
       { n: "上海电气", c: "601727", m: "A", lead: false, r: "燃机整机 + 全生命周期服务（合资/引进路线）" },
     ]},
   ]},
-  { tier: "价值迁移的下一站", tierNote: "动态机会、本身也在卷——闸门②提示的迁移方向。", tag: "mig", envs: [
+  { tier: "价值迁移的下一站", tierNote: "动态机会、本身也在卷——价值正迁移的方向。", tag: "mig", envs: [
     { env: "储能 电芯 / PCS / EMS", note: "备电从 UPS+柴油机迁向大储能，价值迁向这里。", items: [
       { n: "宁德时代", c: "300750", m: "A", lead: true, r: "储能电芯全球龙头" },
       { n: "比亚迪", c: "002594", m: "A", lead: false, r: "自有电芯的储能系统、靠成本压价" },

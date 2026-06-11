@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 数据中心产业链图谱（闸门①）· MS 股票价值分析工具</title>
+<title>AI 数据中心 · 产业链全景图 · MS 股票价值分析工具</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cg stroke='%23D99A2E' stroke-width='30' stroke-linecap='round'%3E%3Cline x1='128' y1='96' x2='128' y2='416'/%3E%3Cline x1='256' y1='96' x2='256' y2='416'/%3E%3Cline x1='384' y1='96' x2='384' y2='416'/%3E%3C/g%3E%3Cg fill='%23D99A2E'%3E%3Crect x='90' y='280' width='76' height='110' rx='22'/%3E%3Crect x='218' y='180' width='76' height='130' rx='22'/%3E%3Crect x='346' y='120' width='76' height='116' rx='22'/%3E%3C/g%3E%3C/svg%3E">
 <style id="chain-ui">
 /* chain_ui.css —— 产业链研究页面共享主题（闸门①图谱、闸门②成本法等都 link 它） */
@@ -179,16 +179,16 @@ footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--border); 
     <div class="hero-text">
       <h1>AI 数据中心产业链图谱</h1>
       <div class="tagline">从算力到电力，第一性原理全链拆解 · 找出值得钻的子链</div>
-      <span class="gate-pill">闸门① · 产业链图谱（只论产业链、不碰个股）</span>
+      <span class="gate-pill">只论产业链、不碰个股</span>
     </div>
   </section>
 
   <section class="card howto">
     <div class="howto-title">📖 怎么读这页（看不懂的地方先看这里）</div>
     <div class="howto-grid">
-      <div><b>① 这一关只找价值在哪一节</b>闸门只在产业链上找真正的价值在哪、是否持久；个股贵不贵、买不买，是第一阶段单股工具的事。这里完全不碰个股。</div>
+      <div><b>① 这页只找价值在哪一节</b>只在产业链上找真正的价值在哪、是否持久；个股贵不贵、买不买，要逐家单独分析。这里完全不碰个股。</div>
       <div><b>② 颜色＝赚钱厚薄</b>绿色＝最赚钱、护城河最硬；蓝色＝中等；灰色＝苦力薄利。看图时颜色越绿，越是值得留意的好环节。</div>
-      <div><b>③ 子链卡点进去钻</b>下面每张子链卡，点一下就钻进它的成本法（闸门②）——把这一节拆开，看价值具体落在哪一块、是护城河还是短缺租金。带<span class="term-demo">虚线</span>的词点一下看大白话。</div>
+      <div><b>③ 子链卡点进去钻</b>下面每张子链卡，点一下就钻进它的成本拆解——把这一节拆开，看价值具体落在哪一块、是护城河还是短缺租金。带<span class="term-demo">虚线</span>的词点一下看大白话。</div>
     </div>
   </section>
 
@@ -221,13 +221,13 @@ footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--border); 
       <span><i class="dot" style="background:var(--rich)"></i>最肥·护城河硬</span>
       <span><i class="dot" style="background:var(--mid)"></i>中·好生意</span>
       <span><i class="dot" style="background:var(--thin)"></i>苦力·薄利/重资产</span>
-      <span class="muted">| 那把刀：原理上必须＝价值稳固；只是当下技术选择＝价值脆弱会被替代</span>
+      <span class="muted">| 原理上必须＝价值稳固；只是当下技术选择＝价值脆弱会被替代</span>
     </div>
   </section>
 
   <section class="card">
-    <div class="sec-title">🎯 值得钻的子链（点进去看成本法）</div>
-    <div class="sec-sub">把全链分成几条子链。每张卡给一句结构性的为什么值得钻，点进去就是它的成本法（闸门②）——拆开看价值落在哪一块、是护城河还是短缺租金。不碰个股。</div>
+    <div class="sec-title">🎯 值得钻的子链（点进去看成本拆解）</div>
+    <div class="sec-sub">把全链分成几条子链。每张卡给一句结构性的为什么值得钻，点进去就是它的成本拆解——拆开看价值落在哪一块、是护城河还是短缺租金。不碰个股。</div>
     <div class="drill-cards" id="drill"></div>
   </section>
 
@@ -236,7 +236,7 @@ footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--border); 
     <div class="sec-sub">在产业链层面，哪条子链最值得先拆——结构性理由，不涉及个股。</div>
     <div class="recs">
       <div class="rec"><div class="rk">已示范</div><div class="rb"><b>电力底座</b>——当下真正的硬约束（卡数据中心落地的不是芯片、是电），而且价值正从算力往这迁。已经拆完做了示范：拆出来真正持久的价值在单晶叶片铸造和燃机服务年金，不在涨价最猛的变压器。</div></div>
-      <div class="rec"><div class="rk">接着钻</div><div class="rb"><b>散热</b>——价值迁移最快的一段（GPU 越强、液冷价值量越高），适合用成本法验证价值是留在系统集成还是上游部件。<b>连接与网络</b>——中国厂全球领先，但价值在往上游光芯片集中，拆开看组装薄在哪、上游肥在哪。</div></div>
+      <div class="rec"><div class="rk">接着钻</div><div class="rb"><b>散热</b>——价值迁移最快的一段（GPU 越强、液冷价值量越高），适合拆开成本验证价值是留在系统集成还是上游部件。<b>连接与网络</b>——中国厂全球领先，但价值在往上游光芯片集中，拆开看组装薄在哪、上游肥在哪。</div></div>
       <div class="rec"><div class="rk">理解为主</div><div class="rb"><b>算力与内存</b>——全链价值最厚最持久（CUDA、HBM 寡头、台积电近独家），但也是最拥挤、最被市场看透的一段；钻它更多是为了理解价值为什么这么集中，而不是找便宜。</div></div>
     </div>
   </section>
@@ -250,19 +250,19 @@ footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--border); 
       <li><b>资本周期</b>：看着最肥的环节往往正在周期顶点；卡脖子常是短缺租金、不是护城河，产能一补就回吐。</li>
       <li><b>价值往哪迁</b>：利润池会移动，要同时看现在在哪、和正往哪流。</li>
     </ol>
-    <p>这一关的产出止于"价值在哪个子链 / 哪一节、是否持久"。个股的估值、贵不贵、买不买，是第一阶段单股工具的活——你过完闸门、锁定环节，再把那一节的公司送进去深析。完整方法论见 skills/industry-chain.md。</p></div>
+    <p>这页的产出止于"价值在哪个子链 / 哪一节、是否持久"。个股的估值、贵不贵、买不买，要逐家单独分析——先锁定环节，再把那一节的公司送进去深析。</p></div>
   </details>
 
   <details>
     <summary>🔍 数据诚实交底（免费联网的边界）</summary>
     <div class="dc"><ul>
-      <li>结构判断（哪节卡脖子、利润往哪迁、谁有护城河）可信度高；具体数字（份额、产能、交期）来自 2026 上半年公开来源，仅作量级，进成本法深拆时要逐一回查。</li>
+      <li>结构判断（哪节卡脖子、利润往哪迁、谁有护城河）可信度高；具体数字（份额、产能、交期）来自 2026 上半年公开来源，仅作量级，往下细拆成本时要逐一回查。</li>
       <li>免费联网替代不了付费数据底座（卫星 + 许可证实时追踪）。我们搬的是分析纪律，不是那套数据底座；查不到的明说、不假装覆盖全。</li>
       <li>提到公司只为说清这一节由谁占据、集中度如何，不含任何估值与买卖判断——那些在第一阶段单股工具里做。</li>
     </ul></div>
   </details>
 
-  <footer>MS 股票价值分析工具 · 产业链研究 · 闸门① 产业链图谱 · Designed by Miro Sun</footer>
+  <footer>MS 股票价值分析工具 · 产业链研究 · 产业链全景图 · Designed by Miro Sun</footer>
 
 </div>
 
@@ -295,11 +295,11 @@ const SUBCHAINS = [
 document.getElementById("drill").innerHTML = SUBCHAINS.map(s => {
   const cls = s.status === "done" ? `${s.tier} done` : s.tier;
   const badge = s.status === "done"
-    ? `<span class="drill-status s-done">闸门② 已拆</span>`
+    ? `<span class="drill-status s-done">已深拆</span>`
     : `<span class="drill-status s-todo">待拆解</span>`;
   const btn = s.status === "done"
-    ? `<a class="dbtn go" href="${s.href}"><span>钻进电力底座成本法</span><span>→</span></a>`
-    : `<div class="dbtn todo"><span>成本法待拆解（点电力底座看示范）</span></div>`;
+    ? `<a class="dbtn go" href="${s.href}"><span>钻进电力底座成本拆解</span><span>→</span></a>`
+    : `<div class="dbtn todo"><span>待深拆（点电力底座看示范）</span></div>`;
   return `<div class="drill-card ${cls}">
     <div class="dh"><div><div class="dname">${s.name}</div><div class="dcov">${s.cov}</div></div>${badge}</div>
     <div class="dwhy">${s.why}</div>${btn}</div>`;
@@ -338,7 +338,7 @@ document.getElementById("drill").innerHTML = SUBCHAINS.map(s => {
     "议价权": "谈价格时谁更有底气。是供应商求着客户买（议价权弱），还是客户排队求供应（议价权强）。",
     "backlog": "在手订单——已签约、还没交货的订单量。backlog 越厚、锁得越远，未来几年收入越有保障。",
     "book-to-bill": "新接订单 ÷ 当期出货。大于 1 表示订单比出货还多、需求在加速。",
-    "BOM": "物料清单——一个产品由哪些零件、各花多少钱拼成的成本明细表。成本法就是拆这张表。",
+    "BOM": "物料清单——一个产品由哪些零件、各花多少钱拼成的成本明细表。成本拆解就是拆这张表。",
     "成本栈": "把一件大工程的总花费，按各个部分拆开、看每部分占多少钱的结构表。",
     "Bear": "熊市情景——分析时假设的最差那种情况（需求转冷、价格下跌），用来检验万一不顺时会亏多少。",
     "attach 率": "配套比例。比如每张 GPU 平均要配几个光模块，这个比例越高、需求越大。",
