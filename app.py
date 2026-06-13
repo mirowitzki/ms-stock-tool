@@ -190,6 +190,25 @@ class DashboardApi:
         log(f"已删除公司 {t} 的全部分析文件")
         return {"ok": True, "ticker": t}
 
+    def refresh_quotes(self):
+        """免费刷新所有已分析公司的最新收盘价（纯代码、零 Max/API）：
+        抓最新收盘 → 刷月度走势 → 重渲交互器 → 把最新价灌进 dashboard.html。只动价格层，判断内核不碰。"""
+        try:
+            os.chdir(PROJECT_ROOT)
+            scripts_dir = PROJECT_ROOT / "scripts"
+            if str(scripts_dir) not in sys.path:
+                sys.path.insert(0, str(scripts_dir))
+            from refresh_quotes import refresh as _refresh_quotes
+            result = _refresh_quotes()           # 报价 + prices.json + 重渲交互器
+            refresh_dashboard_inproc()           # 把最新价灌进 dashboard.html（梯队/卡片）
+            return {"ok": True, "refreshed_at": result.get("refreshed_at"),
+                    "ok_n": len(result.get("ok", [])), "fail_n": len(result.get("fail", []))}
+        except Exception as e:
+            log(f"刷新报价失败：{e}")
+            import traceback
+            log(traceback.format_exc())
+            return {"ok": False, "error": str(e)}
+
 
 # ============================================================
 # Level 2：pywebview 真原生窗口
@@ -238,7 +257,31 @@ def open_with_pywebview(dashboard_path):
         start_kwargs = {}
         if os.name == "nt" and ICON_ICO.exists():
             start_kwargs["icon"] = str(ICON_ICO)
-        webview.start(_apply_native_icon, **start_kwargs)  # 阻塞直到窗口关闭
+
+        def _on_gui_ready():
+            _apply_native_icon()
+            # 开应用时后台静默刷一次报价（不阻塞窗口显示）：抓最新收盘 → 重渲交互器 →
+            # 刷新 dashboard → 重载页面显示最新价。无网/抓不到就静默沿用旧值，不打扰。
+            import threading
+
+            def _bg_refresh():
+                try:
+                    os.chdir(PROJECT_ROOT)
+                    scripts_dir = PROJECT_ROOT / "scripts"
+                    if str(scripts_dir) not in sys.path:
+                        sys.path.insert(0, str(scripts_dir))
+                    from refresh_quotes import refresh as _refresh_quotes
+                    _refresh_quotes()
+                    refresh_dashboard_inproc()
+                    if webview.windows:
+                        webview.windows[0].load_url(dashboard_path.as_uri())
+                    log("启动自动刷新报价完成")
+                except Exception as e:
+                    log(f"启动自动刷新报价失败（忽略、用旧值）：{e}")
+
+            threading.Thread(target=_bg_refresh, daemon=True).start()
+
+        webview.start(_on_gui_ready, **start_kwargs)  # 阻塞直到窗口关闭
         log("窗口已关闭。")
         return True
     except Exception as e:

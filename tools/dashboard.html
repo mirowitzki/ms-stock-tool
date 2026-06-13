@@ -537,6 +537,16 @@ body {
   border:1px solid var(--border); background:#fff; color:var(--text-muted); font-family:inherit; transition:all .15s ease;
 }
 .rank-toggle button.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+.rank-controls { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.quote-stamp { font-size:11.5px; color:var(--text-light); white-space:nowrap; }
+.quote-refresh-btn {
+  font-size:12px; font-weight:600; padding:4px 13px; border-radius:20px; cursor:pointer;
+  border:1px solid var(--accent); background:#fff; color:var(--accent); font-family:inherit; transition:all .15s ease; white-space:nowrap;
+}
+.quote-refresh-btn:hover:not(:disabled) { background:var(--accent); color:#fff; }
+.quote-refresh-btn:disabled { opacity:.55; cursor:default; }
+.rank-card .live-px { color:var(--accent); }
+.rank-card .px-drift { font-size:10px; color:var(--text-light); font-weight:600; }
 .rank-note { font-size:12px; color:var(--text-muted); margin:-2px 0 16px; line-height:1.65; }
 
 .tier-band { margin-bottom:16px; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow-sm); }
@@ -686,12 +696,16 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
 <section id="rank-section" style="display:none;">
   <div class="section-header">
     <h2>📊 价值梯队榜</h2>
-    <div class="rank-toggle">
-      <button id="rank-view-tier" class="active" onclick="setRankView('tier')">按梯队</button>
-      <button id="rank-view-chain" onclick="setRankView('chain')">按产业链</button>
+    <div class="rank-controls">
+      <span class="quote-stamp" id="quote-stamp"></span>
+      <button class="quote-refresh-btn" id="quote-refresh-btn" onclick="refreshQuotes()">🔄 刷新报价</button>
+      <div class="rank-toggle">
+        <button id="rank-view-tier" class="active" onclick="setRankView('tier')">按梯队</button>
+        <button id="rank-view-chain" onclick="setRankView('chain')">按产业链</button>
+      </div>
     </div>
   </div>
-  <p class="rank-note">排名按各家分析时点的安全边际排——现价距我给的加权中枢有多远（不是目标价）。左侧圆点是价格与价值的关系：绿=公允或低估、黄=要牛市才撑得起、橙=偏贵、红=投机。价格变动较大后，需要重新刷新这家的数据再看。</p>
+  <p class="rank-note">排名按最新收盘价距我加权中枢的安全边际排（不是目标价）。点右上角「🔄 刷新报价」拉一次最新收盘、全部重算（免费、几秒钟）；没刷过就用分析时的价。左侧圆点是价格与价值的关系：绿=公允或低估、黄=要牛市才撑得起、橙=偏贵、红=投机。</p>
   <div id="rank-tier-view"></div>
   <div id="rank-chain-view" style="display:none;"></div>
 </section>
@@ -1021,7 +1035,8 @@ function renderCompanies() {
     const s = c.status || {};
     const f = c.files || {};
     const stats = c.stats || {};
-    const hasStats = stats.revenue_today != null || stats.market_cap != null;
+    const hasLive = !!(c.live && c.live.price != null);
+    const hasStats = stats.revenue_today != null || stats.market_cap != null || hasLive;
     return `
       <div class="company-card">
         <div class="card-header">
@@ -1050,6 +1065,7 @@ function renderCompanies() {
           const isCNY = (c.currency && c.currency.code) === 'CNY';
           return `
         <div class="stats-line">
+          ${hasLive ? `<div class="stat"><span class="stat-label">今日价</span><span class="stat-value">${csym}${fmtPx(c.live.price)}</span></div>` : ''}
           ${stats.revenue_today != null ? `<div class="stat"><span class="stat-label">营收</span><span class="stat-value">${csym}${fmtMoney(stats.revenue_today, isCNY)}</span></div>` : ''}
           ${stats.market_cap != null ? `<div class="stat"><span class="stat-label">市值</span><span class="stat-value">${csym}${fmtMoney(stats.market_cap, isCNY)}</span></div>` : ''}
           ${stats.market_cap != null && stats.revenue_today ? `<div class="stat"><span class="stat-label">P/S</span><span class="stat-value">${(stats.market_cap / stats.revenue_today).toFixed(1)}x</span></div>` : ''}
@@ -1156,10 +1172,28 @@ function tierOf(m) { if (m == null) return 3; if (m >= 15) return 1; if (m >= -3
 const chainMeta = {};
 chains.forEach(ch => { chainMeta[ch.slug] = { name: ch.name, link: (ch.pages && ch.pages[0] && ch.pages[0].file) || null }; });
 
+// 用最新收盘价（_quotes.json）重算这家的安全边际/赔率（中枢/上下沿是分析时记的、不动）。
+// 没有最新价时返回 null，回退到 decision.json 记录的分析时赔率。
+function liveOdds(r, price) {
+  if (!price || price <= 0 || r.weighted_center == null) return null;
+  const toCenter = Math.round((r.weighted_center / price - 1) * 100);
+  const down = (r.low != null) ? Math.round((r.low / price - 1) * 100) : null;
+  const up = (r.high != null) ? Math.round((r.high / price - 1) * 100) : null;
+  const ratio = (down != null && up != null && down < 0 && up > 0) ? +(up / Math.abs(down)).toFixed(1) : null;
+  return { to_center_pct: toCenter, downside_pct: down, upside_pct: up, ratio_up_vs_down: ratio };
+}
+
 const rankItems = companies
   .filter(c => c.rank && c.rank.to_center_pct != null)
-  .map(c => ({ c, r: c.rank, tier: tierOf(c.rank.to_center_pct) }))
-  .sort((a, b) => b.r.to_center_pct - a.r.to_center_pct);
+  .map(c => {
+    const live = (c.live && c.live.price != null) ? liveOdds(c.rank, c.live.price) : null;
+    const eff = live || { to_center_pct: c.rank.to_center_pct, downside_pct: c.rank.downside_pct,
+                          upside_pct: c.rank.upside_pct, ratio_up_vs_down: c.rank.ratio_up_vs_down };
+    return { c, r: c.rank, eff, isLive: !!live,
+             livePrice: c.live ? c.live.price : null, liveAsOf: c.live ? c.live.as_of : null,
+             tier: tierOf(eff.to_center_pct) };
+  })
+  .sort((a, b) => b.eff.to_center_pct - a.eff.to_center_pct);
 
 function pctTxt(v) { return v == null ? '—' : (v > 0 ? '+' : '') + v + '%'; }
 
@@ -1168,7 +1202,8 @@ function rankCardHtml(item, opts) {
   const c = item.c, r = item.r;
   const sym = (c.currency && c.currency.symbol) || '$';
   const vs = verdictStyle(r.verdict);
-  const m = r.to_center_pct;
+  const e = item.eff;
+  const m = e.to_center_pct;
   const cm = r.chain ? chainMeta[r.chain] : null;
   let tag = '';
   if (opts.showChainChip && cm) {
@@ -1180,7 +1215,11 @@ function rankCardHtml(item, opts) {
   }
   const tierPill = opts.showTierPill
     ? `<span class="tier-pill t${item.tier}">${['一', '二', '三'][item.tier - 1]}队</span>` : '';
-  const ratio = r.ratio_up_vs_down != null ? r.ratio_up_vs_down.toFixed(1) + 'x' : '—';
+  const ratio = e.ratio_up_vs_down != null ? e.ratio_up_vs_down.toFixed(1) + 'x' : '—';
+  const px = item.isLive ? item.livePrice : r.current_price;
+  const pxLabel = item.isLive
+    ? `现价 <b class="live-px">${sym}${fmtPx(px)}</b><span class="px-drift"> 今日</span>`
+    : `现价 <b>${sym}${fmtPx(px)}</b>`;
   const arch = (r.archetype || []).join(' · ');
   return `
     <div class="rank-card">
@@ -1193,7 +1232,7 @@ function rankCardHtml(item, opts) {
       <div class="rank-margin ${m > 0 ? 'pos' : 'neg'}">${pctTxt(m)}<small>安全边际</small></div>
       <div class="rank-detail">
         <span class="rank-decision">${escapeHtml(r.decision_short || '')}</span>
-        <span class="rank-metrics">赔率 <b>${ratio}</b> · 下行 <b>${pctTxt(r.downside_pct)}</b>/上行 <b>${pctTxt(r.upside_pct)}</b> · 现价 <b>${sym}${fmtPx(r.current_price)}</b> → 中枢 <b>${sym}${fmtPx(r.weighted_center)}</b></span>
+        <span class="rank-metrics">赔率 <b>${ratio}</b> · 下行 <b>${pctTxt(e.downside_pct)}</b>/上行 <b>${pctTxt(e.upside_pct)}</b> · ${pxLabel} → 中枢 <b>${sym}${fmtPx(r.weighted_center)}</b></span>
       </div>
       ${arch ? `<div class="rank-detail"><span class="rank-arch">类型：${escapeHtml(arch)}</span></div>` : ''}
     </div>`;
@@ -1254,9 +1293,31 @@ function setRankView(v) {
   document.getElementById('rank-view-chain').classList.toggle('active', v === 'chain');
 }
 
+// 免费刷新报价（仪表盘跑在 pywebview 里，按钮可调 Python；纯浏览器打开则给提示）。
+async function refreshQuotes() {
+  const btn = document.getElementById('quote-refresh-btn');
+  if (!(window.pywebview && window.pywebview.api && window.pywebview.api.refresh_quotes)) {
+    showToast('刷新报价要在桌面应用里点（浏览器里没有 Python 接口）；或在 Claude Code 里说"刷新报价"', 'error');
+    return;
+  }
+  const old = btn.textContent;
+  btn.disabled = true; btn.textContent = '⏳ 刷新中…（抓最新收盘，几秒）';
+  try {
+    const res = await window.pywebview.api.refresh_quotes();
+    if (res && res.ok) { location.reload(); }
+    else { showToast((res && res.error) || '刷新失败', 'error'); btn.textContent = old; btn.disabled = false; }
+  } catch (e) {
+    showToast('刷新失败：' + e, 'error'); btn.textContent = old; btn.disabled = false;
+  }
+}
+
 function renderRank() {
   if (!rankItems.length) return;
   document.getElementById('rank-section').style.display = 'block';
+  const stamp = document.getElementById('quote-stamp');
+  if (stamp) stamp.textContent = DATA.quotes_refreshed_at
+    ? ('报价更新于 ' + DATA.quotes_refreshed_at)
+    : '报价未刷新 · 现显示分析时价';
   renderRankTiers();
   renderRankChains();
 }

@@ -72,6 +72,17 @@ def load_prices(ticker):
         return None
 
 
+def load_quote(ticker):
+    """读 analyses/_quotes.json 里这只票的最新收盘报价（refresh_quotes.py 产出）。没有就返回 None。"""
+    path = Path("analyses") / "_quotes.json"
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8")).get("quotes", {}).get(ticker.upper())
+    except Exception:
+        return None
+
+
 def load_decision(ticker):
     """读 decision.json 的时间线相关字段（催化剂预测 / 复盘日 / 入场观察区），喂交互器的催化剂时间线。
     没有就返回 None（交互器隐藏时间线）。判断内核不动、只取可证伪预测的日期与阈值。"""
@@ -671,6 +682,16 @@ def render(ticker, starter=False):
         "decision": load_decision(ticker),         # 催化剂/检验时间线（decision.json 的 predictions/review_by/entry_watch）
         "links": links,
     }
+
+    # 免费报价刷新：若有今日收盘，用"今日价×股数"覆盖显示市值（=当前价换成今日），
+    # 交互器里安全边际/反向DCF/市场vs我会自动跟着重算；分析时市值另存供对照。判断内核（情景/四柱/概率）不动。
+    quote = load_quote(ticker)
+    if quote and quote.get("price"):
+        data["quote"] = {"price": quote["price"], "as_of": quote.get("as_of"),
+                         "analysis_market_cap": data["facts"].get("market_cap")}
+        shares = data["facts"].get("diluted_shares_today")
+        if shares:
+            data["facts"]["market_cap"] = round(quote["price"] * shares, 2)
 
     # 读模板
     template_path = Path("tools") / "valuation_explorer.html"

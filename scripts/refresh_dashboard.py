@@ -138,6 +138,8 @@ def scan_company(ticker_dir):
                 "downside_pct": odds.get("downside_to_low_pct"),
                 "upside_pct": odds.get("upside_to_high_pct"),
                 "weighted_center": vr.get("weighted_center"),
+                "low": vr.get("low"),
+                "high": vr.get("high"),
                 "unit": vr.get("unit"),
                 "current_price": dec.get("current_price"),
                 "archetype": dec.get("archetype") or [],
@@ -264,9 +266,27 @@ def main():
 
     chains = scan_chains()
 
+    # 免费报价刷新产出的最新收盘（refresh_quotes.py 写的 analyses/_quotes.json）。
+    # 把今日价灌进每家公司，让梯队/卡片用最新价实时重算（decision.json 的分析时价保持冻结作复盘锚）。
+    quotes_refreshed_at = None
+    quotes = {}
+    quotes_path = analyses_dir / "_quotes.json"
+    if quotes_path.exists():
+        try:
+            qj = json.loads(quotes_path.read_text(encoding="utf-8"))
+            quotes = qj.get("quotes", {}) or {}
+            quotes_refreshed_at = qj.get("refreshed_at")
+        except Exception as e:
+            print(f"⚠ {quotes_path} 解析失败（梯队/卡片会沿用分析时价）：{e}")
+    for c in companies:
+        q = quotes.get(c["ticker"])
+        if q and q.get("price") is not None:
+            c["live"] = {"price": q.get("price"), "as_of": q.get("as_of")}
+
     payload = {
         "scanned_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "tool_version": "0.2",
+        "quotes_refreshed_at": quotes_refreshed_at,
         "companies": companies,
         "chains": chains,
     }

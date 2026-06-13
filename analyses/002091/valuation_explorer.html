@@ -949,7 +949,7 @@ footer a { color: var(--accent); text-decoration: none; }
     <div class="summary-card current">
       <div class="summary-label">当前价</div>
       <div class="summary-value mono" id="summary-current">$0.00</div>
-      <div class="summary-detail">市值 ÷ 完全稀释股数</div>
+      <div class="summary-detail" id="summary-current-detail">市值 ÷ 完全稀释股数</div>
     </div>
     <div class="summary-card weighted">
       <div class="summary-label">概率加权期望每股价值</div>
@@ -1094,12 +1094,12 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "002091",
   "company_name": "江苏国泰",
   "as_of": "2025-12-31",
-  "generated_at": "2026-06-14 00:33:34",
+  "generated_at": "2026-06-14 01:09:20",
   "facts": {
     "revenue_today": 39440,
     "cash": 7000,
     "debt": 4300,
-    "market_cap": 14530,
+    "market_cap": 12240.3,
     "diluted_shares_today": 1627.7
   },
   "history": [
@@ -2225,7 +2225,7 @@ footer a { color: var(--accent); text-decoration: none; }
     },
     {
       "m": "2026-06",
-      "c": 7.99
+      "c": 7.52
     }
   ],
   "next_earnings": {
@@ -2288,6 +2288,11 @@ footer a { color: var(--accent); text-decoration: none; }
   },
   "links": {
     "report_pdf": "002091_公司完整报告.pdf"
+  },
+  "quote": {
+    "price": 7.52,
+    "as_of": "2026-06-12",
+    "analysis_market_cap": 14530
   }
 }
 </script>
@@ -2839,14 +2844,15 @@ function renderMarketVsMe(currentPrice, weighted, safety) {
   document.getElementById('mvm-pbase').textContent = '中 ' + p.base.toFixed(0) + '%';
   document.getElementById('mvm-pbull').textContent = '乐 ' + p.bull.toFixed(0) + '%';
   document.getElementById('mvm-summary').textContent = c.summary || '';
-  const interp = {
-    speculative_bubble: '市场在为远超我中性情景的乐观剧本付钱、安全边际深度为负。',
-    stretched: '市场已按明显高于我中枢的价格成交，要靠乐观剧本才解释得通。',
-    fair_with_bull: '现价要靠乐观情景兑现才撑得住——中性情景不足以支撑。',
-    fair_with_base: '中性情景基本已被 price-in，赔率对称、缺安全边际。',
-    fair: '现价大致等于我的加权中枢。',
-    undervalued: '现价低于我的加权中枢，市场可能还没认。',
-  }[c.verdict] || '';
+  // 这句"预期差"按最新安全边际走（跟着今日价变）；左栏的判词标签/故事/结论是分析时的判断、冻结不动。
+  let interp;
+  if (safety >= 15) interp = '现价明显低于我的加权中枢——按我分析时的判断，现在这个价有安全边际。';
+  else if (safety >= -10) interp = '现价大致在我的加权中枢附近——安全边际偏薄。';
+  else interp = '现价明显高于我的加权中枢——' + ({
+    speculative_bubble: '市场在为远超中性情景的乐观剧本付钱、安全边际深度为负。',
+    stretched: '要靠明显乐观的剧本才解释得通。',
+    fair_with_bull: '要靠乐观情景兑现才撑得住、中性不足以支撑。',
+  }[c.verdict] || '安全边际为负。');
   const gap = document.getElementById('mvm-gap');
   gap.innerHTML = '现价 <b>' + CSYM + currentPrice.toFixed(2) + '</b> · 我的加权中枢 <b>' + CSYM + weighted.toFixed(2)
     + '</b> · 安全边际 <b style="color:' + (safety >= 0 ? 'var(--pos)' : 'var(--neg)') + '">'
@@ -2948,6 +2954,11 @@ function loadDataIntoUI() {
   updateUnitLabels();
   renderCommentary();
   renderTimeline();  // 催化剂时间线（静态，渲染一次）
+  // 报价新鲜度：当前价=今日收盘（免费刷新）时，标一下日期，让人知道这是哪天的价
+  if (DATA.quote && DATA.quote.as_of) {
+    const det = document.getElementById('summary-current-detail');
+    if (det) det.textContent = '今日收盘 ' + DATA.quote.as_of + ' · 市值 ÷ 完全稀释股数';
+  }
   // Facts
   document.getElementById('fact-revenue').value = DATA.facts.revenue_today;
   document.getElementById('fact-cash').value = DATA.facts.cash;

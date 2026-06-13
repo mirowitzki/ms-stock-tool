@@ -1,0 +1,60 @@
+{
+  "refreshed_at": "2026-06-14 01:06:57",
+  "quotes": {
+    "NVDA": {
+      "price": 205.19,
+      "as_of": "2026-06-12",
+      "currency": "USD"
+    },
+    "000009": {
+      "price": 7.06,
+      "as_of": "2026-06-12",
+      "currency": "CNY"
+    },
+    "000925": {
+      "price": 8.03,
+      "as_of": "2026-06-12",
+      "currency": "CNY"
+    },
+    "002091": {
+      "price": 7.52,
+      "as_of": "2026-06-12",
+      "currency": "CNY"
+    },
+    "300085": {
+      "price": 26.65,
+      "as_of": "2026-06-12",
+      "currency": "CNY"
+    },
+    "300199": {
+      "price": 21.86,
+      "as_of": "2026-06-12",
+      "currency": "CNY"
+    },
+    "CRCL": {
+      "price": 77.84,
+      "as_of": "2026-06-12",
+      "currency": "USD"
+    },
+    "NVTS": {
+      "price": 23.39,
+      "as_of": "2026-06-12",
+      "currency": "USD"
+    },
+    "RKLB": {
+      "price": 102.39,
+      "as_of": "2026-06-12",
+      "currency": "USD"
+    },
+    "SITM": {
+      "price": 729.89,
+      "as_of": "2026-06-12",
+      "currency": "USD"
+    },
+    "SWKS": {
+      "price": 73.97,
+      "as_of": "2026-06-12",
+      "currency": "USD"
+    }
+  }
+}
