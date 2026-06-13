@@ -3,6 +3,8 @@
   "company": "Skyworks Solutions",
   "date": "2026-06-01",
   "currency": "USD",
+  "chain": null,
+  "sector": "射频前端·手机",
   "verdict": "好生意、增长受困·待决并购的特殊情形(Track A叠加合并套利)·技术与现金强但被苹果(占67%)+手机射频成熟通缩困住;现价约$77大体公允、略偏低,但安全边际很薄,核心胜负手是与Qorvo合并能否过FTC这个二元事件",
   "value_range": {
     "low": 45,

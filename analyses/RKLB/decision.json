@@ -3,6 +3,8 @@
   "company": "Rocket Lab",
   "date": "2026-06-05",
   "currency": "USD",
+  "chain": "commercial-space",
+  "sector": "火箭发射",
   "note": "decision.json 补建于 2026-06-10（原分析为工具早期产物、2026-06-05重渲到五年口径；价格与结论取分析时点口径）",
   "verdict": "投机性定价·全情景为负——Electron+Space Systems是真实但小的生意，Neutron是二元期权；现价$71.74反向DCF隐含60.9%年化营收CAGR（10年$602M→$70B、复制NVIDIA过去5年的扩张速度），比最乐观Bull还激进一大截；加权期望$6.14（−91%）、连Bull兑现也只值$13.83（−81%）",
   "value_range": {

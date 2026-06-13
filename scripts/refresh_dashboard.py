@@ -55,6 +55,7 @@ def scan_company(ticker_dir):
     stats = {}
     currency_code = None
     next_earnings = None
+    verdict = None  # 反向DCF判词（交互器配色信号），喂价值梯队卡片
     if inputs_json.exists():
         try:
             with inputs_json.open(encoding="utf-8") as f:
@@ -67,6 +68,7 @@ def scan_company(ticker_dir):
                 "market_cap": facts.get("market_cap"),
             }
             currency_code = inputs.get("currency")
+            verdict = (inputs.get("reverse_dcf_commentary") or {}).get("verdict")
             ne = inputs.get("next_earnings") or {}
             if ne.get("date"):
                 next_earnings = {"date": ne.get("date"), "period": ne.get("period"),
@@ -112,6 +114,7 @@ def scan_company(ticker_dir):
     # 值班台数据（2026-06-10）：入场观察区距离 + 复盘到期 + 财报倒计时。
     # 日期相关的判断（到期/倒计时）放浏览器 JS 用当天日期算，这里只注入原始数据。
     watch = {}
+    rank = {}  # 价值梯队排名数据（2026-06-14）：安全边际为主轴，verdict 配色 + 产业链归属为副信号
     dec_path = ticker_dir / "decision.json"
     if dec_path.exists():
         try:
@@ -123,8 +126,29 @@ def scan_company(ticker_dir):
             watch["review_by"] = dec.get("review_by")
             watch["pred_dates"] = sorted(p.get("check_by") for p in (dec.get("predictions") or [])
                                          if p.get("status", "open") == "open" and p.get("check_by"))
+            # 价值梯队：排名主轴=odds.to_center_pct（到加权中枢的安全边际，代码机械推导）
+            odds = dec.get("odds") or {}
+            vr = dec.get("value_range") or {}
+            decision_short = (dec.get("decision") or "").split("。")[0].strip()
+            if len(decision_short) > 40:
+                decision_short = decision_short[:40] + "…"
+            rank = {
+                "to_center_pct": odds.get("to_center_pct"),
+                "ratio_up_vs_down": odds.get("ratio_up_vs_down"),
+                "downside_pct": odds.get("downside_to_low_pct"),
+                "upside_pct": odds.get("upside_to_high_pct"),
+                "weighted_center": vr.get("weighted_center"),
+                "unit": vr.get("unit"),
+                "current_price": dec.get("current_price"),
+                "archetype": dec.get("archetype") or [],
+                "decision_short": decision_short,
+                "verdict": verdict,
+                "chain": dec.get("chain"),
+                "sector": dec.get("sector"),
+                "date": dec.get("date"),
+            }
         except Exception as e:
-            print(f"⚠ {dec_path} 解析失败（这家的值班台信息会缺失）：{e}")
+            print(f"⚠ {dec_path} 解析失败（这家的值班台/梯队信息会缺失）：{e}")
     prices_path = fin_dir / "prices.json"
     if prices_path.exists():
         try:
@@ -163,6 +187,7 @@ def scan_company(ticker_dir):
         "stats": stats,
         "currency": currency,
         "watch": watch,
+        "rank": rank,
     }
 
 

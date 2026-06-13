@@ -3,6 +3,8 @@
   "company": "Circle Internet Group",
   "date": "2026-06-08",
   "currency": "USD",
+  "chain": null,
+  "sector": "稳定币·支付",
   "verdict": "好生意、价格仍偏贵·全球第二大稳定币USDC的合规龙头+GENIUS法案顺风+护城河变宽，但96%收入系于不可控的利率、约60%收入付给Coinbase等渠道分销；现价约$80已按比牛市还激进的五年剧本定价、安全边际约-56%、下行大于上行（利率周期主导的成长股）",
   "value_range": {
     "low": 13,

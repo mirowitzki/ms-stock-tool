@@ -3,6 +3,8 @@
   "company": "SiTime",
   "date": "2026-06-01",
   "currency": "USD",
+  "chain": "ai-datacenter",
+  "sector": "精密计时",
   "verdict": "好生意、贵价格·MEMS精密计时绝对龙头+AI数据中心超级顺风+瑞萨并购全栈化，但现价约$710几乎等于最乐观情景估值、安全边际为负、下行远大于上行（Track B）",
   "value_range": {
     "low": 70,

@@ -3,6 +3,8 @@
   "company": "NVIDIA Corporation",
   "date": "2026-06-06",
   "currency": "USD",
+  "chain": "ai-datacenter",
+  "sector": "AI 算力",
   "note": "decision.json 补建于 2026-06-10（原分析早于此、含 2026-06-06 Computex 近期动作雷达更新；价格与结论取分析时点口径）",
   "verdict": "贵的好生意·公允偏贵（fair_with_bull）——AI算力垄断者+CUDA生态护城河+堡垒资产负债表近乎完美，但现价已把Bull预期打满（反向DCF隐含增速甚至略超Bull情景16.5%），且当前ROIC处周期高峰（19%→89%→71%垂直拉升）需归一化；Computex两颗CPU（Vera/RTX Spark）强化已被定价的Bull、不构成新的未定价上行",
   "value_range": {

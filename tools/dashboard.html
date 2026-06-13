@@ -530,6 +530,64 @@ body {
 .action.gold:hover { color:#241a06; transform:translateY(-2px); box-shadow:var(--shadow-lg); }
 .chain-actions { display:flex; flex-direction:column; gap:7px; }
 
+/* ============= 价值梯队榜（2026-06-14）：按安全边际排名 + 按产业链分组 ============= */
+.rank-toggle { display:flex; gap:6px; }
+.rank-toggle button {
+  font-size:12px; font-weight:600; padding:4px 13px; border-radius:20px; cursor:pointer;
+  border:1px solid var(--border); background:#fff; color:var(--text-muted); font-family:inherit; transition:all .15s ease;
+}
+.rank-toggle button.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+.rank-note { font-size:12px; color:var(--text-muted); margin:-2px 0 16px; line-height:1.65; }
+
+.tier-band { margin-bottom:16px; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow-sm); }
+.tier-head { display:flex; align-items:baseline; gap:10px; padding:11px 16px; font-weight:700; font-size:14px; }
+.tier-head .tier-desc { font-weight:500; font-size:12px; opacity:.85; }
+.tier-head .tier-cnt { margin-left:auto; font-size:12px; font-weight:600; opacity:.8; white-space:nowrap; }
+.tier-band.tier-1 { border-left:3px solid var(--success); }
+.tier-band.tier-2 { border-left:3px solid var(--warn); }
+.tier-band.tier-3 { border-left:3px solid var(--error); }
+.tier-1 .tier-head { background:rgba(31,143,118,.12); color:#176b54; }
+.tier-2 .tier-head { background:rgba(192,138,45,.14); color:#8a5f12; }
+.tier-3 .tier-head { background:rgba(214,69,80,.10); color:#b03a44; }
+.tier-body { padding:12px 14px; display:flex; flex-direction:column; gap:9px; background:var(--card); }
+
+.rank-card {
+  display:grid; grid-template-columns:1fr auto; gap:5px 16px; align-items:center;
+  padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--radius-sm);
+  background:#fff; transition:border-color .15s ease, box-shadow .15s ease;
+}
+.rank-card:hover { border-color:#d3dbe4; box-shadow:var(--shadow-sm); }
+.rank-id { display:flex; align-items:center; gap:9px; min-width:0; flex-wrap:wrap; }
+.vdot { width:9px; height:9px; border-radius:50%; flex:0 0 auto; }
+.rank-ticker { font-family:var(--mono); font-weight:800; font-size:16px; color:var(--primary); }
+.rank-name { font-size:12.5px; color:var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:150px; }
+.rank-tag {
+  font-size:11px; font-weight:600; padding:2px 9px; border-radius:20px; white-space:nowrap;
+  background:var(--border-soft); color:var(--text-muted); border:1px solid var(--border); text-decoration:none;
+}
+a.rank-tag:hover { background:rgba(192,138,45,.14); color:#8a5f12; border-color:rgba(192,138,45,.35); }
+.tier-pill { font-size:10px; font-weight:700; padding:1px 8px; border-radius:10px; white-space:nowrap; }
+.tier-pill.t1 { background:rgba(31,143,118,.15); color:#176b54; }
+.tier-pill.t2 { background:rgba(192,138,45,.17); color:#8a5f12; }
+.tier-pill.t3 { background:rgba(214,69,80,.13); color:#b03a44; }
+.rank-margin { font-family:var(--mono); font-weight:800; font-size:18px; text-align:right; font-variant-numeric:tabular-nums; line-height:1.1; }
+.rank-margin.pos { color:var(--success); }
+.rank-margin.neg { color:var(--error); }
+.rank-margin small { display:block; font-size:9.5px; font-weight:600; color:var(--text-light); letter-spacing:.4px; margin-top:1px; }
+.rank-detail { grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:4px 14px; align-items:baseline; }
+.rank-decision { font-size:12px; color:var(--text); font-weight:600; }
+.rank-metrics { display:flex; flex-wrap:wrap; gap:4px 12px; font-size:11.5px; color:var(--text-muted); font-variant-numeric:tabular-nums; margin-left:auto; }
+.rank-metrics b { color:var(--text); font-weight:700; }
+.rank-arch { font-size:10.5px; color:var(--text-light); }
+
+.chain-group { margin-bottom:18px; }
+.chain-group-head { display:flex; align-items:baseline; gap:10px; padding:4px 2px 9px; border-bottom:1px solid var(--border-soft); margin-bottom:10px; flex-wrap:wrap; }
+.chain-group-head .cg-name { font-size:14px; font-weight:700; color:var(--primary); }
+.chain-group-head .cg-meta { font-size:11.5px; color:var(--text-muted); }
+.chain-group-head .cg-link { margin-left:auto; font-size:11.5px; color:var(--gold); text-decoration:none; font-weight:600; white-space:nowrap; }
+.chain-group-head .cg-link:hover { text-decoration:underline; }
+.chain-group .tier-body { padding:0; border:none; background:transparent; }
+
 /* Footer */
 footer {
   margin-top: 44px;
@@ -622,6 +680,20 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
     <span class="count" id="duty-count"></span>
   </div>
   <div class="dutydesk" id="dutydesk"></div>
+</section>
+
+<!-- 价值梯队榜（2026-06-14）：按安全边际排名 + 按产业链分组 -->
+<section id="rank-section" style="display:none;">
+  <div class="section-header">
+    <h2>📊 价值梯队榜</h2>
+    <div class="rank-toggle">
+      <button id="rank-view-tier" class="active" onclick="setRankView('tier')">按梯队</button>
+      <button id="rank-view-chain" onclick="setRankView('chain')">按产业链</button>
+    </div>
+  </div>
+  <p class="rank-note">排名按各家分析时点的安全边际排——现价距我给的加权中枢有多远（不是目标价）。左侧圆点是价格与价值的关系：绿=公允或低估、黄=要牛市才撑得起、橙=偏贵、红=投机。价格变动较大后，需要重新刷新这家的数据再看。</p>
+  <div id="rank-tier-view"></div>
+  <div id="rank-chain-view" style="display:none;"></div>
 </section>
 
 <!-- 公司列表 -->
@@ -1059,9 +1131,140 @@ function renderChains() {
   }).join('');
 }
 
+// ============= 价值梯队榜（2026-06-14）=============
+// 主轴＝安全边际(odds.to_center_pct，到加权中枢)；副信号＝verdict配色 + 产业链归属。
+// 刻意不塌成单一评分：梯队只回答"现价有没有安全边际"，每张卡保留生意性质(类型/判词)，
+// 把价格维度(梯队)和生意质量维度(判词/类型)分开摆，让二维判断都看得见。
+const VERDICT_STYLE = {
+  undervalued:        { dot: '#1f8f76', label: '低估' },
+  fair:               { dot: '#1f8f76', label: '公允' },
+  fair_with_base:     { dot: '#1f8f76', label: '公允·基准支撑' },
+  fair_with_bull:     { dot: '#c8901a', label: '需牛市才撑得起' },
+  stretched:          { dot: '#e07b39', label: '偏贵' },
+  speculative_bubble: { dot: '#d64550', label: '投机/泡沫' },
+};
+function verdictStyle(v) { return VERDICT_STYLE[v] || { dot: '#93a0ad', label: '' }; }
+
+const TIER_DEFS = {
+  1: { name: '第一梯队 · 现在有安全边际', desc: '现价低于加权中枢 ≥15%、赔率偏上行' },
+  2: { name: '第二梯队 · 大致公允 / 进观察区', desc: '现价在中枢上下、安全边际薄或微负——好生意等好价格' },
+  3: { name: '第三梯队 · 现价为深度负安全边际', desc: '现价显著高于加权中枢（已按乐观/题材定价）——现价不构成投资' },
+};
+function tierOf(m) { if (m == null) return 3; if (m >= 15) return 1; if (m >= -30) return 2; return 3; }
+
+// 产业链 slug → 名称 + 链页面入口（用 chains[] 匹配，保证名称与入口和上面产业链板块一致）
+const chainMeta = {};
+chains.forEach(ch => { chainMeta[ch.slug] = { name: ch.name, link: (ch.pages && ch.pages[0] && ch.pages[0].file) || null }; });
+
+const rankItems = companies
+  .filter(c => c.rank && c.rank.to_center_pct != null)
+  .map(c => ({ c, r: c.rank, tier: tierOf(c.rank.to_center_pct) }))
+  .sort((a, b) => b.r.to_center_pct - a.r.to_center_pct);
+
+function pctTxt(v) { return v == null ? '—' : (v > 0 ? '+' : '') + v + '%'; }
+
+function rankCardHtml(item, opts) {
+  opts = opts || {};
+  const c = item.c, r = item.r;
+  const sym = (c.currency && c.currency.symbol) || '$';
+  const vs = verdictStyle(r.verdict);
+  const m = r.to_center_pct;
+  const cm = r.chain ? chainMeta[r.chain] : null;
+  let tag = '';
+  if (opts.showChainChip && cm) {
+    tag = cm.link
+      ? `<a class="rank-tag" href="${cm.link}" target="_blank" title="打开这条产业链研究">🔗 ${escapeHtml(cm.name)}</a>`
+      : `<span class="rank-tag">🔗 ${escapeHtml(cm.name)}</span>`;
+  } else if (r.sector) {
+    tag = `<span class="rank-tag">${escapeHtml(r.sector)}</span>`;
+  }
+  const tierPill = opts.showTierPill
+    ? `<span class="tier-pill t${item.tier}">${['一', '二', '三'][item.tier - 1]}队</span>` : '';
+  const ratio = r.ratio_up_vs_down != null ? r.ratio_up_vs_down.toFixed(1) + 'x' : '—';
+  const arch = (r.archetype || []).join(' · ');
+  return `
+    <div class="rank-card">
+      <div class="rank-id">
+        <span class="vdot" style="background:${vs.dot}" title="价格与价值的关系：${escapeHtml(vs.label)}"></span>
+        <span class="rank-ticker">${escapeHtml(c.ticker)}</span>
+        <span class="rank-name">${escapeHtml(c.company_name || '')}</span>
+        ${tierPill}${tag}
+      </div>
+      <div class="rank-margin ${m > 0 ? 'pos' : 'neg'}">${pctTxt(m)}<small>安全边际</small></div>
+      <div class="rank-detail">
+        <span class="rank-decision">${escapeHtml(r.decision_short || '')}</span>
+        <span class="rank-metrics">赔率 <b>${ratio}</b> · 下行 <b>${pctTxt(r.downside_pct)}</b>/上行 <b>${pctTxt(r.upside_pct)}</b> · 现价 <b>${sym}${fmtPx(r.current_price)}</b> → 中枢 <b>${sym}${fmtPx(r.weighted_center)}</b></span>
+      </div>
+      ${arch ? `<div class="rank-detail"><span class="rank-arch">类型：${escapeHtml(arch)}</span></div>` : ''}
+    </div>`;
+}
+
+function renderRankTiers() {
+  let html = '';
+  [1, 2, 3].forEach(t => {
+    const items = rankItems.filter(x => x.tier === t);
+    if (!items.length) return;
+    const def = TIER_DEFS[t];
+    html += `<div class="tier-band tier-${t}">
+      <div class="tier-head">${escapeHtml(def.name)}<span class="tier-desc">${escapeHtml(def.desc)}</span><span class="tier-cnt">${items.length} 家</span></div>
+      <div class="tier-body">${items.map(x => rankCardHtml(x, { showChainChip: true })).join('')}</div>
+    </div>`;
+  });
+  document.getElementById('rank-tier-view').innerHTML = html;
+}
+
+function renderRankChains() {
+  const groups = {};
+  const orphans = [];
+  rankItems.forEach(x => {
+    const ch = x.r.chain;
+    if (ch && chainMeta[ch]) (groups[ch] = groups[ch] || []).push(x);
+    else orphans.push(x);
+  });
+  let html = '';
+  chains.forEach(ch => {
+    const items = groups[ch.slug];
+    if (!items || !items.length) return;
+    const cm = chainMeta[ch.slug];
+    html += `<div class="chain-group">
+      <div class="chain-group-head">
+        <span class="cg-name">🔗 ${escapeHtml(ch.name)}</span>
+        <span class="cg-meta">${items.length} 家已分析</span>
+        ${cm.link ? `<a class="cg-link" href="${cm.link}" target="_blank">打开产业链研究 →</a>` : ''}
+      </div>
+      <div class="tier-body">${items.map(x => rankCardHtml(x, { showTierPill: true })).join('')}</div>
+    </div>`;
+  });
+  if (orphans.length) {
+    html += `<div class="chain-group">
+      <div class="chain-group-head">
+        <span class="cg-name">📂 其他主题</span>
+        <span class="cg-meta">${orphans.length} 家 · 暂未归入已研产业链</span>
+      </div>
+      <div class="tier-body">${orphans.map(x => rankCardHtml(x, { showTierPill: true })).join('')}</div>
+    </div>`;
+  }
+  document.getElementById('rank-chain-view').innerHTML = html;
+}
+
+function setRankView(v) {
+  document.getElementById('rank-tier-view').style.display = v === 'tier' ? 'block' : 'none';
+  document.getElementById('rank-chain-view').style.display = v === 'chain' ? 'block' : 'none';
+  document.getElementById('rank-view-tier').classList.toggle('active', v === 'tier');
+  document.getElementById('rank-view-chain').classList.toggle('active', v === 'chain');
+}
+
+function renderRank() {
+  if (!rankItems.length) return;
+  document.getElementById('rank-section').style.display = 'block';
+  renderRankTiers();
+  renderRankChains();
+}
+
 renderCompanies();
 renderChains();
 renderDutyDesk();
+renderRank();
 </script>
 </body>
 </html>
