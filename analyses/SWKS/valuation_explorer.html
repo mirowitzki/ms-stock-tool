@@ -645,6 +645,52 @@ footer a { color: var(--accent); text-decoration: none; }
 .mono { font-variant-numeric: tabular-nums; }
 .flex-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 .spacer-sm { height: 8px; }
+/* ===== 市场在讲什么 vs 我的判断（对照块，2026-06-14）===== */
+.mvm { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.mvm-col { border:1px solid var(--border); border-radius:10px; padding:16px 18px; }
+.mvm-col.market { border-left:4px solid var(--text-muted); background:#fafbfc; }
+.mvm-col.mine { border-left:4px solid var(--accent); background:var(--card); }
+.mvm-h { font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.6px; margin-bottom:10px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.mvm-verdict-tag { display:inline-block; font-size:11.5px; font-weight:700; padding:3px 10px; border-radius:20px; background:rgba(0,0,0,.05); color:var(--text); text-transform:none; letter-spacing:0; }
+.mvm-verdict-tag.red { background:rgba(230,57,70,.12); color:var(--neg); }
+.mvm-verdict-tag.orange { background:rgba(244,162,97,.18); color:#c97a3c; }
+.mvm-verdict-tag.yellow { background:rgba(212,160,23,.15); color:#a07a0e; }
+.mvm-verdict-tag.green { background:rgba(42,157,143,.15); color:var(--pos); }
+.mvm-story { font-size:13.5px; line-height:1.8; color:var(--text); }
+.mvm-mine-row { display:flex; gap:22px; margin-bottom:12px; flex-wrap:wrap; }
+.mvm-mine-row > div { display:flex; flex-direction:column; gap:2px; }
+.mvm-mine-row .lab { font-size:10.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.4px; }
+.mvm-mine-row .num { font-size:18px; font-weight:800; font-family:var(--mono,"SF Mono",ui-monospace,monospace); }
+.mvm-probs { display:flex; gap:6px; margin-bottom:12px; }
+.mvm-prob { flex:1; text-align:center; font-size:11.5px; padding:5px 2px; border-radius:6px; font-weight:700; font-variant-numeric:tabular-nums; }
+.mvm-prob.bear { background:rgba(230,57,70,.10); color:var(--bear); }
+.mvm-prob.base { background:rgba(29,111,184,.10); color:var(--base); }
+.mvm-prob.bull { background:rgba(42,157,143,.10); color:var(--bull); }
+.mvm-summary { font-size:13px; line-height:1.75; color:var(--text); }
+.mvm-gap { margin-top:14px; padding:11px 15px; border-radius:8px; background:#f4f7fb; border-left:3px solid var(--accent); font-size:13px; line-height:1.7; color:var(--text); }
+.mvm-gap b { font-weight:750; font-family:var(--mono,ui-monospace,monospace); }
+@media (max-width:680px){ .mvm { grid-template-columns:1fr; } }
+
+/* ===== 催化剂与检验时间线（2026-06-14）===== */
+.tl { margin:6px 0 0; }
+.tl-item { display:grid; grid-template-columns:100px 1fr; gap:14px; padding:12px 0; border-top:1px solid var(--border); align-items:start; }
+.tl-item:first-child { border-top:none; }
+.tl-date { font-size:12.5px; font-weight:700; color:var(--text); font-family:var(--mono,ui-monospace,monospace); font-variant-numeric:tabular-nums; display:flex; flex-direction:column; gap:4px; }
+.tl-countdown { font-size:10.5px; font-weight:600; padding:1px 7px; border-radius:10px; width:fit-content; }
+.tl-countdown.past { background:rgba(230,57,70,.12); color:var(--neg); }
+.tl-countdown.soon { background:rgba(212,160,23,.15); color:#a07a0e; }
+.tl-countdown.future { background:var(--grid); color:var(--text-muted); }
+.tl-body { min-width:0; }
+.tl-claim { font-size:13.5px; font-weight:600; color:var(--text); margin-bottom:4px; line-height:1.5; }
+.tl-meta { font-size:12px; color:var(--text-muted); line-height:1.65; }
+.tl-meta b { color:var(--text); font-weight:600; }
+.tl-tag { display:inline-block; font-size:10px; font-weight:700; padding:1px 7px; border-radius:10px; margin-right:7px; vertical-align:middle; }
+.tl-tag.bear { background:rgba(230,57,70,.12); color:var(--bear); }
+.tl-tag.base { background:rgba(29,111,184,.12); color:var(--base); }
+.tl-tag.bull { background:rgba(42,157,143,.12); color:var(--bull); }
+.tl-tag.earn { background:rgba(59,125,216,.12); color:#3b7dd8; }
+.tl-tag.review { background:rgba(38,70,83,.12); color:var(--primary); }
+.tl-item.tl-done { opacity:.5; }
 </style>
 </head>
 <body>
@@ -704,6 +750,31 @@ footer a { color: var(--accent); text-decoration: none; }
   <div id="cycle-banner" class="cycle-banner" style="display:none;"></div>
   <div id="safety-headline" class="safety-headline"></div>
   <div class="gauges" id="gauges"></div>
+</section>
+
+<!-- ========================= 市场在讲什么 vs 我的判断 ========================= -->
+<section class="card" id="section-mvm" style="display:none;">
+  <h2>市场在讲什么 vs 我的判断 <span class="card-note">同一个现价，市场押注的未来 vs 我的加权判断——差额就是预期差</span></h2>
+  <div class="mvm">
+    <div class="mvm-col market">
+      <div class="mvm-h">🗣️ 市场在讲什么 <span class="mvm-verdict-tag" id="mvm-verdict"></span></div>
+      <div class="mvm-story" id="mvm-story"></div>
+    </div>
+    <div class="mvm-col mine">
+      <div class="mvm-h">⚖️ 我的判断</div>
+      <div class="mvm-mine-row">
+        <div><span class="lab">概率加权中枢</span><span class="num mono" id="mvm-weighted">—</span></div>
+        <div><span class="lab">相对现价安全边际</span><span class="num" id="mvm-safety">—</span></div>
+      </div>
+      <div class="mvm-probs">
+        <div class="mvm-prob bear" id="mvm-pbear">悲 —</div>
+        <div class="mvm-prob base" id="mvm-pbase">中 —</div>
+        <div class="mvm-prob bull" id="mvm-pbull">乐 —</div>
+      </div>
+      <div class="mvm-summary" id="mvm-summary"></div>
+    </div>
+  </div>
+  <div class="mvm-gap" id="mvm-gap" style="display:none;"></div>
 </section>
 
 <!-- ========================= 股价走势（近 5 年·月）========================= -->
@@ -913,6 +984,15 @@ footer a { color: var(--accent); text-decoration: none; }
   <div id="prob-sum-warning" class="prob-sum-warning"></div>
 </section>
 
+<!-- ========================= 催化剂与检验时间线 ========================= -->
+<section class="card" id="section-timeline" style="display:none;">
+  <h2>催化剂与检验时间线 <span class="card-note">这套判断接下来靠什么、什么时候被证实或证伪</span></h2>
+  <p class="muted" style="font-size:12.5px; margin-top:-4px; margin-bottom:10px;">
+    每条都是钉死的可证伪预测：到期回来对一次，朝中性 / 乐观 / 悲观哪个方向走，决定上面的加权往哪边挪。颜色＝这条兑现利好哪个情景。
+  </p>
+  <div class="tl" id="timeline"></div>
+</section>
+
 <!-- ========================= 叠加对比图 ========================= -->
 <section class="card">
   <h2>三情景叠加对比图</h2>
@@ -1014,7 +1094,7 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "SWKS",
   "company_name": "Skyworks Solutions",
   "as_of": "2025-10-03",
-  "generated_at": "2026-06-10 13:11:28",
+  "generated_at": "2026-06-14 00:33:34",
   "facts": {
     "revenue_today": 4087,
     "cash": 1388,
@@ -1983,6 +2063,58 @@ footer a { color: var(--accent); text-decoration: none; }
     "estimated": false,
     "basis": "据财报日历预计 2026-08-05；以公司公告为准"
   },
+  "decision": {
+    "date": "2026-06-01",
+    "review_by": "2026-09-15",
+    "entry_watch": {
+      "low": 55.0,
+      "high": 65.0,
+      "unit": "美元/股",
+      "note": "破裂地板区——用接近独立价值的价格买、保留合并成功的全部上行，赔率才真正不对称"
+    },
+    "predictions": [
+      {
+        "id": "P1",
+        "claim": "FTC放行是最大二元胜负手",
+        "metric": "FTC第二次信息要求审查结果",
+        "threshold": "2027-06-30前获放行（否决/要求重大剥离=未兑现）",
+        "check_by": "2027-06-30",
+        "source": "FTC/公司公告",
+        "scenario_link": "bull",
+        "status": "open"
+      },
+      {
+        "id": "P2",
+        "claim": "苹果份额企稳是独立价值的命脉",
+        "metric": "苹果收入占比与料号份额",
+        "threshold": "FY2026占比下滑不超过5个百分点、管理层不再披露新的份额流失",
+        "check_by": "2026-12-31",
+        "source": "10-K/电话会",
+        "scenario_link": "base",
+        "status": "open"
+      },
+      {
+        "id": "P3",
+        "claim": "Broad Markets要顶上对冲手机成熟",
+        "metric": "Broad Markets收入",
+        "threshold": "FY2026同比正增长",
+        "check_by": "2026-12-31",
+        "source": "10-K分部",
+        "scenario_link": "base",
+        "status": "open"
+      },
+      {
+        "id": "P4",
+        "claim": "破裂地板$55-65是否真托得住（检验独立价值判断）",
+        "metric": "破裂情形下股价",
+        "threshold": "若合并失败、六个月内股价守住$55上方",
+        "check_by": "2027-06-30",
+        "source": "行情",
+        "scenario_link": "bear",
+        "status": "open"
+      }
+    ]
+  },
   "links": {
     "report_pdf": "SWKS_公司完整报告.pdf"
   }
@@ -2507,6 +2639,104 @@ function updateUnitLabels() {
   });
 }
 
+function escTL(s) {
+  return String(s == null ? '' : s).replace(/[<>&]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
+}
+
+// 市场在讲什么 vs 我的判断（左=反向DCF的市场故事+判词，右=实时加权中枢/安全边际/概率）。
+// 在 computeAll 里随滑块实时刷新右侧；左侧故事静态来自 reverse_dcf_commentary。
+function renderMarketVsMe(currentPrice, weighted, safety) {
+  const sec = document.getElementById('section-mvm');
+  const c = DATA.reverse_dcf_commentary;
+  if (!c || (!c.market_story && !c.summary)) { if (sec) sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  const tagMap = {
+    speculative_bubble: '严重高估 · 投机泡沫', stretched: '高估 · 但仍可解释',
+    fair_with_bull: '公允 · 取决于乐观概率', fair_with_base: '公允 · 中性已基本兑现',
+    fair: '公允', undervalued: '低估',
+  };
+  const vtag = document.getElementById('mvm-verdict');
+  vtag.textContent = c.verdict_label || tagMap[c.verdict] || '';
+  vtag.className = 'mvm-verdict-tag' + (c.verdict_color ? ' ' + c.verdict_color : '');
+  document.getElementById('mvm-story').textContent = c.market_story || c.summary || '';
+  document.getElementById('mvm-weighted').textContent = CSYM + weighted.toFixed(2);
+  const se = document.getElementById('mvm-safety');
+  se.textContent = (safety >= 0 ? '+' : '') + safety.toFixed(0) + '%';
+  se.style.color = safety >= 0 ? 'var(--pos)' : 'var(--neg)';
+  const p = DATA.probabilities;
+  document.getElementById('mvm-pbear').textContent = '悲 ' + p.bear.toFixed(0) + '%';
+  document.getElementById('mvm-pbase').textContent = '中 ' + p.base.toFixed(0) + '%';
+  document.getElementById('mvm-pbull').textContent = '乐 ' + p.bull.toFixed(0) + '%';
+  document.getElementById('mvm-summary').textContent = c.summary || '';
+  const interp = {
+    speculative_bubble: '市场在为远超我中性情景的乐观剧本付钱、安全边际深度为负。',
+    stretched: '市场已按明显高于我中枢的价格成交，要靠乐观剧本才解释得通。',
+    fair_with_bull: '现价要靠乐观情景兑现才撑得住——中性情景不足以支撑。',
+    fair_with_base: '中性情景基本已被 price-in，赔率对称、缺安全边际。',
+    fair: '现价大致等于我的加权中枢。',
+    undervalued: '现价低于我的加权中枢，市场可能还没认。',
+  }[c.verdict] || '';
+  const gap = document.getElementById('mvm-gap');
+  gap.innerHTML = '现价 <b>' + CSYM + currentPrice.toFixed(2) + '</b> · 我的加权中枢 <b>' + CSYM + weighted.toFixed(2)
+    + '</b> · 安全边际 <b style="color:' + (safety >= 0 ? 'var(--pos)' : 'var(--neg)') + '">'
+    + (safety >= 0 ? '+' : '') + safety.toFixed(0) + '%</b>。' + interp;
+  gap.style.display = 'block';
+}
+
+// 催化剂与检验时间线：把 decision.json 的可证伪预测 + 下次财报 + 整体复盘日，按日期排成纵向时间线。
+// 倒计时用浏览器当天日期算（页面每次打开都新鲜）。静态、不随滑块变，init 时渲染一次。
+function renderTimeline() {
+  const sec = document.getElementById('section-timeline');
+  const box = document.getElementById('timeline');
+  const d = DATA.decision;
+  if (!sec || !box) return;
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const daysTo = ds => { if (!ds) return null; const x = new Date(ds + 'T00:00:00'); return isNaN(x) ? null : Math.round((x - today) / 86400000); };
+  const items = [];
+  if (d) {
+    (d.predictions || []).forEach(p => {
+      if (!p.check_by) return;
+      const link = (p.scenario_link || '').toLowerCase();
+      items.push({
+        date: p.check_by, status: p.status,
+        title: p.claim || p.id || '',
+        meta: '看 <b>' + escTL(p.metric) + '</b>：' + escTL(p.threshold)
+          + (p.source ? ' <span style="opacity:.7">· 来源 ' + escTL(p.source) + '</span>' : ''),
+        tagText: { bear: '利空验证', base: '中性验证', bull: '利好验证' }[link] || '检验',
+        tagCls: (link === 'bear' || link === 'base' || link === 'bull') ? link : 'review',
+      });
+    });
+  }
+  const ne = DATA.next_earnings;
+  if (ne && ne.date) items.push({
+    date: ne.date, title: '下一份财报' + (ne.period ? ('（' + escTL(ne.period) + '）') : ''),
+    meta: '财报披露，最新数据点会刷新多条判断' + (ne.estimated ? '（日期为估算）' : ''),
+    tagText: '财报', tagCls: 'earn',
+  });
+  if (d && d.review_by) items.push({
+    date: d.review_by, title: '整体复盘检验点',
+    meta: '回来把全部论点 / 情景 / 概率对一次最新进展、记一次分', tagText: '复盘', tagCls: 'review',
+  });
+  if (!items.length) { sec.style.display = 'none'; return; }
+  items.sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
+  box.innerHTML = items.map(it => {
+    const dd = daysTo(it.date);
+    let cd = '', cls = 'future';
+    if (dd != null) {
+      if (dd < 0) { cd = '已过 ' + (-dd) + ' 天'; cls = 'past'; }
+      else if (dd === 0) { cd = '就在今天'; cls = 'soon'; }
+      else if (dd <= 30) { cd = dd + ' 天后'; cls = 'soon'; }
+      else { cd = dd + ' 天后'; cls = 'future'; }
+    }
+    const done = (it.status && it.status !== 'open') ? ' tl-done' : '';
+    return '<div class="tl-item' + done + '">'
+      + '<div class="tl-date">' + it.date + '<span class="tl-countdown ' + cls + '">' + cd + '</span></div>'
+      + '<div class="tl-body"><div class="tl-claim"><span class="tl-tag ' + it.tagCls + '">' + it.tagText + '</span>' + escTL(it.title) + '</div>'
+      + '<div class="tl-meta">' + it.meta + '</div></div></div>';
+  }).join('');
+  sec.style.display = 'block';
+}
+
 function renderCommentary() {
   const c = DATA.reverse_dcf_commentary;
   const el = document.getElementById('rev-commentary');
@@ -2546,6 +2776,7 @@ function renderCommentary() {
 function loadDataIntoUI() {
   updateUnitLabels();
   renderCommentary();
+  renderTimeline();  // 催化剂时间线（静态，渲染一次）
   // Facts
   document.getElementById('fact-revenue').value = DATA.facts.revenue_today;
   document.getElementById('fact-cash').value = DATA.facts.cash;
@@ -2747,6 +2978,9 @@ function computeAll() {
 
   // 价值判断仪表盘（四柱 + 周期 + 安全边际头条）
   renderGauges(currentPrice, weighted, weightedRef, wLow, wHigh);
+
+  // 市场在讲什么 vs 我的判断（右侧加权中枢/安全边际/概率随滑块实时刷新）
+  renderMarketVsMe(currentPrice, weighted, safety);
 
   // 历史利润表图
   renderHistoryChart();

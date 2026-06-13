@@ -72,6 +72,27 @@ def load_prices(ticker):
         return None
 
 
+def load_decision(ticker):
+    """读 decision.json 的时间线相关字段（催化剂预测 / 复盘日 / 入场观察区），喂交互器的催化剂时间线。
+    没有就返回 None（交互器隐藏时间线）。判断内核不动、只取可证伪预测的日期与阈值。"""
+    path = Path("analyses") / ticker.upper() / "decision.json"
+    if not path.exists():
+        return None
+    try:
+        d = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    preds = [{k: p.get(k) for k in
+              ("id", "claim", "metric", "threshold", "check_by", "source", "scenario_link", "status")}
+             for p in (d.get("predictions") or [])]
+    return {
+        "date": d.get("date"),
+        "review_by": d.get("review_by"),
+        "entry_watch": d.get("entry_watch"),
+        "predictions": preds,
+    }
+
+
 def build_history(fin):
     """从财务数据提取年度历史，返回按年份排序的 list。"""
     revenue_keys = [
@@ -647,6 +668,7 @@ def render(ticker, starter=False):
         "pillars": inputs.get("pillars", {}),      # 我写的判断一句话（资本配置/安全边际等）
         "prices": load_prices(ticker),             # 近 5 年月度收盘价（fetch_prices.py 产出）
         "next_earnings": inputs.get("next_earnings"),  # 下一份财报日期（喂交互器顶部提醒横幅；可空）
+        "decision": load_decision(ticker),         # 催化剂/检验时间线（decision.json 的 predictions/review_by/entry_watch）
         "links": links,
     }
 
