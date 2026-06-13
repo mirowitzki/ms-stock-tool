@@ -66,6 +66,7 @@ def scan_company(ticker_dir):
             stats = {
                 "revenue_today": facts.get("revenue_today"),
                 "market_cap": facts.get("market_cap"),
+                "diluted_shares": facts.get("diluted_shares_today"),  # 喂卡片用今日价×股数重算市值/PS
             }
             currency_code = inputs.get("currency")
             verdict = (inputs.get("reverse_dcf_commentary") or {}).get("verdict")
@@ -282,6 +283,11 @@ def main():
         q = quotes.get(c["ticker"])
         if q and q.get("price") is not None:
             c["live"] = {"price": q.get("price"), "as_of": q.get("as_of")}
+            # 值班台观察区也用今日价（与梯队/卡片同一个数，免得三处价格不一致）
+            c.setdefault("watch", {})
+            c["watch"]["last_close"] = q.get("price")
+            if q.get("as_of"):
+                c["watch"]["last_close_month"] = q.get("as_of")
 
     payload = {
         "scanned_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),

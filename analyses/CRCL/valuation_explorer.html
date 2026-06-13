@@ -669,6 +669,8 @@ footer a { color: var(--accent); text-decoration: none; }
 .mvm-summary { font-size:13px; line-height:1.75; color:var(--text); }
 .mvm-gap { margin-top:14px; padding:11px 15px; border-radius:8px; background:#f4f7fb; border-left:3px solid var(--accent); font-size:13px; line-height:1.7; color:var(--text); }
 .mvm-gap b { font-weight:750; font-family:var(--mono,ui-monospace,monospace); }
+.mvm-stale { margin-top:10px; padding:9px 13px; border-radius:8px; background:#fff7e6; border:1px solid #f3d98a; border-left:3px solid var(--warn); font-size:12px; line-height:1.65; color:#7a5a12; }
+.mvm-stale b { font-weight:750; font-family:var(--mono,ui-monospace,monospace); }
 @media (max-width:680px){ .mvm { grid-template-columns:1fr; } }
 
 /* ===== 催化剂与检验时间线（2026-06-14）===== */
@@ -775,6 +777,7 @@ footer a { color: var(--accent); text-decoration: none; }
     </div>
   </div>
   <div class="mvm-gap" id="mvm-gap" style="display:none;"></div>
+  <div class="mvm-stale" id="mvm-stale" style="display:none;"></div>
 </section>
 
 <!-- ========================= 股价走势（近 5 年·月）========================= -->
@@ -1094,7 +1097,7 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "CRCL",
   "company_name": "Circle Internet Group",
   "as_of": "2026-06-08",
-  "generated_at": "2026-06-14 01:09:20",
+  "generated_at": "2026-06-14 01:19:44",
   "facts": {
     "revenue_today": 2747,
     "cash": 2300,
@@ -2069,6 +2072,21 @@ function renderMarketVsMe(currentPrice, weighted, safety) {
     + '</b> · 安全边际 <b style="color:' + (safety >= 0 ? 'var(--pos)' : 'var(--neg)') + '">'
     + (safety >= 0 ? '+' : '') + safety.toFixed(0) + '%</b>。' + interp;
   gap.style.display = 'block';
+
+  // 文字判断（左栏故事+结论）是分析时写的、文字里引用了当时的价；今日价明显偏离时提醒文字待重看。
+  // 上面的数字都已按今日价自动重算，这里只标"文字"这一层的新鲜度。
+  const stale = document.getElementById('mvm-stale');
+  const q = DATA.quote, shares = DATA.facts.diluted_shares_today;
+  if (q && q.analysis_market_cap && shares) {
+    const aPrice = q.analysis_market_cap / shares;
+    const drift = aPrice > 0 ? (currentPrice / aPrice - 1) : 0;
+    if (Math.abs(drift) >= 0.15) {
+      stale.innerHTML = '📝 左边的市场故事与结论是现价约 <b>' + CSYM + aPrice.toFixed(2)
+        + '</b> 时写的；今日 <b>' + CSYM + currentPrice.toFixed(2) + '</b>（' + (drift >= 0 ? '+' : '')
+        + (drift * 100).toFixed(0) + '%）。上面的数字已按今日价自动更新，这段文字判断可以让我重新写一遍。';
+      stale.style.display = 'block';
+    } else { stale.style.display = 'none'; }
+  } else { stale.style.display = 'none'; }
 }
 
 // 催化剂与检验时间线：把 decision.json 的可证伪预测 + 下次财报 + 整体复盘日，按日期排成纵向时间线。

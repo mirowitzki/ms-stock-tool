@@ -1063,12 +1063,15 @@ function renderCompanies() {
         ${hasStats ? (() => {
           const csym = (c.currency && c.currency.symbol) || '$';
           const isCNY = (c.currency && c.currency.code) === 'CNY';
+          // 有今日价就用 今日价×股数 重算市值/PS，跟今日价保持一致；没有则回退分析时市值
+          const liveMc = (hasLive && stats.diluted_shares) ? c.live.price * stats.diluted_shares : null;
+          const effMc = liveMc != null ? liveMc : stats.market_cap;
           return `
         <div class="stats-line">
           ${hasLive ? `<div class="stat"><span class="stat-label">今日价</span><span class="stat-value">${csym}${fmtPx(c.live.price)}</span></div>` : ''}
           ${stats.revenue_today != null ? `<div class="stat"><span class="stat-label">营收</span><span class="stat-value">${csym}${fmtMoney(stats.revenue_today, isCNY)}</span></div>` : ''}
-          ${stats.market_cap != null ? `<div class="stat"><span class="stat-label">市值</span><span class="stat-value">${csym}${fmtMoney(stats.market_cap, isCNY)}</span></div>` : ''}
-          ${stats.market_cap != null && stats.revenue_today ? `<div class="stat"><span class="stat-label">P/S</span><span class="stat-value">${(stats.market_cap / stats.revenue_today).toFixed(1)}x</span></div>` : ''}
+          ${effMc != null ? `<div class="stat"><span class="stat-label">市值${liveMc != null ? '·今日' : ''}</span><span class="stat-value">${csym}${fmtMoney(effMc, isCNY)}</span></div>` : ''}
+          ${effMc != null && stats.revenue_today ? `<div class="stat"><span class="stat-label">P/S${liveMc != null ? '·今日' : ''}</span><span class="stat-value">${(effMc / stats.revenue_today).toFixed(1)}x</span></div>` : ''}
         </div>
         `; })() : ''}
 
