@@ -598,6 +598,25 @@ a.rank-tag:hover { background:rgba(192,138,45,.14); color:#8a5f12; border-color:
 .chain-group-head .cg-link:hover { text-decoration:underline; }
 .chain-group .tier-body { padding:0; border:none; background:transparent; }
 
+/* ============= 资本投向热力榜（2026-06-14）============= */
+.capflow-note { font-size:12px; color:var(--text-muted); margin:-2px 0 14px; line-height:1.65; }
+.cf-row { display:grid; grid-template-columns:1fr auto; gap:5px 14px; align-items:center; padding:11px 14px; border:1px solid var(--border-soft); border-radius:var(--radius-sm); background:#fff; margin-bottom:9px; transition:border-color .15s ease, box-shadow .15s ease; }
+.cf-row:hover { border-color:#d3dbe4; box-shadow:var(--shadow-sm); }
+.cf-main { display:flex; align-items:center; gap:9px; flex-wrap:wrap; min-width:0; }
+.cf-count { font-size:13px; font-weight:800; color:var(--accent); font-family:var(--mono); }
+.cf-name { font-size:14px; font-weight:700; color:var(--primary); }
+.cf-name a { color:var(--primary); text-decoration:none; }
+.cf-name a:hover { color:var(--accent); text-decoration:underline; }
+.cf-sig { font-size:10.5px; font-weight:700; padding:1px 8px; border-radius:20px; white-space:nowrap; }
+.cf-sig.strong { background:rgba(31,143,118,.15); color:#176b54; }
+.cf-sig.mid { background:rgba(192,138,45,.16); color:#8a5f12; }
+.cf-sig.early { background:var(--border-soft); color:var(--text-light); }
+.cf-co { font-family:var(--mono); font-size:11px; font-weight:700; color:var(--text-muted); background:var(--border-soft); border:1px solid var(--border); border-radius:6px; padding:1px 7px; }
+.cf-status { font-size:11.5px; font-weight:600; white-space:nowrap; }
+.cf-status.researched { color:var(--success); }
+.cf-status.new { color:var(--gold); }
+.cf-sub { grid-column:1 / -1; font-size:11px; color:var(--text-light); padding-top:1px; }
+
 /* Footer */
 footer {
   margin-top: 44px;
@@ -681,6 +700,16 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
     <h3>还没有产业链研究</h3>
     <p>在 Claude Code 对话区说"研究 ×× 产业链"，研究成果会出现在这里。</p>
   </div>
+</section>
+
+<!-- 资本投向热力榜（2026-06-14）：聚合各股「产业布局雷达」→ 哪些产业资本最扎堆、该优先研究 -->
+<section id="capflow-section" style="display:none;">
+  <div class="section-header">
+    <h2>🛰️ 资本投向热力榜</h2>
+    <span class="count" id="capflow-count"></span>
+  </div>
+  <p class="capflow-note">把各只股票「产业布局雷达」里指向的产业汇总——几家公司的资本 / 动作扎堆同一产业，就是值得优先研究的信号。但资本越扎堆越要警惕：同一股涌入的资本既是需求信号、也是未来产能墙的种子，到产业链分析里要同时看供给过剩。</p>
+  <div id="capflow"></div>
 </section>
 
 <!-- 值班台（2026-06-10）：今天该看什么——价格进观察区 / 复盘到期 / 临近财报 -->
@@ -1325,10 +1354,39 @@ function renderRank() {
   renderRankChains();
 }
 
+// ============= 资本投向热力榜（2026-06-14）=============
+// 聚合各股 layout.json 指向的产业（refresh_dashboard 算好），按公司数×信号强度排。
+// 已研链给链接、未研产业给"建议立项"。chainMeta 复用梯队榜那份（slug→链接）。
+const capitalFlow = DATA.capital_flow || [];
+function renderCapitalFlow() {
+  const sec = document.getElementById('capflow-section');
+  const box = document.getElementById('capflow');
+  if (!sec || !capitalFlow.length) { if (sec) sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  document.getElementById('capflow-count').textContent = capitalFlow.length + ' 个产业';
+  const sigName = { 3: '强', 2: '中', 1: '早期' }, sigCls = { 3: 'strong', 2: 'mid', 1: 'early' };
+  box.innerHTML = capitalFlow.map(g => {
+    const meta = g.chain_slug ? chainMeta[g.chain_slug] : null;
+    const label = (meta && meta.link)
+      ? `<a href="${meta.link}" target="_blank">${escapeHtml(g.label)}</a>` : escapeHtml(g.label);
+    const comps = g.companies.map(t => `<span class="cf-co">${escapeHtml(t)}</span>`).join('');
+    const status = g.researched
+      ? `<span class="cf-status researched">已在研 ✓</span>`
+      : `<span class="cf-status new">新赛道 · 建议立项</span>`;
+    const sub = (g.sub || []).map(s => `${escapeHtml(s.ticker)}：${escapeHtml(s.name || '')}`).join('　·　');
+    return `<div class="cf-row">
+      <div class="cf-main"><span class="cf-count">${g.companies.length}家</span><span class="cf-name">${label}</span><span class="cf-sig ${sigCls[g.best_sig] || 'mid'}">信号${sigName[g.best_sig] || '中'}</span>${comps}</div>
+      <div>${status}</div>
+      <div class="cf-sub">${sub}</div>
+    </div>`;
+  }).join('');
+}
+
 renderCompanies();
 renderChains();
 renderDutyDesk();
 renderRank();
+renderCapitalFlow();
 </script>
 </body>
 </html>

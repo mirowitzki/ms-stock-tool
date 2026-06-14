@@ -248,6 +248,42 @@ def scan_chains():
     return out
 
 
+def scan_capital_flow(analyses_dir):
+    """聚合所有公司 layout.json 的『指向产业』→ 资本投向热力榜。
+    几家公司的资本 / 动作指向同一产业＝值得优先研究的信号（按公司数 × 信号强度排）。
+    已研链按 chain_slug 归并、未研产业按名称归并。"""
+    SIG_RANK = {"strong": 3, "mid": 2, "early": 1}
+    groups = {}
+    for d in sorted(p for p in analyses_dir.iterdir() if p.is_dir() and not p.name.startswith((".", "_"))):
+        lp = d / "layout.json"
+        if not lp.exists():
+            continue
+        try:
+            L = json.loads(lp.read_text(encoding="utf-8"))
+        except Exception as e:
+            print(f"⚠ {lp} 解析失败（热力榜会缺这家）：{e}")
+            continue
+        for ind in (L.get("industries") or []):
+            slug = ind.get("chain_slug")
+            key = slug or (ind.get("name") or "").strip()
+            if not key:
+                continue
+            g = groups.setdefault(key, {
+                "label": ind.get("chain_name") if slug else ind.get("name"),
+                "chain_slug": slug, "researched": bool(slug),
+                "companies": [], "best_sig": 0, "sub": [],
+            })
+            if d.name not in g["companies"]:
+                g["companies"].append(d.name)
+            g["best_sig"] = max(g["best_sig"], SIG_RANK.get(ind.get("signal"), 2))
+            g["sub"].append({"ticker": d.name, "name": ind.get("name"), "signal": ind.get("signal")})
+            if slug and ind.get("chain_name"):
+                g["label"] = ind.get("chain_name")
+    out = list(groups.values())
+    out.sort(key=lambda g: (len(g["companies"]), g["best_sig"]), reverse=True)
+    return out
+
+
 def main():
     analyses_dir = Path("analyses")
     if not analyses_dir.exists():
@@ -289,12 +325,15 @@ def main():
             if q.get("as_of"):
                 c["watch"]["last_close_month"] = q.get("as_of")
 
+    capital_flow = scan_capital_flow(analyses_dir)
+
     payload = {
         "scanned_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "tool_version": "0.2",
         "quotes_refreshed_at": quotes_refreshed_at,
         "companies": companies,
         "chains": chains,
+        "capital_flow": capital_flow,
     }
 
     template_path = Path("tools") / "dashboard.html"

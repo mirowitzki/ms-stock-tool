@@ -1,0 +1,56 @@
+{
+  "ticker": "NVTS",
+  "as_of": "2026-06-14",
+  "note": "读 NVTS 的真实布局动作指向哪些产业，作为第二阶段产业链分析的候选。研究雷达、非买入信号。",
+  "moves": [
+    {
+      "date": "2026-05-29",
+      "title": "参加 NVIDIA MGX 伙伴典礼，合作共建 800V DC 机柜供电架构（GaNFast PDB 去掉 48V 中间级）",
+      "industry": "AI 数据中心供电",
+      "so_what": "被英伟达拉进 800V 供电生态、股价当日大涨——AI 数据中心供电从 48V 转向 800V HVDC，是电力链的一次架构级价值迁移。",
+      "source": "GlobeNewswire / Navitas 2026-05",
+      "link": "https://www.globenewswire.com/news-release/2026/06/03/3306044/0/en/navitas-collaborates-with-nvidia-mgx-ecosystem-to-accelerate-800-vdc-ai-infrastructure.html"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "公告 800VDC AI 基础设施合作细节（GaN PDB 最大化机柜效率与空间）",
+      "industry": "AI 数据中心供电",
+      "so_what": "把 GaN 高压方案打进 AI 工厂机柜，卡住 800V 这条新供电路线的器件位。",
+      "source": "GlobeNewswire 2026-06-03",
+      "link": "https://www.globenewswire.com/news-release/2026/06/03/3306044/0/en/navitas-collaborates-with-nvidia-mgx-ecosystem-to-accelerate-800-vdc-ai-infrastructure.html"
+    },
+    {
+      "date": "2026",
+      "title": "全 GaN 10kW 800V→50V DC-DC 平台、98.5% 峰值效率；100V + 650V GaN 送样 800V HVDC",
+      "industry": "AI 数据中心供电",
+      "so_what": "用器件性能（效率 / 功率密度）卡位 800V 架构的关键转换环节。",
+      "source": "Navitas",
+      "link": "https://navitassemi.com/navitas-supports-800-vdc-power-architecture-for-nvidias-next-generation-ai-factory-computing-platforms/"
+    },
+    {
+      "date": "2026",
+      "title": "与 GlobalFoundries 长期 GaN 制造合作、美国产能（2026 下半年）",
+      "industry": "半导体代工 / GaN 制造",
+      "so_what": "把 GaN 产能本土化、上规模——产能在路上，也意味着这一环节未来供给会变多（按资本周期盯供给墙）。",
+      "source": "Navitas 2026",
+      "link": "https://navitassemi.com/navitas-supports-800-vdc-power-architecture-for-nvidias-next-generation-ai-factory-computing-platforms/"
+    }
+  ],
+  "industries": [
+    {
+      "name": "AI 数据中心供电（800V / GaN）",
+      "signal": "strong",
+      "thesis": "被英伟达 MGX 800V 生态拉入、GaN PDB 去掉 48V 中间级——AI 数据中心供电从 48V 转向 800V HVDC，是电力链确定在发生的价值迁移；NVTS 卡器件位。",
+      "chain_slug": "ai-datacenter",
+      "chain_name": "AI 数据中心",
+      "chain_page": "../../chains/ai-datacenter/chain_map.html",
+      "handoff_note": "直接对应电力底座的价值迁移判断（chain C5）；GaN 产能扩张要按资本周期盯供给墙"
+    },
+    {
+      "name": "能源 / 电网 + 工业电气化",
+      "signal": "mid",
+      "thesis": "GaN / SiC 高功率方案也打能源、电网、工业电气化——AI 之外的第二需求池。",
+      "handoff_note": "可立项：高功率 GaN / SiC 在电网 / 工业的渗透"
+    }
+  ]
+}

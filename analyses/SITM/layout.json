@@ -1,0 +1,48 @@
+{
+  "ticker": "SITM",
+  "as_of": "2026-06-14",
+  "note": "读 SITM 的真实布局动作指向哪些产业，作为第二阶段产业链分析的候选。研究雷达、非买入信号。",
+  "moves": [
+    {
+      "date": "2026-02-04",
+      "title": "约 $15 亿现金 + 413 万股收购瑞萨（Renesas）计时业务，打造精密计时龙头",
+      "industry": "AI 数据中心计时",
+      "so_what": "标的约 $3 亿营收 / 约 70% 毛利、约 75% 来自 AI 数据中心与通信——把精密计时这一小而硬的环节深度绑进 AI 数据中心，加速冲 $10 亿营收。",
+      "source": "AnySilicon / SEC 8-K 2026-02",
+      "link": "https://anysilicon.com/news/sitime-to-acquire-renesas-timing-business-creating-a-new-timing-powerhouse-for-ai-datacenter-and-embedded-markets/"
+    },
+    {
+      "date": "2026-05-08",
+      "title": "收购的反垄断（HSR）审查等待期届满，交割条件之一达成",
+      "industry": "AI 数据中心计时",
+      "so_what": "这桩接近自身体量的大整合向交割推进，2026 年底前完成的概率上升。",
+      "source": "SEC 8-K 2026-05",
+      "link": "https://www.sec.gov/Archives/edgar/data/0001451809/000119312526215879/d56344d8k.htm"
+    },
+    {
+      "date": "2026-02",
+      "title": "与瑞萨签 MOU，探索把 MEMS 谐振器集成进其嵌入式计算产品",
+      "industry": "嵌入式 / 计时",
+      "so_what": "把 MEMS 计时往嵌入式扩，是 AI 数据中心之外的第二条腿。",
+      "source": "AnySilicon 2026-02",
+      "link": "https://anysilicon.com/news/sitime-to-acquire-renesas-timing-business-creating-a-new-timing-powerhouse-for-ai-datacenter-and-embedded-markets/"
+    }
+  ],
+  "industries": [
+    {
+      "name": "AI 数据中心计时",
+      "signal": "strong",
+      "thesis": "自身 AI 计时高增长（2026Q1 数据中心 +88%）+ $15 亿收瑞萨计时（约 75% 来自 AI 数据中心 + 通信），资本与产品双押『AI 数据中心的计时』这一节——小环节、但绑得很硬。",
+      "chain_slug": "ai-datacenter",
+      "chain_name": "AI 数据中心",
+      "chain_page": "../../chains/ai-datacenter/chain_map.html",
+      "handoff_note": "计时是 AI 数据中心链里小而硬的环节，可并入该链体检（连接/网络节）"
+    },
+    {
+      "name": "通信基础设施",
+      "signal": "mid",
+      "thesis": "瑞萨计时业务里通信占比高；5G / 光通信随 AI 网络升级，对高精度计时的需求随之上行。",
+      "handoff_note": "可并入 AI 数据中心链的连接/网络环节一起看"
+    }
+  ]
+}

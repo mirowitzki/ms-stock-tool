@@ -120,6 +120,48 @@
    "status": "open"
   }
  ],
+ "layout_signals": {
+  "as_of": "2026-06-14",
+  "note": "来自第一阶段单股『产业布局雷达』(analyses/<TICKER>/layout.json)的龙头资本投向，反哺本链情景。铁律：资本洪流是双刃剑——既是近期需求信号、又是未来产能过剩的种子，每条同时给需求(牛)与过剩(熊)读法；并防反互补品(龙头投某环节可能是为把它压薄、为自己核心环节收租)。复盘时与 predictions 一起检验。",
+  "signals": [
+   {
+    "env": "光器件 / 共封装光学(CPO)",
+    "companies": ["NVDA"],
+    "signal": "strong",
+    "demand_read": "NVDA 两笔各 $2B 投 Lumentum/Coherent + 锁产能 + Marvell 硅光——把『光』标成数据中心下一个硬瓶颈，近期需求强、价值正从电向光迁。",
+    "glut_read": "同一笔资本是 2027-28 光产能墙的种子；且 NVDA 可能在 commoditize 光以利 GPU 收租，光器件的持久价值要警惕被压薄(反互补品)。",
+    "informs": "新子链候选『光通信/CPO』(尚未拆闸门②) + 价值迁移；持久性按第五层(供给扩不扩得出、买方能否一体化)严判",
+    "links_prediction": null
+   },
+   {
+    "env": "电力底座 · 800V/GaN 供电",
+    "companies": ["NVTS", "NVDA"],
+    "signal": "strong",
+    "demand_read": "NVIDIA MGX 800V 生态 + Navitas GaN PDB 去 48V 中间级——AI 数据中心供电从 48V 转 800V HVDC、价值往 GaN/SiC 器件迁，是 C5(价值迁移)在电力侧的实时确认。",
+    "glut_read": "GaN 产能在扩(Navitas×GlobalFoundries 美国产能 2026 下半年)、SiC 已被中国 8 寸压价——按资本周期盯供给墙，别把架构迁移期的器件溢价当永续。",
+    "informs": "C5(价值迁向储能电化学/SiC)",
+    "links_prediction": "C5"
+   },
+   {
+    "env": "连接与网络 · 精密计时",
+    "companies": ["SITM"],
+    "signal": "mid",
+    "demand_read": "SITM $15 亿收瑞萨计时(约 75% 来自 AI 数据中心 + 通信)——计时这一小而硬环节的需求随 AI 网络升级确认。",
+    "glut_read": "环节小、整合后格局更集中，过剩风险低但天花板也低；不是大利润池。",
+    "informs": "连接与网络子链(待拆闸门②)",
+    "links_prediction": null
+   },
+   {
+    "env": "算力与内存 · 代工/先进封装",
+    "companies": ["NVDA", "NVTS"],
+    "signal": "mid",
+    "demand_read": "NVDA $5B 入股 Intel + NVTS 绑 GlobalFoundries 美国 GaN 产能——代工/先进封装的战略卡位与本土化。",
+    "glut_read": "先进封装(CoWoS)本链已判为周期短缺租金、产能扩出来会回吐；代工本土化也在加供给——按 C1 类租金逻辑盯回吐，不当永续护城河。",
+    "informs": "算力与内存子链(待拆) + 呼应 C1/C2 短缺租金判断",
+    "links_prediction": null
+   }
+  ]
+ },
  "knowledge_files": {
   "nodes": "nodes.json（节点卡真相源）",
   "indicators": "indicators.json（领先指标与季度数据点）"
