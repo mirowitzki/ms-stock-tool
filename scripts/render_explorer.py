@@ -83,6 +83,18 @@ def load_quote(ticker):
         return None
 
 
+def load_layout(ticker):
+    """读 layout.json（产业布局雷达：近期布局动作 + 推断指向的产业），喂交互器的布局雷达区。
+    没有就返回 None（交互器自动隐藏该区）。由分析时写 / explorer-updater 联网刷新。"""
+    path = Path("analyses") / ticker.upper() / "layout.json"
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+
 def load_decision(ticker):
     """读 decision.json 的时间线相关字段（催化剂预测 / 复盘日 / 入场观察区），喂交互器的催化剂时间线。
     没有就返回 None（交互器隐藏时间线）。判断内核不动、只取可证伪预测的日期与阈值。"""
@@ -680,6 +692,7 @@ def render(ticker, starter=False):
         "prices": load_prices(ticker),             # 近 5 年月度收盘价（fetch_prices.py 产出）
         "next_earnings": inputs.get("next_earnings"),  # 下一份财报日期（喂交互器顶部提醒横幅；可空）
         "decision": load_decision(ticker),         # 催化剂/检验时间线（decision.json 的 predictions/review_by/entry_watch）
+        "layout": load_layout(ticker),             # 产业布局雷达（layout.json：近期动作 + 指向的产业 → 接力产业链分析）
         "links": links,
     }
 

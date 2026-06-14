@@ -1,0 +1,123 @@
+{
+  "ticker": "NVDA",
+  "as_of": "2026-06-14",
+  "note": "读 NVDA 的真实动作（资本投向 + 产品/合作）指向哪些产业，作为第二阶段产业链分析的候选。研究雷达、非买入信号；值不值得投到产业链里严判。",
+  "moves": [
+    {
+      "date": "2026-05",
+      "title": "2026 年股权投资累计超 $400 亿，沿 AI 全栈系统性卡位",
+      "industry": "AI 基础设施全栈",
+      "so_what": "从只卖芯片转向沿产业链上下游入股 + 锁采购：用资产负债表把自己嵌进光、网络、代工、电信、机器人等相邻环节，既扩生态又卡供给。看它往哪砸钱，就是看它赌哪些环节是下一个瓶颈。",
+      "source": "CNBC 2026-05",
+      "link": "https://www.cnbc.com/2026/05/09/nvidia-embraces-ai-investor-topping-40-billion-in-equity-bets-2026.html"
+    },
+    {
+      "date": "2026-04",
+      "title": "$2B 投 Marvell，绑定 NVLink Fusion + AI-RAN（定制硅 / 光 DSP / 硅光）",
+      "industry": "网络 / 光通信 / AI-RAN",
+      "so_what": "把定制互连与光 DSP、硅光能力接进自己的 AI 工厂与 AI-RAN 生态——互连和光正在成为机柜规模算力的硬约束。",
+      "source": "IEEE ComSoc 2026-04-08",
+      "link": "https://techblog.comsoc.org/2026/04/08/analysis-nvidias-2-billion-investment-in-marvell-nvlink-fusion-ecosystem-ran-silicon-strategy/"
+    },
+    {
+      "date": "2026-Q1",
+      "title": "$2B 投 Lumentum + 多年采购承诺、锁定先进激光器件产能",
+      "industry": "光通信 / 光器件",
+      "so_what": "真金白银 + 产能锁定砸向光器件，等于明牌：下一代数据中心架构里，光（共封装光学 / 硅光）是它认定要提前卡住的瓶颈环节。",
+      "source": "NVIDIA Newsroom",
+      "link": "https://nvidianews.nvidia.com/news/nvidia-announces-strategic-partnership-with-lumentum-to-develop-state-of-the-art-optics-technology"
+    },
+    {
+      "date": "2026-Q1",
+      "title": "$2B 投 Coherent，共研光学以扩展下一代数据中心架构",
+      "industry": "光通信 / 光器件",
+      "so_what": "两笔各 $2B（Lumentum + Coherent）同时砸进光器件，信号叠加——把光这一环节当成确定要占的高地。",
+      "source": "NVIDIA Newsroom",
+      "link": "https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture"
+    },
+    {
+      "date": "2026-03",
+      "title": "GTC 2026：物理 AI 数据工厂蓝图 + 机器人「大爆炸」（Cosmos / GR00T / Jetson Thor），FANUC / ABB / Uber / Teradyne 绑定",
+      "industry": "机器人 / 物理 AI",
+      "so_what": "把物理 AI 推成下一条主线：开放模型 + 边缘算力 + 一票工业 / 人形机器人厂商绑定，复制当年 CUDA 的平台卡位打法——但终端商业化仍早期。",
+      "source": "NVIDIA Investor 2026-03",
+      "link": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Open-Physical-AI-Data-Factory-Blueprint-to-Accelerate-Robotics-Vision-AI-Agents-and-Autonomous-Vehicle-Development/default.aspx"
+    },
+    {
+      "date": "2026-01",
+      "title": "CES 2026：机器人开放模型 + Jetson T4000，Boston Dynamics / Caterpillar / LG / NEURA 首发新机",
+      "industry": "机器人 / 边缘 AI",
+      "so_what": "一年开年就把机器人生态铺开，边缘推理芯片（Jetson）能效 4 倍提升——为物理 AI 的端侧算力卡位。",
+      "source": "NVIDIA Investor 2026-01",
+      "link": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Releases-New-Physical-AI-Models-as-Global-Partners-Unveil-Next-Generation-Robots/default.aspx"
+    },
+    {
+      "date": "2025-12",
+      "title": "$1B 投 Nokia，把 Aerial RAN（ARC Pro）嵌进其 RAN，5G-Advanced → 6G",
+      "industry": "AI-RAN / 6G",
+      "so_what": "把算力塞进无线基站，做软件定义、AI 原生的网络底座；AI-RAN 市场 2030 年被估到约 $2000 亿——它在抢这条新链的入口。",
+      "source": "IEEE ComSoc 2026-04",
+      "link": "https://techblog.comsoc.org/2026/04/08/analysis-nvidias-2-billion-investment-in-marvell-nvlink-fusion-ecosystem-ran-silicon-strategy/"
+    },
+    {
+      "date": "2025-09",
+      "title": "$5B 入股 Intel 结成 x86 + CUDA 联盟（据报现值已超 $250 亿）",
+      "industry": "半导体代工 / x86 生态",
+      "so_what": "战略对冲 + 供应链卡位：绑定 x86 与潜在代工产能，给高度依赖台积电的供给链加一条腿。",
+      "source": "Dataconomy 2026-01-02",
+      "link": "https://dataconomy.com/2026/01/02/nvidia-acquires-5-billion-dollar-stake-in-intel-for-strategic-alliance/"
+    },
+    {
+      "date": "2025-09",
+      "title": "NVentures 一周内押 Quantinuum（$600M）/ PsiQuantum（$1B）/ QuEra，三种量子路线全押",
+      "industry": "量子计算",
+      "so_what": "对三种硬件路线（离子阱 / 光子 / 中性原子）同时下注 + CUDA-Q 做经典-量子混合——典型的早期期权式卡位，商业化仍远。",
+      "source": "The Quantum Insider 2025-09-13",
+      "link": "https://thequantuminsider.com/2025/09/13/how-is-nvidia-betting-on-quantum-a-look-at-nventures-quantum-investment-playbook-from-skepticism-to-strategic-stakes/"
+    }
+  ],
+  "industries": [
+    {
+      "name": "光通信 / 共封装光学（CPO）/ 硅光",
+      "signal": "strong",
+      "thesis": "两笔各 $2B 砸进 Lumentum、Coherent 并锁产能，再加 Marvell 的光 DSP / 硅光——NVDA 用真金白银把『光』标成数据中心下一个硬瓶颈。机柜功率与互连带宽逼近铜的物理极限，价值正从电向光迁。",
+      "chain_slug": "ai-datacenter",
+      "chain_name": "AI 数据中心",
+      "chain_page": "../../chains/ai-datacenter/chain_map.html",
+      "handoff_note": "光器件 / CPO 值得作为该链的新子链单独立项拆解"
+    },
+    {
+      "name": "机器人 / 物理 AI / 人形",
+      "signal": "strong",
+      "thesis": "CES + GTC 2026 两连发把物理 AI 推成主线：开放模型（Cosmos / GR00T）+ 边缘算力（Jetson Thor）+ 一票工业 / 人形机器人厂商绑定，复制 CUDA 式平台卡位。平台层信号强，但终端商业化（出货 / 单位经济）仍早期——正是产业链分析该去拆的地方。",
+      "handoff_note": "去产业链分析立项：拆人形 / 工业机器人的执行器、减速器、传感、算力等环节，看价值落在哪节"
+    },
+    {
+      "name": "AI-RAN / 6G",
+      "signal": "mid",
+      "thesis": "$1B 投 Nokia + $2B 投 Marvell + 全美 AI-RAN 栈（T-Mobile / Cisco 等），把算力塞进无线网。制度与运营商驱动、2030 市场被估约 $2000 亿，但落地节奏受电信资本开支与标准节奏制约。",
+      "handoff_note": "去产业链分析立项：AI-RAN 的基带、射频、算力卡位与运营商需求台账"
+    },
+    {
+      "name": "半导体代工 / 先进封装 / x86",
+      "signal": "mid",
+      "thesis": "$5B 入股 Intel 结盟，是对『过度依赖台积电』的供给链对冲。代工与先进封装（CoWoS 等）本就是 AI 算力的卡脖子环节——这一步把它显式纳入战略视野。",
+      "chain_slug": "ai-datacenter",
+      "chain_name": "AI 数据中心",
+      "chain_page": "../../chains/ai-datacenter/chain_map.html",
+      "handoff_note": "看该链的代工 / 先进封装环节（注意：先进封装多属周期性短缺租金，按第四 / 五层判持久性）"
+    },
+    {
+      "name": "自动驾驶 / Robotaxi",
+      "signal": "mid",
+      "thesis": "GTC 上宣布与 Uber 合作在洛杉矶落地自动驾驶车队，叠加 DRIVE 平台——从卖芯片走向卖整套自动驾驶大脑，进入落地兑现期。",
+      "handoff_note": "去产业链分析立项：Robotaxi 的算力、传感（激光雷达 / 摄像头）、运营平台环节"
+    },
+    {
+      "name": "量子计算",
+      "signal": "early",
+      "thesis": "NVentures 对三种量子硬件路线同时下注 + CUDA-Q 做混合栈，是典型早期期权式卡位。商业化仍远——按你的纪律，这类先当观察 / 题材警惕，不急于投。",
+      "handoff_note": "可立项但定性为早期期权：重点盯里程碑（纠错、逻辑比特、真实工作负载），别按渗透率外推"
+    }
+  ]
+}
