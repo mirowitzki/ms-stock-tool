@@ -1,0 +1,100 @@
+{
+  "chain": "optical-module",
+  "created": "2026-06-15",
+  "_usage": "季度 checkpoint（review.py 提醒到期）：派一个联网 agent 把每个指标拉一个新数据点 append 进 series（date/value/source），对照 reading_guide 判读哪条链判断在兑现/被证伪。只拉数判读、不重做判断；越线才升级完整复盘。判读结果若构成预测打分，登 reviews/CALIBRATION.md。",
+  "next_checkpoint": "2026-09-30",
+  "cadence": "quarterly",
+  "indicators": [
+    {
+      "id": "eml-leadtime-price",
+      "name": "高速 EML / InP 衬底交期、价格与缺口",
+      "node": "laser-chip / inp-substrate",
+      "linked_judgment": "上游 EML/InP=高壁垒结构护城河叠加当下短缺租金（O1）",
+      "how_to_check": "WebSearch: EML laser chip lead time 2026 / InP substrate shortage 2026；Lumentum/Coherent/住友/AXT 财报 book-to-bill 与产能",
+      "baseline": {
+        "value": "EML/200G 芯片缺口约 60-70%、交期 18-24 个月、新订单涨价 10-30%；InP 衬底缺口 >70%、龙头订单排满至 2026；Lumentum InP 激光售罄至 2027",
+        "as_of": "2025-2026（eastmoney 调研 / 36kr）"
+      },
+      "reading_guide": "交期回落到 ≤12 个月、涨价停止或 book-to-bill 回到 1× = 短缺租金开始回吐（住友/AXT 扩产落成）；缺口维持+续涨 = 结构性短缺持续、价值锚更硬",
+      "series": []
+    },
+    {
+      "id": "module-asp",
+      "name": "800G / 1.6T 光模块 ASP 与龙头毛利率",
+      "node": "module-assembly",
+      "linked_judgment": "模块组装的厚利润是会被国产二线+ASP 通缩抹平的周期租金（O2）",
+      "how_to_check": "WebSearch: 800G optical module price 2026 / 1.6T transceiver ASP；中际旭创/新易盛季报毛利率",
+      "baseline": {
+        "value": "800G ASP 下行（2026 跌破 $400、索尔思硅光供 Meta 报 $350）；1.6T ASP 稳（EML >$1000/硅光约 $900）；旭创 2025 毛利率 42.6%（从 34.65% 升）、新易盛净利率约 38.5%",
+        "as_of": "2026-01/05（eastmoney 调研 + 2025 年报）"
+      },
+      "reading_guide": "800G ASP 续跌+龙头毛利率掉头向下 = 组装周期租金被抹平（判断兑现）；1.6T ASP 也开始跌+二线放量 = 通缩传导到高端；毛利率维持高位+1.6T 缺货撑价 = 租金回吐推迟",
+      "series": []
+    },
+    {
+      "id": "capacity-fomo",
+      "name": "资本周期：扩产潮与融资潮（FOMO 信号）",
+      "node": "module-assembly",
+      "linked_judgment": "链处资本周期扩张顶部、2027-28 产能过剩种子（O3）",
+      "how_to_check": "WebSearch: 光模块 扩产 泰国 2026 / 光模块 定增 港股 IPO；头部+二线 capex、A+H 上市进度、新进入者（东山精密索尔思）",
+      "baseline": {
+        "value": "头部（旭创/新易盛/华工）+二线（剑桥/仕佳）+跨界并购（东山精密 59.35 亿收索尔思）同步大扩产；泰国军备竞赛；A+H/定增/可转债融资潮；内部人减持（旭创王伟修）",
+        "as_of": "2026-05（上海证券报/凤凰财经定性‘大扩产’）"
+      },
+      "reading_guide": "扩产持续+新进入者增多+订单/价格走弱 = 资本周期顶点确认、过剩临近（熊分支抬权重）；扩产放缓+并购整合 = 周期降温；订单仍排满+缺货 = 顶点后移而非消失",
+      "series": []
+    },
+    {
+      "id": "lpo-cpo-penetration",
+      "name": "CPO / LPO 替代率（⚠三口径分开取）",
+      "node": "cpo / lpo-lro",
+      "linked_judgment": "CPO/LPO 是慢 S 曲线价值迁移、非悬崖；中国双雄角色升级（O4）",
+      "how_to_check": "WebSearch: CPO penetration rate 2026 / LPO adoption AI datacenter；NVIDIA Spectrum-X Photonics / Broadcom Davisson 出货；旭创 CPO 光引擎份额",
+      "baseline": {
+        "value": "CPO 替代率口径(大摩) 2026≈3%/2027≈11%；全模块份额(券商) 2026≈5%；AI-DC 占比(SemiAnalysis) 2026≈0.5%→2030≈35%。Bernstein/InnoLight：大规模‘2028 之后’、‘2026-2027 无云厂大规模部署’",
+        "as_of": "2025-2026（均二手转引、原报告待回源）"
+      },
+      "reading_guide": "三口径分开看、不混用。CPO 替代率超预期加速（如 2027 替代率 >20%）= 迁移快于预期、组装利润池侵蚀加快；维持个位数+中国双雄 CPO 光引擎放量 = 慢迁移+角色升级兑现；LPO 跨厂互通打通+800G 大比例实采 = DSP 节点承压",
+      "series": []
+    },
+    {
+      "id": "laser-localization",
+      "name": "光芯片（EML/CW）国产化突破",
+      "node": "laser-chip",
+      "linked_judgment": "光芯片国产替代是 A 股最硬卡脖子+最大机会（但反噬风险）（O5）",
+      "how_to_check": "WebSearch: 源杰科技 200G EML / 国产光芯片 数据中心 2026；源杰/仕佳/长光季报数据中心收入",
+      "baseline": {
+        "value": "100G EML 源杰国内独家量产、过验证供旭创/新易盛；硅光 CW 光源国内份额 >60%；但 200G EML 国内 <10%、几乎空白；源杰 2025 数据中心收入 +719%、全球高端份额 2024 约 3%→2025 约 8%",
+        "as_of": "2025（源杰年报）"
+      },
+      "reading_guide": "国产 200G EML 量产+客户验证 = 卡脖子突破（机会兑现）；但同时多家国产涌入+价格战 = 反噬（替代后从高毛利塌成内卷，按双面卡读）；高端仍 <10% = 卡脖子持续、海外激光源价值锚更硬",
+      "series": []
+    },
+    {
+      "id": "dsp-localization",
+      "name": "光 DSP / 电芯片国产化",
+      "node": "dsp-chip / driver-tia",
+      "linked_judgment": "DSP 是全链最深护城河、中国几乎空白（O5 的最难一关）+ LPO 威胁",
+      "how_to_check": "WebSearch: 国产 光DSP 800G 量产 2026 / 橙群微 PAM4 DSP；光迅/烽火 DSP 进展",
+      "baseline": {
+        "value": "中国高速 oDSP（800G/1.6T）自给 <5-10%、几乎零量产；光迅 400G PAM4 量产/800G 验证；烽火相干 DSP（1.6T 2026Q3）；橙群微/海思未上市；裕太微 oDSP 在研非主业",
+        "as_of": "2026（eastmoney/sina 纪要）"
+      },
+      "reading_guide": "国产数通高速 oDSP（800G+）真量产出货 = 最难一关突破（罕见、重大）；维持 <10% = DSP 仍是美日双寡头护城河；LPO 大比例渗透 = DSP 这块蛋糕本身缩小（国产替代意义下降）",
+      "series": []
+    },
+    {
+      "id": "capex-revenue-ratio",
+      "name": "AI capex / 直接 AI 收入比（全链 β，与 ai-datacenter 共用）",
+      "node": "demand-base",
+      "linked_judgment": "全链 β：AI capex 能否被收入消化 + ASP 通缩（O7）",
+      "how_to_check": "四大云厂季报 capex 与 AI 收入；WebSearch: AI capex revenue gap 2026 / 1.6T optical demand 2026",
+      "baseline": {
+        "value": "AI 数通光模块 2025 >$23B(+50%)/2026 $26B；但 ASP 通缩（800G $1200→$450）；1.6T 2026 需求区间 8.6M-20M（2.3× 跨度）；capex/收入约 13:1（ai-datacenter 链口径）",
+        "as_of": "2026"
+      },
+      "reading_guide": "capex/收入收敛+1.6T 放量落实 = 需求地基变实（整链 β 上修）；超大厂 capex 指引下修/项目延期扩散+ASP 加速通缩 = 量价利润三杀（整链 Bear 权重上调）",
+      "series": []
+    }
+  ]
+}

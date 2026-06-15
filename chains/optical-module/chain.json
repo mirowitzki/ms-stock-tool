@@ -1,0 +1,13 @@
+{
+  "slug": "optical-module",
+  "name": "光模块（光通信）",
+  "as_of": "2026-06",
+  "tagline": "AI 需求最猛的链之一，但价值‘中国赢规模、美日拿利润’——一块模块约一半价值压在进口的 DSP 与高速激光器；A 股持久价值在无源器件（天孚）与光芯片国产替代（源杰），组装环节高增长但处资本周期顶点、且 CPO/硅光在慢慢重排价值",
+  "subchains": 6,
+  "selected": 30,
+  "gates": ["图谱", "成本法", "选股"],
+  "gates_done": 1,
+  "pages": [
+    {"title": "产业链全景图", "icon": "🗺️", "file": "chains/optical-module/chain_map.html", "primary": true}
+  ]
+}

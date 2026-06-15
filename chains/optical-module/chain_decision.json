@@ -1,0 +1,186 @@
+{
+  "chain": "optical-module",
+  "name": "光模块（光通信）",
+  "as_of": "2026-06",
+  "gate1_subchains": [
+    "光芯片（激光器/调制器/探测器）",
+    "电芯片（DSP/Driver/TIA）",
+    "衬底材料（InP/陶瓷/铌酸锂）",
+    "模块封装（整机）",
+    "光器件/无源",
+    "技术迁移（CPO/硅光/LPO）"
+  ],
+  "gate2_done": [],
+  "selection_verified": true,
+  "selected_count": 30,
+  "core_thesis": "AI 超级周期里需求最确定、增长最猛的链之一（2025 $23B/+50%、800G+ 出货 2025 2400 万→2026 6300 万只、1.6T 商用元年），但价值分布是‘中国赢规模、美日拿利润、终局还要重排’的三层故事：①一块模块约一半价值压在美日的高壁垒环节（DSP~28%+EML~9%+driver/TIA~8%+InP 衬底），那是真结构护城河；中国近乎垄断的是中游组装（执行壁垒真、净利率 20-38%、2024-25 在 800G ASP 腰斩中毛利率反升利润翻倍，但久期受上游 IP+ASP 通缩夹击、待 mix 红利耗尽兑现）。注：‘约一半价值在进口芯片’要收窄——真正卡死进口的是 EML/高速 oDSP/InP 三格，光芯片整体国产化率已 35%(2023)→58%(2025)、龙头硅光自给>80%，龙头正往上游爬。②资本周期已到扩张顶部（头部+二线+跨界并购同步扩产、融资潮、内部人减持、800G 已价格战）——卡脖子厚利润要分环节判租金 vs 护城河（上游 EML/DSP/InP=高壁垒短缺租金，中游 800G 组装=被国产二线抹平的周期租金）。③CPO/硅光/LPO 在把价值从可插拔组装+模块内 DSP 迁向 ASIC+先进封装+InP 激光源，但是慢 S 曲线非悬崖（四源共识 2026-27 CPO 替代个位数%、中国双雄角色升级转 CPO 光引擎=求生路径、缓冲多大待核）；另有反向暗线：铜（DAC/ACC）在 scale-up 域给光模块只数封顶（NVL72 机柜内走铜、零光模块），CPO 要 2028 后才在 scale-up 替铜，需求台账的每 GPU 配比必须先扣走铜的层。A 股能触达的持久价值在无源（天孚，盈利质量最好但久期待 CPO 方向）+光芯片国产替代（源杰/仕佳/光库），组装是高增长但久期争议最大。一个结构价值锚：硅做不了光增益、InP 激光源不可替代——但 CPO 把激光颗数集中化、非单调越来越值钱。",
+  "key_judgments": [
+    {
+      "env": "上游·高速 EML 激光器 + InP 衬底",
+      "call": "高壁垒结构护城河叠加当下短缺租金（价值在美日 Lumentum/Coherent/住友/AXT，中国攻坚 200G）；硅做不了光增益、激光源结构不可替代，但 CPO 把激光颗数集中化、非单调越值钱",
+      "占位龙头": ["LITE", "COHR", "5802.T", "AXTI", "源杰688498"],
+      "watch": "缺口/交期是否随住友/AXT 扩产回落（短缺租金回吐）、国产 200G EML 是否突破",
+      "review_by": "2027-06"
+    },
+    {
+      "env": "电芯片·DSP",
+      "call": "全链最深结构护城河（Marvell/Broadcom 双寡头+台积电先进制程+设计 IP），但 LPO 是最近的替代威胁、中国几乎空白",
+      "占位龙头": ["MRVL", "AVGO", "光迅002281", "烽火600498"],
+      "watch": "LPO 在 AI 后端渗透率（DSP 蛋糕缩小）、国产数通 oDSP 能否真量产",
+      "review_by": "2027-06"
+    },
+    {
+      "env": "中游·模块封装组装",
+      "call": "真实但周期性——执行壁垒真（速度/规模/客户、净利率 20-38%、2024-25 ASP 腰斩中毛利率反升利润翻倍），但久期受上游 IP+ASP 通缩夹击（待 mix 红利耗尽兑现）、处资本周期扩张顶部、800G 已价格战；长期利润池被 CPO/LPO 慢侵蚀（角色升级转 CPO 光引擎是求生路径、从系统集成商退为零件商议价权下移、缓冲多大待核）",
+      "占位龙头": ["中际旭创300308", "新易盛300502", "光迅002281"],
+      "watch": "800G ASP 与龙头毛利率是否掉头、扩产潮是否撞产能过剩、CPO 光引擎单价护不护得住利润",
+      "review_by": "2027-06"
+    },
+    {
+      "env": "光器件·无源（含光引擎）",
+      "call": "当下盈利质量最好（精密壁垒+解决方案绑定，天孚毛利 54% 不杀价）——但久期待定：CPO 时代 FAU/光引擎是留在精密无源厂（受益）还是被台积电 COUPE/晶圆级集成吞掉（受损），方向两可，是‘盈利最好但久期待定’、不是‘久期最好’",
+      "占位龙头": ["天孚通信300394", "太辰光300570", "腾景688195"],
+      "watch": "天孚毛利率是否维持、CPO/硅光把分立无源集成进光引擎是压缩还是放大其价值",
+      "review_by": "2027-06"
+    },
+    {
+      "env": "价值迁移·CPO/硅光/LPO",
+      "call": "慢 S 曲线、非悬崖（四源共识 2026-27 CPO 替代个位数%、大规模 2028 后）；价值迁向 ASIC+先进封装+激光源；中国双雄角色升级转做 CPO 光引擎",
+      "占位龙头": ["NVDA", "AVGO", "TSM", "中际旭创300308"],
+      "watch": "CPO 替代率（分三口径）、LPO 跨厂互通、旭创 CPO 光引擎份额与单价",
+      "review_by": "2027-12"
+    },
+    {
+      "env": "A 股国产替代·光芯片（双面卡）",
+      "call": "卡脖子最硬+最大机会（源杰破 100G EML、硅光 CW 国内 >60%），但也是国产涌入价格战的反噬风险（替代后可能从高毛利塌成内卷）",
+      "占位龙头": ["源杰688498", "仕佳688313", "光库300620", "长光688048"],
+      "watch": "国产 200G EML 突破（机会）vs 多家涌入价格战（反噬）——双向都盯",
+      "review_by": "2027-06"
+    }
+  ],
+  "open_todo": [
+    "闸门②成本法待用户选环节（候选：① 光芯片国产替代/EML ② 无源器件天孚 ③ 模块组装久期专项 ④ CPO 价值承接链）",
+    "两处口径待回一手源：Marvell vs Broadcom DSP 份额、CPO 替代率三口径原报告 PDF（现均二手转引）",
+    "InP 衬底 CR3 口径核（住友 60%+AXT 35%+JX 超 100%，疑通美双计）"
+  ],
+  "next_checkpoint": "2026-09-30",
+  "checkpoint_cadence": "quarterly（只拉 indicators.json 指标判读，越线才完整复盘；打分登 reviews/CALIBRATION.md）",
+  "predictions": [
+    {
+      "id": "O1",
+      "claim": "上游高速 EML/InP 的厚利润里有相当部分是短缺租金、随住友/AXT/Lumentum 扩产回吐（但结构壁垒底子仍在）",
+      "metric": "EML/InP 交期、缺口、book-to-bill（indicators: eml-leadtime-price）",
+      "threshold": "2027-06-30 前 EML/InP 交期从 18-24 月回落到 ≤12 月、或涨价停止/book-to-bill 回到 1× = 短缺租金回吐兑现；缺口维持 = 结构短缺持续",
+      "check_by": "2027-06-30",
+      "source": "Lumentum/Coherent/住友/AXT 财报 + 行业调研",
+      "scenario_link": "租金 vs 护城河（上游）",
+      "status": "open"
+    },
+    {
+      "id": "O2",
+      "claim": "模块组装（800G）的厚利润是周期租金、被国产二线+ASP 通缩抹平",
+      "metric": "800G ASP 与龙头毛利率（indicators: module-asp）",
+      "threshold": "2027-06-30 前 800G ASP 续跌且中际旭创/新易盛单季毛利率掉头向下（同比降）= 周期租金被抹平兑现；毛利率维持 42%+ 且 1.6T 缺货撑价 = 回吐推迟",
+      "check_by": "2027-06-30",
+      "source": "中际旭创/新易盛季报 + ASP 调研",
+      "scenario_link": "租金 vs 护城河（中游）",
+      "status": "open"
+    },
+    {
+      "id": "O3",
+      "claim": "链处资本周期扩张顶部，2027-28 产能过剩从模块封装环节先显现",
+      "metric": "扩产潮/融资潮/订单价格（indicators: capacity-fomo）",
+      "threshold": "2028-06-30 前出现：模块厂订单同比转弱 + 800G 产能利用率下行 + 价格战扩散到 1.6T = 过剩兑现；订单仍排满+缺货 = 顶点后移",
+      "check_by": "2028-06-30",
+      "source": "上海证券报/季报/行业产能统计",
+      "scenario_link": "资本周期",
+      "status": "open"
+    },
+    {
+      "id": "O4",
+      "claim": "CPO/LPO 是慢 S 曲线价值迁移、2026-27 替代率个位数%，中国双雄角色升级（非营收悬崖）",
+      "metric": "CPO/LPO 替代率（分三口径）+ 旭创 CPO 光引擎放量（indicators: lpo-cpo-penetration）",
+      "threshold": "2027-12-31 时点：CPO 替代率（大摩口径）≤15% 且中国双雄 CPO 光引擎放量 = 慢迁移+角色升级兑现；替代率超预期加速（>25%）或云厂大规模实采 = 迁移快于预期、组装利润池侵蚀加快",
+      "check_by": "2027-12-31",
+      "source": "NVIDIA/Broadcom CPO 出货 + 旭创/新易盛披露 + Bernstein/SemiAnalysis 跟踪",
+      "scenario_link": "价值迁移",
+      "status": "open"
+    },
+    {
+      "id": "O5",
+      "claim": "光芯片国产替代是 A 股最硬卡脖子+最大机会，但替代到哪一步会引发国产涌入价格战的反噬（双面卡）",
+      "metric": "国产 200G EML 突破 vs 国产玩家拥挤度（indicators: laser-localization / dsp-localization）",
+      "threshold": "2027-06-30 前：源杰/仕佳 200G EML 量产+客户验证 = 机会兑现；同时若 ≥3 家国产同速率涌入致芯片价格战 = 反噬启动（替代后毛利下台阶）——两者都要登记",
+      "check_by": "2027-06-30",
+      "source": "源杰/仕佳/光库季报 + 行业产能",
+      "scenario_link": "国产替代双面卡",
+      "status": "open"
+    },
+    {
+      "id": "O6",
+      "claim": "无源器件（天孚）是 A 股当下盈利质量最好的环节；CPO 时代是受益还是受损方向两可、久期待定（别把当下高毛利当久期）",
+      "metric": "天孚毛利率 + CPO/硅光对无源价值的方向（indicators: module-asp）",
+      "threshold": "2027-12-31 前天孚综合毛利率维持 50%+ 且光引擎/FAU 在 CPO 链放量 = 久期+受益兑现；毛利率下行或被光引擎集成压缩 = 判断需下修",
+      "check_by": "2027-12-31",
+      "source": "天孚季报 + CPO 供应链跟踪",
+      "scenario_link": "盈利质量最好·久期待定",
+      "status": "open"
+    },
+    {
+      "id": "O7",
+      "claim": "全链 β：AI capex 消化+ASP 通缩，使出货增长≠利润增长是结构特征",
+      "metric": "capex/AI 收入比 + ASP 通缩（indicators: capex-revenue-ratio / module-asp）",
+      "threshold": "2027-06-30 时点：超大厂 capex 指引维持+1.6T 放量落实+ASP 通缩温和 = 地基变实；capex 下修/项目延期扩散+ASP 加速通缩 = 量价利润三杀（整链 Bear 上调）",
+      "check_by": "2027-06-30",
+      "source": "四大云厂季报 + LightCounting/TrendForce",
+      "scenario_link": "全链 β（与 ai-datacenter 共用）",
+      "status": "open"
+    }
+  ],
+  "layout_signals": {
+    "as_of": "2026-06-15",
+    "note": "来自第一阶段单股『产业布局雷达』与本链采集的龙头资本投向，反哺本链情景。铁律：资本洪流双刃（既是近期需求、又是 24-36 月后过剩种子）；防反互补品（龙头投某环节可能是为把它压薄、为自己核心环节收租）。复盘时与 predictions 一起检验。",
+    "signals": [
+      {
+        "env": "光器件/CPO（NVDA 砸光）",
+        "companies": ["NVDA"],
+        "signal": "strong",
+        "demand_read": "NVDA 两笔各 $2B 投 Lumentum/Coherent+锁产能、约 $4B CPO 投入、Marvell 硅光——把‘光’标成数据中心下一个硬瓶颈，近期需求强、价值正从电向光迁；与 ai-datacenter 链 layout_signals 同源。",
+        "glut_read": "同一笔资本是 2027-28 光产能墙的种子；且 NVDA 推 CPO/自研网络可能在 commoditize 可插拔模块、为 GPU 收租——组装环节的持久价值要警惕被压薄（反互补品）。",
+        "informs": "module-assembly 久期（O2/O4）+ laser-chip 价值锚（O1）",
+        "links_prediction": "O4"
+      },
+      {
+        "env": "上游激光源/EML（英伟达锁单 Lumentum）",
+        "companies": ["NVDA", "LITE", "COHR"],
+        "signal": "strong",
+        "demand_read": "英伟达对 Lumentum 200G EML/高功率 CW 激光锁单、Coherent InP 售罄至 2027——确认激光源是 CPO/硅光时代的不可替代价值锚（硅做不了增益）。",
+        "glut_read": "Lumentum/住友/AXT 同步大扩产（+40%~翻倍），2027-28 缺口缓解后短缺租金回吐——按 O1 盯交期/book-to-bill 回落。",
+        "informs": "O1（上游短缺租金 vs 护城河）",
+        "links_prediction": "O1"
+      },
+      {
+        "env": "中游组装·泰国军备竞赛+跨界并购",
+        "companies": ["中际旭创", "新易盛", "华工科技", "东山精密"],
+        "signal": "strong",
+        "demand_read": "头部+二线+跨界并购方（东山精密 59.35 亿收索尔思）同步泰国大扩产、A+H/定增融资潮——2026 北美需求确认（订单排到 Q4-2027）。",
+        "glut_read": "典型 FOMO 资本周期顶点——同一扩产是 2027-28 过剩种子；下游 800G 已现价格战、内部人减持，过剩将先从组装环节显现（O3）。",
+        "informs": "O3（资本周期顶点）+ O2（组装周期租金）",
+        "links_prediction": "O3"
+      },
+      {
+        "env": "国产替代·光芯片自建产线",
+        "companies": ["中际旭创", "源杰科技", "仕佳光子", "东山精密"],
+        "signal": "mid",
+        "demand_read": "旭创自建硅光产线、源杰数据中心收入 +719%、仕佳 12 亿抢产能、东山（索尔思）具 100G/200G 光芯片量产——国产替代向上游芯片攻坚的真金白银。",
+        "glut_read": "国产涌入是双面卡——突破是机会，但多家同速率涌入会把光芯片从卡脖子高毛利压成内卷（O5 反噬侧）；按双面卡同时盯突破与拥挤。",
+        "informs": "O5（国产替代双面卡）",
+        "links_prediction": "O5"
+      }
+    ]
+  },
+  "knowledge_files": {
+    "nodes": "nodes.json（节点卡真相源）",
+    "indicators": "indicators.json（领先指标与季度数据点）"
+  }
+}
