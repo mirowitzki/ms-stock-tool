@@ -1,0 +1,10 @@
+{
+  "ticker": "SPCX",
+  "currency": "USD",
+  "prices": [
+    {
+      "m": "2026-06",
+      "c": 160.95
+    }
+  ]
+}

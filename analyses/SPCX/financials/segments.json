@@ -1,0 +1,28 @@
+{
+  "_note": "三大经营分部，来自 424B4 招股书分部附注（Note 19）。revenue 为分部收入；margin 此处为分部『经营利润率』(segment operating margin)，非毛利率——SpaceX 未按分部披露毛利，仅披露分部经营利润(loss from operations)。cost = revenue − 分部经营利润(含该分部研发/销管)。AI 分部经营亏损 63.55 亿、利润率 −199%，是合并亏损的根源；连接(星链)分部经营利润率 +39% 是利润引擎。",
+  "by_industry": {
+    "2025-12-31": [
+      {
+        "name": "连接·星链宽带 (Connectivity)",
+        "revenue": 11387000000,
+        "cost": 6964000000,
+        "gross_profit": 4423000000,
+        "margin": 0.3884
+      },
+      {
+        "name": "太空·火箭发射 (Space)",
+        "revenue": 4086000000,
+        "cost": 4743000000,
+        "gross_profit": -657000000,
+        "margin": -0.1608
+      },
+      {
+        "name": "AI·xAI/Grok/X",
+        "revenue": 3201000000,
+        "cost": 9556000000,
+        "gross_profit": -6355000000,
+        "margin": -1.9853
+      }
+    ]
+  }
+}
