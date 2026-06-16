@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>斯特林发动机 · 产业链全景图</title>
+<style id="chain-ui">
+/* chain_ui.css —— 产业链研究页面共享主题（闸门①图谱、闸门②成本法等都 link 它） */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f3f5f8; --bg-pattern: #e8edf2; --card: #ffffff;
+  --ink: #0e2230; --text: #1f2a33; --text-muted: #5b6775; --text-light: #93a0ad;
+  --border: #e4e8ee; --border-soft: #eef1f5;
+  --primary: #0f2e3d; --accent: #1f6f8b; --accent-light: #2a93b0;
+  --gold: #c08a2d;
+  --rich: #1f8f76; --rich-bg: rgba(31,143,118,.10);
+  --mid: #1f6f8b; --mid-bg: rgba(31,111,139,.10);
+  --thin: #93a0ad; --thin-bg: rgba(147,160,173,.12);
+  --good: #1f8f76; --caution: #c8901a; --hot: #d64550;
+  --radius: 16px; --radius-sm: 10px;
+  --mono: "SF Mono","JetBrains Mono","Consolas",ui-monospace,monospace;
+  --shadow-sm: 0 1px 2px rgba(16,34,48,.05), 0 1px 3px rgba(16,34,48,.04);
+  --shadow: 0 4px 14px rgba(16,34,48,.07), 0 2px 6px rgba(16,34,48,.04);
+  --shadow-lg: 0 14px 36px rgba(16,34,48,.12), 0 6px 14px rgba(16,34,48,.06);
+  --shadow-xl: 0 24px 50px rgba(16,34,48,.16), 0 8px 18px rgba(16,34,48,.08);
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  background: linear-gradient(180deg, var(--bg-pattern) 0%, var(--bg) 440px);
+  color: var(--text); line-height: 1.62; font-size: 14px; min-height: 100vh;
+  padding: 28px 18px 90px; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+.container { max-width: 1140px; margin: 0 auto; }
+a { color: var(--accent); }
+
+.topbar { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom: 14px; flex-wrap:wrap; }
+.back-link { font-size:13px; font-weight:600; color:var(--text-muted); text-decoration:none;
+  background:#fff; border:1px solid var(--border); padding:7px 14px; border-radius:20px; box-shadow:var(--shadow-sm); }
+.back-link:hover { color:var(--accent); border-color:var(--accent); }
+.asof-pill { font-size:12px; color:var(--text-muted); font-weight:600; background:#fff; border:1px solid var(--border);
+  padding:6px 13px; border-radius:20px; font-variant-numeric:tabular-nums; }
+
+.hero { position:relative; display:flex; align-items:center; gap:18px; margin:0 0 12px; padding:26px 30px;
+  border-radius:20px; background:linear-gradient(135deg,#0f2e3d 0%,#16465a 55%,#1d6076 100%); color:#eaf2f5;
+  box-shadow:var(--shadow-xl); overflow:hidden; }
+.hero::after { content:""; position:absolute; right:-70px; top:-90px; width:280px; height:280px;
+  background:radial-gradient(circle, rgba(42,147,176,.40), rgba(42,147,176,0) 70%); pointer-events:none; }
+.hero .brand-icon { position:relative; z-index:1; width:54px; height:54px; flex:0 0 auto;
+  background:linear-gradient(135deg,var(--gold) 0%,#e0a93f 100%); border-radius:15px;
+  display:flex; align-items:center; justify-content:center; box-shadow:0 10px 22px rgba(192,138,45,.40); }
+.hero .hero-text { position:relative; z-index:1; min-width:0; }
+.hero h1 { font-size:24px; font-weight:750; color:#fff; letter-spacing:-0.4px; line-height:1.2; }
+.hero .tagline { font-size:13px; color:#b9cdd6; margin-top:4px; }
+.hero .gate-pill { display:inline-block; margin-top:8px; font-size:11.5px; font-weight:700; color:#ffe6b8;
+  background:rgba(192,138,45,.22); border:1px solid rgba(224,169,63,.4); padding:3px 11px; border-radius:20px; }
+
+.card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:24px 26px; margin:16px 0; box-shadow:var(--shadow); }
+.sec-title { font-size:18px; font-weight:750; color:var(--primary); letter-spacing:-0.3px; margin-bottom:4px; }
+.sec-sub { font-size:12.5px; color:var(--text-muted); margin-bottom:18px; }
+.lead { font-size:14.5px; color:var(--text); line-height:1.72; }
+.lead + .lead { margin-top:12px; }
+.muted { color:var(--text-muted); } .hl { color:var(--gold); font-weight:700; }
+.card b, .lead b { color:var(--primary); }
+
+/* 总览三点 + β 提示 */
+.points { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:18px 0 4px; }
+.point { background:linear-gradient(180deg,#f7fafb,#f1f5f7); border:1px solid var(--border-soft);
+  border-radius:12px; padding:15px 16px; position:relative; }
+.point::before { content:""; position:absolute; left:0; top:13px; bottom:13px; width:3px; border-radius:3px;
+  background:linear-gradient(180deg,var(--accent),var(--accent-light)); }
+.point .pn { font-size:10px; font-weight:800; color:var(--accent); letter-spacing:.6px; }
+.point .pt { font-size:13.5px; font-weight:700; color:var(--ink); margin:3px 0; }
+.point .pd { font-size:12px; color:var(--text-muted); line-height:1.55; }
+.beta { margin-top:18px; padding:13px 16px; background:rgba(214,69,80,.06); border-left:3px solid var(--hot);
+  border-radius:8px; font-size:12.5px; color:var(--text); line-height:1.6; }
+.beta b { color:var(--hot); }
+
+/* 新手指引卡（howto） */
+.howto { background:linear-gradient(135deg,#fbf7ee,#f6f0e2); border-color:#ecdcb8; }
+.howto-title { font-size:15px; font-weight:750; color:#7a5a18; margin-bottom:13px; display:flex; align-items:center; gap:8px; }
+.howto-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; font-size:12.5px; color:var(--text); line-height:1.62; }
+.howto-grid > div { background:rgba(255,255,255,.55); border:1px solid #ecdcb8; border-radius:11px; padding:13px 15px; }
+.howto-grid b { color:var(--primary); display:block; margin-bottom:4px; font-size:13px; }
+
+/* 可折叠 */
+details { background:#fff; border:1px solid var(--border); border-radius:12px; margin:12px 0; overflow:hidden; }
+details summary { cursor:pointer; padding:14px 18px; font-size:14px; font-weight:700; color:var(--primary); list-style:none;
+  display:flex; align-items:center; justify-content:space-between; }
+details summary::-webkit-details-marker { display:none; }
+details summary::after { content:"▸"; color:var(--text-light); transition:transform .2s; }
+details[open] summary::after { transform:rotate(90deg); }
+details .dc { padding:2px 18px 18px; font-size:13px; color:var(--text-muted); line-height:1.7; }
+details .dc ol, details .dc ul { padding-left:20px; } details .dc li { margin:7px 0; }
+details .dc b { color:var(--text); }
+
+footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--border); text-align:center; color:var(--text-light); font-size:12px; }
+
+@media (max-width: 720px) {
+  .points, .howto-grid { grid-template-columns:1fr; }
+}
+
+</style>
+<style>
+/* 页面专属样式（共享样式来自 chain_ui.css 内联块） */
+table.qt { width:100%; border-collapse:collapse; font-size:13px; margin-top:10px; }
+table.qt th { text-align:left; font-weight:700; padding:8px 9px; border-bottom:2px solid #d8cfc0; color:#5a4a33; white-space:nowrap; }
+table.qt td { padding:8px 9px; border-bottom:1px solid #eee5d6; vertical-align:top; line-height:1.55; }
+table.qt tr:last-child td { border-bottom:none; }
+.qpill { display:inline-block; font-size:11px; font-weight:700; padding:2px 9px; border-radius:12px; white-space:nowrap; }
+.qpill.recover { background:rgba(31,143,118,.13); color:#1f8f76; }
+.qpill.early { background:rgba(58,107,166,.12); color:#3a6ba6; }
+.qpill.clearing { background:rgba(192,138,45,.14); color:#9a6c14; }
+.qpill.decline { background:rgba(196,69,54,.12); color:#c44536; }
+.qpill.proven { background:rgba(31,143,118,.13); color:#1f8f76; }
+.qpill.expand { background:rgba(214,69,80,.12); color:#d64550; }
+.qpill.build { background:rgba(58,107,166,.12); color:#3a6ba6; }
+.qpill.watch { background:rgba(192,138,45,.14); color:#9a6c14; }
+.flagline { background:rgba(196,69,54,.07); border-left:3px solid #c44536; padding:10px 14px; border-radius:6px; margin-top:10px; font-size:13.5px; line-height:1.7; }
+.bom { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 2px; }
+.bom span { background:#f4ede1; border:1px solid #e3d8c4; border-radius:8px; padding:5px 10px; font-size:12.5px; }
+/* 判别表与占有体检表：控住列宽，别让短列被挤成一字一行 */
+table.knife td:first-child, table.knife th:first-child { min-width:118px; }
+table.knife td:nth-child(2), table.knife th:nth-child(2) { min-width:108px; }
+table.occ td:first-child, table.occ th:first-child { min-width:150px; }
+table.occ td:nth-child(2) { width:46%; }
+.verdict { display:inline-block; margin-top:8px; font-size:11px; font-weight:700; padding:2px 9px; border-radius:10px; line-height:1.55; }
+.verdict.v-rich { background:rgba(31,143,118,.12); color:#1f8f76; }
+.verdict.v-mid { background:rgba(31,111,139,.12); color:#1f6f8b; }
+.verdict.v-thin { background:rgba(147,160,173,.18); color:#5b6775; }
+.verdict.v-watch { background:rgba(192,138,45,.14); color:#9a6c14; }
+/* 第一性原理链路图（与其它链同款） */
+.anchor-box { text-align:center; margin:6px 0 18px; }
+.anchor-box .ab { display:inline-block; background:linear-gradient(135deg,var(--gold),#e0a93f); color:#241a06;
+  font-size:14px; font-weight:750; padding:10px 22px; border-radius:30px; box-shadow:0 8px 18px rgba(192,138,45,.32); }
+.anchor-box .abx { font-size:11.5px; color:var(--text-light); margin-top:7px; max-width:660px; margin-left:auto; margin-right:auto; }
+.flow { display:flex; flex-direction:column; }
+.layer { display:flex; align-items:stretch; gap:14px; padding:8px 0; }
+.layer .lk { flex:0 0 98px; display:flex; flex-direction:column; align-items:flex-end; justify-content:center;
+  text-align:right; padding-right:14px; border-right:2px solid var(--border); }
+.layer .lk .lkn { font-size:14px; font-weight:750; color:var(--primary); }
+.layer .lk .lkt { font-size:10px; font-weight:700; padding:1px 7px; border-radius:10px; margin-top:4px; }
+.lkt.rich { background:var(--rich-bg); color:var(--rich); } .lkt.mid { background:var(--mid-bg); color:var(--mid); } .lkt.thin { background:var(--thin-bg); color:var(--thin); }
+.layer .li { flex:1; display:flex; flex-wrap:wrap; gap:7px; align-content:center; padding:2px 0; }
+.chip { font-size:12px; font-weight:600; padding:6px 12px; border-radius:9px; border:1px solid var(--border); background:#fff; color:var(--text); }
+.chip.rich { border-color:rgba(31,143,118,.35); background:var(--rich-bg); color:#15705c; }
+.chip.mid { border-color:rgba(31,111,139,.30); background:var(--mid-bg); color:#185b73; }
+.chip.thin { border-color:var(--border); background:#f7f8fa; color:var(--text-muted); }
+.flow-arrow { padding-left:112px; color:var(--text-light); font-size:13px; line-height:.5; }
+.software-band { margin-top:14px; display:flex; align-items:center; gap:12px; padding:12px 16px;
+  background:linear-gradient(135deg,rgba(192,138,45,.10),rgba(192,138,45,.04)); border:1px dashed rgba(192,138,45,.5); border-radius:12px; }
+.software-band .sbk { font-size:13px; font-weight:750; color:var(--gold); flex:0 0 auto; max-width:128px; }
+.software-band .sbd { font-size:12.5px; color:var(--text-muted); }
+.legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid var(--border-soft); font-size:11.5px; color:var(--text-muted); }
+.legend span { display:inline-flex; align-items:center; gap:5px; } .dot { width:10px; height:10px; border-radius:3px; display:inline-block; }
+.keyline { border-top:3px solid var(--gold); }
+.handoff { background:linear-gradient(135deg,#f7fafb,#eef4f6); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>♨️ 斯特林发动机 · 产业链全景图</h1>
+      <p class="tagline">一个 1816 年的公有领域热力学循环、零专利壁垒——所以这页先回答一件最反直觉的事：价值不归「斯特林」这三个字，归把它可靠塞进利基系统的精密制造与集成。真正赚钱的是反向循环的制冷机，正向发电两百年墓碑累累。</p>
+      <span class="gate-pill">只看产业链、不碰个股 · 判断与数字经四路独立采集 + 核查</span>
+    </div>
+  </section>
+
+  <section class="card howto">
+    <div class="howto-title">这页怎么读</div>
+    <div class="lead">这页只回答三件事：斯特林的价值落在哪一节、是结构护城河还是题材噪音、谁真沾边。<b>不碰任何个股估值与买卖</b>——提到公司只是「这节由谁占据」的事实。这条链和别的不一样：它不是上下游线性链，而是一个公开原理横跨几个互不相关的终端市场；它最大的用处，是教人区分「一个公开技术的概念」和「一笔可投资的价值」。</div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">🧭 这条链的底色</div>
+    <div class="sec-sub">先理解它和别的产业链根本不一样的地方，再看图。</div>
+    <p class="lead">斯特林发动机不是一只股票、也不是一条产业链，而是一类技术主题——<span class="hl">1816 年 Robert Stirling 的公开专利、早进公有领域（他的公司 1818 年就在造机），原理零壁垒、谁都能用</span>。这一句决定了整条链最反直觉的结论：<b>价值不归「斯特林」这个循环本身，归把它做可靠、并塞进电网/光伏/内燃机/常规制冷到不了或被法规强制的缝隙、还保证多年免维护的系统集成方与精密制造</b>。把这个循环拆成两个方向，命运完全相反：①<b>反向循环（制冷机）</b>是斯特林两百年真正赚到钱、且有结构护城河的一面——可靠性（MTTF）是真壁垒、全球前三家约占 46%、价格从低端 &lt;$2,000 到军用专用单元可达约 $25 万（Mordor 单源）横跨约百倍，价值压在军用/空间高可靠端；最大下游是制冷型红外。②<b>正向循环（发电）</b>两百年墓碑累累——碟式光热、家用热电联产、铝储热三波创业全军覆没；只在潜艇 AIP、空间核电、利基甲烷发电三个缝隙站住脚，而这三处要么军用、要么被对手技术边缘化、要么没上市。<b>这是它和前几条链最根本的不同：前面的链争的是「价值在哪一节、什么价格」，这条链先得回答「这个热闹的概念，到底有没有一笔买得到的真实价值」</b>。</p>
+    <p class="lead">所以这一关的重点是三件事：</p>
+    <div class="points">
+      <div class="point"><div class="pn">其一</div><div class="pt">分清制冷与发电两副面孔</div><div class="pd">反向循环的制冷机是真钱、有护城河（军用红外）；正向循环的发电是墓碑+三个利基。热闹几乎全在发电（蹭航天/核电/军工），真钱在制冷——方向反着。</div></div>
+      <div class="point"><div class="pn">其二</div><div class="pt">价值归集成方，没有纯标的</div><div class="pd">原理公有、零壁垒，所以没有一家「斯特林纯标的」上市公司。活下来的都是把它塞进利基的集成商（Qnergy/Sunpower-AMETEK/NASA），押「更好发电机」拼大众市场的几乎全亡。</div></div>
+      <div class="point"><div class="pn">其三</div><div class="pt">中美分叉、且都不可投纯标</div><div class="pd">制冷红外的真实业绩暴露偏中国军用（高德红外）、空间核电偏美国（NASA/承包商）、潜艇 AIP 在中瑞——但三处分别是红外公司、被布雷顿边缘化、国家造船体系，没有一处给得出斯特林纯标的。</div></div>
+    </div>
+    <div class="beta"><b>底下悬着的 β 风险（这条链特有）：是题材噪音、不是 β 放大器。</b>斯特林会周期性地在 A 股变成概念被炒（蹭商业航天/可控核聚变/军工），但搜「斯特林概念股」会自动飘到商业航天/燃气轮机那些主题——<b>因为它本身没有纯标的</b>。更要当心：网上不少「斯特林发电复兴」的市场报告（某公司 150MW 大单、拿欧投行 €1,200 万等）经核查多为臆造，对应公司早已破产清算。纪律：把「一个公开原理的题材热度」和「一笔可投资的真实价值」严格分开——这条链的全部价值，正在于帮你做这个区分。</div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">⛓️ 第一性原理：这条链在交付什么</div>
+    <div class="sec-sub">从价值锚往下拆两个方向；颜色＝价值占有（利润/护城河）在公开市场的厚薄——注意厚薄不等于重要性、也不等于二级市场拿得到。</div>
+    <div class="anchor-box">
+      <div class="ab">价值锚：在替代方案（电网/光伏/内燃机/常规制冷）缺席或被法规强制的缝隙里，可靠地完成热⇄功转换的单位成本</div>
+      <div class="abx">斯特林循环的物理特长是「外部加热、闭式、安静、多燃料」，但功率密度低、密封难、成本高、启停慢。所以它只在替代方案够不到的地方有价值：没有空气（潜艇）、没有电网/光伏（偏远、甲烷井口）、没有阳光（深空核电）、要把红外焦平面塞进小体积降到 77K（战术制冷）。关键：买家付的钱是买「可靠运行多年的系统」，不是买那个 1816 年的公开循环。</div>
+    </div>
+    <div class="flow" id="flow"></div>
+    <div class="software-band">
+      <div class="sbk">横切层 · 价值为什么不归斯特林原理本身</div>
+      <div class="sbd">这是本页第一性原理的核心：斯特林循环是公有领域，原理零壁垒、谁都能用——所以利润不可能归「斯特林」这三个字。难点全在工程实现：精密间隙密封、工质（氢/氦）防泄漏、长寿命可靠性（MTTF 从早期约 4,000 小时做到军用 20,000–30,000 小时）、热交换器/再生器工艺、再把它塞进一个法规强制或替代缺席的利基并保证多年免维护。<b>市场用脚投票印证了这一点</b>：活下来的全是「系统集成商」——Qnergy（甲烷减排整机+远程运维）、Sunpower/AMETEK（制冷机，FPSE 真正赚钱的落点是制冷不是发电）、NASA+承包商（空间核电转换器）；而只押「斯特林=更好的发电机」去拼电网/家用大众市场的（SES、Infinia、Microgen、WhisperGen、Azelio），几乎无一例外破产。所以分层图上颜色最绿（最肥）的从来不是「斯特林」那一层、而是「价值归谁」那一层——精密制造、可靠性、军用高端。</div>
+    </div>
+    <div class="software-band" style="margin-top:10px;">
+      <div class="sbk">横切层 · 中美市场分叉（同一原理、两国价值完全不同）</div>
+      <div class="sbd">这条链天生要做中美分叉：①<b>制冷红外</b>——真实业绩暴露偏中国军用，A 股唯一把制冷探测器+自产斯特林冷源全链自控的是高德红外（武汉高芯），海外是 Ricor/Thales/AIM/Honeywell Hymatic 等专精厂（多在以色列/法/德/英、且沉在大集团里）；②<b>空间核电</b>——是美国命题（NASA 裂变表面电源/同位素电源），但 2025-08 月面 100kWe 堆已明确选闭式布雷顿、斯特林被边缘化，中国侧仅学术路线无上市暴露；③<b>潜艇 AIP</b>——中国（711 所 320kW）与瑞典（Saab A26）并存，但都在国家造船体系内。含义：判断斯特林某一处「有没有价值」，先问清是哪个市场、谁在买单——而且每一处的答案都指向「价值真实、但纯标的拿不到」。</div>
+    </div>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--rich)"></i>最肥·真护城河/价值锚</span>
+      <span><i class="dot" style="background:var(--mid)"></i>中·真实但早期/受夹</span>
+      <span><i class="dot" style="background:var(--thin)"></i>苦力·价值毁灭或被分走或不可投</span>
+      <span class="muted">| 档位是本链内相对判级、不跨链比色；颜色≠二级市场是否拿得到纯标的</span>
+    </div>
+    <div class="bom" style="margin-top:16px;"><span>全球斯特林制冷机市场约 $3.4–8.5 亿（机构差约 2.5×、低置信）</span><span>占全 cryocooler 约 32%（Mordor 2025）</span><span>军用下游约 33%（斯特林专用口径·最大）</span><span>价格 $2千 → $25万 约百倍分层（价值压在军用/空间高端）</span></div>
+    <p class="lead" style="margin-top:14px;"><b>每个方向的价值能活多久、值不值钱？三类一眼分开</b>。斯特林这个原理不分好坏、关键看用在哪——<b>有结构护城河</b>＝靠精密制造与可靠性筑墙、且替代绕不过（制冷机本体）；<b>价值毁灭/无优势</b>＝相对 PV+电池/内燃机/燃机没有压倒性优势、商业化必败（碟式光热、家用 CHP）；<b>价值真实但拿不到</b>＝最容易骗人的一类——价值是真的，但要么在国家体系（潜艇 AIP）、要么被对手技术边缘化（空间核电选了布雷顿）、要么没上市（Qnergy）。逐个方向判别：</p>
+    <table class="qt knife">
+      <tr><th>方向</th><th>属于哪类</th><th>大白话为什么</th></tr>
+      <tr><td><b>斯特林制冷机（反向循环）</b></td><td>有结构护城河</td><td>可靠性（MTTF）是几十年攒出来的硬门槛，全球前三家约占 46%、价格从低端到军用专用横跨百倍——这是斯特林唯一有真护城河、且替代（脉管/HOT）只能慢侵蚀绕不过的一面。但护城河强烈分层，钱压在军用/空间高端。</td></tr>
+      <tr><td><b>制冷型红外（下游）</b></td><td>价值真实·二级市场可触达</td><td>军用远距/导引头/空间高灵敏场景非制冷探测器够不到、必须制冷——这是二级市场唯一能真触达斯特林价值的地方（高德红外全链自控）。但要清楚：你是在分析一家红外/武器系统公司，斯特林只是它的使能输入、不是价值主轴。</td></tr>
+      <tr><td><b>潜艇 AIP（正向·动力）</b></td><td>价值真实但拿不到</td><td>斯特林作发电唯一大规模服役的应用，中国 711 所、瑞典 Saab 都在用——但价值在国家造船体系/涉密研究所，公开市场基本不可见；且正被锂电池（日本已弃斯特林改锂电）和燃料电池（德国）两头夹。</td></tr>
+      <tr><td><b>空间核电转换器（正向·发电）</b></td><td>价值真实但被边缘化</td><td>理论效率约为热电（RTG）的 3–4 倍，曾是斯特林发电最硬落点——但 2025-08 NASA 月面 100kWe 堆明确选了闭式布雷顿、不是斯特林；且全球龙头 Sunpower 早被 AMETEK 吃下、归入仪表事业部（占比缺一手分部数、待核），没有纯标的。</td></tr>
+      <tr><td><b>利基发电（Qnergy）</b></td><td>价值真实但没上市</td><td>甲烷减排/油气田零滑漏/偏远供电——唯一活着的商用斯特林发电机，价值来自「电网和 PV 到不了+甲烷法规强制」、不拼度电成本。是「价值归集成方」的正面样本，但未上市、买不到。</td></tr>
+      <tr><td><b>大众市场发电（碟式光热/家用 CHP/储能）</b></td><td>价值毁灭·墓碑</td><td>碟式光热（SES 2011 清算、唯一电站只运行约一年）、家用热电联产（BG 投 &gt;£40M 关停、比燃气锅炉贵 £1,500）、铝储热（Azelio 2023 破产）——押「斯特林=更好的发电机」拼大众市场的三波创业全军覆没。是防「斯特林复兴」题材的免疫节点。</td></tr>
+    </table>
+    <p class="lead muted" style="margin-top:10px;">为什么这样拆：斯特林不是线性产业链，所以不按「上游→下游」拆，按「这个公开原理被用在哪个终端市场、那个市场里斯特林相对替代方案有没有优势」拆。反向循环（制冷）只切一条——它是斯特林唯一有护城河的一面；正向循环（发电）切四条——一条军用、一条被边缘化、一条没上市、一条已成墓碑；再加一层横切的「价值归谁」，因为它是这条链最重的判断。漏掉任何一段，都会把「热闹的发电题材」错当成「可投资的价值」。</p>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">🧮 需求台账：两个方向分开算——真钱在制冷、热闹在发电</div>
+    <div class="sec-sub">斯特林的需求要按「反向制冷」和「正向发电」两本账分开，量级和性质完全不同。</div>
+    <p class="lead"><b>反向（制冷）那本账——小但真</b>：全球斯特林制冷机市场约 $3.4 亿到 $8.5 亿（不同机构差约 2.5 倍、低置信；且这个口径含红外/科研/超导/医疗/航天等全用途、各报告不可加总），斯特林约占整个低温制冷机市场的 32%（Mordor 2025·32.13%），其中军用下游约占 33%（斯特林专用口径·最大）。最大终端是制冷型红外：红外探测器整体市场 $6.5 亿（2025）→$10.2 亿（2030）、CAGR 9.6%，其中制冷型约占 32%（非制冷约 68%）。<b>这里有个口径要点破</b>：上面"斯特林制冷机 $3.4–8.5 亿"看着比"制冷型红外探测器约 $2 亿"还大、量级像反了——正说明这个制冷机口径远不止红外（含科研/超导/医疗/航天），别把它整个当成红外用途。<b>这是一笔真实、但非常小的利基生意</b>——按最窄口径毛估，整个全球斯特林制冷机生意大致也就一家中型公司年收入的量级。</p>
+    <p class="lead"><b>正向（发电）那本账——热闹但几乎无可投价值</b>：①潜艇 AIP——中国 711 所 2021 验证 320kW（40% 效率、当时已知单机最大）、装备 039A/B；瑞典 Saab A26 用 4 台斯特林、2025 拿下波兰订单（Orka 约 $25 亿）——真实需求，但全在国家造船体系内。②空间核电——理论效率高，但 2025-08 月面 100kWe 堆选了布雷顿、斯特林被挤到低功率（Kilopower 1–10kWe）与同位素瓦特级；2025-12 行政令加速空间核电，但钱流向布雷顿。③利基发电——Qnergy 是唯一活着的商用斯特林发电机，累计融资仅约 $46M（最近一轮 2021-11 的 $16M），数千万级利基。<b>三处需求都真，但都不给纯标的</b>。</p>
+    <div class="flagline">🚩 台账红旗（概念热度 vs 真实价值的错配，是这条链最大的坑）：①<b>量级太小</b>——全球斯特林制冷机市场约 $3.4–8.5 亿、发电侧唯一已起量的 Qnergy 累计才融了约 $46M，这不是一个能撑起「概念股板块」的体量，却周期性被当大题材炒。②<b>题材会自动跑偏</b>——搜「斯特林概念股」会飘到商业航天/燃气轮机，因为它本身没有纯标的，热度只能附着到别的主题上。③<b>复兴叙事多为臆造、但要和真实早期尝试区分</b>——网上多份「斯特林发电复兴」市场报告（SES×SolarReserve 150MW、Microgen 拿欧投行 €1,200 万等）经逐条核查是臆造，对应公司（SES、Microgen）早已破产或从无融资记录；不过也确有两家真实但未起量的早期玩家（Deep Space Energy 拿 ESA/NATO 钱做同位素斯特林、Stirlingversal 持 Kockums 授权在昆山设厂），按期权看、别和臆造混为一谈、也别用「墓碑」一并抹掉。结论：这条链里凡看到「斯特林要颠覆 XX」的说法，先问两句——价值落在集成方还是原理本身？有没有一笔买得到的真实暴露？</div>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">📈 各应用域到哪一站了：没有资本周期泡沫，因为没有可投实体</div>
+    <div class="sec-sub">别的链要防「人人扩产的顶点」；这条链反过来——它最大的特征是冷清，热度只在两处、且其中一处的钱其实流向了对手技术。</div>
+    <table class="qt">
+      <tr><th>方向</th><th>状态与资本/政策</th><th>价值性质</th><th>判定</th></tr>
+      <tr><td><b>制冷机本体</b>（Ricor/Thales/AIM/高芯）</td><td>稳态利基、无 FOMO 扩产潮；随军用采购周期波动</td><td>真护城河（MTTF/CR3≈46%），价值压在军用/空间高端</td><td><span class="qpill proven">稳态·真壁垒</span></td></tr>
+      <tr><td><b>制冷型红外</b>（高德红外等）</td><td>军品采购周期低谷——高德 2024 上市以来首次净亏约 -4.47 亿（型号采购延期+降价）</td><td>结构护城河，但需求是军品采购周期性、非永续增长</td><td><span class="qpill clearing">采购周期低谷</span></td></tr>
+      <tr><td><b>新兴冷源</b>（超导/AI冷却/量子）</td><td>萌芽期——Hinetics 2026 CES 首发超导电机自带斯特林冷源、DOE 资助，但仍原型、无量产收入</td><td>真增量需求向量、但极早期，按期权对待</td><td><span class="qpill early">萌芽·期权</span></td></tr>
+      <tr><td><b>空间核电转换器</b></td><td>政策大力加速（2025-12 行政令），但 2025-08 月面 100kWe 堆明确选闭式布雷顿——钱流向对手技术</td><td>高技术、但价值被边缘化，无纯标的</td><td><span class="qpill watch">政策热·选型转布雷顿</span></td></tr>
+      <tr><td><b>潜艇 AIP</b></td><td>中瑞在产/出口（Saab 拿波兰单），但日本已弃斯特林改锂电、德国走燃料电池</td><td>真实但在国家体系、被锂电+燃料电池夹</td><td><span class="qpill watch">军用·被替代夹击</span></td></tr>
+      <tr><td><b>利基发电（Qnergy）</b></td><td>小规模利基成长（甲烷/偏远），累计融资约 $46M、未上市</td><td>真实利基占有、但买不到</td><td><span class="qpill build">利基·未上市</span></td></tr>
+      <tr><td><b>大众市场发电</b></td><td>已出清——SES 2011/Infinia 2013/Azelio 2023 三波破产</td><td>价值毁灭、墓碑</td><td><span class="qpill decline">已出清·墓碑</span></td></tr>
+    </table>
+    <p class="lead" style="margin-top:12px;">读法：这张表的核心张力和别的链相反——<b>别的链危险在「人人扩产的顶点」，这条链的特征是冷清</b>，几乎没有资本周期泡沫可言，因为根本没有一家斯特林纯标的可供资本涌入炒作。唯二有「热度」的地方：①新兴冷源（超导/AI 数据中心冷却）有真金白银（Hinetics/DOE）进来，但极早期、按期权看；②空间核电有强政策东风，<b>但要按「资本/政策投向」纪律反向读——这股政策的钱流向的是闭式布雷顿、不是斯特林</b>（公司/政策的赌注≠斯特林的未来）。所以空间核电越热，越要分清承接方是布雷顿还是斯特林，别把东风错记成斯特林的需求。</p>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">🧲 价值被谁占有（租金三问逐方向体检——本页最重的判断）</div>
+    <div class="sec-sub">斯特林「重要」的应用不少，但能把利润留在公开市场、且二级市场拿得到的极少。这一节把它们分开。</div>
+    <p class="lead"><b>判别工具——租金三问</b>：① <b>必要吗</b>——这个利基离了斯特林转不转；② <b>稀缺吗</b>——它的本事别人是不是马上学得会、变得出来；③ <b>占有得住吗</b>——好处能不能留在自己口袋。三问全过且持久＝结构占有；只过前两问＝周期/利基租金；只过第一问＝苦力。这条链的特殊考题：<b>很多方向价值是真的，但占有者要么是公有原理、要么在国家体系、要么没上市</b>——所以每一行还要追问第四句：这份价值，二级市场买得到纯标的吗。逐个方向过堂：</p>
+    <table class="qt occ">
+      <tr><th>方向与判定</th><th>三问体检</th><th>久期与威胁</th></tr>
+      <tr>
+        <td><b>斯特林循环本身</b><br><span class="muted" style="font-size:12px;">1816 公有领域原理</span><br><span class="verdict v-thin">零壁垒·价值不在这层</span></td>
+        <td>必要✓——所有斯特林应用都用它。稀缺✗——1816 年公开专利、早进公有领域，谁都能用。占有✗——原理无人能占有。买得到？无意义——没有「斯特林原理」这个标的。</td>
+        <td>这是整条链的题眼：原理零壁垒，所以利润不可能归「斯特林」三个字，只能归下游把它做可靠并塞进利基的人。凡把「斯特林」本身当卖点的题材，都站不住。</td>
+      </tr>
+      <tr>
+        <td><b>斯特林制冷机本体</b><br><span class="muted" style="font-size:12px;">反向循环·军用红外冷源</span><br><span class="verdict v-rich">真护城河·但买不到纯标的</span></td>
+        <td>必要✓——制冷型红外必配集成杜瓦制冷机降到 77K，斯特林是主流冷源。稀缺✓——可靠性（MTTF 从约 4,000h 做到 20,000–30,000h）是几十年精密制造门槛，全球前三家约占 46%、产能集中欧洲+以色列+北美约 79%（此口径偏西方、未含也产空间级斯特林的日本住友重工 SHI）。占有✓——价格 $2 千到 $25 万约百倍分层，价值锁在军用高端。买得到纯标的✗——海外厂沉在大集团（Honeywell/Thales），中国厂在体制内（中电科 11 所）或上市公司子公司，无纯本体标的。</td>
+        <td>斯特林唯一有真护城河的一面。替代是慢侵蚀非悬崖：脉管（零振动、长寿命）蚕食空间/MRI 长寿命场景，HOT 高工作温度探测器（把工作温度抬到 150–160K）削弱深冷需求——但战术/手持/弹载的小体积低成本场景，斯特林近 20 年仍主流；护城河也不只在守，2026 Sunpower CryoTel GT 还拿下美陆军 CIRCM、斯特林在再生式制冷机增速领先，战术段还在拿新订单。</td>
+      </tr>
+      <tr>
+        <td><b>制冷型红外</b><br><span class="muted" style="font-size:12px;">高德红外/睿创/富吉瑞</span><br><span class="verdict v-rich">二级市场唯一可触达·但是红外公司</span></td>
+        <td>必要✓——军用远距/导引头/空间高灵敏不可替代。稀缺✓——制冷探测器（碲镉汞/二类超晶格晶体生长+读出电路+杜瓦封装）是高门槛。占有✓——高德红外把制冷机本体也自产，全链自控。二级市场买得到△——高德红外 002414 是唯一全链自控者，但你买的是一家红外/武器系统公司，斯特林只是它的使能输入。</td>
+        <td>这是二级市场唯一能真触达斯特林价值的地方。但需求是军品采购周期性（高德 2024 上市以来首亏是采购低谷、非结构恶化），且斯特林冷源对这些公司是「使能输入」非价值主轴——它们的价值主轴是红外探测器与整机。逐家贵贱留第一阶段单股工具。</td>
+      </tr>
+      <tr>
+        <td><b>潜艇 AIP</b><br><span class="muted" style="font-size:12px;">711 所/Saab Kockums</span><br><span class="verdict v-thin">价值真实·但在国家体系·不可投</span></td>
+        <td>必要✓——常规潜艇水下长航需 AIP，斯特林是成熟路线之一。稀缺✓——涉密、技术门槛高。占有（国家体系）——核心资产在非上市研究所（711 所）/并入大集团（Kockums→Saab）。买得到纯标的✗——A 股 600482 中国动力是中船动力平台，但斯特林 AIP 资产归属待核、是涉密军用切片；Saab 里斯特林占比极小。</td>
+        <td>斯特林作发电唯一大规模服役的应用，但价值被国家造船体系占据、公开市场基本不可见；且技术路线正被锂电池（日本苍龙→大鲸级弃斯特林改锂电）和燃料电池（德国 TKMS）两头夹。</td>
+      </tr>
+      <tr>
+        <td><b>空间核电转换器</b><br><span class="muted" style="font-size:12px;">Sunpower-AMETEK/NASA</span><br><span class="verdict v-thin">高技术·被布雷顿边缘化</span></td>
+        <td>必要△——深空/月面太阳能不可用处需核电，但斯特林非唯一（布雷顿/热电是对手）。稀缺△——技术含量高，但大功率赛道已选布雷顿。占有✗——全球龙头 Sunpower 早被 AMETEK 吃下、归入仪表事业部（占比缺一手分部数、待核），其余涉空间核上市公司（LMT/BWXT/LUNR）是堆/系统/燃料角色。买得到纯标的✗。</td>
+        <td>2025-08 NASA 月面 100kWe 堆指令明确选闭式布雷顿，斯特林被挤到低功率（Kilopower 1–10kWe）与同位素瓦特级（ASRG 已 2013 取消）非主线；深空主力同位素电源是 MMRTG 热电、也非斯特林。2025-12 行政令的空间核电加速主要利好布雷顿。要精确：这是大功率裂变堆赛道出局、不是整体出局——同位素瓦特级这条线仍活，2026 还来了 ESA/NATO 资助的新进入者（Deep Space Energy），价值承接方从 NASA/AMETEK 迁向欧洲初创+ESA。</td>
+      </tr>
+      <tr>
+        <td><b>利基发电（Qnergy）+ 大众市场墓碑</b><br><span class="muted" style="font-size:12px;">甲烷/偏远 vs 碟式光热/CHP/储能</span><br><span class="verdict v-thin">利基真实但没上市·大众市场已毁灭</span></td>
+        <td>Qnergy：必要✓（电网/PV 到不了+甲烷法规强制）、稀缺✓（利基垄断+可靠性）、占有✓（系统集成）、买得到✗（未上市）。大众市场：必要✗——相对 PV+电池/燃气锅炉无优势，三问第一关就过不了。</td>
+        <td>Qnergy 是「价值归系统集成方」的正面样本（数千万级利基、累计融资约 $46M），但未上市。大众市场三波墓碑（SES/Infinia/Azelio）已出清——无『已起量』的复兴，网传复兴叙事多为臆造；但有两家真实早期反例（Deep Space Energy/Stirlingversal、均未起量、按期权盯），别用『墓碑』一并抹掉。</td>
+      </tr>
+    </table>
+    <p class="lead" style="margin-top:12px;">一句话：<b>斯特林最肥的钱（制冷机军用/空间高端）有真护城河、但买不到纯标的；二级市场唯一能真触达的是高德红外 002414——可那是分析一家红外/武器系统公司、斯特林只是它的使能输入；发电侧要么在国家体系（AIP）、要么被对手技术边缘化（空间核电选了布雷顿）、要么没上市（Qnergy）、要么已成墓碑（大众市场）</b>。这条链没有「价值在哪一节、谁占着」之外的第二步可走——它的产出止于「真实价值在哪、为什么二级市场拿不到纯标的」。</p>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">🌡️ 题材热度 vs 真实价值（聚合口径，不落个股）</div>
+    <div class="sec-sub">这条链几乎没有上市纯标的，所以「温度计」量的不是估值冷热，是「题材热度」和「真实价值」的错配。</div>
+    <table class="qt">
+      <tr><th>层</th><th>读数</th><th>判读</th></tr>
+      <tr><td>斯特林作为 A 股题材</td><td>周期性蹭商业航天/可控核聚变/军工热点；但搜「斯特林概念股」会飘到那些主题、几乎找不到纯标的</td><td>题材热度可以很高，但底下没有可投实体——热度只能附着到别的主题上。这是「概念噪音」最典型的样子</td></tr>
+      <tr><td>有真实业绩暴露的红外公司</td><td>高德红外 2024 上市以来首亏（约 -4.47 亿）；睿创微纳/大立科技以非制冷为主（大立现为 *ST大立·退市风险）</td><td>真实暴露在制冷红外、不在「斯特林」本身；当前处军品采购周期低谷——是采购周期、不是斯特林故事</td></tr>
+      <tr><td>海外大集团里的斯特林</td><td>AMETEK（Sunpower）、Honeywell（Hymatic）、Thales、Saab——斯特林/制冷机/AIP 都是各自营收里可忽略的一隅</td><td>价值真实但被稀释到大盘里——买这些公司不等于买斯特林暴露</td></tr>
+    </table>
+    <p class="lead muted" style="margin-top:10px;">温度读法：这条链的「热」在题材、「冷」在实体。如果存在与市场主流的差，最可能不在「斯特林会不会复兴发电」（那是反复被臆造的题材），而在两个真实但小的地方——<b>制冷型红外的军品采购周期拐点</b>（2024 低谷后 2025–2026 是否复苏），以及<b>新兴冷源期权是否兑现</b>（超导电机自带斯特林冷源在 AI 数据中心/航空电推的早期信号）。注意：这两处都没有斯特林纯标的，前者落到红外公司、后者目前在海外初创——单只票贵贱要逐家单独分析（第一阶段）。</p>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">🎯 候选研究方向：挑哪个深入（诚实前提——没有纯标的）</div>
+    <div class="sec-sub">这条链的诚实结论是「没有斯特林纯标的」，所以「挑哪个深入」更多是研究雷达；每行末列是要持续跟踪的领先指标，每季度核对一次。</div>
+    <table class="qt">
+      <tr><th>#</th><th>方向</th><th>为什么值得研究（与市场主流的差在哪）</th><th>风险/反方</th><th>领先指标</th></tr>
+      <tr><td>1 ★</td><td>制冷型红外·制冷机自产全链（高德红外 002414/高芯）</td><td>二级市场唯一能真触达斯特林价值的地方——高德红外把制冷探测器+自产斯特林冷源全链自控，是「斯特林概念」里少有的有真实业绩的暴露。认知差＝市场把斯特林当航天/核聚变题材炒，真实价值其实在这家红外公司的军品采购周期里</td><td>关键前提：你在分析一家红外/武器系统公司，斯特林只是它的使能输入、不是价值主轴；当前处军品采购周期低谷（2024 首亏）；非制冷在抢民用份额</td><td>军品采购景气复苏（2025-2026）、制冷型占红外比例、高德制冷型业务收入（回一手年报核口径）</td></tr>
+      <tr><td>2</td><td>新兴冷源期权（超导电机/AI 数据中心冷却/量子）</td><td>斯特林制冷机一个全新需求场景的领先信号——Hinetics 2026 CES 首发超导电机自带斯特林冷源、DOE 资助、瞄航空电推+AI 数据中心。是反向布局雷达：从一个技术信号去发现该研究哪条产业链（与 AI 数据中心链交叉）</td><td>极早期（原型阶段、无量产收入）、海外为主、A 股映射弱；是研究雷达、不是即期标的——按期权对待、别外推</td><td>Hinetics 等是否从原型走到量产订单；AI 数据中心超导互联商用化进度</td></tr>
+      <tr><td>3</td><td>制冷机本体壁垒专项（若想钻护城河）</td><td>斯特林唯一有真结构护城河的一面——可靠性（MTTF）、全球 CR3≈46%、价值百倍分层在军用高端。适合研究「一个公有原理为什么能在制造端筑起壁垒」</td><td>无纯标的——海外沉在大集团（Honeywell/Thales）、中国在体制内（中电科 11 所）或子公司（高芯）；研究价值高、可投性弱</td><td>斯特林占 cryocooler 份额 vs 脉管侵蚀、HOT 探测器渗透</td></tr>
+      <tr><td>—</td><td>空间核电 / 潜艇 AIP / 利基发电（不建议作投资方向）</td><td>研究价值在于「证否」——理解斯特林发电为什么拿不到投资暴露：空间核电被布雷顿边缘化、AIP 在国家造船体系、Qnergy 未上市</td><td>都不可投：价值要么沉在大集团（AME）、要么在国家体系、要么未上市、要么已成墓碑</td><td>FSP 阶段二选型（布雷顿 vs 斯特林）、潜艇 AIP 路线、斯特林发电复兴信号（防臆造）</td></tr>
+    </table>
+    <p class="lead muted" style="margin-top:10px;">说明：这张表和别的链不一样——别的链是「挑一个最肥的环节送进第一阶段选股」，这条链是「先认清没有纯标的、再决定要不要为唯一能触达的方向 1 做单股深析」。唯一够得上单股深析的是方向 1（高德红外），且要全程清楚：你在分析一家红外公司，不是「斯特林本身」。挑哪个由你定，这页不替你选股。</p>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">⏳ 开关与里程碑时间表（每季度核对一次）</div>
+    <table class="qt">
+      <tr><th>事项</th><th>现状</th><th>时间表</th><th>影响</th></tr>
+      <tr><td>空间核电动力转换选型</td><td>2025-08 月面 100kWe 堆指令选闭式布雷顿；斯特林留低功率非主线</td><td>检验线 2026-12：FSP 阶段二中标方案是否仍布雷顿</td><td>斯特林被边缘化的直接检验——别把空间核电热度错记成斯特林需求</td></tr>
+      <tr><td>制冷型红外军品采购</td><td>2024 采购周期低谷（高德上市以来首亏）</td><td>检验线 2026-12：交付/型号放量/营收是否复苏</td><td>唯一可触达暴露的环节景气——是采购周期、不是斯特林故事</td></tr>
+      <tr><td>新兴冷源期权兑现</td><td>Hinetics 2026 CES 首发超导电机斯特林冷源、仍原型</td><td>检验线 2027-12：是否拿到量产订单（超原型）</td><td>斯特林制冷机新增长向量是否从期权变需求</td></tr>
+      <tr><td>潜艇 AIP 技术路线</td><td>日本弃斯特林改锂电、德国走燃料电池；中瑞仍用斯特林</td><td>检验线 2028-06：新签常规潜艇锂电 vs 斯特林占比</td><td>斯特林 AIP 份额是否被两头夹（军用、不可投，仅判趋势）</td></tr>
+      <tr><td>斯特林发电复兴信号</td><td>无已起量者——Qnergy 数千万级利基；另两家真实早期反例 Deep Space Energy/Stirlingversal 未破门槛；网传复兴报告多为臆造</td><td>持续观察：是否有玩家收入/订单破 $1 亿（一手可核）</td><td>防题材臆造——凡市场报告先验证一手出处</td></tr>
+      <tr><td>制冷机替代侵蚀</td><td>脉管（零振动长寿命）蚕食空间/MRI；HOT 探测器削弱深冷</td><td>检验线 2028-06：斯特林占 cryocooler 份额是否守住 ≥18%</td><td>制冷机护城河久期——慢侵蚀 vs 加速</td></tr>
+    </table>
+  </section>
+
+  <section class="card">
+    <div class="sec-title">🧾 哪些数字要打折扣看</div>
+    <p class="lead muted">这页诚实交底：① <b>斯特林制冷机市场规模口径分裂</b>——$3.4 亿到 $8.5 亿、机构差约 2.5 倍（含 Verified Market Research $587M、QYResearch 等）、CAGR 从 4.3% 到 10% 都有，多为付费墙后摘要、且口径含红外/科研/超导/医疗/航天等非红外用途不可加总，本页用区间、标低置信；② <b>高德红外 2024 营收已坐实</b>＝约 26.78 亿（+10.87%）、归母 -4.47 亿（上市以来首亏，型号采购延期+降价，多源一手一致）；网传 46.19 亿/6.86 亿对照数经核无对应公开期间、已删（逐家个股深析属第一阶段）；③ <b>潜艇 AIP 有两处缺口</b>——Saab Kockums 斯特林 AIP 在 Saab 营收占比、中国动力 600482 是否含 711 所斯特林资产，均未取到一手分部数据（已标待核）；④ <b>斯特林 vs 脉管 vs JT 在制冷型红外里的份额拆分缺数</b>，只确认斯特林是主流冷源之一；⑤ <b>太空斯特林转换器单项合同金额查不到</b>（属 NASA 内部研发拨款、未单列）；AMETEK 旗下 Sunpower 事业部营收占比缺一手分部数、「对 AME 财报可忽略」待回 10-K 坐实（Sunpower 是 AME 旗下技术领先、2026 还拿美陆军 CIRCM 的活跃单元、非边角料）；⑥ <b>已排除的混淆项</b>：富信科技（688662）是半导体热电制冷（TEC）、不是斯特林，已排除；代码 300468 是四方精创（金融科技、与制冷无关），切勿据此把任何公司扯进斯特林；⑦ <b>大立科技 002214 现为 *ST大立</b>（退市风险警示），引用必带标注；⑧ <b>两处经核订正</b>：斯特林占 cryocooler 份额由旧二手聚合的 21% 直接回源 Mordor 订正为约 32%（相应检验线阈值上移）；全球 CR3／产能区域那组数口径偏西方、未单列日本住友重工 SHI（6302.T，也产空间级斯特林、同样沉在大集团里）。公司名单已逐个联网核代码，但仅作「这一节由谁占据」的线索、个股贵贱留第一阶段。</p>
+  </section>
+
+  <section class="card keyline">
+    <div class="sec-title">一句话结论</div>
+    <p class="lead">斯特林发动机是一个 1816 年的公有领域热力学循环、零专利壁垒——所以这条链最该记住的一句话是：<b>价值不归「斯特林」这三个字，归把它做可靠并塞进利基系统的精密制造与集成；它没有纯标的</b>。把循环拆成两个方向，命运相反：反向循环的制冷机是斯特林唯一有真护城河的一面（可靠性壁垒、军用高端百倍价差），二级市场唯一能真触达的是高德红外 002414——但那是分析一家红外/武器系统公司、斯特林只是它的使能输入，且当前处军品采购周期低谷；正向循环的发电两百年墓碑累累，只在潜艇 AIP（军用、在国家造船体系、被锂电夹）、空间核电（理论效率高、却被布雷顿边缘化、龙头沉在 AMETEK）、利基甲烷发电（Qnergy 唯一活着、但未上市）三处站住脚，没有一处给得出可投的纯标的。<b>这条链最大的用处，不是找到一只票，而是学会区分「一个公开技术的概念热度」和「一笔买得到的真实价值」</b>——斯特林几乎是这种错配最纯粹的样本：热闹在发电、真钱在制冷、且两边都没有纯标的。真要往下走，唯一够得上单股深析的是高德红外（且要清楚在分析一家红外公司）；其余方向是研究雷达、不是买卖清单。挑哪个深入由你定，这页不替你选股。</p>
+  </section>
+
+  <section class="card handoff">
+    <div class="sec-title">🚀 与其它研究的交叉（结构事实，非买卖建议）</div>
+    <p class="lead muted">与 AI 数据中心链：新兴冷源（超导电机自带斯特林冷源、AI 数据中心超导互联冷却）是两链的交叉点——Hinetics（DOE 资助、瞄 AI 数据中心）是一个反向布局雷达信号，从「一个技术动作」反推出该去研究的产业方向。与商业航天链：空间核电是交叉，但这里恰恰是一记提醒——「商业航天/空间核电热」不等于斯特林受益，2025-08 月面堆已选布雷顿、斯特林被边缘化，热度流向的是对手技术。反向桥的意义：这条链是「从一个个股概念出发、却发现没有可投实体」的样本，正好演示第一阶段（单股）与第二阶段（产业链）之间的双向桥怎么用来证否一个题材。若高德红外要深析：送进第一阶段单股工具用四柱+反向 DCF 体检——但记住「好环节 ≠ 好股票」，更何况这里斯特林只是它的输入、它的价值主轴是红外。</p>
+  </section>
+
+</div>
+<script>
+/* 第一性原理链路图——判级转译自 nodes.json 各节点卡的 map_tier（真相源在 JSON、此处是渲染层） */
+const LAYERS = [
+  ["原理层", "thin", [
+    ["斯特林循环（1816 公有领域）","零专利壁垒·谁都能用·价值不在这层","thin"]
+  ]],
+  ["反向·制冷", "rich", [
+    ["斯特林制冷机本体","MTTF壁垒·CR3≈46%·军用$25万/低端<$2千百倍分层·真护城河","rich"],
+    ["制冷型红外（最大下游）","占红外约32%·高德002414全链自控·二级市场唯一可触达","rich"],
+    ["新兴冷源（超导/量子/AI冷却）","Hinetics 2026CES·DOE·真增量但极早期","mid"]
+  ]],
+  ["正向·发电/动力", "thin", [
+    ["潜艇AIP","711所320kW/瑞典Saab·军用·价值在国家体系·不可投","thin"],
+    ["空间核电转换器","理论效率高·但2025-08月面堆选布雷顿·被边缘化","thin"],
+    ["利基发电（Qnergy）","甲烷/偏远·唯一活着的商用·但未上市","thin"],
+    ["大众市场（碟式光热/家用CHP/储能）","三波墓碑·已出清·价值毁灭","thin"]
+  ]],
+  ["价值归谁", "rich", [
+    ["系统集成+精密制造+军用高端","钱归把斯特林做可靠并塞进利基的人·不归1816原理","rich"]
+  ]],
+];
+document.getElementById("flow").innerHTML = LAYERS.map((L, i) => {
+  const chips = L[2].map(it => `<span class="chip ${it[2]}">${it[0]}<span style="font-size:10.5px;color:var(--text-light);font-weight:500"> · ${it[1]}</span></span>`).join("");
+  const tl = { rich: "最肥", mid: "中", thin: "苦力" }[L[1]];
+  const arrow = i < LAYERS.length - 1 ? `<div class="flow-arrow">↓</div>` : "";
+  return `<div class="layer"><div class="lk"><span class="lkn">${L[0]}</span><span class="lkt ${L[1]}">${tl}</span></div><div class="li">${chips}</div></div>${arrow}`;
+}).join("");
+</script>
+<script id="glossary">
+/* glossary.js —— 产业链研究各页共享：术语浮窗（点带虚线的词看大白话）。
+   页面在 body 末尾 <script src=".../glossary.js"><\/script> 即可，自动注入样式 + 给全文加虚线 + 浮窗。 */
+(function () {
+  const GLOSSARY = {
+    "斯特林发动机": "一种 1816 年发明的外燃机：靠外部加热让封闭气体（氦/氢）一冷一热地胀缩来做功。安静、能烧各种燃料，但功率密度低、密封难、成本高——所以两百年来当发电机反复商业失败，原理本身是公有领域、零专利壁垒。",
+    "斯特林循环": "斯特林发动机背后的热力学循环：等温压缩→等容吸热→等温膨胀→等容放热。1816 年就公开了、谁都能用——价值不在这个循环本身，在把它做可靠的精密制造。",
+    "斯特林制冷机": "把斯特林循环反过来跑：用电驱动、把冷指降到 40-150K 的机械式低温制冷机。是制冷型红外探测器降温的主流冷源之一——这是斯特林两百年真正赚到钱、有护城河的一面。",
+    "制冷型红外": "把红外焦平面封进真空杜瓦、用制冷机降到约 77K 来压住热噪声的高灵敏红外探测器，主用于军用导引头/远距侦察。相对的『非制冷』便宜但灵敏度低，用于车载/安防。",
+    "cryocooler": "低温制冷机的统称，把东西降到极低温。常见类型有斯特林、脉管、GM、JT——斯特林约占其中 32%（Mordor 2025）。",
+    "脉管": "脉管制冷机——一种没有低温运动部件的制冷机，零振动、寿命更长，正在长寿命场景（空间载荷/MRI）蚕食斯特林制冷机的份额。",
+    "MTTF": "平均无故障时间——设备平均能可靠运行多少小时才坏一次。制冷机的 MTTF 从早期约 4,000 小时做到军用 20,000-30,000 小时，是几十年攒出来的硬壁垒。",
+    "自由活塞斯特林": "英文 FPSE——一种没有曲柄连杆、靠气体弹簧让活塞自由往复的斯特林机，结构简单、寿命长。空间核电转换器和高端制冷机都用它。",
+    "AIP": "不依赖空气推进——让常规潜艇不上浮、不用通气管也能在水下航行数周的系统。斯特林发动机是其中一种成熟路线，但正被锂电池和燃料电池替代。",
+    "布雷顿循环": "燃气轮机用的那种热力学循环（气体压缩→加热→膨胀做功）。空间核电的大功率堆 2025 年选了它、而不是斯特林——是斯特林在空间核电的主要竞争对手。",
+    "RTG": "放射性同位素温差发电机——靠钚-238 衰变热用温差直接发电（无运动部件），是深空探测器的主力电源。效率只有约 6-7%，斯特林转换器理论上能到约 26%、但可靠性不如它。",
+    "capex": "资本开支——公司为扩产花的大钱，比如买地、建厂、买设备。云厂的 capex 主要是买 AI 芯片和建数据中心。",
+    "compute": "算力，也就是计算能力——衡量能跑多少 AI 运算。",
+    "被定价": "好消息已经反映进股价了。一个好生意如果人人都知道好、股价已经涨上去，再买就赚不到便宜。",
+    "认知差": "你对一家公司的判断和市场主流看法不一样、而且很可能是你对。价值投资真正赚大钱靠的就是这个差。",
+    "variant perception": "认知差——你的判断和市场主流不一样、而且可能是你对。",
+    "β 风险": "贝塔风险——不是某一家公司自己的问题，而是整条链、整个板块一起涨跌的大环境风险。万一 AI 投资退潮，相关股票会一起跌。",
+    "护城河": "一家公司或一个环节长期挡住竞争对手、保住高利润的本事，比如独家工艺、专利、客户离不开它。护城河越深，好日子越能持续。",
+    "结构护城河": "靠工艺/IP/良率/关系筑起、产能想扩也扩不出来的持久壁垒——能穿越周期，是真护城河。",
+    "周期租金": "只是因为眼下短缺、产能暂时不够才赚到的暴利。产能一补上就回吐，不持久。和结构护城河相对。",
+    "利润池": "整条链赚到的钱不是平均分的。利润池就是看这笔总利润堆在哪几个环节、各分到多少——堆得最多的地方最值得研究。",
+    "卡脖子": "整条链里供不应求、谁也绕不开的那个环节。卡脖子的环节最有定价权——但要分清是结构护城河还是周期租金。",
+    "资本周期": "一个行业景气时大家拼命扩产，导致产能过剩、价格崩、利润垮，再减产、又紧缺的循环。看供给（谁在扩产）往往比看需求更能提前判断利润拐点。",
+    "供给受限": "想扩产也扩不出来（技术太难、建设周期太长、或寡头不愿扩）。供给受限的环节超额利润能维持更久。",
+    "扩张顶部": "全行业都在疯狂砸钱扩产的时刻——往往利润最好、但也最危险，因为新产能一投产就会把价格打下来。",
+    "价值占有": "一个环节实际能从整条链里拿走多少利润。和价值创造（对整条链有多重要）常常是两回事。",
+    "价值创造": "一个环节给整条链帮了多大忙、有多重要。重要不等于能赚到钱（要看价值占有）。",
+    "ROIC": "投入资本回报率——每投 1 块钱能赚回多少。长期高于借钱成本，才是真正在创造价值的好生意。",
+    "WACC": "加权平均资本成本——公司融到这笔钱的平均代价。赚的（ROIC）要比这个高，才算创造了价值。",
+    "反向 DCF": "正常估值是用假设算公司值多少钱；反向 DCF 反过来——从现在的股价倒推出市场假设了它未来要增长多快，再判断这个假设是不是已经太乐观。",
+    "中周期归一化": "不要用景气最高峰那年的暴利去估值（那不可持续），而是用一个跨越好年和坏年的平均水平来算，避免在山顶上按最贵的价买。",
+    "毛利率": "卖一件东西、扣掉直接成本后还剩多少比例的钱。毛利率高通常意味着有定价权、有技术含量。",
+    "毛利": "卖一件东西、扣掉直接成本后赚的那部分。占售价的比例（毛利率）高，通常意味着有定价权。",
+    "渗透率": "新技术替代老技术的进度。比如液冷渗透率＝多少比例的数据中心已经从风冷换成了液冷。",
+    "国产替代": "原来靠进口的零件或材料，改用国产的。既是国产厂商的机会，也常因为一拥而上变成价格内卷。",
+    "寡头": "整个市场只被极少数几家公司把持的格局，通常有很强的定价权。",
+    "议价权": "谈价格时谁更有底气。是供应商求着客户买（议价权弱），还是客户排队求供应（议价权强）。",
+    "backlog": "在手订单——已签约、还没交货的订单量。backlog 越厚、锁得越远，未来几年收入越有保障。",
+    "book-to-bill": "新接订单 ÷ 当期出货。大于 1 表示订单比出货还多、需求在加速。",
+    "BOM": "物料清单——一个产品由哪些零件、各花多少钱拼成的成本明细表。成本法就是拆这张表。",
+    "成本栈": "把一件大工程的总花费，按各个部分拆开、看每部分占多少钱的结构表。",
+    "Bear": "熊市情景——分析时假设的最差那种情况（需求转冷、价格下跌），用来检验万一不顺时会亏多少。",
+    "attach 率": "配套比例。比如每张 GPU 平均要配几个光模块，这个比例越高、需求越大。",
+    "折旧": "贵重设备会逐年损耗、分摊成本。AI 芯片折旧按几年摊，直接影响账面利润——摊得慢、利润就显得高。",
+    "循环融资": "我投资你、你再回头买我的东西，形成的资金闭环。比如英伟达投资客户、客户再用这笔钱买英伟达芯片——好看但脆弱。",
+    "安全边际": "用保守估值减去现在的价格留出的缓冲。安全边际厚，意味着就算看错了也不容易亏本金。",
+    "GPU": "图形处理器——英伟达做的那种 AI 算力芯片，是训练大模型的主力。",
+    "ASIC": "为某一种活儿定制的专用芯片。云厂自研 ASIC（谷歌 TPU、亚马逊 Trainium）就是想绕开英伟达、降成本。",
+    "CUDA": "英伟达的软件生态（开发工具加代码库）。全世界 AI 程序员都习惯用它，换别家芯片要重写代码——这是英伟达真正的护城河。",
+    "HBM": "高带宽内存——紧贴 AI 芯片、负责高速喂数据的特种内存。被 SK 海力士等三家垄断，是当前最紧缺、最赚钱的环节之一。",
+    "CoWoS": "台积电的一种先进封装工艺，把 AI 芯片和 HBM 内存拼装在一起。产能卡死、供不应求，是过去两年的头号瓶颈。",
+    "先进封装": "把多块芯片高密度拼装在一起的工艺（CoWoS 就是其中一种），决定了 AI 芯片能不能做出来。",
+    "晶圆代工": "替别人制造芯片的工厂，台积电是绝对龙头。几乎所有 AI 芯片都在它那里生产。",
+    "EML": "光模块里负责发光的激光芯片。全球只有几家能做、英伟达砸钱锁产能，是卡脖子中的卡脖子。",
+    "光模块": "数据中心里把电信号转成光、让成千上万张 GPU 互相高速通信的器件。中国厂商（中际旭创等）全球领先。",
+    "DSP": "光模块里做信号处理的芯片，被博通和 Marvell 两家垄断，国产几乎是空白。",
+    "CPO": "共封装光学——下一代把光直接封进交换芯片的技术，2028 年后可能颠覆现在用的可插拔光模块。",
+    "硅光": "用硅基工艺做光器件的技术路线，被看作光通信的未来方向之一。",
+    "NVLink": "英伟达自家的高速互联技术，让一个机柜里的多张 GPU 像一块大芯片一样协同。",
+    "燃气轮机": "烧天然气发电的大型设备。数据中心要能马上供上的电，燃气轮机是当前唯一能大规模快速供电的来源。",
+    "单晶叶片": "燃气轮机里承受上千度高温的涡轮叶片，用单晶镍基高温合金整体铸造，全球极少数厂能做，是燃气轮机最贵、最难仿、最卡脖子的零件。",
+    "高温合金": "能在上千度高温下不变形的特种金属，用来做燃气轮机叶片、航空发动机，工艺极难、供应极集中。",
+    "LTSA": "长期服务协议——卖出燃气轮机后签的几十年维护保养合同。利润比卖设备本身还高（约两倍）、年年收、抗周期，是燃气轮机真正的利润池。",
+    "服务年金": "设备卖出后，靠几十年维保合同年年收的稳定现金流。像年金一样可预测、抗周期。",
+    "GOES": "取向硅钢——做变压器铁芯的特种钢材，全球极少数厂能产（美国只有一家），是变压器的卡脖子原料之一。",
+    "取向硅钢": "做变压器铁芯的特种钢材（英文 GOES），冶炼工艺极难、产地极少，是变压器的卡脖子原料。",
+    "变压器": "把电网的高压电升压/降压、再送进数据中心的关键设备。现在全球短缺、交期长达数年。",
+    "变电站": "把高压电网的电降压、再分配给数据中心的设施。新建一座要 5–10 年审批建设，是落地最大瓶颈之一。",
+    "并网": "新建的电厂或数据中心接入电网。美国现在并网排队要等 4–7 年，是 AI 数据中心落地的最大物理瓶颈。",
+    "开关柜": "把电分配、保护、通断的成套电气设备，数据中心中压配电的关键一环，现在交期很长。",
+    "UPS": "不间断电源——市电断了也能瞬间顶上、保证数据中心不停机的设备，里面大量用功率半导体和电池。",
+    "IGBT": "一种功率半导体开关器件，是 UPS、变频、电源里控制大电流的核心芯片。市场成熟、分散，国产已价格战。",
+    "SiC": "碳化硅——新一代功率半导体材料，比传统 IGBT 更高效省电，正在高端 UPS 和电源里替代 IGBT。",
+    "功率半导体": "专门控制大电流大电压的芯片（IGBT、SiC 等），是电源、UPS、变频的心脏。",
+    "BESS": "电池储能系统——用一堆电池给数据中心储电、削峰、备电，正在抢传统 UPS 和柴油机的活。",
+    "PCS": "储能变流器——储能系统里把电池的直流电和电网的交流电互相转换的设备。",
+    "EMS": "能量管理系统——储能 / 配电系统里负责调度、控制的软件与设备。",
+    "LFP": "磷酸铁锂——目前储能电池的主流路线，便宜、安全、循环寿命长，被宁德时代等中国厂主导。",
+    "柴油发电机": "市电断了时启动供电的备用柴油发电机组。占数据中心电气投资比例不小，但技术门槛相对低。",
+    "母线": "工厂预制的大电流导体排（铜或铝），把电从变压器送到机柜。成本几乎全是金属（铜/铝）。",
+    "能源孤岛": "数据中心不等漫长的电网排队，自己在旁边建电厂直接供电。贵，但能早几年通电——在 AI 竞赛里这几年值几十亿。",
+    "固态变压器": "用功率电子（SiC 等）替代传统铜+硅钢铁芯的新型变压器，英文 SST，2028 年后放量，是对传统变压器的远端威胁。",
+    "联合循环": "燃气发电的一种高效方式，先用燃气轮机发电、再用余热烧锅炉带蒸汽轮机再发一次电。",
+    "速度到电": "从立项到真正通上电要多久。AI 竞赛里谁先通电谁先赚钱，所以宁可多花钱也要快。",
+    "覆铜板": "做电路板（PCB）的基础材料，英文缩写 CCL。高端 AI 服务器板用的高速覆铜板是卡脖子材料。",
+    "ODM": "代工厂——按客户要求把零件组装成整机（如服务器）。活儿重要但毛利薄，是典型的搬砖环节。",
+    "IDC": "数据中心（机房）运营商，提供机柜、电力、网络给云厂和企业租用，是重资产生意。",
+    "液冷": "用液体而不是风给高功率 AI 芯片散热。新一代 AI 机柜太热、风冷散不掉，只能上液冷。"
+  };
+
+  const css = ".term{border-bottom:1px dashed #1f6f8b;cursor:help}.term:hover{color:#1f6f8b}"
+    + ".term-pop{display:none;position:absolute;z-index:80;max-width:340px;background:#0f2e3d;color:#eaf2f5;"
+    + "font-size:12.5px;line-height:1.64;padding:12px 15px;border-radius:11px;"
+    + "box-shadow:0 24px 50px rgba(16,34,48,.28);border:1px solid rgba(255,255,255,.08)}"
+    + ".term-pop::before{content:'\\1F4A1 \\5927\\767D\\8BDD';display:block;font-size:10.5px;font-weight:700;color:#ffd98a;letter-spacing:.5px;margin-bottom:5px}"
+    + ".term-demo{border-bottom:1px dashed #1f6f8b;color:#1f6f8b}";
+  const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
+
+  const pop = document.createElement("div"); pop.className = "term-pop"; document.body.appendChild(pop);
+  let pinned = false;
+  function place(el) {
+    pop.style.display = "block";
+    const r = el.getBoundingClientRect(), pw = pop.offsetWidth, ph = pop.offsetHeight;
+    let left = Math.min(r.left + window.scrollX, window.scrollX + document.documentElement.clientWidth - pw - 16);
+    left = Math.max(left, window.scrollX + 10);
+    let top = r.bottom + window.scrollY + 8;
+    if (r.bottom + 8 + ph > window.innerHeight && r.top - 8 - ph > 0) top = r.top + window.scrollY - ph - 8;
+    pop.style.left = left + "px"; pop.style.top = top + "px";
+  }
+  function show(el) { pop.textContent = el.getAttribute("data-def") || ""; place(el); }
+  document.addEventListener("mouseover", e => { const t = e.target.closest(".term"); if (t && !pinned) show(t); });
+  document.addEventListener("mouseout", e => { const t = e.target.closest(".term"); if (t && !pinned) pop.style.display = "none"; });
+  document.addEventListener("click", e => {
+    const t = e.target.closest(".term");
+    if (t) { pinned = true; show(t); e.stopPropagation(); } else { pinned = false; pop.style.display = "none"; }
+  });
+
+  try {
+    const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const keys = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
+    const parts = keys.map(k => /^[\x00-\x7f]+$/.test(k) ? "(?<![A-Za-z0-9])" + esc(k) + "(?![A-Za-z0-9])" : esc(k));
+    const RE = new RegExp(parts.join("|"), "g");
+    const SKIP = "script,style,summary,h1,.sec-title,.term,.term-pop,.term-demo,.lkt,.pill,.tier-pill,.drill-status,.gate-pill,.howto-title,.dname,.flag";
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode(n) {
+        const p = n.parentElement;
+        if (!p || p.closest(SKIP)) return NodeFilter.FILTER_REJECT;
+        if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = []; let wn; while (wn = walker.nextNode()) nodes.push(wn);
+    nodes.forEach(tn => {
+      const txt = tn.nodeValue; RE.lastIndex = 0;
+      if (!RE.test(txt)) return; RE.lastIndex = 0;
+      const frag = document.createDocumentFragment(); let last = 0, m;
+      while (m = RE.exec(txt)) {
+        const term = m[0], i = m.index;
+        if (i > last) frag.appendChild(document.createTextNode(txt.slice(last, i)));
+        const span = document.createElement("span");
+        span.className = "term"; span.tabIndex = 0;
+        span.setAttribute("data-def", GLOSSARY[term] || "");
+        span.textContent = term;
+        frag.appendChild(span); last = i + term.length;
+        if (m.index === RE.lastIndex) RE.lastIndex++;
+      }
+      if (last < txt.length) frag.appendChild(document.createTextNode(txt.slice(last)));
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  } catch (err) { /* 老浏览器不支持 lookbehind 时静默跳过 */ }
+})();
+
+</script>
+</body>
+</html>

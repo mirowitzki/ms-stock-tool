@@ -101,6 +101,61 @@ footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--border); 
 }
 
 </style>
+<style>
+/* 页面专属样式（共享样式来自 chain_ui.css 内联块） */
+table.qt { width:100%; border-collapse:collapse; font-size:13px; margin-top:10px; }
+table.qt th { text-align:left; font-weight:700; padding:8px 9px; border-bottom:2px solid #d8cfc0; color:#5a4a33; white-space:nowrap; }
+table.qt td { padding:8px 9px; border-bottom:1px solid #eee5d6; vertical-align:top; line-height:1.55; }
+table.qt tr:last-child td { border-bottom:none; }
+.qpill { display:inline-block; font-size:11px; font-weight:700; padding:2px 9px; border-radius:12px; white-space:nowrap; }
+.qpill.recover { background:rgba(31,143,118,.13); color:#1f8f76; }
+.qpill.early { background:rgba(58,107,166,.12); color:#3a6ba6; }
+.qpill.clearing { background:rgba(192,138,45,.14); color:#9a6c14; }
+.qpill.decline { background:rgba(196,69,54,.12); color:#c44536; }
+.qpill.proven { background:rgba(31,143,118,.13); color:#1f8f76; }
+.qpill.expand { background:rgba(214,69,80,.12); color:#d64550; }
+.qpill.build { background:rgba(58,107,166,.12); color:#3a6ba6; }
+.qpill.watch { background:rgba(192,138,45,.14); color:#9a6c14; }
+.flagline { background:rgba(196,69,54,.07); border-left:3px solid #c44536; padding:10px 14px; border-radius:6px; margin-top:10px; font-size:13.5px; line-height:1.7; }
+.bom { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 2px; }
+.bom span { background:#f4ede1; border:1px solid #e3d8c4; border-radius:8px; padding:5px 10px; font-size:12.5px; }
+/* 判别表与占有体检表：控住列宽，别让短列被挤成一字一行 */
+table.knife td:first-child, table.knife th:first-child { min-width:118px; }
+table.knife td:nth-child(2), table.knife th:nth-child(2) { min-width:108px; }
+table.occ td:first-child, table.occ th:first-child { min-width:150px; }
+table.occ td:nth-child(2) { width:46%; }
+.verdict { display:inline-block; margin-top:8px; font-size:11px; font-weight:700; padding:2px 9px; border-radius:10px; line-height:1.55; }
+.verdict.v-rich { background:rgba(31,143,118,.12); color:#1f8f76; }
+.verdict.v-mid { background:rgba(31,111,139,.12); color:#1f6f8b; }
+.verdict.v-thin { background:rgba(147,160,173,.18); color:#5b6775; }
+.verdict.v-watch { background:rgba(192,138,45,.14); color:#9a6c14; }
+/* 第一性原理链路图（与其它链同款） */
+.anchor-box { text-align:center; margin:6px 0 18px; }
+.anchor-box .ab { display:inline-block; background:linear-gradient(135deg,var(--gold),#e0a93f); color:#241a06;
+  font-size:14px; font-weight:750; padding:10px 22px; border-radius:30px; box-shadow:0 8px 18px rgba(192,138,45,.32); }
+.anchor-box .abx { font-size:11.5px; color:var(--text-light); margin-top:7px; max-width:660px; margin-left:auto; margin-right:auto; }
+.flow { display:flex; flex-direction:column; }
+.layer { display:flex; align-items:stretch; gap:14px; padding:8px 0; }
+.layer .lk { flex:0 0 98px; display:flex; flex-direction:column; align-items:flex-end; justify-content:center;
+  text-align:right; padding-right:14px; border-right:2px solid var(--border); }
+.layer .lk .lkn { font-size:14px; font-weight:750; color:var(--primary); }
+.layer .lk .lkt { font-size:10px; font-weight:700; padding:1px 7px; border-radius:10px; margin-top:4px; }
+.lkt.rich { background:var(--rich-bg); color:var(--rich); } .lkt.mid { background:var(--mid-bg); color:var(--mid); } .lkt.thin { background:var(--thin-bg); color:var(--thin); }
+.layer .li { flex:1; display:flex; flex-wrap:wrap; gap:7px; align-content:center; padding:2px 0; }
+.chip { font-size:12px; font-weight:600; padding:6px 12px; border-radius:9px; border:1px solid var(--border); background:#fff; color:var(--text); }
+.chip.rich { border-color:rgba(31,143,118,.35); background:var(--rich-bg); color:#15705c; }
+.chip.mid { border-color:rgba(31,111,139,.30); background:var(--mid-bg); color:#185b73; }
+.chip.thin { border-color:var(--border); background:#f7f8fa; color:var(--text-muted); }
+.flow-arrow { padding-left:112px; color:var(--text-light); font-size:13px; line-height:.5; }
+.software-band { margin-top:14px; display:flex; align-items:center; gap:12px; padding:12px 16px;
+  background:linear-gradient(135deg,rgba(192,138,45,.10),rgba(192,138,45,.04)); border:1px dashed rgba(192,138,45,.5); border-radius:12px; }
+.software-band .sbk { font-size:13px; font-weight:750; color:var(--gold); flex:0 0 auto; max-width:128px; }
+.software-band .sbd { font-size:12.5px; color:var(--text-muted); }
+.legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid var(--border-soft); font-size:11.5px; color:var(--text-muted); }
+.legend span { display:inline-flex; align-items:center; gap:5px; } .dot { width:10px; height:10px; border-radius:3px; display:inline-block; }
+.keyline { border-top:3px solid var(--gold); }
+.handoff { background:linear-gradient(135deg,#f7fafb,#eef4f6); }
+</style>
 </head>
 <body>
 <div class="container">
@@ -323,6 +378,17 @@ document.getElementById("flow").innerHTML = LAYERS.map((L, i) => {
    页面在 body 末尾 <script src=".../glossary.js"><\/script> 即可，自动注入样式 + 给全文加虚线 + 浮窗。 */
 (function () {
   const GLOSSARY = {
+    "斯特林发动机": "一种 1816 年发明的外燃机：靠外部加热让封闭气体（氦/氢）一冷一热地胀缩来做功。安静、能烧各种燃料，但功率密度低、密封难、成本高——所以两百年来当发电机反复商业失败，原理本身是公有领域、零专利壁垒。",
+    "斯特林循环": "斯特林发动机背后的热力学循环：等温压缩→等容吸热→等温膨胀→等容放热。1816 年就公开了、谁都能用——价值不在这个循环本身，在把它做可靠的精密制造。",
+    "斯特林制冷机": "把斯特林循环反过来跑：用电驱动、把冷指降到 40-150K 的机械式低温制冷机。是制冷型红外探测器降温的主流冷源之一——这是斯特林两百年真正赚到钱、有护城河的一面。",
+    "制冷型红外": "把红外焦平面封进真空杜瓦、用制冷机降到约 77K 来压住热噪声的高灵敏红外探测器，主用于军用导引头/远距侦察。相对的『非制冷』便宜但灵敏度低，用于车载/安防。",
+    "cryocooler": "低温制冷机的统称，把东西降到极低温。常见类型有斯特林、脉管、GM、JT——斯特林约占其中 32%（Mordor 2025）。",
+    "脉管": "脉管制冷机——一种没有低温运动部件的制冷机，零振动、寿命更长，正在长寿命场景（空间载荷/MRI）蚕食斯特林制冷机的份额。",
+    "MTTF": "平均无故障时间——设备平均能可靠运行多少小时才坏一次。制冷机的 MTTF 从早期约 4,000 小时做到军用 20,000-30,000 小时，是几十年攒出来的硬壁垒。",
+    "自由活塞斯特林": "英文 FPSE——一种没有曲柄连杆、靠气体弹簧让活塞自由往复的斯特林机，结构简单、寿命长。空间核电转换器和高端制冷机都用它。",
+    "AIP": "不依赖空气推进——让常规潜艇不上浮、不用通气管也能在水下航行数周的系统。斯特林发动机是其中一种成熟路线，但正被锂电池和燃料电池替代。",
+    "布雷顿循环": "燃气轮机用的那种热力学循环（气体压缩→加热→膨胀做功）。空间核电的大功率堆 2025 年选了它、而不是斯特林——是斯特林在空间核电的主要竞争对手。",
+    "RTG": "放射性同位素温差发电机——靠钚-238 衰变热用温差直接发电（无运动部件），是深空探测器的主力电源。效率只有约 6-7%，斯特林转换器理论上能到约 26%、但可靠性不如它。",
     "capex": "资本开支——公司为扩产花的大钱，比如买地、建厂、买设备。云厂的 capex 主要是买 AI 芯片和建数据中心。",
     "compute": "算力，也就是计算能力——衡量能跑多少 AI 运算。",
     "被定价": "好消息已经反映进股价了。一个好生意如果人人都知道好、股价已经涨上去，再买就赚不到便宜。",

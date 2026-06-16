@@ -1,0 +1,87 @@
+{
+  "chain": "stirling",
+  "created": "2026-06-16",
+  "_usage": "季度 checkpoint（review.py 提醒到期）：派一个联网 agent 把每个指标拉一个新数据点 append 进 series（date/value/source），对照 reading_guide 判读哪条链判断在兑现/被证伪。只拉数判读、不重做判断；越线才升级完整复盘。判读结果若构成预测打分，登 reviews/CALIBRATION.md。",
+  "next_checkpoint": "2026-09-30",
+  "cadence": "quarterly",
+  "indicators": [
+    {
+      "id": "stirling-cryo-share",
+      "name": "斯特林占 cryocooler 市场份额 vs 脉管/HOT 侵蚀",
+      "node": "cryocooler-body",
+      "linked_judgment": "制冷机本体护城河持续、替代是慢侵蚀非悬崖（ST1）",
+      "how_to_check": "WebSearch: stirling cryocooler market share 2026 / pulse tube cryocooler growth；Mordor/QYResearch cryocooler 类型份额；HOT infrared detector 150K adoption",
+      "baseline": {
+        "value": "斯特林约占 cryocooler 约 32%（Mordor 2025·32.13%；GM 亦约 32%/JT 9%/脉管增速最快约 14.9% CAGR）；CR3≈46%；战术/手持/弹载仍以斯特林为主；HOT 探测器(InAsSb/T2SL 抬到 150-160K)在渗透",
+        "as_of": "2025（Mordor 估）"
+      },
+      "reading_guide": "斯特林份额维持 ≥25%（vs 当前约 32%）且战术段仍主导 = 慢侵蚀兑现(ST1)；份额跌破约 22% 或脉管/HOT 在战术段大规模上位 = 侵蚀快于预期；脉管继续主要吃空间/MRI长寿命 = 符合预期(非战术段)",
+      "series": []
+    },
+    {
+      "id": "cryo-ir-procurement",
+      "name": "制冷型红外军品采购景气",
+      "node": "cooled-ir",
+      "linked_judgment": "制冷型红外是军品采购周期需求、2024 是低谷（ST6）",
+      "how_to_check": "军工红外公司季报(环节口径，不碰个股估值)：营收/交付/订单是否复苏；制冷型占红外整体比例；WebSearch: 制冷型红外 军品采购 2026",
+      "baseline": {
+        "value": "红外整体 $0.65B(2025)→$1.02B(2030)/CAGR 9.6%、制冷型约占 32%；高德红外 2024 上市以来首亏约 -4.47 亿(型号采购延期+降价)——采购周期低谷",
+        "as_of": "2024-2025"
+      },
+      "reading_guide": "交付恢复/型号放量/营收回升 = 采购周期复苏(ST6)；持续低迷或降价扩散 = 未见底。注：环节景气判读、个股贵贱留第一阶段",
+      "series": []
+    },
+    {
+      "id": "space-nuclear-selection",
+      "name": "空间核电动力转换选型（布雷顿 vs 斯特林）",
+      "node": "space-nuclear",
+      "linked_judgment": "大功率赛道由布雷顿主导、斯特林被边缘化（ST2）",
+      "how_to_check": "WebSearch: NASA fission surface power phase 2 award 2026 / Brayton vs Stirling space reactor；SR-1 Freedom power conversion；NSTM-3 进展",
+      "baseline": {
+        "value": "2025-08-04 Duffy 指令：月面 100kWe 堆明确选闭式布雷顿；SR-1 在轨堆(>20kWe,2028)亦布雷顿；斯特林仅留 Kilopower 1-10kWe 与同位素瓦特级(ASRG 已 2013 取消)非主线；MMRTG 热电是深空主力",
+        "as_of": "2025-08 / 2026-04"
+      },
+      "reading_guide": "FSP 阶段二(2026 初)确认布雷顿、斯特林缺席 ≥100kWe = 边缘化兑现(ST2)；斯特林意外被选回大功率 = 证伪。注意区分 Kilopower(裂变+斯特林低功率) vs ASRG(同位素+斯特林) vs 大功率堆(布雷顿)",
+      "series": []
+    },
+    {
+      "id": "stirling-powergen-revival",
+      "name": "斯特林发电复兴信号（防臆造）",
+      "node": "powergen-failed",
+      "linked_judgment": "斯特林作为发电机无可信复兴（ST3）",
+      "how_to_check": "对抗性核查：搜真实一手融资/订单公告，逐条排除 SEO 臆造市场报告；WebSearch: Stirling engine generator 2026 funding order；Qnergy 新闻",
+      "baseline": {
+        "value": "唯一活着商用=Qnergy(数千万级利基、累计融资约 $46M、最近一轮 2021-11 $16M)；三波墓碑(SES 2011/Infinia 2013/Azelio 2023)已出清；网传 SES×SolarReserve 150MW/Microgen EIB €12M 等经核为臆造不采信；但 Deep Space Energy(ESA/NATO 资助·同位素斯特林·2029 演示)与 Stirlingversal(Kockums 授权·昆山厂)是两家真实早期反例、均未破 $1 亿门槛",
+        "as_of": "2026-06"
+      },
+      "reading_guide": "某斯特林发电玩家年收入破 $1 亿 或单笔 >$1 亿订单/融资(一手可核) = 复兴信号(需重估)；维持仅 Qnergy 利基增量 = 无复兴(ST3 兑现)。凡市场报告类数据先验证一手出处、防臆造",
+      "series": []
+    },
+    {
+      "id": "emerging-cryo-demand",
+      "name": "新兴冷源需求（超导/AI冷却/量子）",
+      "node": "emerging-cryo",
+      "linked_judgment": "新兴冷源是真增量但极早期、按期权对待（ST5）",
+      "how_to_check": "WebSearch: Hinetics superconducting motor order 2026 / cryogen-free superconducting AI datacenter；DOE ARPA-E 进展；量子前级冷却斯特林",
+      "baseline": {
+        "value": "Hinetics 2026-01 CES 首发无低温介质超导电机(用商用斯特林制冷机)、DOE ARPA-E 资助、瞄航空电推+AI 数据中心、2025-05 出原型；量子前级冷却(AMETEK Sunpower 被 TU Berlin 验证)——均极早期、无量产收入",
+        "as_of": "2026-01"
+      },
+      "reading_guide": "Hinetics(或同类)拿到量产订单(超原型)、或 AI 数据中心超导互联商用化 = 期权开始兑现、斯特林冷源受益(ST5)；维持原型/科研 = 仍早期、不外推。与 ai-datacenter 链交叉",
+      "series": []
+    },
+    {
+      "id": "aip-route-mix",
+      "name": "潜艇 AIP 技术路线（斯特林 vs 锂电 vs 燃料电池）",
+      "node": "submarine-aip",
+      "linked_judgment": "斯特林 AIP 被锂电+燃料电池两头夹（ST4）",
+      "how_to_check": "WebSearch: submarine AIP lithium-ion vs Stirling 2026 / Saab A26 order / 新建常规潜艇 动力 选型",
+      "baseline": {
+        "value": "日本苍龙后期→大鲸级弃斯特林改锂电(连 AIP 都不需要)；德国 TKMS 走燃料电池；斯特林仍在中国 711 所(320kW/40%、装 039A/B)与瑞典 Saab A26(波兰 2025-11 选 A26、Orka 约 $2.52B)服役出口；A26 交付推迟到 2031/2033",
+        "as_of": "2025-2026"
+      },
+      "reading_guide": "新签常规潜艇 AIP 锂电占比上升、斯特林路线收窄 = 被夹兑现(ST4)；斯特林在新订单维持/扩大 = 需上修。注：本节军用、不可投，仅判技术路线趋势",
+      "series": []
+    }
+  ]
+}

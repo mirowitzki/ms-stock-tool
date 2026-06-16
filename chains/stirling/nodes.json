@@ -1,0 +1,261 @@
+{
+  "chain": "stirling",
+  "version": "2026-06-16",
+  "_schema": {
+    "说明": "斯特林发动机产业链知识结构化真相源。判断和数字先进这里、页面是渲染层。每个数字带 as_of+source+confidence。这条链的特殊性：不是上下游线性链，而是一个 1816 年的公有领域热力学循环横跨几个互不相关终端市场——所以节点=应用域，外加一张横切层节点卡解释『价值为什么不归斯特林原理本身』。口径(全球 vs 中国、斯特林专用 vs 含脉管/GM/JT 的全 cryocooler、军用高端 vs 民用低端)是本链幻觉最大来源，每个聚合数字标口径。",
+    "five_layer": "necessity / capture(凭什么占有+久期) / capital_cycle(周期位置) / rent_or_moat(三档：结构护城河/周期或利基/价值毁灭或不可投)",
+    "map_tier": "分层钱流判级 rich/mid/thin（价值占有厚薄、非重要性；本链内相对、不跨链比色）",
+    "核心判断": "斯特林是 1816 年公有领域原理、零专利壁垒；价值不归循环本身、归把它可靠塞进利基系统的集成方与精密制造。真正赚钱的是反向循环的制冷机(中国军用红外)；正向发电两百年墓碑累累、只在潜艇AIP(军用不可投)、空间核电(被布雷顿边缘化)、利基发电(Qnergy甲烷/偏远·未上市)三处站住脚。A股唯一可触达=高德红外 002414(制冷型红外+自产斯特林冷源)，但那是分析一家红外公司、斯特林是输入不是主轴。无任何斯特林纯标的。"
+  },
+  "nodes": [
+    {
+      "id": "stirling-principle",
+      "name": "斯特林循环本身（横切层·公有领域原理）",
+      "subchain": "横切层",
+      "map_tier": "thin",
+      "role": "1816 年 Robert Stirling 的公开专利、早进公有领域（其公司 1818-1922 即在造机）——这一层解释整条链最反直觉的事实：原理零壁垒、谁都能用，所以价值不归『斯特林』这三个字，归把它可靠集成进某利基系统的精密制造与可靠性 know-how",
+      "five_layer": {
+        "necessity": "—（这是横切全链的定性层、不是某环节）",
+        "capture": "原理本身零占有——1816 公开专利、全球任何人可用；价值占有发生在下游『把它做可靠并塞进利基』的系统集成与精密制造层",
+        "capital_cycle": "—（原理无周期）",
+        "rent_or_moat": "原理＝苦力/无壁垒；护城河在精密密封/长寿命可靠性/热交换器再生器工艺/把它塞进电网与PV到不了或法规强制的缝隙并保证多年免维护——这层才是壁垒"
+      },
+      "players": [
+        {"name": "（无）——原理是公有领域，无人占有", "ticker": "—", "market": "—", "note": "市场用脚投票印证：活下来的都是『系统集成商』(Qnergy/Sunpower-AMETEK/NASA)，只押『斯特林=更好的发电机』去拼大众市场的(SES/Infinia/Microgen/WhisperGen/Azelio)几乎全军覆没"}
+      ],
+      "key_numbers": [
+        {"metric": "斯特林发电反复失败的结构性根因", "value": "功率密度低(受气体对流换热限制、机器又大又重)；密封/工质(氢/氦)泄漏是头号难题(高性能缸压可达 220bar、氢会穿透加热头金属漏掉)；高温高压需昂贵高强材料致单位成本压不下来；启停慢、调速难只适合恒速；相对内燃机+电机/燃机/PV+电池无压倒性优势", "as_of": "2018-2023", "source": "Energy Conversion & Management 2018 (sciencedirect S0196890418306514) + Wikipedia: Stirling engine + EPRI 评估", "confidence": "权威综述多源一致"},
+        {"metric": "壁垒归属定性", "value": "难点全在工程实现(降成本/提功率密度/可靠密封/换热器再生器工艺)、不在循环原理；价值落在精密制造+长寿命可靠性+利基集成这层", "as_of": "2023", "source": "Technological challenges of the Stirling machine 综述", "confidence": "定性高置信"}
+      ],
+      "threat_timeline": [],
+      "linked_indicators": [],
+      "applicability": "全球通用定性——决定整条链『没有纯标的、价值归集成方』这一最重判断的根基",
+      "last_reviewed": "2026-06-16"
+    },
+    {
+      "id": "cryocooler-body",
+      "name": "斯特林制冷机本体（反向循环·真正赚钱的一面）",
+      "subchain": "反向循环·制冷",
+      "map_tier": "rich",
+      "role": "基于逆斯特林循环、用工质(多为氦)往复压缩膨胀把冷指降到 40-150K(红外焦平面主流 77K)的机械式低温制冷机——分旋转式(电机+曲柄)与线性式(对置直线电机、低振动长寿命)。是斯特林这个原理两百年来真正赚到钱、且有结构护城河的一面，但护城河强烈分层(军用高端 vs 民用低端)",
+      "five_layer": {
+        "necessity": "制冷型红外探测器必配集成杜瓦制冷机(IDCA)，斯特林是把焦平面降到 77K 的主流冷源之一(与脉管/JT 并存)——在战术/手持/弹载的小体积低成本场景近 20 年仍主流",
+        "capture": "持久(可靠性 MTTF 是真壁垒：早期约 4000h 远不够、做到 Ricor K508N 20000h/高端 30000h+ 靠精密间隙密封+挠性/气浮轴承+激光焊冷指+长期工程积累；CR3≈46%、产能集中欧洲+以色列+北美约 79% 即壁垒证据)",
+        "capital_cycle": "稳态利基(军用需求随装备采购周期波动、非资本周期顶点；无 FOMO 扩产潮)",
+        "rent_or_moat": "结构护城河、但强烈分层——价格横跨约百倍，价值几乎全压在军用/空间高可靠端；替代是慢侵蚀非悬崖(脉管+HOT 两头挤)，但护城河不只在守、战术段还在拿新订单(2026 Sunpower CryoTel GT 拿美陆军 CIRCM、斯特林在再生式制冷机增速领先、脉管缩小化难至今未在战术段上位)——威胁与韧性两边都要摆、防单向看空"
+      },
+      "players": [
+        {"name": "Ricor", "ticker": "未上市", "market": "以色列", "note": "战术微型旋转斯特林全球龙头之一(CR3)；K508N MTTF 设计 20000h(前代 10000h)；无人机吊舱/单兵热瞄/夜视主力"},
+        {"name": "Thales Cryogenics", "ticker": "HO.PA(母 Thales)", "market": "法/荷(母法股)", "note": "CR3 之一；旋转斯特林做过加速老化 MTTF 验证。母公司 Thales 是大型防务集团、cryogenics 仅极小一隅"},
+        {"name": "AIM Infrared", "ticker": "未上市", "market": "德国", "note": "CR3 之一(与 Ricor/Thales 并列被点名为斯特林主要厂商)"},
+        {"name": "Honeywell Hymatic", "ticker": "HON(母 Honeywell)", "market": "英(母美股)", "note": "空间级长寿命挠性轴承线性斯特林霸主——自述在轨美国长寿命挠性轴承制冷机 85% 含 Hymatic 硬件。母公司 Honeywell 巨型多元、此为极小一隅"},
+        {"name": "AMETEK Sunpower（CryoTel）", "ticker": "AME", "market": "美股", "note": "自由活塞斯特林(FPSE)鼻祖、2013 初被 AMETEK 收购；CryoTel 系列气浮轴承 FPSE、40-150K、供科研/超导/量子；2026 CryoTel GT 拿美陆军 CIRCM(红外对抗)、是 AME 旗下技术领先、在赢军方合同的活跃单元。『非斯特林纯标的』成立，但『对 AME($600亿+仪表巨头)财报可忽略』缺一手分部数、待回 AME 10-K 坐实"},
+        {"name": "Sumitomo Heavy Industries 住友重工", "ticker": "6302.T", "market": "日股", "note": "上市；机电事业部 SHI Cryogenics 主力是 GM/脉管(供 MRI/半导体离子注入机 4K/10K)，但也产空间级斯特林冷源(FS1ST 80K/LB2ST 20K)上 JAXA 卫星(Hitomi/SPICA)——又一个斯特林沉在约 $59 亿大集团里的实例(印证无纯标的)；CR3/产能区域那组西方口径未把它单列"},
+        {"name": "中电科11所（华北光电）", "ticker": "未上市(体制内)", "market": "中国", "note": "三大红外所之一(碲镉汞)；产旋转/线性集成式斯特林制冷机，用于弹载/机载/舰载/手持红外武器。非独立上市标的"},
+        {"name": "武汉高芯科技（高德红外 002414 全资子公司）", "ticker": "002414(母)", "market": "A股", "note": "A股唯一自产斯特林冷源者；旋转+线性斯特林，RS058 型制冷量≥550mW@77K、稳态功耗≤5.5W、重量≤430g、MTTF≥10000h；制冷探测器+杜瓦+制冷机全链自控"},
+        {"name": "昆明物理所/上海技术物理所/中船711所", "ticker": "未上市(体制内)", "market": "中国", "note": "红外/低温工程研究所，参与斯特林制冷机研发，非独立上市"}
+      ],
+      "key_numbers": [
+        {"metric": "斯特林制冷机全球市场规模（口径分歧极大）", "value": "约 $3.4 亿(IndustryArc $335.85M)~$8.5 亿(部分报告 $850M)；含 Verified Market Research $587.6M(2024)、QYResearch 约 $430M(2029)——机构差约 2.5×；且口径含红外/科研/超导/医疗/航天等全用途、各报告不可加总", "as_of": "2024-2029", "source": "IndustryArc / Verified Market Research / QYResearch（多为付费墙后摘要）", "confidence": "low（口径分裂约 2.5×、谨慎用区间）"},
+        {"metric": "斯特林占全 cryocooler 市场份额", "value": "约 32%（Mordor 2025 直接回源·32.13%；GM 亦约 32%、JT 约 9%、脉管增速最快约 14.9% CAGR）——旧二手聚合曾误传 21%，已订正", "as_of": "2025", "source": "Mordor Intelligence（直接回源 mordorintelligence.com/industry-reports/cryocooler-market）", "confidence": "med（口径订正：21%→32%）"},
+        {"metric": "斯特林制冷机产品/下游结构", "value": "旋转式约 53%(最大)；下游军用约 33%(最大)、电子约 25%（斯特林专用口径；注：全 cryocooler 口径下医疗最大约 27%，两口径别混）", "as_of": "近年", "source": "QYResearch/valuates 聚合（斯特林专用）；Mordor（全 cryocooler 医疗 27.38%）", "confidence": "med"},
+        {"metric": "全球集中度 CR3", "value": "约 46%（第一梯队 Ricor/AIM/Thales）；产能区域 欧洲约 40%+以色列约 21%+北美约 18%≈79%（QYResearch 口径偏西方、未单列日本住友重工 SHI）", "as_of": "近年", "source": "QYResearch 聚合", "confidence": "med（口径偏西方）"},
+        {"metric": "价格断层（价值分层证据）", "value": "商用 $1,800-22,800（多源可查）、低端 <$2,000；专用军用单元可达约 $250,000（Mordor 单源、独立渠道未复现，军用单价本不公开）——同名横跨约百倍", "as_of": "近年", "source": "多源（商用端）/ Mordor Intelligence（军用上限单源）", "confidence": "med（军用上限单源）"},
+        {"metric": "可靠性壁垒(MTTF)演进", "value": "早期约 4000h→Ricor K508N 20000h→高端 30000h+；靠精密密封/挠性轴承/激光焊冷指", "as_of": "近年", "source": "Reliability Growth of Stirling Coolers (academia) + Ricor", "confidence": "med"}
+      ],
+      "threat_timeline": [
+        {"threat": "脉管制冷机分流(零振动/长寿命，蚕食空间/MRI 长寿命场景)", "watch_signal": "脉管 CAGR(约14.9%)、MRI/空间载荷从斯特林转脉管", "horizon": "已发生、渐进(战术/手持斯特林仍主导)"},
+        {"threat": "HOT 高工作温度探测器削弱深冷需求(InAsSb/T2SL 抬到 150-160K、给 TEC 留口子)", "watch_signal": "HOT 探测器渗透、制冷机被小型化或被 TEC 替代", "horizon": "进行中、慢侵蚀非悬崖"}
+      ],
+      "linked_indicators": ["cryo-ir-procurement", "emerging-cryo-demand"],
+      "applicability": "全球需求、军用为主力下游；中国本体厂=体制内研究所+上市公司子公司(高芯科技)，无纯本体独立上市标的——A股唯一全链自控者是高德红外 002414",
+      "last_reviewed": "2026-06-16"
+    },
+    {
+      "id": "cooled-ir",
+      "name": "制冷型红外（最大下游·A股唯一可触达）",
+      "subchain": "反向循环·制冷",
+      "map_tier": "rich",
+      "role": "把焦平面(碲镉汞 HgCdTe/锑化铟 InSb/量子阱 QWIP/二类超晶格 T2SL)封进高真空杜瓦、用斯特林(或脉管/JT)降到 77-150K 压住热噪声，换取远超非制冷的灵敏度/探测距离，主用于军用导引头/远距侦察/空间科学——是斯特林制冷机的第一大下游，也是二级市场唯一能真触达斯特林价值的地方(但触达的是一家红外公司、斯特林是其输入不是价值主轴)",
+      "five_layer": {
+        "necessity": "军用远距/导引头/空间高灵敏场景不可替代(非制冷微测辐射热计灵敏度/探测距离够不到)；制冷是其物理前提",
+        "capture": "持久但分层——制冷探测器(碲镉汞/T2SL 晶体生长+读出电路+杜瓦封装)是工艺壁垒；高德红外把制冷机本体也自产、全链自控，是少数把斯特林冷源价值留在自家的玩家",
+        "capital_cycle": "随军品采购周期波动(高德 2024 营收约 26.78 亿、上市以来首次净亏约 -4.47 亿，因型号项目采购延期+降价)——是采购周期低谷、非资本周期顶点",
+        "rent_or_moat": "结构护城河(高门槛红外全链)，但需求是军品采购周期性、非永续增长；斯特林冷源对这些公司是『使能输入』非价值主轴——它们是红外/武器系统公司"
+      },
+      "players": [
+        {"name": "高德红外", "ticker": "002414", "market": "A股·深主板", "note": "强暴露：唯一同时批量产非制冷+制冷探测器的民企，运营 8 英寸碲镉汞/二类超晶格制冷探测器批产线，子公司高芯科技自产旋转+线性斯特林冷源——制冷型全链自控。⚠2024 上市以来首次净亏约 -4.47 亿/营收约 26.78 亿(+10.87%)/扣非 -4.94 亿——型号采购延期+降价致首亏(多源一手一致)"},
+        {"name": "睿创微纳", "ticker": "688002", "market": "A股·科创板", "note": "弱暴露(以非制冷为主)：非制冷红外成像+MEMS 芯片龙头，2024-09 发布全球首款 6μm VGA 非制冷探测器；已横向延伸制冷/中波但收入主轴是非制冷、不做斯特林本体"},
+        {"name": "大立科技", "ticker": "002214", "market": "A股·深主板", "note": "⚠现为 *ST大立(已被实施退市风险警示，引用必带标注)；国内唯一量产双技术路线(非晶硅+氧化钒)非制冷焦平面龙头，主业非制冷、不做斯特林本体"},
+        {"name": "富吉瑞", "ticker": "688272", "market": "A股·科创板", "note": "中暴露(系统集成口径)：自研量产制冷型多功能手持热像仪，但掌握的是非制冷探测器制备、外购制冷探测器/冷源做整机集成——非冷源本体"},
+        {"name": "北方导航", "ticker": "600435", "market": "A股·沪主板", "note": "待核：兵器集团光电资产、含红外制导，但公开年报未见斯特林本体/制冷型探测器明细披露——列 missing"},
+        {"name": "Lynred / SCD / Leonardo DRS / Teledyne", "ticker": "未上市/未上市/DRS/TDY", "market": "法/以/美/美", "note": "海外制冷探测器+模组主力(SCD 的 HOT 可达 160K 降低制冷需求；Teledyne 做 T2SL)"}
+      ],
+      "key_numbers": [
+        {"metric": "红外探测器整体市场(含制冷+非制冷)", "value": "$0.65B(2025)→$1.02B(2030)、CAGR 9.6%", "as_of": "2025-2030", "source": "MarketsandMarkets", "confidence": "med"},
+        {"metric": "制冷型 vs 非制冷型占比", "value": "非制冷约 68% / 制冷约 32%(制冷因高成本受限)", "as_of": "近年", "source": "marketreportanalytics 聚合", "confidence": "med"},
+        {"metric": "制冷型工作温度与材料", "value": "长波/中波焦平面主流 77-80K(部分系统取 150K 档)；四大材料 HgCdTe/InSb/QWIP/T2SL", "as_of": "—", "source": "Leonardo DRS / 技术综述", "confidence": "high"},
+        {"metric": "斯特林在制冷型红外里的角色", "value": "制冷型探测器必配 IDCA(探测器+杜瓦+制冷机)，斯特林是主流冷源之一(与脉管/JT 并存)；斯特林 vs 脉管 vs JT 在 IDCA 里的份额拆分缺数", "as_of": "—", "source": "知乎技术综述", "confidence": "high(定性)/份额缺数"}
+      ],
+      "threat_timeline": [
+        {"threat": "非制冷(微测辐射热计)凭成本/像元微缩持续抢民用份额(车载/安防/工业)", "watch_signal": "制冷型占比是否跌破约 32%", "horizon": "持续(但军用高灵敏场景制冷型不可替代)"}
+      ],
+      "linked_indicators": ["cryo-ir-procurement"],
+      "applicability": "全球需求、中国军用为主；A股唯一把制冷探测器+自产斯特林冷源全链自控的是高德红外 002414，但当前被军品采购周期压制(2024 首亏)。注：这是分析一家红外/武器系统公司、斯特林是输入不是主轴",
+      "last_reviewed": "2026-06-16"
+    },
+    {
+      "id": "emerging-cryo",
+      "name": "新兴冷源需求（超导/量子/AI 数据中心冷却）",
+      "subchain": "反向循环·制冷",
+      "map_tier": "mid",
+      "role": "斯特林制冷机的新增长向量——超导电机自带冷源、量子计算前级冷却、低温电子。是布局雷达式的领先信号(真金白银刚进来)，但极早期、规模小、海外为主、A股映射弱",
+      "five_layer": {
+        "necessity": "超导/量子要把磁体或量子比特降到几十 K 甚至 4K；斯特林制冷机(尤其 FPSE)是可随转子走、紧凑、长寿命的冷源候选",
+        "capture": "海外本体厂(AMETEK Sunpower CryoTel/Hinetics)占先；价值在冷源本体的精密制造，A股暂无对应玩家",
+        "capital_cycle": "萌芽期(2025-2026 才冒头、原型阶段、无量产收入)",
+        "rent_or_moat": "增量需求向量、非替代——是期权：若超导电机/量子/AI数据中心超导互联起量，斯特林冷源是受益方之一；但当前极早期、按期权对待、别外推"
+      },
+      "players": [
+        {"name": "Hinetics", "ticker": "未上市", "market": "美国初创", "note": "2026-01 CES 发布全球首台无低温介质(cryogen-free)超导电机，用商用斯特林循环制冷机直接挂转子上(冷头 sub-20K、超导线圈维持 <30K)；DOE ARPA-E 资助、瞄航空电推进+AI 数据中心；2025-05 已出原型。极早期"},
+        {"name": "AMETEK Sunpower（CryoTel）", "ticker": "AME", "market": "美股", "note": "FPSE 制冷机被 TU Berlin 验证可在量子应用维持温度且不引入振动、作 4K 稀释制冷前级/SQUID 冷源；对 AME 财报可忽略"}
+      ],
+      "key_numbers": [
+        {"metric": "Hinetics 超导电机用斯特林冷源采购规模/单价/订单", "value": "null（仍原型阶段、无量产数）", "as_of": "2026-01", "source": "interestingengineering CES2026 / ARPA-E", "confidence": "事件确证、规模缺数"},
+        {"metric": "量子/低温电子用斯特林市场规模量级", "value": "null（确认极早期、无金额）", "as_of": "2024-2026", "source": "physicsworld", "confidence": "定性早期"}
+      ],
+      "threat_timeline": [
+        {"threat": "（这是增量需求向量、不是被威胁方）若超导电机/AI数据中心超导互联起量则受益", "watch_signal": "Hinetics 拿量产订单、超导电机/超导互联在 AI 数据中心商用化", "horizon": "2027+（早期、按期权盯）"}
+      ],
+      "linked_indicators": ["emerging-cryo-demand"],
+      "applicability": "全球(美国为主)；A股映射弱、暂无对应本体玩家——与 ai-datacenter 链(数据中心冷却/超导互联)有交叉，作为反向布局雷达的领先信号记一笔",
+      "last_reviewed": "2026-06-16"
+    },
+    {
+      "id": "space-nuclear",
+      "name": "空间核电·斯特林转换器（被布雷顿边缘化）",
+      "subchain": "正向循环·发电",
+      "map_tier": "thin",
+      "role": "把核热源(同位素衰变热或裂变堆热)经热管送入自由活塞斯特林机做功发电——理论效率约为热电(RTG)的 3-4 倍(约 26% vs 约 6-7%)。曾是斯特林发电最硬的落点，但 2025-08 NASA 把月面堆提到 100kWe 后明确选了闭式布雷顿、不是斯特林；斯特林只留在低功率(Kilopower 1-10kWe)与同位素瓦特级两个非主线小生态",
+      "five_layer": {
+        "necessity": "深空/月面太阳能不可用处需核电；斯特林是动态转换候选之一，但非唯一(布雷顿/热电是对手)",
+        "capture": "无纯标的占有——全球 FPSE 龙头 Sunpower 早被 AMETEK 吃下沉为可忽略事业部；其余涉空间核上市公司(LMT/BWXT/LUNR)是堆/系统/燃料角色、不做斯特林",
+        "capital_cycle": "政策催化期但选型转向布雷顿——2025-12 行政令+2026-04 国家空间核电倡议在加速空间核电，但大功率赛道(100kWe月面堆/SR-1在轨堆)已锁定布雷顿、斯特林被边缘化",
+        "rent_or_moat": "对二级市场不可单独触达——价值要么沉在 AME 这种与斯特林无关的大盘里、要么在被布雷顿取代的赛道里、要么在不可投的国家科研体系/私有公司里"
+      },
+      "players": [
+        {"name": "AMETEK Sunpower", "ticker": "AME", "market": "美股", "note": "全球自由活塞斯特林龙头、做 NASA ASC/ASRG 转换器+2018 拿 Kilopower 斯特林合同；2013-01-02 被 AMETEK 公告收购、归入仪表事业部。『非斯特林纯标的』成立；对 AME($600亿+市值)定性极小、但具体分部营收缺一手数、待回 10-K 坐实"},
+        {"name": "Lockheed Martin", "ticker": "LMT", "market": "美股", "note": "FSP 阶段一牵头之一，走堆+布雷顿系统集成、非斯特林；$5M 概念合同对 LMT($710亿收入)四舍五入为零"},
+        {"name": "BWX Technologies", "ticker": "BWXT", "market": "美股", "note": "提供堆与燃料、不做斯特林；主业是海军核动力(潜艇/航母)，空间核仅一小片"},
+        {"name": "Intuitive Machines", "ticker": "LUNR", "market": "美股·Nasdaq", "note": "IX 合资牵头方(IM+X-energy)、走堆+系统、非斯特林；可忽略"},
+        {"name": "Westinghouse", "ticker": "私有(Cameco 49%+Brookfield)", "market": "私有", "note": "eVinci 类微堆、非斯特林；不可投"},
+        {"name": "应流股份", "ticker": "603308", "market": "A股", "note": "⚠明确排除为斯特林标的：只做高温合金/核电大型铸件/两机零部件，是核能材料外围、与空间斯特林转换器无直接关系"},
+        {"name": "中国侧(中核动力院/航天科技)", "ticker": "无公开纯标的", "market": "中国", "note": "学术文献载『堆+钠热管+斯特林』路线存在、中俄拟 2033-2035 月面建堆，但无斯特林转换器上市纯标的、无落地合同金额"}
+      ],
+      "key_numbers": [
+        {"metric": "FSP 月面裂变电源新目标与选型", "value": "2025-08-04 Duffy 指令：100kWe、明确指定闭式布雷顿循环(非斯特林)、质量<15吨、FY2030Q1 前可发射", "as_of": "2025-08-04", "source": "NASA FSP 指令 PDF / ANS", "confidence": "high"},
+        {"metric": "KRUSTY(Kilopower 用斯特林)地面核试", "value": "1kWe 级、高浓铀、钠热管驱动斯特林对、成功(2018-03)；Kilopower 目标 1-10kWe", "as_of": "2018", "source": "KRUSTY NTRS / NASA Kilopower", "confidence": "high"},
+        {"metric": "ASRG(同位素斯特林发电机)取消", "value": "2013 秋因预算取消飞行单元采购；效率约 26%、Pu-238 用量仅 MMRTG 的约 1/4", "as_of": "2013", "source": "Wikipedia ASRG / Planetary Society", "confidence": "high"},
+        {"metric": "当前深空主力同位素电源(非斯特林)", "value": "MMRTG(温差/热电)：约 2000Wt→约 110We；下一代 Next-Gen RTG 仍是热电，均非斯特林", "as_of": "2024", "source": "Lyncean RTG / SpaceNews", "confidence": "high"},
+        {"metric": "SR-1 Freedom 在轨堆", "value": "2028-12 拟发射、>20kWe、铀燃料+布雷顿转换(非斯特林)、核电推进赴火星", "as_of": "2026-04", "source": "SpacePolicyOnline / NSTM-3", "confidence": "high"},
+        {"metric": "太空斯特林转换器单项合同金额", "value": "null(公开渠道无 Sunpower/AMETEK 斯特林单项合同金额、属 NASA Glenn 内部研发拨款未单列)", "as_of": "—", "source": "—", "confidence": "missing"}
+      ],
+      "threat_timeline": [
+        {"threat": "布雷顿循环在 ≥100kWe 大功率堆全面取代斯特林", "watch_signal": "FSP 阶段二(2026 初最终招标)中标方与选型、SR-1 转换方案", "horizon": "已发生(2025-08 指令)、2026 初招标确认"},
+        {"threat": "热电 RTG(MMRTG/Next-Gen)继续把持同位素深空电源", "watch_signal": "ASRG/SRPS 是否复活、Pu-238 产能", "horizon": "已发生(斯特林同位素线被取消、仅低强度续研)"}
+      ],
+      "linked_indicators": ["space-nuclear-selection"],
+      "applicability": "全球(美国主导)；斯特林被布雷顿(大功率堆)与热电 RTG(同位素)两头夹、二级市场不可单独触达。2025-12 行政令的空间核电加速主要利好布雷顿、非直接利好斯特林——这是对『空间核电=斯特林订单窗口』的关键纠正。但要精确：斯特林在 ≥100kWe 大功率裂变堆出局是事实，同位素瓦特级转换这条线仍活、2026 还有 ESA/NATO 资助的新进入者(Deep Space Energy)——价值承接方从 NASA/AMETEK 迁向欧洲初创+ESA，是『大功率赛道出局』、不是『整体出局』",
+      "last_reviewed": "2026-06-16"
+    },
+    {
+      "id": "submarine-aip",
+      "name": "潜艇 AIP·斯特林发动机（军用·不可投·被锂电夹击）",
+      "subchain": "正向循环·发电",
+      "map_tier": "thin",
+      "role": "斯特林作为发电/动力(正向循环)唯一真正大规模服役的应用——不依赖空气推进让常规潜艇水下航行数周不上浮。但价值被国家造船体系/研究所占据、基本不可作为独立投资标的；且技术路线正被锂电池(日本)与燃料电池(德国)两头夹",
+      "five_layer": {
+        "necessity": "常规潜艇水下长航需 AIP；斯特林闭式循环是成熟路线之一，但非唯一(燃料电池/锂电是对手)",
+        "capture": "国家造船体系/涉密研究所占据——核心资产在非上市的研究所(中国 711 所、瑞典 Kockums 并入 Saab)，公开市场基本不可见",
+        "capital_cycle": "—(军备采购、非商业资本周期)；技术路线层面斯特林份额在被锂电侵蚀",
+        "rent_or_moat": "不可投——价值在国家体系内；即便沾边的上市公司(Saab/中国动力)，斯特林 AIP 都是其极小军用切片、非价值驱动"
+      },
+      "players": [
+        {"name": "中船 711 所", "ticker": "未上市(体制内)", "market": "中国", "note": "2021-12 验证 320kW/40% 热电转换效率斯特林发动机(当时已知单机最大)；装备 039A(中国首艘斯特林 AIP)/039B(国产化升级 AIP)；从瑞典引进后国产化"},
+        {"name": "中国动力", "ticker": "600482", "market": "A股·沪主板", "note": "待核：中船动力平台(2015 注入含 711 所在内 16 家、5 家军工院所核心动力资产、总资产约 545 亿、覆盖柴油机)，但斯特林 AIP 是否在上市主体内、是涉密军品无法公开确证——即便沾边也是军用极小切片、非投资逻辑"},
+        {"name": "Saab Kockums", "ticker": "SAAB-B.ST(母 Saab AB)", "market": "瑞典股", "note": "A26 Blekinge 级用 4× Kockums MkV V4-275R 斯特林 AIP+2 柴电、潜航 45 天/纯 AIP 约 18 天；2025-11 波兰选 A26(Orka 约 $2.52B)、瑞典授 Saab $1.0B 两艘。但斯特林 AIP 在 Saab AB(战斗机/防务大集团)营收占比极小(确切分部数缺、列 missing)"},
+        {"name": "德国 TKMS / 法国(对手路线)", "ticker": "TKMS.DE / 未上市", "market": "德/法", "note": "TKMS 走 PEM 燃料电池 AIP(212/214 型)——是斯特林的主要竞争路线"}
+      ],
+      "key_numbers": [
+        {"metric": "中国 711 所斯特林发动机", "value": "2021-12 验证 320kW、40% 热电转换效率、当时已知单机最大；为兆瓦级奠基", "as_of": "2021-12", "source": "维基 039A型潜艇 / 新浪军事", "confidence": "high"},
+        {"metric": "瑞典 A26 斯特林 AIP 与交付", "value": "4× MkV V4-275R 斯特林、潜航 45 天/纯 AIP 约 18 天；瑞典两艇交付从原 2024/25 一再推迟到 2031/2033(2025-10 协议成本上限 SEK 250 亿≈$2.6B)；另波兰 Orka 三艇 2025-11 选 A26 约 $2.52B(10B zloty)——是不同国家不同艇数，两个 $2.5B 量级是巧合、别混", "as_of": "2025-10/11", "source": "Naval News / ArmyRecognition", "confidence": "high"},
+        {"metric": "斯特林 AIP 被锂电替代(关键趋势)", "value": "日本苍龙级后期改锂电、大鲸级从设计起用锂电使 AIP/斯特林变得不必要(锂电能量密度高、无机械振动、续航更长)", "as_of": "2019-2026", "source": "SWZ Maritime / USNI Proceedings / 19FortyFive", "confidence": "high"},
+        {"metric": "Saab Kockums 斯特林 AIP 在 Saab AB 营收占比", "value": "null(确切分部数缺；定性=极小、Saab 主业是 Gripen 战斗机等)", "as_of": "—", "source": "—(agent 读 Saab PDF 时卡死未取到)", "confidence": "missing"}
+      ],
+      "threat_timeline": [
+        {"threat": "锂电池替代斯特林 AIP(日本已弃斯特林改锂电)", "watch_signal": "新建常规潜艇选锂电 vs 斯特林 AIP 的比例", "horizon": "已发生(日本)、进行中"},
+        {"threat": "燃料电池 AIP(德国 TKMS PEM)挤压斯特林份额", "watch_signal": "出口订单里燃料电池 vs 斯特林路线", "horizon": "持续竞争"}
+      ],
+      "linked_indicators": [],
+      "applicability": "中国/瑞典等；价值在国家造船体系/涉密研究所、二级市场基本不可触达。唯一沾边的 A股 600482 中国动力其斯特林 AIP 资产归属待核、且是军用极小切片",
+      "last_reviewed": "2026-06-16"
+    },
+    {
+      "id": "powergen-niche",
+      "name": "斯特林发电·利基系统集成（Qnergy 甲烷/偏远——唯一活着的商用发电）",
+      "subchain": "正向循环·发电",
+      "map_tier": "thin",
+      "role": "斯特林作为发电机两百年反复失败后，唯一真实在放量的发电向量——但价值来自『电网和 PV 到不了的地方+甲烷法规强制』、不拼度电成本。代表=Qnergy。未上市、规模小，是『把斯特林可靠塞进利基并保证多年免维护』这一活法的正面样本",
+      "five_layer": {
+        "necessity": "油气田零滑漏发电/填埋场沼气/铁路信号/电信偏远供电——这些是电网与 PV 到不了、或甲烷法规强制减排的缝隙",
+        "capture": "系统集成商占有(整机+远程运维平台)，价值在可靠性与利基垄断、不在斯特林原理",
+        "capital_cycle": "小规模成长(增量、非颠覆)；累计融资仅约 $46M、无 2024-25 大额新融资",
+        "rent_or_moat": "利基占有(真实但小)——价值在『法规强制+替代缺席』的缝隙；不上市、对二级市场不可触达"
+      },
+      "players": [
+        {"name": "Qnergy", "ticker": "未上市", "market": "以色列/美国犹他", "note": "当前唯一商用斯特林发电机供应商；旗舰 PowerGen 自由活塞斯特林、单机最高 5kW 可扩 20kW、多燃料；主业甲烷减排/油气田零滑漏/偏远无电网；已部署数千台。2025-03 发 TORCH4(填埋场沼气)、2025-09 进澳洲油气"},
+        {"name": "Cool Energy", "ticker": "未上市", "market": "美国", "note": "ThermoHeart 余热斯特林(25kWe、余热→电 31%)；仍小公司、未见规模量产/大订单"},
+        {"name": "Microgen Engine Corporation", "ticker": "未上市", "market": "荷兰", "note": "BG 旧 Microgen 资产重组、产 1kW 自由活塞斯特林(沿用 Sunpower FPSE 技术)；仍运营但规模微小、未大众化"}
+      ],
+      "key_numbers": [
+        {"metric": "Qnergy 产品与定位", "value": "PowerGen FPSE 最高 5kW(可扩 20kW)、多燃料；主业甲烷减排/偏远供电、非度电成本竞争；累计融资约 $46M、最近一轮 2021-11 Series C $16M", "as_of": "2025", "source": "Qnergy 官网 / Tracxn", "confidence": "med-high"},
+        {"metric": "Cool Energy ThermoHeart", "value": "25kWe、余热→电 31%(同温段对手约 18%)、设计寿命目标 18 万小时；无 2024-25 规模订单证据", "as_of": "2019 数据表", "source": "Cool Energy 数据表", "confidence": "med"}
+      ],
+      "threat_timeline": [],
+      "linked_indicators": [],
+      "applicability": "全球利基(甲烷法规驱动)；均未上市、对二级市场不可触达——是『价值归系统集成方』的正面样本、不是可投标的",
+      "last_reviewed": "2026-06-16"
+    },
+    {
+      "id": "powergen-failed",
+      "name": "斯特林发电·大众市场墓碑（dish-CSP / micro-CHP / 储能——三波失败）",
+      "subchain": "正向循环·发电",
+      "map_tier": "thin",
+      "role": "凡是押『斯特林=更好的发电机』去拼电网/家用大众市场的，几乎全军覆没——这一节是反面教材，解释为什么这条链没有发电侧的可投标的，也是防『斯特林复兴』叙事的免疫节点",
+      "five_layer": {
+        "necessity": "—(这些应用斯特林并非不可替代，正因有 PV+电池/燃气锅炉/内燃机等更优替代才失败)",
+        "capture": "价值毁灭——投入的股权资本几乎归零(SES NTR 约 $100M、BG Microgen >£40M、Azelio 约 2 亿 SEK 缺口)",
+        "capital_cycle": "已出清(玩家破产退出)",
+        "rent_or_moat": "价值毁灭/无壁垒——dish-CSP 败给 PV 崩价且无储热、micro-CHP 比燃气锅炉贵 £1500、铝储热斯特林融不到资破产"
+      },
+      "players": [
+        {"name": "Stirling Energy Systems (SES)", "ticker": "已破产", "market": "美国", "note": "2011-09-29 Chapter 7 清算；NTR 2008 注资约 $100M 归零；唯一商业电站 Maricopa 1.5MW(60 台 SunCatcher、26% 效率)仅运行约一年；1.6GW 已核准管线从未建成。败因=PV 崩价+碟式斯特林无储热(丢了 CSP 唯一卖点)"},
+        {"name": "Infinia", "ticker": "已破产", "market": "美国", "note": "2013-09 Chapter 11；资产 2013-11 被以色列 Qnergy 收购"},
+        {"name": "Azelio", "ticker": "已破产", "market": "瑞典", "note": "2023-07 破产(更正:非 2022)；铝相变储热+斯特林放电(号称 13 小时);IP 归 Stena、Gas-Box 归 Texel;股东归零;长时储能赛道警示样本"},
+        {"name": "BG Group Microgen / WhisperGen", "ticker": "已关闭/退场", "market": "英/新西兰", "note": "BG 2011-02 关 micro-CHP(投 >£40M/7 年未果、比燃气锅炉贵 £1500);WhisperGen 量产从未达成、已退场"}
+      ],
+      "key_numbers": [
+        {"metric": "dish-Stirling CSP 崩塌", "value": "SES 2011-09 Ch7 清算、Maricopa 1.5MW 运行约一年即拆、1.6GW 管线从未建成；Infinia 2013-09 Ch11→Qnergy", "as_of": "2011-2013", "source": "Wikipedia SES / Reuters Events / REVE", "confidence": "high"},
+        {"metric": "micro-CHP 失败经济门槛", "value": "BG 关 Microgen 投 >£40M/7 年；斯特林 micro-CHP 比普通燃气锅炉贵约 £1500、降不下来", "as_of": "2011", "source": "ENDS Report / NS Energy", "confidence": "high"},
+        {"metric": "储能斯特林破产", "value": "Azelio 2023-07 破产、缺口约 2 亿 SEK、股东归零", "as_of": "2023-07", "source": "Energy-Storage.news / Canary Media", "confidence": "high"},
+        {"metric": "『斯特林复兴』叙事多为臆造(防幻觉)", "value": "网上多份市场报告声称 SES×SolarReserve 150MW/Microgen 拿 EIB €12M 等——经核查多为臆造(SES 2011 已清算、Microgen 无融资记录)、不采信", "as_of": "2026-06", "source": "Crunchbase(Microgen 无融资) 等反证", "confidence": "high(已证伪)"},
+        {"metric": "真实早期反例(防悲观成见镜像、与臆造严格区分)", "value": "两家真实但早期、均未破 $1 亿门槛：①Deep Space Energy(拉脱维亚-英国)2026-02 拿 ESA+NATO DIANA+拉政府约 €930K-€1M、做同位素斯特林发电机(RTALIG 约 25% 效率、用钚少 5 倍)、目标 2029 演示飞行；②Stirlingversal(瑞典隆德、持 Kockums 斯特林全球授权、昆山设厂)把高温脏烟气转电、2025-12/2026-01 洽无锡太湖动力、靠可转债续命。结论：发电侧无『已起量』的复兴，但有两个真实早期尝试、按期权盯、别用『墓碑』一词一并抹掉", "as_of": "2026-02", "source": "NEI Magazine/payloadspace/SatNews(Deep Space Energy)；stirlingversal.com/PitchBook(Stirlingversal)", "confidence": "med(早期、多家航天媒体报道·数额待防线一已核)"}
+      ],
+      "threat_timeline": [],
+      "linked_indicators": [],
+      "applicability": "全球；这些是已出清的墓碑、无可投标的——价值在于免疫臆造的『斯特林发电复兴』题材(网传 SES×SolarReserve 等多为臆造)。但要把『臆造的复兴』与『真实早期反例』区分：Deep Space Energy/Stirlingversal 是两家真实但未起量的早期尝试(按期权盯)，所以措辞是『无已起量的复兴』、不是『绝对没有任何尝试』",
+      "last_reviewed": "2026-06-16"
+    }
+  ],
+  "_pending": "①潜艇 AIP：Saab Kockums 斯特林 AIP 分部营收/600482 斯特林资产归属未取到(已列 missing、挂 next_checkpoint)；②斯特林制冷机市场规模口径分裂约 2.5×($3.4-8.5亿)、AME 旗下 Sunpower 事业部营收占比缺一手分部数(待回 AME 10-K)、军用专用单元 $25万上限 Mordor 单源待复现；③质检订正(2026-06-16)：斯特林占 cryocooler 份额经直接回源 Mordor 由 21% 订正为约 32%、ST1 阈值随之上移；高德 2024 那个来源不明的 46.19亿对照口径已删(确认口径=营收26.78亿/首亏4.47亿)；补入漏掉的上市玩家住友重工6302.T；Hinetics 冷源温度由约50K 订正为冷头sub-20K/线圈<30K；Saab 美元折算 $2.3B→$2.6B；④占位公司代码已逐个核、富信688662/四方精创300468已排除、北方导航600435斯特林暴露待核；⑤Deep Space Energy/Stirlingversal 是两家真实早期斯特林发电反例(均未起量、按期权盯)。闸门②成本法待用户选环节后做、逐家个股分析属第一阶段单股工具。"
+}
