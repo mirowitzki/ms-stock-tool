@@ -23,6 +23,10 @@ import subprocess
 import sys
 from pathlib import Path
 
+# 质检硬闸门：完整报告不过五道质检关、不出干净 PDF（解决"有模板不照做"的执行问题）
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from qc_gate import verify_qc
+
 
 # 自动定位 pandoc / wkhtmltopdf（Windows 常见路径 + PATH 搜索）
 def find_executable(name, common_paths):
@@ -84,6 +88,7 @@ def main():
     ap = argparse.ArgumentParser(description="把中文 Markdown 报告渲染成排版工整的 PDF。")
     ap.add_argument("ticker", help="股票代码，如 RKLB")
     ap.add_argument("--file", help="指定单个 .md 文件名（相对 analyses/<TICKER>/）；不指定则渲染所有 *_完整报告.md")
+    ap.add_argument("--draft", action="store_true", help="跳过质检硬闸门、强制出草稿 PDF（默认不过五道质检关拒绝出完整报告 PDF）")
     args = ap.parse_args()
 
     pandoc_exe = find_pandoc()
@@ -125,6 +130,16 @@ def main():
     print(f"准备渲染 {ticker} 的 {len(targets)} 份报告：")
     rendered = []
     for md in targets:
+        # 完整报告走质检硬闸门：五道关全过 + _thesis.md 在 + 报告指纹未过期，才放行
+        if "完整报告" in md.name and not args.draft:
+            ok, msg = verify_qc(ticker)
+            if not ok:
+                print(f"  ⛔ {md.name} 未过质检闸门、拒绝出 PDF：\n     {msg}")
+                print(f"     跑完五道质检关后登记：python scripts/qc_gate.py {ticker} --record "
+                      f"check_numbers=pass fact=pass discipline=pass depth=pass insight=pass")
+                print(f"     （确需草稿可加 --draft 跳过闸门）")
+                continue
+            print(f"  ✓ 质检闸门放行：{msg}")
         result = render_one(md, pandoc_exe, wk_exe, css_path.absolute())
         if result:
             rendered.append(result)

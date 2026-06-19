@@ -169,9 +169,9 @@
 ## 帮用户分析一家公司的流程（输入：股票代码；输出：一份完整报告 PDF + 估值交互器）
 
 1. **取数**：`python scripts/fetch_a_stocks.py <代码> --years 5`（A股）/ `fetch_filings.py`（美股）+ `python scripts/fetch_prices.py <代码>`（近 5 年月度股价）
-2. **写唯一一份完整报告**：**先读 `reviews/LESSONS.md` + `skills/report-writing.md`（写作铁律：展示别断言）**；**先跑 `compute_metrics.py` 出 metrics.json**；加载 business-understanding + moat-analysis + valuation + **value-judgment（四柱）** + **analysis-depth（分析深度·寻找价值）** 技能，**动笔前先做 analysis-depth 的四步（定一句核心论点 / 找认知差 / 诊断价值困在哪靠什么释放 / 定主变量），把判断的脊梁立起来再写**；**深读 `filings/` 的招股书 + 近 5 年年报 + 高信号公告**（问询函/控制权/重组等）+ 联网补全组织/管理/文化（含管理层激励/内部人持股，喂第三柱），写出 `<TICKER>_公司完整报告.md`——**机构级；章节结构按 `templates/report-template.md`，每段写法按 `skills/report-writing.md`（show-don't-tell、给具体数字/机制/画面、一章一章深挖）；含"投资分析与估值"章节（替代原 memo）**。追求完整度、不限页数、**绝不写成放大版摘要**。（不再写 dossier / memo）
+2. **写唯一一份完整报告**：**先读 `reviews/LESSONS.md` + `skills/report-writing.md`（写作铁律：展示别断言）**；**先跑 `compute_metrics.py` 出 metrics.json**；加载 business-understanding + moat-analysis + valuation + **value-judgment（四柱）** + **analysis-depth（分析深度·寻找价值）** 技能，**动笔前先做 analysis-depth 的四步（定一句核心论点 / 找认知差 / 诊断价值困在哪靠什么释放 / 定主变量），把判断的脊梁立起来再写、并落成 `analyses/<代码>/_thesis.md`（这是出 PDF 硬闸门的必需项，强制"分析先于码字"）**；**深读 `filings/` 的招股书 + 近 5 年年报 + 高信号公告**（问询函/控制权/重组等）+ 联网补全组织/管理/文化（含管理层激励/内部人持股，喂第三柱），写出 `<TICKER>_公司完整报告.md`——**机构级；章节结构按 `templates/report-template.md`，每段写法按 `skills/report-writing.md`（show-don't-tell、给具体数字/机制/画面、一章一章深挖）；含"投资分析与估值"章节（替代原 memo）**。追求完整度、不限页数、**绝不写成放大版摘要**。（不再写 dossier / memo）
 3. **过『质检关』**（必做，见专节）：跑 `check_numbers.py` + 四个检查 agent（防幻觉 + 防成见 + 防写水/depth-check + 防浅析/insight-check），🔴清零才出 PDF。
-4. **出 PDF**：`python scripts/render_pdf.py <代码>`（渲染完整报告.pdf；dossier/memo 不存在会自动跳过）
+4. **出 PDF**：`python scripts/render_pdf.py <代码>`——**出 PDF 前自动过 `qc_gate.py` 硬闸门**：必须 ① `_thesis.md`（动笔前四步）在 ② 五道关已 `--record` 全 pass ③ 报告指纹未过期（登记后没再改报告），三者满足才放行、否则拒绝出 PDF（确需草稿用 `--draft`）。
 5. **出交互器 + 决策记录**：
    - 把报告"估值"章的三情景 + 基础事实 + 概率写成 `valuation_inputs.json`——**每情景必写 `story` + `governance`**（交互器拿它们当卡片主面，价值显示成毛估区间）；**还必写 `pillars` 块**（四柱判断仪表盘）：每柱一句话判断 + `pillars.details.<柱>` 这家公司的详细分析（引用本公司具体数字、落到这只股票、**不写课本定义**）。详见 `skills/value-judgment.md`。
    - **【美股必做】生成 `financials/segments.json` 让桑基图能画出收入组成。** A 股的 segments.json 由 `fetch_a_stocks.py` 自动抓；**美股的分部数据不在 XBRL companyfacts 里、要从 10-K 的收入拆分表（按产品/终端市场/地区）+ 季度财报读出来、手工写 segments.json**（schema 见 002091 的：维度键 `by_product`/`by_industry`/`by_market`/`by_region` → 期间日期 → `[{name, revenue, cost, gross_profit, margin}]`，revenue 用原始货币单位、`_seg_latest_annual` 已支持非日历财年取最新期）。优先用最能体现业务 performance 的拆分：多分部公司(如 NVDA 的 Data Center/Gaming 等)用 10-K 审计分部；单一报告分部公司(如 SWKS)用财报口径的终端市场拆分(Mobile/Broad Markets)并在 `_note` 标注是估算口径、cost/margin 未披露留 null。没有 segments.json 时桑基图只能从"营业收入"起步、看不到收入组成。
@@ -198,6 +198,8 @@
 5. **洞察 agent（防浅析 / 防"有事实没判断"，2026-06-19 加）**：最后起一个独立 subagent，按 `skills/insight-check.md` 查**分析轴**——有没有贯穿全文、立得住的核心论点；每个承重数字有没有被解读成"对价值意味着什么"（而非只陈述）；有没有指出市场看错在哪（认知差/variant perception）；财务有没有"从数字反推体质与文化"的反向视角；估值有没有"价值阶梯（资产/EPV/分部加总/成长）+ 价值困在哪、靠什么释放"的诊断；情景是不是带名字的故事 + 主变量。标尺＝688237 深版的分析密度。depth-check（第四道）管事实轴、它管分析轴，两道各管一轴——一份报告可以事实很全却分析很浅。**根因＝跳过了"先形成并论证一个价值论点"这步、直接把采集来的事实组织成章节；纠正＝动笔前先做 analysis-depth 的四步（定 thesis / 找认知差 / 诊断价值困在哪 / 定主变量）。**
 
 **收四份红黄牌 → 改掉所有 🔴（🟡 视情况修或标注为"判断"）；任何一章被判 🔴写水就回原始材料第一手补深、被判 🔴浅析就回去补判断（定 thesis / 找认知差 / 把数字解读成价值含义 / 做价值阶梯诊断）→ 🔴清零，才出 PDF / 交互器。** 检查 agent 只挑错、不改写；最终判断和修改由主 Claude 做（人主导、工具辅助）。**独立上下文是命门**——一旦让检查 agent 读了草稿结论再"复核"，它就被带跑、和作者共享盲点了。
+
+> **硬闸门（2026-06-19 加，解决"有模板不照做"的执行问题）：质检从"应该跑"升级成"不跑就出不来干净 PDF"。** 光有模板/技能（被动文档）管不住执行——最该做的分析会被静默跳过、没有点强制它暴露。所以把质检关变成代码强制的闸门（参照"净债漏算"教训：终点是代码/回归测试、不是让人每次手工记得）。流程：五道关跑完后 `python scripts/qc_gate.py <代码> --record check_numbers=pass fact=pass discipline=pass depth=pass insight=pass` 登记结论（写 `analyses/<代码>/_qc_status.json` + 锁定报告 sha256 指纹）；`render_pdf.py` 出完整报告 PDF 前自动调 `qc_gate.py` 校验——缺 `_thesis.md`、或任一关非 pass、或报告在登记后被改过（指纹不符）= 拦下、拒绝出 PDF。这把"忘了跑 / 跳过某关 / 质检后偷改报告"三类高发失败堵死（改了报告→指纹不符→必须重跑质检重登记）。**诚实边界**：闸门不能阻止"谎报 pass"，但它强制独立对抗 agent 真的跑起来——agent 的严格性不依赖作者诚实、只依赖"真跑了"，而这正是闸门强制的。这是工具里第一道"代码挡住交付物、而非靠自觉"的关。
 
 ## 后台复盘：越学越智慧（纯后台、不显示在 dashboard）
 

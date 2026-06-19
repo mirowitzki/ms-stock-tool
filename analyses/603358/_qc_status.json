@@ -1,0 +1,13 @@
+{
+  "report_file": "603358_公司完整报告.md",
+  "report_sha256": "a156a666b4d6ce19ecbedffeb989f07a0e50b3e28d4313e6067c0b6d5d3cd351",
+  "recorded_at": "2026-06-19 22:49:53",
+  "lines": {
+    "check_numbers": "pass",
+    "fact": "pass",
+    "discipline": "pass",
+    "depth": "pass",
+    "insight": "pass"
+  },
+  "note": "603358分析深度重写：fact-check/discipline/depth/insight 四agent + check_numbers 均过、精修已落改"
+}
