@@ -142,7 +142,7 @@
 > ⚠️ 用户 2026-05-31 **删掉了 dossier 和 memo 两个模块**——最终交付物只有两个：**一份非常完整的机构级报告 + 估值交互器**。
 0. **取数**（`scripts/fetch_a_stocks.py` A股 / `scripts/fetch_filings.py` 美股 + `scripts/fetch_prices.py` 股价）：抓 **招股说明书（必抓，给起源/历史/原始竞争打底）+ 近 5 年年报 + 近 5 年高信号公告** + 财务/分部/季报，落到 `analyses/<TICKER>/`。纯代码。**另跑 `python scripts/fetch_prices.py <代码>` 抓近 5 年月度收盘价**（美股走新浪 stock_us_daily、A 股走新浪 stock_zh_a_daily，都免费、避开被沙箱代理掐断的 eastmoney）→ `financials/prices.json`，喂交互器的"股价走势"图。
    - **数据规模规矩（用户 2026-05-31）**：上市 ≤5 年 → 招股书 + 全部年报+披露；上市 >5 年 → **招股书 + 只抓近 5 年年报+披露**（别想读 20 年资料、会消化不过来）。`--years` 控制年报/披露窗口；招股书无论上市多久都抓（`fetch_prospectus`，落到 `filings/招股说明书.txt`）。**分析时也照这个范围读，聚焦深挖、别贪多。**
-1. **写一份完整报告**（加载 `skills/business-understanding.md` + `skills/moat-analysis.md` + `skills/valuation.md` + **`skills/value-judgment.md`（价值判断四柱）** + **`skills/report-writing.md`**）：先读 `reviews/LESSONS.md`，**先跑 `python scripts/compute_metrics.py <代码>` 生成 metrics.json（四柱硬数字真相源）**，**深读 `filings/` 的招股书 + 近 5 年年报 + 高信号公告**，写出**唯一的 `analyses/<TICKER>/<TICKER>_公司完整报告.md`**。
+1. **写一份完整报告**（加载 `skills/business-understanding.md` + `skills/moat-analysis.md` + `skills/valuation.md` + **`skills/value-judgment.md`（价值判断四柱）** + **`skills/report-writing.md`（写作铁律）** + **`skills/analysis-depth.md`（分析深度·把事实拧成价值判断、寻找价值）**）：先读 `reviews/LESSONS.md`，**先跑 `python scripts/compute_metrics.py <代码>` 生成 metrics.json（四柱硬数字真相源）**，**深读 `filings/` 的招股书 + 近 5 年年报 + 高信号公告**，写出**唯一的 `analyses/<TICKER>/<TICKER>_公司完整报告.md`**。
    - **章节结构**看 `templates/report-template.md`（业务概述 → 发展历程 → 行业与竞争格局 → 商业模式与盈利引擎 → 资本配置 → 组织治理与诚信 → 财务全貌 → 投资分析与估值[三情景+反向DCF，替代原 memo] → 风险全景）。
    - **每段怎么写**看 `skills/report-writing.md`（最高写作标准）：**展示别断言（show, don't tell）**，每个判断后面必须跟具体数字/机制/画面；**一章一章深挖、写透一章再下一章**，深度优先于覆盖面；**绝不写成"放大版摘要"**（教训：写水过、被用户连批两次）。追求完整度、不限页数。
 2. **出 PDF + 交互器 + 决策记录**：`compute_metrics.py` 生成 `financials/metrics.json`（四柱真相源，喂报告+交互器仪表盘+质检关）；`render_pdf.py` 渲报告 PDF；据报告"估值"章写 `valuation_inputs.json`（每情景含 story+governance）；写 `decision.json`（**先于** render_explorer，喂交互器催化剂时间线）→ `render_explorer.py` 出交互器（读 valuation_inputs + decision）；`refresh_dashboard.py` 刷新。
@@ -169,8 +169,8 @@
 ## 帮用户分析一家公司的流程（输入：股票代码；输出：一份完整报告 PDF + 估值交互器）
 
 1. **取数**：`python scripts/fetch_a_stocks.py <代码> --years 5`（A股）/ `fetch_filings.py`（美股）+ `python scripts/fetch_prices.py <代码>`（近 5 年月度股价）
-2. **写唯一一份完整报告**：**先读 `reviews/LESSONS.md` + `skills/report-writing.md`（写作铁律：展示别断言）**；**先跑 `compute_metrics.py` 出 metrics.json**；加载 business-understanding + moat-analysis + valuation + **value-judgment（四柱）** 技能，**深读 `filings/` 的招股书 + 近 5 年年报 + 高信号公告**（问询函/控制权/重组等）+ 联网补全组织/管理/文化（含管理层激励/内部人持股，喂第三柱），写出 `<TICKER>_公司完整报告.md`——**机构级；章节结构按 `templates/report-template.md`，每段写法按 `skills/report-writing.md`（show-don't-tell、给具体数字/机制/画面、一章一章深挖）；含"投资分析与估值"章节（替代原 memo）**。追求完整度、不限页数、**绝不写成放大版摘要**。（不再写 dossier / memo）
-3. **过『质检关』**（必做，见专节）：跑 `check_numbers.py` + 三个检查 agent（防幻觉 + 防成见 + 防写水/depth-check），🔴清零才出 PDF。
+2. **写唯一一份完整报告**：**先读 `reviews/LESSONS.md` + `skills/report-writing.md`（写作铁律：展示别断言）**；**先跑 `compute_metrics.py` 出 metrics.json**；加载 business-understanding + moat-analysis + valuation + **value-judgment（四柱）** + **analysis-depth（分析深度·寻找价值）** 技能，**动笔前先做 analysis-depth 的四步（定一句核心论点 / 找认知差 / 诊断价值困在哪靠什么释放 / 定主变量），把判断的脊梁立起来再写**；**深读 `filings/` 的招股书 + 近 5 年年报 + 高信号公告**（问询函/控制权/重组等）+ 联网补全组织/管理/文化（含管理层激励/内部人持股，喂第三柱），写出 `<TICKER>_公司完整报告.md`——**机构级；章节结构按 `templates/report-template.md`，每段写法按 `skills/report-writing.md`（show-don't-tell、给具体数字/机制/画面、一章一章深挖）；含"投资分析与估值"章节（替代原 memo）**。追求完整度、不限页数、**绝不写成放大版摘要**。（不再写 dossier / memo）
+3. **过『质检关』**（必做，见专节）：跑 `check_numbers.py` + 四个检查 agent（防幻觉 + 防成见 + 防写水/depth-check + 防浅析/insight-check），🔴清零才出 PDF。
 4. **出 PDF**：`python scripts/render_pdf.py <代码>`（渲染完整报告.pdf；dossier/memo 不存在会自动跳过）
 5. **出交互器 + 决策记录**：
    - 把报告"估值"章的三情景 + 基础事实 + 概率写成 `valuation_inputs.json`——**每情景必写 `story` + `governance`**（交互器拿它们当卡片主面，价值显示成毛估区间）；**还必写 `pillars` 块**（四柱判断仪表盘）：每柱一句话判断 + `pillars.details.<柱>` 这家公司的详细分析（引用本公司具体数字、落到这只股票、**不写课本定义**）。详见 `skills/value-judgment.md`。
@@ -182,20 +182,22 @@
 
 **用户的主界面是 `dashboard.html`**——他在那里看所有公司、点开**完整报告 PDF** 和**交互器**（就这两个交付物）。.md 是 Claude 的源文件、.pdf 是用户的阅读版本。
 
-## 出报告前必过的『质检关』（防幻觉 + 防成见 + 防写水，纯后台、不显示在 dashboard）
+## 出报告前必过的『质检关』（防幻觉 + 防成见 + 防写水 + 防浅析，纯后台、不显示在 dashboard）
 
 > 来历：曾在 688237 报告里既犯**幻觉/事实错**（并购金额写错、漏算理财误判资金危机、把一次性当变脸），又犯**成见/纪律错**（套"小盘股陷阱"模板、红旗不写善意解释、一边倒）。质检关就是堵这两类错。
-> **这是 Claude 出报告前自己要过的内部关卡，dashboard 一行都不显示；用四道独立防线，全部吃 Max 订阅、免费，不碰付费 API。**
+> **这是 Claude 出报告前自己要过的内部关卡，dashboard 一行都不显示；用五道独立防线，全部吃 Max 订阅、免费，不碰付费 API。**
+> 第五道『防浅析/洞察』2026-06-19 加（用户拿 688237 深版对照 603358，点出差距在分析层面）：前四道管对账/数字真假/立场/事实深度，唯独没人管**分析深度**——一份事实很全、立场也中性、却只在组织事实、没有形成并论证一个价值判断的报告，能全过前四关、依然不是为"寻找价值"服务的深度分析。depth-check 管事实轴、insight-check 管分析轴。
 > 第四道『防写水』2026-06-19 加（用户第三次点名报告写成"放大版摘要"）：前三道管对账/数字真假/立场，唯独没人管**深度**——一份每个数字都对、立场也中性、却通篇停在执行摘要高度的报告，能全过前三关、依然不合格。
 
-每写完一份 `<TICKER>_公司完整报告.md`，**出 PDF 前**依次过四关：
+每写完一份 `<TICKER>_公司完整报告.md`，**出 PDF 前**依次过五关：
 
 1. **代码对账（最便宜，先跑）**：`python scripts/check_numbers.py <代码> <草稿.md>` → 读 `analyses/<代码>/_check_numbers.txt`。它把草稿里每个金额/百分比分成"✓有据/⚠未匹配"，并打印"数据快照"地面真值（含**真实净现金=货币资金+理财−有息负债**，专治"只读货币资金"的盲点）。代码精确、不幻觉，先扫一遍数字。
 2. **风控/数据 agent（防幻觉）**：用 **Agent 工具起一个独立 subagent**（干净上下文，**只喂原始材料 + 草稿，不带写报告时的推理**），按 `skills/fact-check.md` 把每个数字、每句具体事实/引语回查到 `financials/` 或 `filings/` 原文，对抗性默认"无据"，输出 🔴必改/🟡存疑。
 3. **纪律 agent（防成见）**：再起一个独立 subagent，按 `skills/discipline-check.md` 的清单逐条查纪律（红旗有没有善意解释、生意与价格分没分开、有没有套模板/一边倒/单一目标价/给管理层贴人格标签……），输出 🔴/🟡。注：报告里可以出现人名（用户 2026-05-31 改），naming 本身不再是违规；要查的是有没有贴人格标签。
 4. **深度 agent（防写水/防偷懒，2026-06-19 加）**：最后起一个独立 subagent，按 `skills/depth-check.md` **逐章**判定"深挖 vs 放大版摘要"——对照原始材料（filings/financials）指出哪段有料却被一笔带过，输出每章 ✅深挖 / 🟡偏摘要 / 🔴写水 + "这里有料没用"的原文行号指针。标尺＝RKLB / 688237 深版密度。这道关专治"每个数字都对、立场也中性、但通篇停在摘要高度"的报告——前三关都管不到深度。**根因常是把深读外包给采集 agent、拿事实清单二手合成；纠正＝作者据行号回原文第一手读再下笔，深读不外包。**
+5. **洞察 agent（防浅析 / 防"有事实没判断"，2026-06-19 加）**：最后起一个独立 subagent，按 `skills/insight-check.md` 查**分析轴**——有没有贯穿全文、立得住的核心论点；每个承重数字有没有被解读成"对价值意味着什么"（而非只陈述）；有没有指出市场看错在哪（认知差/variant perception）；财务有没有"从数字反推体质与文化"的反向视角；估值有没有"价值阶梯（资产/EPV/分部加总/成长）+ 价值困在哪、靠什么释放"的诊断；情景是不是带名字的故事 + 主变量。标尺＝688237 深版的分析密度。depth-check（第四道）管事实轴、它管分析轴，两道各管一轴——一份报告可以事实很全却分析很浅。**根因＝跳过了"先形成并论证一个价值论点"这步、直接把采集来的事实组织成章节；纠正＝动笔前先做 analysis-depth 的四步（定 thesis / 找认知差 / 诊断价值困在哪 / 定主变量）。**
 
-**收三份红黄牌 → 改掉所有 🔴（🟡 视情况修或标注为"判断"）；任何一章被判 🔴写水，回原始材料第一手补深 → 🔴清零，才出 PDF / 交互器。** 检查 agent 只挑错、不改写；最终判断和修改由主 Claude 做（人主导、工具辅助）。**独立上下文是命门**——一旦让检查 agent 读了草稿结论再"复核"，它就被带跑、和作者共享盲点了。
+**收四份红黄牌 → 改掉所有 🔴（🟡 视情况修或标注为"判断"）；任何一章被判 🔴写水就回原始材料第一手补深、被判 🔴浅析就回去补判断（定 thesis / 找认知差 / 把数字解读成价值含义 / 做价值阶梯诊断）→ 🔴清零，才出 PDF / 交互器。** 检查 agent 只挑错、不改写；最终判断和修改由主 Claude 做（人主导、工具辅助）。**独立上下文是命门**——一旦让检查 agent 读了草稿结论再"复核"，它就被带跑、和作者共享盲点了。
 
 ## 后台复盘：越学越智慧（纯后台、不显示在 dashboard）
 
