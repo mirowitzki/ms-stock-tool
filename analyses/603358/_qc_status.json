@@ -1,7 +1,7 @@
 {
   "report_file": "603358_公司完整报告.md",
-  "report_sha256": "a156a666b4d6ce19ecbedffeb989f07a0e50b3e28d4313e6067c0b6d5d3cd351",
-  "recorded_at": "2026-06-19 22:49:53",
+  "report_sha256": "8c50d24ac655a3d296f9204ab14fdbe36fc21eb88ab387dc8565761b817f72b3",
+  "recorded_at": "2026-06-19 23:06:56",
   "lines": {
     "check_numbers": "pass",
     "fact": "pass",
@@ -9,5 +9,5 @@
     "depth": "pass",
     "insight": "pass"
   },
-  "note": "603358分析深度重写：fact-check/discipline/depth/insight 四agent + check_numbers 均过、精修已落改"
+  "note": "拆掉超卓对照、改为独立论证/同行对比；insight-check 复检通过(七动作全✅、独立性达成、洞察无削弱)；事实轴三关沿用(纯拆壳重述、无新事实/数字/立场)"
 }
