@@ -693,6 +693,34 @@ footer a { color: var(--accent); text-decoration: none; }
 .tl-tag.earn { background:rgba(59,125,216,.12); color:#3b7dd8; }
 .tl-tag.review { background:rgba(38,70,83,.12); color:var(--primary); }
 .tl-item.tl-done { opacity:.5; }
+
+/* ===== 产业布局雷达（2026-06-14）===== */
+.lr-note { font-size:12.5px; color:var(--text-muted); line-height:1.7; margin:-2px 0 6px; }
+.lr-note b { color:var(--text); font-weight:700; }
+.lr-h3 { font-size:13px; font-weight:700; color:var(--text); margin:16px 0 8px; }
+.lr-move { display:grid; grid-template-columns:84px 1fr; gap:14px; padding:11px 0; border-top:1px solid var(--border); align-items:start; }
+.lr-move:first-child { border-top:none; }
+.lr-move-date { font-size:12px; font-weight:700; color:var(--text-muted); font-family:var(--mono,ui-monospace,monospace); font-variant-numeric:tabular-nums; }
+.lr-move-body { min-width:0; }
+.lr-move-title { font-size:13.5px; font-weight:600; color:var(--text); margin-bottom:3px; line-height:1.5; }
+.lr-move-title a { color:var(--accent); text-decoration:none; }
+.lr-move-title a:hover { text-decoration:underline; }
+.lr-move-sowhat { font-size:12px; color:var(--text-muted); line-height:1.65; }
+.lr-move-tag { display:inline-block; font-size:10.5px; font-weight:600; padding:1px 8px; border-radius:10px; background:var(--grid); color:var(--text-muted); margin-left:6px; vertical-align:middle; white-space:nowrap; }
+.lr-inds { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.lr-ind { border:1px solid var(--border); border-radius:10px; padding:13px 15px; border-left:3px solid var(--accent); }
+.lr-ind-head { display:flex; align-items:center; gap:8px; margin-bottom:7px; flex-wrap:wrap; }
+.lr-ind-name { font-size:14px; font-weight:700; color:var(--text); }
+.lr-sig { font-size:10.5px; font-weight:700; padding:2px 9px; border-radius:20px; white-space:nowrap; }
+.lr-sig.strong { background:rgba(42,157,143,.15); color:var(--pos); }
+.lr-sig.mid { background:rgba(212,160,23,.15); color:#a07a0e; }
+.lr-sig.early { background:var(--grid); color:var(--text-muted); }
+.lr-ind-thesis { font-size:12.5px; color:var(--text); line-height:1.7; margin-bottom:9px; }
+.lr-ind-handoff { font-size:12px; color:var(--text-muted); line-height:1.6; padding-top:8px; border-top:1px dashed var(--border); }
+.lr-ind-handoff a { color:var(--accent); text-decoration:none; font-weight:600; }
+.lr-ind-handoff a:hover { text-decoration:underline; }
+.lr-ind-handoff .cmd { font-family:var(--mono,monospace); background:var(--grid); padding:1px 6px; border-radius:4px; font-size:11px; color:var(--text); }
+@media (max-width:680px){ .lr-inds { grid-template-columns:1fr; } .lr-move { grid-template-columns:64px 1fr; } }
 </style>
 </head>
 <body>
@@ -996,6 +1024,16 @@ footer a { color: var(--accent); text-decoration: none; }
   <div class="tl" id="timeline"></div>
 </section>
 
+<!-- ========================= 产业布局雷达 ========================= -->
+<section class="card" id="section-layout" style="display:none;">
+  <h2>🛰️ 产业布局雷达 <span class="card-note" id="lr-asof"></span></h2>
+  <p class="lr-note">读这家公司的真实动作——钱往哪砸、产品往哪走——指向哪些产业，作为第二阶段产业链分析的候选。<b>这是研究雷达、不是买入信号</b>：值不值得投，拎到产业链分析里严判。</p>
+  <h3 class="lr-h3">最近的布局动作</h3>
+  <div id="lr-moves"></div>
+  <h3 class="lr-h3">这些动作指向的产业（→ 拿去产业链分析）</h3>
+  <div class="lr-inds" id="lr-inds"></div>
+</section>
+
 <!-- ========================= 叠加对比图 ========================= -->
 <section class="card">
   <h2>三情景叠加对比图</h2>
@@ -1097,12 +1135,12 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "300199",
   "company_name": "翰宇药业",
   "as_of": "2025-12-31",
-  "generated_at": "2026-06-14 01:19:44",
+  "generated_at": "2026-06-21 14:52:24",
   "facts": {
     "revenue_today": 966,
     "cash": 101,
     "debt": 1907,
-    "market_cap": 19307.63,
+    "market_cap": 19431.28,
     "diluted_shares_today": 883.24
   },
   "history": [
@@ -2214,7 +2252,7 @@ footer a { color: var(--accent); text-decoration: none; }
     },
     {
       "m": "2026-06",
-      "c": 21.86
+      "c": 22.0
     }
   ],
   "next_earnings": {
@@ -2285,12 +2323,13 @@ footer a { color: var(--accent); text-decoration: none; }
       }
     ]
   },
+  "layout": null,
   "links": {
     "report_pdf": "300199_公司完整报告.pdf"
   },
   "quote": {
-    "price": 21.86,
-    "as_of": "2026-06-12",
+    "price": 22.0,
+    "as_of": "2026-06-18",
     "analysis_market_cap": 18927
   }
 }
@@ -2928,6 +2967,44 @@ function renderTimeline() {
   sec.style.display = 'block';
 }
 
+// 产业布局雷达：读 layout.json，渲染近期布局动作（带源链接）+ 推断指向的产业（接力产业链分析）。
+// 静态、不随滑块变；判断/链接来自 layout.json（分析时写 / explorer-updater 联网刷新）。
+function renderLayout() {
+  const sec = document.getElementById('section-layout');
+  const L = DATA.layout;
+  if (!sec) return;
+  if (!L || (!(L.moves || []).length && !(L.industries || []).length)) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  const asof = document.getElementById('lr-asof');
+  if (asof) asof.textContent = L.as_of ? ('更新于 ' + L.as_of + ' · 联网扫描') : '';
+  document.getElementById('lr-moves').innerHTML = (L.moves || []).map(m => {
+    const title = m.link
+      ? '<a href="' + escTL(m.link) + '" target="_blank" rel="noopener">' + escTL(m.title) + ' ↗</a>'
+      : escTL(m.title);
+    const tag = m.industry ? '<span class="lr-move-tag">' + escTL(m.industry) + '</span>' : '';
+    const src = m.source ? '<span style="opacity:.6">（' + escTL(m.source) + '）</span>' : '';
+    return '<div class="lr-move"><div class="lr-move-date">' + escTL(m.date || '') + '</div>'
+      + '<div class="lr-move-body"><div class="lr-move-title">' + title + tag + '</div>'
+      + '<div class="lr-move-sowhat">' + escTL(m.so_what || '') + ' ' + src + '</div></div></div>';
+  }).join('');
+  const sigTxt = { strong: '信号强 · 真金白银', mid: '信号中', early: '早期 / 期权' };
+  document.getElementById('lr-inds').innerHTML = (L.industries || []).map(it => {
+    const sig = (it.signal === 'strong' || it.signal === 'early') ? it.signal : 'mid';
+    let handoff;
+    if (it.chain_page) {
+      handoff = '已研：<a href="' + escTL(it.chain_page) + '" target="_blank" rel="noopener">→ 打开' + escTL(it.chain_name || '产业链') + '研究</a>'
+        + (it.handoff_note ? '<br>' + escTL(it.handoff_note) : '');
+    } else {
+      handoff = '尚未研究 · 去产业链分析立项：<span class="cmd">研究 ' + escTL(it.name) + ' 产业链</span>'
+        + (it.handoff_note ? '<br>' + escTL(it.handoff_note) : '');
+    }
+    return '<div class="lr-ind"><div class="lr-ind-head"><span class="lr-ind-name">' + escTL(it.name) + '</span>'
+      + '<span class="lr-sig ' + sig + '">' + sigTxt[sig] + '</span></div>'
+      + '<div class="lr-ind-thesis">' + escTL(it.thesis || '') + '</div>'
+      + '<div class="lr-ind-handoff">' + handoff + '</div></div>';
+  }).join('');
+}
+
 function renderCommentary() {
   const c = DATA.reverse_dcf_commentary;
   const el = document.getElementById('rev-commentary');
@@ -2968,6 +3045,7 @@ function loadDataIntoUI() {
   updateUnitLabels();
   renderCommentary();
   renderTimeline();  // 催化剂时间线（静态，渲染一次）
+  renderLayout();    // 产业布局雷达（静态，渲染一次）
   // 报价新鲜度：当前价=今日收盘（免费刷新）时，标一下日期，让人知道这是哪天的价
   if (DATA.quote && DATA.quote.as_of) {
     const det = document.getElementById('summary-current-detail');

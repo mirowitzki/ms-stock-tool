@@ -1,59 +1,74 @@
 {
-  "refreshed_at": "2026-06-21 13:28:56",
+  "refreshed_at": "2026-06-21 14:52:24",
   "quotes": {
     "NVDA": {
-      "price": 205.19,
-      "as_of": "2026-06-12",
+      "price": 210.69,
+      "as_of": "2026-06-18",
       "currency": "USD"
     },
     "000009": {
-      "price": 7.06,
-      "as_of": "2026-06-12",
+      "price": 6.84,
+      "as_of": "2026-06-18",
       "currency": "CNY"
     },
     "000925": {
-      "price": 8.03,
-      "as_of": "2026-06-12",
+      "price": 8.16,
+      "as_of": "2026-06-18",
       "currency": "CNY"
     },
     "002091": {
-      "price": 7.52,
-      "as_of": "2026-06-12",
+      "price": 7.61,
+      "as_of": "2026-06-18",
       "currency": "CNY"
     },
     "300085": {
-      "price": 26.65,
-      "as_of": "2026-06-12",
+      "price": 26.96,
+      "as_of": "2026-06-18",
       "currency": "CNY"
     },
     "300199": {
-      "price": 21.86,
-      "as_of": "2026-06-12",
+      "price": 22.0,
+      "as_of": "2026-06-18",
       "currency": "CNY"
     },
     "CRCL": {
-      "price": 77.84,
-      "as_of": "2026-06-12",
+      "price": 80.23,
+      "as_of": "2026-06-18",
       "currency": "USD"
     },
     "NVTS": {
-      "price": 23.39,
-      "as_of": "2026-06-12",
+      "price": 24.02,
+      "as_of": "2026-06-18",
       "currency": "USD"
     },
     "RKLB": {
-      "price": 102.39,
-      "as_of": "2026-06-12",
+      "price": 107.24,
+      "as_of": "2026-06-18",
       "currency": "USD"
     },
     "SITM": {
-      "price": 729.89,
-      "as_of": "2026-06-12",
+      "price": 729.04,
+      "as_of": "2026-06-18",
       "currency": "USD"
     },
     "SWKS": {
-      "price": 73.97,
-      "as_of": "2026-06-12",
+      "price": 72.45,
+      "as_of": "2026-06-18",
+      "currency": "USD"
+    },
+    "601012": {
+      "price": 12.84,
+      "as_of": "2026-06-18",
+      "currency": "CNY"
+    },
+    "603358": {
+      "price": 39.4,
+      "as_of": "2026-06-18",
+      "currency": "CNY"
+    },
+    "SPCX": {
+      "price": 185.0,
+      "as_of": "2026-06-18",
       "currency": "USD"
     }
   }
