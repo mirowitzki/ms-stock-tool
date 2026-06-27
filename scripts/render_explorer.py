@@ -133,32 +133,62 @@ def load_decision(ticker):
     }
 
 
-def load_report_chapters(ticker):
-    """把 <TICKER>_公司完整报告.md 按一级标题(# 第X章)拆成章节、各自用 pandoc 转 HTML 片段，
-    返回 [{id, title, html}, ...]，喂交互器的「完整深度报告」嵌入区。
+def _strip_exec_summary(body):
+    """去掉章内的"执行摘要"小节(## 或 ### 级都认)——执行摘要已由章首判断卡承担、正文里重复。
+    从"执行摘要"标题起跳过，直到遇到同级或更高级的下一个标题为止。只改交互器渲染、不动报告 .md 源。"""
+    out, skip_level = [], None
+    for ln in body.split("\n"):
+        m = re.match(r"^(#{2,4})\s+(.+?)\s*$", ln)
+        if m:
+            level, title = len(m.group(1)), m.group(2).strip()
+            if skip_level is None and title.startswith("执行摘要"):
+                skip_level = level
+                continue
+            if skip_level is not None and level <= skip_level:
+                skip_level = None
+        if skip_level is None:
+            out.append(ln)
+    return "\n".join(out).strip()
 
-    设计：报告 Markdown 仍是唯一正文真相源（最顺手写、质检照常跑）；这里只做渲染层转换，
-    与 render_pdf 走同一个 pandoc、口径一致。找不到报告 / 没有 pandoc → 返回 None（交互器自动隐藏该区）。
+
+def load_report_chapters(ticker):
+    """把 <TICKER>_公司完整报告.md 按章拆开、各自用 pandoc 转 HTML 片段，返回 (chapters, thesis_html)。
+    - chapters：[{id, title, html}, ...]，喂交互器按章嵌入的正文（已剔除导读/执行摘要/核心论点）。
+    - thesis_html：核心论点那段的 HTML，喂第一章判断卡（"核心论点进卡片"）。
+
+    报告 Markdown 仍是唯一正文真相源；这里只做渲染层转换，与 render_pdf 同一个 pandoc、口径一致。
+    找不到报告 / 没有 pandoc → 返回 (None, None)（交互器自动隐藏正文区）。
     """
     base = Path("analyses") / ticker.upper()
     mds = sorted(base.glob("*完整报告.md"))
     if not mds:
-        return None
+        return None, None
     pandoc = _find_pandoc()
     if not pandoc:
         print("  ⚠ 找不到 pandoc，跳过报告正文嵌入（交互器其余部分照常）。")
-        return None
+        return None, None
 
-    text = mds[0].read_text(encoding="utf-8")
-    lines = text.splitlines()
+    def md2html(md):
+        if not (md or "").strip():
+            return ""
+        try:
+            r = subprocess.run(
+                [pandoc, "-f", "markdown-auto_identifiers", "-t", "html5"],
+                input=md, capture_output=True, text=True, encoding="utf-8", errors="replace")
+            if r.returncode == 0:
+                return r.stdout
+            print(f"  ⚠ pandoc 转换失败：{r.stderr.strip()[:120]}")
+        except Exception as e:
+            print(f"  ⚠ pandoc 转换异常：{e}")
+        return ""
+
+    lines = mds[0].read_text(encoding="utf-8").splitlines()
 
     # 报告标题层级不统一：有的用 # 第X章(一级)、有的用 ## 第X章(二级、一级只留给报告名)。
-    # 自动判层：一级标题≥3 个 → 章节是一级；否则章节是二级。
     n_h1 = sum(1 for l in lines if re.match(r"^# (?!#)", l))
     chap_re = re.compile(r"^# (?!#)(.+?)\s*$") if n_h1 >= 3 else re.compile(r"^## (?!#)(.+?)\s*$")
 
-    chapters = []      # [title, body_md]
-    preface = []       # 第一个章标题之前的内容（二级模式下含 # 报告名 + 导读正文）
+    chapters, preface = [], []
     cur_title, cur_body = None, []
     for ln in lines:
         m = chap_re.match(ln)
@@ -173,40 +203,82 @@ def load_report_chapters(ticker):
     if cur_title is not None:
         chapters.append([cur_title, "\n".join(cur_body).strip()])
     if not chapters:
-        return None
+        return None, None
 
+    # 抽出"核心论点"做判断卡的 thesis；丢掉无意义的导读/前言/元信息段（分析时点·口径声明这类）。
+    thesis_md = None
     if n_h1 >= 3:
-        # 一级模式：首章就是报告名(# XX完整报告)，其正文是核心论点/导读——改名，空则丢弃
-        if "完整报告" in chapters[0][0] or chapters[0][0].endswith("报告"):
-            if chapters[0][1]:
-                chapters[0][0] = "核心论点 · 导读"
-            else:
-                chapters.pop(0)
+        # 一级模式：首章是报告名(# XX完整报告)、正文含元信息 + ## 核心论点；抽出核心论点、整章移除。
+        m_core = re.search(r"(?m)^##\s*核心论点[^\n]*$", chapters[0][1])
+        if m_core:
+            thesis_md = chapters[0][1][m_core.end():].strip()
+        chapters.pop(0)
     else:
-        # 二级模式：preface 去掉 # 报告名行后若还有正文(前言/口径声明)，作为导读章插到最前
-        # （这里是前言/口径，核心论点在这类报告里通常是单独一章，故只叫"导读"）
-        intro = "\n".join(l for l in preface if not re.match(r"^# (?!#)", l)).strip()
-        if intro:
-            chapters.insert(0, ["导读", intro])
+        # 二级模式：核心论点 是独立的 ## 章，抽出来；# 报告名 + 元信息前言已落在 preface、自然丢弃。
+        for i, (title, body) in enumerate(chapters):
+            if title.startswith("核心论点"):
+                thesis_md = body.strip()
+                chapters.pop(i)
+                break
 
-    out = []
-    for i, (title, body) in enumerate(chapters):
-        html = ""
-        if body:
-            try:
-                r = subprocess.run(
-                    [pandoc, "-f", "markdown-auto_identifiers", "-t", "html5"],
-                    input=body, capture_output=True, text=True,
-                    encoding="utf-8", errors="replace",
-                )
-                if r.returncode == 0:
-                    html = r.stdout
-                else:
-                    print(f"  ⚠ pandoc 转换「{title}」失败：{r.stderr.strip()[:120]}")
-            except Exception as e:
-                print(f"  ⚠ pandoc 转换「{title}」异常：{e}")
-        out.append({"id": f"ch-{i}", "title": title, "html": html})
-    return out or None
+    # 每章去掉"执行摘要"小节——执行摘要已由判断卡承担（报告 .md 源不动、PDF 仍保留）
+    for ch in chapters:
+        ch[1] = _strip_exec_summary(ch[1])
+    chapters = [c for c in chapters if c[1].strip()]
+
+    out = [{"id": f"ch-{i}", "title": t, "html": md2html(b)} for i, (t, b) in enumerate(chapters)]
+    return (out or None), (md2html(thesis_md) or None)
+
+
+def build_ch1_card(inputs, base, thesis_html):
+    """组装第一章判断卡数据：数字(各业务营收/占比/毛利/同比)来自 segments.json，
+    判断(本质/光谱位置/护城河/证据/最强多头/认知差/钱权重心/各业务角色)来自 valuation_inputs.json 的 ch1 块，
+    核心论点来自报告 markdown(thesis_html)。没有 ch1 块就返回 None（卡片自动隐藏）。"""
+    ch1 = inputs.get("ch1")
+    if not ch1:
+        return None
+    rows = []
+    seg_path = base / "financials" / "segments.json"
+    if seg_path.exists():
+        try:
+            data = json.loads(seg_path.read_text(encoding="utf-8"))
+        except Exception:
+            data = {}
+        roles = ch1.get("segment_roles", {})
+        for key in ("by_product", "by_industry", "by_market", "by_region"):
+            grp = data.get(key) or {}
+            annual = sorted(p for p in grp if str(p).endswith("12-31")) or sorted(grp.keys())
+            if not annual:
+                continue
+            cur = [s for s in grp[annual[-1]] if s.get("revenue")]
+            if not cur:
+                continue
+            prev = {s.get("name"): s.get("revenue")
+                    for s in (grp[annual[-2]] if len(annual) >= 2 else [])}
+            total = sum(s.get("revenue") or 0 for s in cur)
+            for s in cur:
+                name, rev = s.get("name"), (s.get("revenue") or 0)
+                r = roles.get(name, {})
+                yoy = round((rev / prev[name] - 1) * 100, 1) if prev.get(name) else None
+                rows.append({
+                    "name": name, "revenue": to_millions(rev),
+                    "pct": round(rev / total * 100, 1) if total else None,
+                    "margin": round(s["margin"] * 100, 1) if s.get("margin") is not None else None,
+                    "yoy": yoy, "source": r.get("source", ""),
+                    "role": r.get("role", ""), "kind": r.get("kind", ""),
+                })
+            break
+    return {
+        "essence": ch1.get("essence", ""),
+        "thesis_html": thesis_html or "",
+        "quality": ch1.get("quality", {}),
+        "moat": ch1.get("moat", ""),
+        "evidence": ch1.get("evidence", ""),
+        "steelman": ch1.get("steelman", ""),
+        "variant": ch1.get("variant", ""),
+        "power_center": ch1.get("power_center", ""),
+        "segments": rows,
+    }
 
 
 def build_history(fin):
@@ -762,6 +834,13 @@ def render(ticker, starter=False):
     if report_pdfs:
         links["report_pdf"] = report_pdfs[0].name
 
+    # 报告正文按章嵌入 + 第一章判断卡（核心论点抽去喂卡片、不再当章节）
+    report_chapters, report_thesis_html = load_report_chapters(ticker)
+    ch1_card = build_ch1_card(inputs, base, report_thesis_html)
+    # 没有第一章判断卡的公司（尚未写 ch1 块）：核心论点回退成正文首章，避免凭空消失
+    if ch1_card is None and report_thesis_html:
+        report_chapters = [{"id": "ch-core", "title": "核心论点", "html": report_thesis_html}] + (report_chapters or [])
+
     # 组装完整数据对象
     data = {
         "ticker": ticker,
@@ -784,7 +863,8 @@ def render(ticker, starter=False):
         "next_earnings": inputs.get("next_earnings"),  # 下一份财报日期（喂交互器顶部提醒横幅；可空）
         "decision": load_decision(ticker),         # 催化剂/检验时间线（decision.json 的 predictions/review_by/entry_watch）
         "layout": load_layout(ticker),             # 产业布局雷达（layout.json：近期动作 + 指向的产业 → 接力产业链分析）
-        "report_chapters": load_report_chapters(ticker),  # 完整报告正文(按章嵌入)：交互器=唯一阅读家；PDF 改按需导出
+        "report_chapters": report_chapters,        # 报告正文(按章嵌入交互器主干；已剔除导读/执行摘要/核心论点)
+        "ch1_card": ch1_card,                      # 第一章判断卡（生意质量卡 + 业务速览 + 核心论点）
         "links": links,
     }
 

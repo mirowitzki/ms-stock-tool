@@ -722,27 +722,39 @@ footer a { color: var(--accent); text-decoration: none; }
 .lr-ind-handoff .cmd { font-family:var(--mono,monospace); background:var(--grid); padding:1px 6px; border-radius:4px; font-size:11px; color:var(--text); }
 @media (max-width:680px){ .lr-inds { grid-template-columns:1fr; } .lr-move { grid-template-columns:64px 1fr; } }
 
-/* ===================== 完整深度报告（正文嵌入）===================== */
-.report-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-.report-head h2 { margin:0; }
-.report-tools { display:flex; gap:8px; flex-wrap:wrap; }
-.rpt-btn { font-size:12.5px; padding:6px 12px; border:1px solid var(--border); background:#fff;
-  color:var(--text); border-radius:8px; cursor:pointer; transition:all .15s ease; }
-.rpt-btn:hover { border-color:var(--accent); color:var(--accent); box-shadow:var(--shadow); }
-.report-toc { display:flex; flex-wrap:wrap; gap:6px; margin:14px 0 6px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+/* ===================== 报告正文（按章嵌入交互器主干）===================== */
+.report-toc { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 16px; position:sticky; top:0;
+  background:var(--bg); padding:10px 0; z-index:5; }
 .rtoc-pill { font-size:12.5px; padding:5px 11px; border-radius:999px; background:#eef2f6; color:var(--primary);
   text-decoration:none; border:1px solid transparent; transition:all .15s ease; }
 .rtoc-pill:hover { background:var(--accent); color:#fff; }
-.report-chapter { border-bottom:1px solid var(--grid); }
-.report-chapter:last-child { border-bottom:none; }
-.rchap-summary { cursor:pointer; list-style:none; padding:14px 4px 14px 28px; position:relative;
-  font-size:17px; font-weight:700; color:var(--primary); user-select:none; }
-.rchap-summary::-webkit-details-marker { display:none; }
-.rchap-summary::before { content:'▸'; position:absolute; left:6px; top:14px; color:var(--accent);
-  transition:transform .15s ease; font-size:14px; }
-.report-chapter[open] > .rchap-summary::before { transform:rotate(90deg); }
-.rchap-summary:hover { color:var(--accent); }
-.rchap-body { padding:2px 4px 26px; max-width:880px; }
+.report-chapter { scroll-margin-top:60px; }
+.rchap-h { font-size:18px; color:var(--primary); margin:0 0 14px; padding-bottom:8px;
+  border-bottom:2px solid var(--accent); display:inline-block; }
+.rchap-body { max-width:880px; }
+/* —— 第一章判断卡（生意质量卡 + 业务速览）—— */
+.qc-lab { font-size:12px; color:var(--text-muted); margin-bottom:8px; }
+.qc-ess { font-size:18px; font-weight:700; color:var(--text); line-height:1.5; margin-bottom:12px; }
+.qc-thesis { font-size:13.5px; color:#23303a; line-height:1.85; margin-bottom:6px; padding:12px 16px;
+  background:#f3f6f9; border-left:3px solid var(--accent); border-radius:0 6px 6px 0; }
+.qc-thesis p { margin:0; }
+.qc-spec { position:relative; height:8px; border-radius:999px; background:#eef2f6; border:1px solid var(--border); margin:42px 0 4px; }
+.qc-spec-mk { position:absolute; top:-7px; width:18px; height:18px; border-radius:50%; border:2px solid var(--card); transform:translateX(-50%); }
+.qc-spec-v { position:absolute; top:-26px; transform:translateX(-50%); font-size:11.5px; font-weight:700; white-space:nowrap; }
+.qc-spec-lab { display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted); margin-top:8px; }
+.qc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px 22px; margin-top:18px; }
+.qc-full { grid-column:1/-1; }
+.qc-k { font-size:12px; color:var(--text-muted); margin-bottom:3px; }
+.qc-v { font-size:13px; color:var(--text); line-height:1.6; }
+.qc-tbl { width:100%; border-collapse:collapse; font-size:12.5px; }
+.qc-tbl th { text-align:left; color:var(--text-muted); font-weight:600; padding:6px 8px; border-bottom:1px solid var(--border); }
+.qc-tbl td { padding:7px 8px; border-bottom:1px solid var(--grid); color:var(--text); }
+.qc-src { background:#eef2f6; color:var(--text-muted); border:1px solid var(--border); padding:1px 7px; border-radius:6px; font-size:11px; }
+.rk { display:inline-block; padding:2px 9px; border-radius:999px; font-size:12px; font-weight:600; white-space:nowrap; }
+.rk-eng { background:rgba(26,84,144,.12); color:var(--accent); }
+.rk-good { background:rgba(42,157,143,.16); color:#1f7a6e; }
+.rk-warn { background:rgba(212,160,23,.18); color:#9a7400; }
+.rk-bad { background:rgba(230,57,70,.12); color:var(--bear); }
 /* —— 章内正文排版（pandoc 转出来的 HTML）—— */
 .rchap-body h2 { font-size:16px; color:var(--primary); margin:26px 0 10px; padding-bottom:5px; border-bottom:1px solid var(--grid); }
 .rchap-body h3 { font-size:14.5px; color:var(--accent); margin:20px 0 8px; }
@@ -788,7 +800,7 @@ footer a { color: var(--accent); text-decoration: none; }
 
 <nav class="topnav">
   <a href="../../dashboard.html">← 返回仪表盘</a>
-  <a href="#section-report" id="nav-report" class="primary" style="display: none;">📖 阅读完整报告</a>
+  <a href="#section-report" id="nav-report" class="primary" style="display: none;">📖 报告正文</a>
   <a href="#" id="nav-pdf" style="display: none;">📄 下载 PDF</a>
 </nav>
 
@@ -1180,18 +1192,12 @@ footer a { color: var(--accent); text-decoration: none; }
   </div>
 </details>
 
-<!-- ========================= 完整深度报告（与按需 PDF 同源·正文嵌入）========================= -->
-<section class="card" id="section-report" style="display:none;">
-  <div class="report-head">
-    <h2>📖 完整深度报告 <span class="card-note">九章全文 · 与 PDF 同一份源</span></h2>
-    <div class="report-tools">
-      <button type="button" class="rpt-btn" onclick="toggleAllChapters()">展开 / 收起全部</button>
-      <button type="button" class="rpt-btn" onclick="printReport()">🖨 打印 / 存为 PDF</button>
-    </div>
-  </div>
+<!-- ========================= 报告正文（按章嵌入交互器主干）========================= -->
+<div id="section-report" style="display:none;">
+  <div id="ch1-card"></div>
   <nav class="report-toc" id="report-toc"></nav>
-  <div class="report-body" id="report-body"></div>
-</section>
+  <div id="report-body"></div>
+</div>
 
 <footer>
   <p><span id="footer-ticker">—</span> · 生成时间 <span id="footer-time">—</span></p>
@@ -1923,50 +1929,81 @@ function renderLayout() {
 
 // 完整深度报告：读 DATA.report_chapters（render_explorer 用 pandoc 把报告 .md 按章转成 HTML），
 // 渲染成章节导航 + 可折叠正文。交互器=唯一阅读家；正文真相源仍是报告 Markdown。静态、渲染一次。
+// 第一章判断卡：生意质量卡（本质 + 核心论点 + 质量光谱 + 护城河/证据/最强多头/认知差/钱权）+ 业务速览表。
+// 数字来自 segments.json（代码算）、判断来自 valuation_inputs.json 的 ch1 块、核心论点来自报告 markdown。
+function renderCh1Card() {
+  const box = document.getElementById('ch1-card');
+  const c = DATA.ch1_card;
+  if (!box) return;
+  if (!c) { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  const cy = DATA.currency || { symbol: '$', code: 'USD' };
+  const fmtRev = v => v == null ? '—'
+    : (cy.code === 'CNY' ? (cy.symbol + (v / 100).toFixed(2) + '亿') : (cy.symbol + Math.round(v).toLocaleString() + 'M'));
+  const q = c.quality || {};
+  const pos = Math.max(6, Math.min(94, (q.pos != null ? q.pos : 50)));
+  const mk = pos <= 40 ? 'var(--bull)' : (pos >= 62 ? 'var(--bear)' : 'var(--warn)');
+  const fld = (k, v, full) => v
+    ? '<div class="qc-f' + (full ? ' qc-full' : '') + '"><div class="qc-k">' + k + '</div><div class="qc-v">' + escTL(v) + '</div></div>' : '';
+  const kindCls = { eng: 'rk-eng', good: 'rk-good', warn: 'rk-warn', bad: 'rk-bad' };
+  const rows = (c.segments || []).map(s => {
+    const tag = s.role ? '<span class="rk ' + (kindCls[s.kind] || 'rk-warn') + '">' + escTL(s.role) + '</span>' : '—';
+    const src = s.source ? '<span class="qc-src">' + escTL(s.source) + '</span>' : '';
+    const yoy = s.yoy == null ? '—' : ((s.yoy >= 0 ? '+' : '') + s.yoy + '%');
+    return '<tr><td>' + escTL(s.name) + '</td><td>' + fmtRev(s.revenue) + '</td><td>' + (s.pct == null ? '—' : s.pct + '%')
+      + '</td><td>' + (s.margin == null ? '—' : s.margin + '%') + '</td><td>' + yoy + '</td><td>' + src + '</td><td>' + tag + '</td></tr>';
+  }).join('');
+  const segBlock = rows
+    ? '<div class="qc-lab" style="margin-top:18px">业务速览 · 每块业务扮什么角色</div>'
+      + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>业务</th><th>营收</th><th>占比</th><th>毛利率</th><th>同比</th><th>来源</th><th>角色判断</th></tr></thead><tbody>'
+      + rows + '</tbody></table></div>'
+    : '';
+  box.innerHTML =
+    '<section class="card">'
+    + '<div class="qc-lab">第一章 · 这是门什么生意</div>'
+    + (c.essence ? '<div class="qc-ess">' + escTL(c.essence) + '</div>' : '')
+    + (c.thesis_html ? '<div class="qc-thesis">' + c.thesis_html + '</div>' : '')
+    + '<div class="qc-spec"><div class="qc-spec-v" style="left:' + pos + '%;color:' + mk + '">' + escTL(q.verdict || '') + '</div>'
+    + '<div class="qc-spec-mk" style="left:' + pos + '%;background:' + mk + '"></div></div>'
+    + '<div class="qc-spec-lab"><span>复利机器</span><span>有壁垒但受困</span><span>稳健低回报</span><span>无壁垒苦力活</span><span>题材故事</span></div>'
+    + '<div class="qc-grid">'
+    + fld('价值内核(护城河)', c.moat) + fld('证据', c.evidence)
+    + fld('最强多头(先给善意解释)', c.steelman) + fld('钱和权在谁手里', c.power_center)
+    + fld('市场看错在哪', c.variant, true)
+    + '</div>'
+    + segBlock
+    + '</section>';
+}
+
 function renderReport() {
-  const sec = document.getElementById('section-report');
+  const cont = document.getElementById('section-report');
   const chs = DATA.report_chapters;
-  if (!sec) return;
-  if (!chs || !chs.length) { sec.style.display = 'none'; return; }
-  sec.style.display = 'block';
-  // 章节导航（点击：展开目标章并滚动到位）
+  if (!cont) return;
+  if (!chs || !chs.length) { cont.style.display = 'none'; return; }
+  cont.style.display = 'block';
+  // 顶部章节跳转条（点击滚到对应章）
   const toc = document.getElementById('report-toc');
   toc.innerHTML = chs.map(c =>
     '<a href="#' + c.id + '" class="rtoc-pill" data-target="' + c.id + '">' + escTL(c.title) + '</a>'
   ).join('');
-  // 章节正文：首章(导读)默认展开、其余折叠；正文 HTML 已由 pandoc 转好，直接注入
+  // 每章按文档顺序铺成一张独立的卡，正文直接可见——作为交互器主干的一部分（不再是单独的"完整报告"区块）
   const body = document.getElementById('report-body');
-  body.innerHTML = chs.map((c, i) =>
-    '<details class="report-chapter" id="' + c.id + '"' + (i === 0 ? ' open' : '') + '>'
-    + '<summary class="rchap-summary">' + escTL(c.title) + '</summary>'
+  body.innerHTML = chs.map(c =>
+    '<section class="card report-chapter" id="' + c.id + '">'
+    + '<h2 class="rchap-h">' + escTL(c.title) + '</h2>'
     + '<div class="rchap-body">' + (c.html || '<p class="muted">（本章无正文）</p>') + '</div>'
-    + '</details>'
+    + '</section>'
   ).join('');
   toc.querySelectorAll('.rtoc-pill').forEach(a => {
     a.addEventListener('click', ev => {
       ev.preventDefault();
       const t = document.getElementById(a.dataset.target);
-      if (t) { t.open = true; t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
   const nav = document.getElementById('nav-report');
   if (nav) nav.style.display = 'inline-flex';
 }
-
-function toggleAllChapters() {
-  const items = document.querySelectorAll('#report-body .report-chapter');
-  const anyClosed = Array.from(items).some(d => !d.open);
-  items.forEach(d => { d.open = anyClosed; });
-}
-
-function printReport() {
-  document.querySelectorAll('#report-body .report-chapter').forEach(d => { d.open = true; });
-  window.print();
-}
-// 原生 Ctrl+P 也确保所有章展开（CSS 另有 print 兜底强制显示折叠章正文）
-window.addEventListener('beforeprint', () => {
-  document.querySelectorAll('#report-body .report-chapter').forEach(d => { d.open = true; });
-});
 
 function renderCommentary() {
   const c = DATA.reverse_dcf_commentary;
@@ -2009,7 +2046,8 @@ function loadDataIntoUI() {
   renderCommentary();
   renderTimeline();  // 催化剂时间线（静态，渲染一次）
   renderLayout();    // 产业布局雷达（静态，渲染一次）
-  renderReport();    // 完整深度报告正文（静态，渲染一次）
+  renderReport();    // 报告正文按章嵌入（静态，渲染一次）
+  renderCh1Card();   // 第一章判断卡（生意质量卡 + 业务速览 + 核心论点）
   // 报价新鲜度：当前价=今日收盘（免费刷新）时，标一下日期，让人知道这是哪天的价
   if (DATA.quote && DATA.quote.as_of) {
     const det = document.getElementById('summary-current-detail');

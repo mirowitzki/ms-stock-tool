@@ -722,27 +722,39 @@ footer a { color: var(--accent); text-decoration: none; }
 .lr-ind-handoff .cmd { font-family:var(--mono,monospace); background:var(--grid); padding:1px 6px; border-radius:4px; font-size:11px; color:var(--text); }
 @media (max-width:680px){ .lr-inds { grid-template-columns:1fr; } .lr-move { grid-template-columns:64px 1fr; } }
 
-/* ===================== 完整深度报告（正文嵌入）===================== */
-.report-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-.report-head h2 { margin:0; }
-.report-tools { display:flex; gap:8px; flex-wrap:wrap; }
-.rpt-btn { font-size:12.5px; padding:6px 12px; border:1px solid var(--border); background:#fff;
-  color:var(--text); border-radius:8px; cursor:pointer; transition:all .15s ease; }
-.rpt-btn:hover { border-color:var(--accent); color:var(--accent); box-shadow:var(--shadow); }
-.report-toc { display:flex; flex-wrap:wrap; gap:6px; margin:14px 0 6px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+/* ===================== 报告正文（按章嵌入交互器主干）===================== */
+.report-toc { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 16px; position:sticky; top:0;
+  background:var(--bg); padding:10px 0; z-index:5; }
 .rtoc-pill { font-size:12.5px; padding:5px 11px; border-radius:999px; background:#eef2f6; color:var(--primary);
   text-decoration:none; border:1px solid transparent; transition:all .15s ease; }
 .rtoc-pill:hover { background:var(--accent); color:#fff; }
-.report-chapter { border-bottom:1px solid var(--grid); }
-.report-chapter:last-child { border-bottom:none; }
-.rchap-summary { cursor:pointer; list-style:none; padding:14px 4px 14px 28px; position:relative;
-  font-size:17px; font-weight:700; color:var(--primary); user-select:none; }
-.rchap-summary::-webkit-details-marker { display:none; }
-.rchap-summary::before { content:'▸'; position:absolute; left:6px; top:14px; color:var(--accent);
-  transition:transform .15s ease; font-size:14px; }
-.report-chapter[open] > .rchap-summary::before { transform:rotate(90deg); }
-.rchap-summary:hover { color:var(--accent); }
-.rchap-body { padding:2px 4px 26px; max-width:880px; }
+.report-chapter { scroll-margin-top:60px; }
+.rchap-h { font-size:18px; color:var(--primary); margin:0 0 14px; padding-bottom:8px;
+  border-bottom:2px solid var(--accent); display:inline-block; }
+.rchap-body { max-width:880px; }
+/* —— 第一章判断卡（生意质量卡 + 业务速览）—— */
+.qc-lab { font-size:12px; color:var(--text-muted); margin-bottom:8px; }
+.qc-ess { font-size:18px; font-weight:700; color:var(--text); line-height:1.5; margin-bottom:12px; }
+.qc-thesis { font-size:13.5px; color:#23303a; line-height:1.85; margin-bottom:6px; padding:12px 16px;
+  background:#f3f6f9; border-left:3px solid var(--accent); border-radius:0 6px 6px 0; }
+.qc-thesis p { margin:0; }
+.qc-spec { position:relative; height:8px; border-radius:999px; background:#eef2f6; border:1px solid var(--border); margin:42px 0 4px; }
+.qc-spec-mk { position:absolute; top:-7px; width:18px; height:18px; border-radius:50%; border:2px solid var(--card); transform:translateX(-50%); }
+.qc-spec-v { position:absolute; top:-26px; transform:translateX(-50%); font-size:11.5px; font-weight:700; white-space:nowrap; }
+.qc-spec-lab { display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted); margin-top:8px; }
+.qc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px 22px; margin-top:18px; }
+.qc-full { grid-column:1/-1; }
+.qc-k { font-size:12px; color:var(--text-muted); margin-bottom:3px; }
+.qc-v { font-size:13px; color:var(--text); line-height:1.6; }
+.qc-tbl { width:100%; border-collapse:collapse; font-size:12.5px; }
+.qc-tbl th { text-align:left; color:var(--text-muted); font-weight:600; padding:6px 8px; border-bottom:1px solid var(--border); }
+.qc-tbl td { padding:7px 8px; border-bottom:1px solid var(--grid); color:var(--text); }
+.qc-src { background:#eef2f6; color:var(--text-muted); border:1px solid var(--border); padding:1px 7px; border-radius:6px; font-size:11px; }
+.rk { display:inline-block; padding:2px 9px; border-radius:999px; font-size:12px; font-weight:600; white-space:nowrap; }
+.rk-eng { background:rgba(26,84,144,.12); color:var(--accent); }
+.rk-good { background:rgba(42,157,143,.16); color:#1f7a6e; }
+.rk-warn { background:rgba(212,160,23,.18); color:#9a7400; }
+.rk-bad { background:rgba(230,57,70,.12); color:var(--bear); }
 /* —— 章内正文排版（pandoc 转出来的 HTML）—— */
 .rchap-body h2 { font-size:16px; color:var(--primary); margin:26px 0 10px; padding-bottom:5px; border-bottom:1px solid var(--grid); }
 .rchap-body h3 { font-size:14.5px; color:var(--accent); margin:20px 0 8px; }
@@ -788,7 +800,7 @@ footer a { color: var(--accent); text-decoration: none; }
 
 <nav class="topnav">
   <a href="../../dashboard.html">← 返回仪表盘</a>
-  <a href="#section-report" id="nav-report" class="primary" style="display: none;">📖 阅读完整报告</a>
+  <a href="#section-report" id="nav-report" class="primary" style="display: none;">📖 报告正文</a>
   <a href="#" id="nav-pdf" style="display: none;">📄 下载 PDF</a>
 </nav>
 
@@ -1180,18 +1192,12 @@ footer a { color: var(--accent); text-decoration: none; }
   </div>
 </details>
 
-<!-- ========================= 完整深度报告（与按需 PDF 同源·正文嵌入）========================= -->
-<section class="card" id="section-report" style="display:none;">
-  <div class="report-head">
-    <h2>📖 完整深度报告 <span class="card-note">九章全文 · 与 PDF 同一份源</span></h2>
-    <div class="report-tools">
-      <button type="button" class="rpt-btn" onclick="toggleAllChapters()">展开 / 收起全部</button>
-      <button type="button" class="rpt-btn" onclick="printReport()">🖨 打印 / 存为 PDF</button>
-    </div>
-  </div>
+<!-- ========================= 报告正文（按章嵌入交互器主干）========================= -->
+<div id="section-report" style="display:none;">
+  <div id="ch1-card"></div>
   <nav class="report-toc" id="report-toc"></nav>
-  <div class="report-body" id="report-body"></div>
-</section>
+  <div id="report-body"></div>
+</div>
 
 <footer>
   <p><span id="footer-ticker">—</span> · 生成时间 <span id="footer-time">—</span></p>
@@ -1209,7 +1215,7 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "NVDA",
   "company_name": "NVIDIA Corporation",
   "as_of": "2026-01-25",
-  "generated_at": "2026-06-27 23:04:12",
+  "generated_at": "2026-06-28 00:28:41",
   "facts": {
     "revenue_today": 215938,
     "cash": 10605,
@@ -2393,65 +2399,61 @@ footer a { color: var(--accent); text-decoration: none; }
   "report_chapters": [
     {
       "id": "ch-0",
-      "title": "导读",
-      "html": "<blockquote>\n<p>这份报告写给一个完全不熟悉这家公司的读者。读完之后你应该能用自己的话向另一个人解释：这家公司到底在做什么生意、它在哪个行业里、靠什么活下来、未来五年最关键的胜负手是什么。<\/p>\n<p>全部数据基于：<a href=\"filings/\">6 份 10-K\n年报（FY2021-FY2026）<\/a>、<a href=\"filings/DEF14A_2026-06-24.txt\">2026\n年委托书 DEF14A<\/a>、<a href=\"financials/financials.csv\">整理后的 6+\n年财务序列 financials.csv<\/a>，以及对创始人、行业、文化的联网检索。<\/p>\n<p><strong>重要提醒<\/strong>：NVDA 财年截至每年 1 月最后一个周日，所以\n<strong>FY2026 ≈ 自然年 2025<\/strong>（截至 2026-01-25 的 12\n个月）。本报告所有 “FY” 都指 NVIDIA 财年。<\/p>\n<p>这份报告不做估值，也不给买卖建议。它只回答一个问题：<strong>这是一门什么样的生意。<\/strong><\/p>\n<\/blockquote>\n<hr />\n"
-    },
-    {
-      "id": "ch-1",
       "title": "引子：为什么这家公司值得一份长报告",
       "html": "<p>如果你只看一个数字：<strong>2022 年 11 月 ChatGPT\n上线的那个周，NVIDIA 股价大约 $13（按今天 10:1 分拆后的口径计）；3\n年后的 2026 年初，股价超过 $150<\/strong>。市值从 $3000 亿涨到 $4+\n万亿——成为人类历史上市值最高的公司之一。<\/p>\n<p>但这不是这家公司值得一份长报告的真正理由。真正的理由是：<\/p>\n<p>第一，<strong>它是过去 50\n年商业史上最罕见的”创始人模式持续兑现”案例<\/strong>。Jensen Huang 1993\n年和两位芯片工程师朋友在加州 Denny’s 餐厅用 $40,000 启动资金创办公司，32\n年后仍是 CEO——这个长度在大型科技公司里几乎是\n0（苹果、谷歌、微软、亚马逊、Meta 的创始人 CEO 早就换过几任了）。理解\nJensen 的管理哲学就是理解这家公司。<\/p>\n<p>第二，<strong>它是”押注 20 年终于收获”的极致案例<\/strong>。NVIDIA 从\n2006 年开始押注 CUDA（GPU\n通用计算编程模型）——当时几乎没人理解为什么一家游戏显卡公司要花十年时间做”科学计算软件平台”。直到\n2012 年深度学习突破、2017 年 Transformer 论文发表、2022 年 ChatGPT\n让世界看到 AI\n真实潜力——那些年的”看似无用的投资”才被验证为最深的护城河。这种长期主义在公开市场上是稀缺的研究对象。<\/p>\n<p>第三，<strong>它正处于一个特殊的”巅峰风险点”<\/strong>。当一家公司毛利率\n71%、净利率 56%、占有 90% 的 AI\n训练芯片市场，<strong>这种状态很难维持<\/strong>——大客户会自研、对手会追赶、地缘政治会变化、新一代制程会变贵。所以当下的高估值同时反映”它真的非常强”和”它强不到永远这么强”两种预期。<\/p>\n<p>下面我们从头开始讲。<\/p>\n<hr />\n"
     },
     {
-      "id": "ch-2",
+      "id": "ch-1",
       "title": "一、一句话讲它是做什么的",
       "html": "<p><strong>一句话：NVIDIA 是一家 1993 年靠 $40,000 起家的 GPU\n公司，借生成式 AI 浪潮变成了”全球 AI\n数据中心基础设施”的核心供应商——它造芯片、造网络、造软件，把这三样捆在一起卖给微软、亚马逊、谷歌、Meta、OpenAI\n等所有需要训练大模型的公司。<\/strong><\/p>\n<p>这一句话太干，远远不够。下面拆开讲。<\/p>\n<h3>1.1 它卖什么<\/h3>\n<p>NVIDIA\n今天卖三类产品，但它们被深度耦合成一个<strong>“系统级解决方案”<\/strong>：<\/p>\n<p><strong>第一类：AI 加速 GPU（中文常称”AI 训练芯片”）<\/strong><\/p>\n<p>这是公司最重要的产品。当前主力是 <strong>Blackwell<\/strong>\n架构（B100、B200、GB200、GB300 等型号），上一代是\n<strong>Hopper<\/strong>（H100、H200）。这些芯片专门用于运行大型 AI\n模型——训练 ChatGPT 之类的大语言模型需要数千颗这种芯片协同工作。<\/p>\n<p>每颗 Blackwell GPU 包含 2080 亿个晶体管（作为对比，普通笔记本电脑 CPU\n大约 100-200 亿个），单颗售价\n$30,000-$50,000，是世界上<strong>单价最高的批量生产芯片<\/strong>。<\/p>\n<p>下一代 <strong>Rubin<\/strong> 架构计划 FY2027 下半年量产，号称对 AI\n推理任务的成本/性能比 Blackwell 提升 10 倍。<\/p>\n<p><strong>第二类：数据中心网络（NVLink + InfiniBand）<\/strong><\/p>\n<p>这是 NVDA 通过 2020 年以 $71 亿收购 Mellanox 获得的能力。当几千颗 GPU\n需要协同训练时，它们之间的数据通信速度往往成为瓶颈。NVDA 的 NVLink +\nInfiniBand 网络可以做到每秒 1.8 TB 的带宽——比传统以太网快几十倍。<\/p>\n<p>这一块业务 FY2026 营收 <strong>$310 亿<\/strong>，同比增长\n<strong>142%<\/strong>——是公司增长最快的细分领域。<\/p>\n<p><strong>第三类：软件生态（CUDA 等）<\/strong><\/p>\n<p>NVDA\n提供的不只是芯片，还有运行在这些芯片上的整套软件栈——CUDA（编程框架）、cuDNN（深度学习库）、TensorRT（推理优化）、NeMo（大模型训练）、Omniverse（仿真）等。<strong>全球有\n750 万开发者在使用 CUDA<\/strong>。<\/p>\n<p>软件本身不直接卖钱——主要是免费提供。但它创造了<strong>护城河<\/strong>：客户一旦在\nCUDA 上构建了软件栈，切换到 AMD 或 Google TPU\n就要重写所有代码——成本巨大、风险极高。<\/p>\n<p><strong>这三类捆绑销售<\/strong>：客户买的不是”GPU”，是”一整个能跑 AI\n的数据中心”。<\/p>\n<h3>1.2 它卖给谁<\/h3>\n<p>NVIDIA 今天的客户大致分四层：<\/p>\n<p><strong>第一层：“超大客户”——5-7 家全球级科技巨头<\/strong><\/p>\n<p>按公司在 10-K 里的披露（FY2026）： - 一个直接客户占总营收\n<strong>22%<\/strong> - 另一个占 <strong>14%<\/strong> -\n第三、四个各占大约 10%（FY2025 数据，FY2026 数据 10-K 未单独披露）<\/p>\n<p>虽然公司没有点名，但根据公开报道和行业分析，这些大客户基本是： -\n<strong>微软<\/strong>（Azure、OpenAI 训练设施） - <strong>亚马逊\nAWS<\/strong> - <strong>谷歌<\/strong>（虽然 Google 也自研 TPU，仍是 NVDA\n大客户） - <strong>Meta<\/strong>（Llama 模型训练 + Reality Labs） -\n<strong>CoreWeave<\/strong>、<strong>Lambda Labs<\/strong> 等 GPU 云服务商\n- 大型 AI 实验室（OpenAI 通过云转售采购）<\/p>\n<p>10-K 还专门提了一句：“<strong>估计有一家 AI\n研究与部署公司<\/strong>（暗指 OpenAI）通过我们客户的云服务为我们贡献了\nmeaningful 数量的营收”——这是公司主动披露的”间接客户集中度”风险。<\/p>\n<p><strong>第二层：传统企业<\/strong>——大型银行、制药、汽车制造商等，用\nNVDA 芯片做内部 AI 项目。<\/p>\n<p><strong>第三层：政府与学术机构<\/strong>——美国国家实验室、各国政府的\nAI 基础设施项目、大学研究中心。<\/p>\n<p><strong>第四层：游戏玩家与设计师<\/strong>——传统 GeForce\n显卡市场。这块 FY2026 营收 $160\n亿，看起来还不小，但<strong>只占公司总营收\n7%<\/strong>——已经成了”附带的大业务”。<\/p>\n<p>NVDA 客户结构地理上 FY2026 大约：美国 ~50%、新加坡\n~20%（实际上是台积电封测中转）、其他\n~30%。中国大陆受出口管制影响，过去几年从重要市场（约\n20%）萎缩到边缘（个位数）。<\/p>\n<h3>1.3 它解决了什么问题<\/h3>\n<p>NVIDIA 在两个层面上回答了”AI 需要什么”这个问题：<\/p>\n<p><strong>第一层：GPU 比 CPU 更适合 AI<\/strong><\/p>\n<p>这是 NVDA 1990 年代赌对的第一个洞察。传统计算机 CPU\n像一个”超快的精算师”——一次做一件事，但做得非常快。GPU\n像”一万个普通学生同时做加减乘除”——每个不快，但<strong>并行能力极强<\/strong>。<\/p>\n<p>事实证明 AI 训练的本质就是巨量的矩阵乘法——非常适合用 GPU\n这种并行架构。所以 NVDA 误打误撞中把”游戏显卡”变成了”AI 训练芯片”。<\/p>\n<p>但仅此还不够。第二层洞察才是真正的护城河：<\/p>\n<p><strong>第二层：AI 训练需要的不只是芯片，是”系统”<\/strong><\/p>\n<p>训练一个像 GPT-4\n这样的大模型，不是用一颗芯片，是用<strong>几万颗芯片同时工作<\/strong>。这些芯片之间需要：\n- 极快的网络互联（每个 GPU 每秒和邻居交换几 TB 数据） -\n统一的软件栈（让程序员能写”在一万颗 GPU 上同时跑”的代码） -\n经过验证的整体架构（一套可靠的设计，少操心硬件细节）<\/p>\n<p>NVDA 在过去十年里<strong>逐渐把自己从”一家卖 GPU 的公司”变成了”卖整个\nAI 数据中心系统的公司”<\/strong>。客户买的不是芯片——是”一个能用的 AI\n工厂”。这就是为什么 NVDA 能够维持 70%+ 的毛利率——一台 NVL72 系统（72 颗\nGB200 + 网络 + 机柜）售价超过 $300 万，远高于零散 GPU 的总和。<\/p>\n<p>这个”系统级整包”是 hyperscaler 自研\nASIC（专用芯片）短期内难以复制的——他们能做出芯片，但做不出完整的训练系统软件栈、网络协议、参考架构。<\/p>\n<hr />\n"
     },
     {
-      "id": "ch-3",
+      "id": "ch-2",
       "title": "二、它所在的行业",
       "html": "<h3>2.1 半导体与 AI 计算：一个”赢家通吃”的市场<\/h3>\n<p>要理解\nNVDA，先要理解半导体行业的结构。这是一个<strong>极度集中<\/strong>的行业：<\/p>\n<p><strong>制造端<\/strong>：全球先进制程（≤7nm）的芯片制造产能几乎完全集中在\n<strong>台积电（TSMC）<\/strong>。三星和 Intel 偶尔有竞争力，但在 ≤5nm\n节点上台积电一家独大。<strong>NVDA 的所有 AI\n芯片都在台积电制造<\/strong>——这是公司的关键单点风险。<\/p>\n<p><strong>设备端<\/strong>：芯片制造设备由\n<strong>ASML<\/strong>（荷兰）、<strong>应用材料<\/strong>（美国）等几家公司垄断。EUV\n光刻机全球只有 ASML 一家能造。<\/p>\n<p><strong>存储端<\/strong>：HBM（高带宽内存，AI 芯片必备）主要来自\n<strong>三星<\/strong> 和 <strong>SK 海力士<\/strong>（韩国）。<\/p>\n<p><strong>设计端<\/strong>（NVDA\n在这里）：芯片设计是相对开放的——理论上很多公司可以做。但 <strong>AI GPU\n设计<\/strong>的高门槛使得这块也极度集中。<\/p>\n<p>NVDA 的位置：<strong>专注于设计<\/strong>（fabless\n模式），自己不造芯片，把生产外包给台积电。这让 NVDA\n资本开支相对其他半导体公司轻得多——但供应链完全依赖亚洲（台湾 +\n韩国）。<\/p>\n<h3>2.2 AI 训练芯片市场：NVDA 几乎垄断<\/h3>\n<p>按 2025-2026 年的市场数据： - <strong>NVDA AI 训练芯片市场份额：约\n80-90%<\/strong>（不同分析师估计有差异） -\n这是少有的”科技公司在巨大市场里几乎独占”的情况 - 这种地位 12-18\n个月前就建立了，到现在仍未被打破<\/p>\n<p>但市场份额的稳固性面临 4 个方向的挑战：<\/p>\n<h3>2.3 主要玩家——谁在挑战 NVDA<\/h3>\n<p><strong>AMD——直接对手中最强<\/strong><\/p>\n<p>AMD MI300X（2024 推出）和正在出货的 MI400 系列（2026）是 NVDA H100 /\nH200 的直接替代。AMD 的优势： - <strong>HBM 内存更大<\/strong>（MI300X\n192GB vs H100 80GB）——某些推理任务更适合 - 价格通常便宜 20-30% - 主要\nhyperscaler（微软、Meta）都有 AMD 部署<\/p>\n<p>但 AMD 的关键劣势：<strong>ROCm 软件栈不如 CUDA\n成熟<\/strong>——开发者抱怨连连。这个差距在缩小但远未抹平。<\/p>\n<p><strong>Intel Gaudi——挑战者中的小角色<\/strong><\/p>\n<p>Intel Gaudi 3 在 2024-2025 试图竞争但市场份额很小。Intel\n整体陷入财务困境，CEO 多次换人，对 NVDA 威胁有限。<\/p>\n<p><strong>超大客户自研 ASIC——最大威胁<\/strong><\/p>\n<p>这是 NVDA 真正的结构性担忧。每家超大客户都在花费数十亿美元自研专用 AI\n芯片：<\/p>\n<table>\n<colgroup>\n<col style=\"width: 33%\" />\n<col style=\"width: 33%\" />\n<col style=\"width: 33%\" />\n<\/colgroup>\n<thead>\n<tr>\n<th>客户<\/th>\n<th>自研芯片<\/th>\n<th>现状<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>Google<\/td>\n<td>TPU v5p、v6（Trillium）、Ironwood<\/td>\n<td>已成熟，内部承担 Google AI 大部分负载<\/td>\n<\/tr>\n<tr>\n<td>Amazon<\/td>\n<td>Trainium、Trainium2<\/td>\n<td>已部署在 AWS，Anthropic 是大客户<\/td>\n<\/tr>\n<tr>\n<td>Microsoft<\/td>\n<td>Maia 200<\/td>\n<td>2024 推出，部署 Azure 内部<\/td>\n<\/tr>\n<tr>\n<td>Meta<\/td>\n<td>MTIA v1、v2<\/td>\n<td>主要做推理<\/td>\n<\/tr>\n<tr>\n<td>字节、阿里、百度、华为<\/td>\n<td>各自有方案<\/td>\n<td>在中国市场已替代不少 NVDA<\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<p><strong>关键统计<\/strong>：根据 2026 年初的数据，<strong>Custom ASIC\n全行业出货量预计 +44.6%，而 GPU +16.1%<\/strong>——增速差距明显倾向\nASIC。<\/p>\n<p>这不是说 NVDA 立刻被取代——而是说<strong>未来 3-5\n年的市场份额扩张面对的是”每个大客户都在尝试减少 NVDA\n依赖”的趋势<\/strong>。NVDA 自己的 10-K 也明确把这一项列为风险。<\/p>\n<p><strong>Google TPU——最长寿命的对手<\/strong><\/p>\n<p>Google TPU 已经做了 10 年（从 v1 到 v6），Google 内部几乎所有 AI\n工作负载（搜索 AI、广告 AI、Gemini 训练）都用 TPU。最新 Ironwood TPU\n的训练性能据 Google 称已经达到与 Blackwell 相当的水平。<strong>TPU 是\nNVDA 最有威胁的对手<\/strong>，但它只在 Google\n云上提供，所以不是”公开市场对手”。<\/p>\n<h3>2.4 监管与地缘政治<\/h3>\n<p><strong>美国出口管制<\/strong>是 NVDA 当前最大的非市场风险：<\/p>\n<ul>\n<li>2022 年起：美国对中国出口高端 GPU 实施许可制<\/li>\n<li>2023 年：H100 不能卖中国；NVDA 设计了缩水版 H800<\/li>\n<li>2024 年：H800 也被禁；NVDA 设计了更缩水的 H20<\/li>\n<li>2025 年 8 月：H20 也需要许可证；美国政府要求 NVDA 把 H20 营收的\n<strong>15% 上交政府<\/strong>（事实上征税）<\/li>\n<li>2025 年 1 月：拜登政府推出 <strong>AI Diffusion\nIFR<\/strong>（人工智能扩散临时规则），把 H200、GB200、GB300\n全部纳入全球许可范围。该规则前景不明，但暗示出口管制可能进一步扩大<\/li>\n<li>2026 年：FY2026 NVDA 因为 H20 库存和采购承诺<strong>一次性冲减 $45\n亿美元<\/strong>——5 年内最大的”政策受损”事件<\/li>\n<\/ul>\n<p><strong>对 NVDA 业务的实际影响<\/strong>： - 中国市场从 2022\n年占营收约 25% 降到 FY2026 几乎可以忽略 - H20 的小规模授权销售（FY2026\n仅 $0.6 亿）远低于过去中国市场的 $100+ 亿 - 中国客户转向华为 Ascend\n等本土替代 -\n<strong>结构性永久损失<\/strong>：即使政策放松，中国客户已经开始转移，回流困难<\/p>\n<h3>2.5 行业总结<\/h3>\n<p><strong>NVDA 当前所处的行业局面<\/strong>： 1. 在 AI\n训练芯片这个细分市场上拥有 80-90% 份额——史无前例 2.\n但这个细分市场本身正在被三股力量重塑： - 超大客户自研\nASIC（替代部分内部需求） - 制程升级成本急升（5nm → 3nm →\n2nm，每代芯片设计成本翻倍） - 出口管制让全球市场被切成”美国阵营 +\n中国阵营” 3. NVDA 的 CUDA\n软件生态仍是最深的护城河——但它的相对优势在被开源 AI 模型的成熟所削弱<\/p>\n<hr />\n"
     },
     {
-      "id": "ch-4",
+      "id": "ch-3",
       "title": "三、公司的起点：1993 年 Denny's 餐厅的故事",
       "html": "<p>NVIDIA 的故事开始于 1993 年加州圣何塞的一家 Denny’s 餐厅。<\/p>\n<p>三个芯片工程师——Jensen Huang（30 岁，时任 LSI Logic 工程总监）、Chris\nMalachowsky（Sun Microsystems 工程师）、Curtis Priem（IBM/Sun\n工程师）——在那里讨论”PC 图形芯片市场的机会”。当时 PC\n游戏正在兴起，但图形处理能力远跟不上需求。三人决定一起创业，用\n<strong>$40,000 启动资金<\/strong> 成立 NVIDIA Corporation。<\/p>\n<p>Don Valentine 领导下的红杉资本和 Sutter Hill Ventures\n提供了早期投资。公司名字 “NVIDIA” 来自拉丁语\n“invidia”（嫉妒/羡慕），暗示”让对手羡慕”的产品。<\/p>\n<p><strong>1999 年 IPO<\/strong>——成为公开市场公司。当时主要产品是 PC\n游戏显卡（GeForce 系列），跟 ATI（后被 AMD 收购）和\n3dfx（后破产）激烈竞争。<\/p>\n<p><strong>2006 年——CUDA 的诞生<\/strong><\/p>\n<p>这是 NVDA 历史上<strong>最重要的转折<\/strong>。Jensen Huang\n决定，<strong>让 GPU\n不仅能渲染游戏画面，还要能做通用科学计算<\/strong>。他启动了\nCUDA（Compute Unified Device Architecture）项目——一个让程序员用 C\n语言编程 GPU 的软件平台。<\/p>\n<p>这个决定在当时<strong>几乎没人理解<\/strong>： -\n游戏显卡公司为什么要做科学计算平台？ - 谁会用 GPU\n跑科学计算？传统计算机不行吗？ -\n这要投入多少工程师、做多少年？回报在哪里？<\/p>\n<p>但 Jensen 坚持。<strong>CUDA 让 NVIDIA 在接下来 15 年里持续亏损 /\n微利<\/strong>——但 CUDA 团队和生态系统一直在扩张。<\/p>\n<p><strong>2012 年——AlexNet 时刻<\/strong><\/p>\n<p>多伦多大学 Geoffrey Hinton 团队用 NVIDIA GeForce GTX 580 GPU\n训练了一个叫 AlexNet 的神经网络，在 ImageNet\n图像识别比赛中以远超传统方法的成绩夺冠。<strong>这是深度学习革命的起点<\/strong>。<\/p>\n<p>从那一刻起，全世界 AI 研究者都意识到：用 GPU 跑深度学习比 CPU\n快几十倍。CUDA 突然变成了<strong>所有 AI 研究的事实标准<\/strong>。<\/p>\n<p>NVDA 一夜之间从”游戏显卡公司”变成了”AI 计算的核心供应商”——但市场用了\n5-10 年才完全理解这件事。<\/p>\n<p><strong>2017 年——Transformer 论文<\/strong><\/p>\n<p>Google 的 8 个研究者发表 “Attention Is All You Need” 论文，提出\nTransformer 架构。这成为后来所有大语言模型（包括\nGPT、Claude、Gemini）的底层架构。<strong>Transformer\n训练比之前的模型架构对算力需求大得多——直接让 NVDA\n数据中心业务起飞<\/strong>。<\/p>\n<p><strong>2019 年——决定收购 Mellanox<\/strong><\/p>\n<p>Jensen 看到：AI 训练已经从”一颗 GPU 跑”变成”几千颗 GPU 协同跑”——GPU\n之间的网络互联成为关键。NVDA 出价 $71 亿收购以色列网络芯片公司\nMellanox，2020 年 4 月完成。这给了 NVDA InfiniBand 高速互联技术。<\/p>\n<p><strong>2020 年 9 月——尝试收购 ARM<\/strong><\/p>\n<p>NVDA 宣布以 $400 亿（现金 + 股票）收购英国芯片设计公司 ARM。ARM\n设计的芯片架构被全球 99% 的智能手机使用。这本来会让 NVDA 同时掌握 GPU 和\nCPU 设计标准——但因为各国监管反对（特别是中国和英国），<strong>2022 年 2\n月交易被迫终止<\/strong>。<\/p>\n<p>这是 NVDA\n历史上最大的”未完成战略”——但<strong>没有重大资本损失<\/strong>（已付的\n$20 亿前期款项中部分作为 ARM 永久许可保留）。<\/p>\n<p><strong>2022 年 11 月 30 日——ChatGPT 上线<\/strong><\/p>\n<p>OpenAI 的 ChatGPT 让全世界突然看到了大语言模型的潜力。短短 3\n个月内吸引 1\n亿用户——史上增长最快的消费品。但更重要的是：<strong>所有大科技公司都意识到，必须立刻投入\nAI 基础设施竞赛<\/strong>。<\/p>\n<p>接下来的 18 个月里，微软、谷歌、亚马逊、Meta 把 AI\n资本开支从”小几十亿美元/年”提升到”几千亿美元/年”。<strong>NVDA\n几乎是这场 capex 浪潮的唯一受益者<\/strong>——因为只有它的 GPU + CUDA\n能够跑生产级的大模型训练。<\/p>\n<h3>3.1 在我们 5 年时间窗口的”起点”——FY2021<\/h3>\n<p>我们获取的最早一份 10-K 是 FY2021（截至 2021-01-31）。那时 ChatGPT\n还没出现，但 AI 浪潮已经在酝酿：<\/p>\n<ul>\n<li><strong>总营收 $16.7B<\/strong>——和今天 $216B 比，只有 1/13<\/li>\n<li><strong>Data Center 营收 $6.7B<\/strong>（占 40%）——Mellanox\n刚整合一年，互联业务初具规模<\/li>\n<li><strong>Gaming 营收 $7.8B<\/strong>——是当时最大业务<\/li>\n<li><strong>管理层措辞<\/strong>：把 AI 列为”四大战略”之一，但还没有”AI\n第一”的定调<\/li>\n<li><strong>ARM 收购<\/strong>在 10-K 里有详细披露，预计 2022 Q1\n完成（实际未完成）<\/li>\n<li><strong>Mellanox<\/strong>：4 月 27 日完成收购，整年贡献约 $1.5B\n营收<\/li>\n<\/ul>\n<p>这是一个<strong>“AI 浪潮前夜”的\nNVDA<\/strong>——已经在战略上下注，但还没有看到结果。<\/p>\n<hr />\n"
     },
     {
-      "id": "ch-5",
+      "id": "ch-4",
       "title": "四、发展历程：从 FY2021 到 FY2026 它实际走过的路",
       "html": "<p>6 年的财务数据已经讲了大半个故事。让我们逐年看：<\/p>\n<h3>4.1 FY2021（截至 2021-01-31）：AI 浪潮前夜<\/h3>\n<ul>\n<li><strong>总营收 $16.7B<\/strong>（YoY +53%）<\/li>\n<li>净利润 $4.3B<\/li>\n<li>股东权益 $16.9B、现金 $0.85B（大量现金用于 Mellanox 收购）<\/li>\n<li>数据中心 $6.7B（+124%，Mellanox 全年并表）<\/li>\n<li>游戏 $7.8B（+41%）——RTX 30 系发布，遇上加密货币挖矿热潮<\/li>\n<li>重要事件：4 月完成 Mellanox 收购；9 月宣布 ARM 交易<\/li>\n<\/ul>\n<h3>4.2 FY2022（截至 2022-01-30）：游戏与挖矿巅峰<\/h3>\n<ul>\n<li><strong>总营收 $26.9B<\/strong>（+61%）<\/li>\n<li>净利润 $9.8B<\/li>\n<li>Data Center $10.6B（+58%）；Gaming 创纪录 $12.5B（+61%）<\/li>\n<li>ARM 收购进入终局——监管反对加剧<\/li>\n<li><strong>关键事件<\/strong>：5 月起加密货币市场崩溃，影响游戏 GPU\n需求（高端 GPU 大量被挖矿采购）<\/li>\n<\/ul>\n<h3>4.3 FY2023（截至 2023-01-29）：转折之年<\/h3>\n<ul>\n<li><strong>总营收 $27.0B<\/strong>（基本持平）<\/li>\n<li>净利润 $4.4B（<strong>腰斩<\/strong>）——加密寒冬 + Gaming 暴跌<\/li>\n<li>Gaming 跌至 $9.1B（-27%）<\/li>\n<li>Data Center 涨至 $15.0B（+41%）<\/li>\n<li>公司开始转型——从 PC 游戏公司变成数据中心公司<\/li>\n<\/ul>\n<p><strong>重要事件<\/strong>： - 2 月，ARM 收购正式终止 - 11\n月，<strong>ChatGPT 上线<\/strong>——年底之后，公司开始感受到订单飙升 -\n美国出口管制开始针对中国 H100 销售 - 公司推出 H800（H100\n的中国合规版本）<\/p>\n<h3>4.4 FY2024（截至 2024-01-28）：ChatGPT 红利兑现<\/h3>\n<ul>\n<li><strong>总营收\n$60.9B<\/strong>（<strong>+126%<\/strong>）——半导体史上罕见的爆发<\/li>\n<li>净利润 $29.8B（+581%）<\/li>\n<li>Data Center $47.5B（占 78%，+217%）<\/li>\n<li>Gaming $10.4B（+15%）<\/li>\n<li>毛利率从 56.9% 提升到 72.7%——产品组合变化驱动<\/li>\n<\/ul>\n<p><strong>重要事件<\/strong>： - H100 全年供不应求，客户排队 -\n公司年底宣布 Blackwell 架构 - 出口管制升级到 H100/H800 都禁；公司设计\nH20（更弱的中国合规版本）<\/p>\n<h3>4.5 FY2025（截至 2025-01-26）：Hopper 巅峰<\/h3>\n<ul>\n<li><strong>总营收 $130.5B<\/strong>（<strong>+114%<\/strong>）<\/li>\n<li>净利润 $72.9B（+145%）<\/li>\n<li>Data Center $115B（占 88%，+142%）<\/li>\n<li>毛利率 75.0%——历史巅峰<\/li>\n<li>运营现金流 $64B、年终现金 $8.6B<\/li>\n<\/ul>\n<p><strong>重要事件<\/strong>： - 6 月 10:1\n股票分拆（让股价对散户更”友好”） - Hopper（H100/H200）系列继续供不应求 -\nBlackwell 量产推迟（设计 issue 一度让市场恐慌，最终解决） - 公司开始建设\nEos 超级计算机（自用）<\/p>\n<h3>4.6 FY2026（截至 2026-01-25）：Blackwell 接棒 + 政策受损<\/h3>\n<ul>\n<li><strong>总营收 $215.9B<\/strong>（<strong>+65%<\/strong>）<\/li>\n<li>净利润 $120.1B（+65%）<\/li>\n<li>Data Center $193.7B（占 90%，+68%）<\/li>\n<li>Networking $31.4B（+142%）<\/li>\n<li>毛利率 <strong>跌到 71.1%<\/strong>（-3.9pp）<\/li>\n<\/ul>\n<p><strong>重要事件<\/strong>： - Blackwell 全面量产，成为主力产品 - 1\n月，AI Diffusion IFR 公布 - 8 月，H20 获得有限授权销售，但美国政府要求\n15% 营收上交 - 全年因 H20 库存 + 采购承诺<strong>冲减 $45\n亿美元<\/strong>——主要原因毛利率下滑 - 12 月，公司宣布以 <strong>$170\n亿（$130 现金 + $40 亿应付）收购 Groq<\/strong>——推理芯片公司 - 与 OpenAI\n谈判一项投资 + 合作协议（未完成）<\/p>\n<h3>4.7 6 年走过的路总结<\/h3>\n<p>回看这 6 年，几个关键观察：<\/p>\n<p><strong>第一，营收和利润增长之大令人窒息<\/strong>：5 年从 $16.7B 到\n$216B（<strong>13 倍<\/strong>），净利润从 $4.3B 到 $120B（<strong>28\n倍<\/strong>）。即使在科技史上，这种规模的快速增长也极其罕见——通常发生在”成长股早期阶段”（市值几亿到几十亿美元），而\nNVDA 是从已经 $100B 市值起步增长。<\/p>\n<p><strong>第二，业务结构发生根本变化<\/strong>：FY2021 时，Gaming\n是最大业务（47%）、Data Center 第二（40%）。FY2026 时，Gaming 已经降到\n7%、Data Center 上升到 90%。<strong>这是同一家公司在 5\n年里事实上换了主业<\/strong>。<\/p>\n<p><strong>第三，盈利能力质变<\/strong>：净利率从 26% 上升到\n56%。毛利率从 62% 上升到\n71%。这种水平的盈利能力在硬件公司里是罕见的——更接近软件公司（微软净利率约\n35%、Apple 约 25%）。<strong>这反映了 NVDA\n的产品已经从”芯片”变成了”系统级整包”<\/strong>。<\/p>\n<p><strong>第四，资本配置由小并购转向大并购<\/strong>：FY2021 的 Mellanox\n$7.1B 是公司当时最大并购；FY2026 的 Groq $17B 是新的最大并购。Groq\n的整合效果要 2027-2028 才能看清。<\/p>\n<p><strong>第五，地缘政治成本越来越大<\/strong>：从 FY2024\n的小规模出口管制到 FY2026 的 $45\n亿冲减——影响在快速放大。中国市场从核心市场（占营收\n25%）退化为边缘市场。<\/p>\n<hr />\n"
     },
     {
-      "id": "ch-6",
+      "id": "ch-5",
       "title": "五、真正的游戏规则与盈利引擎",
       "html": "<h3>5.1 谁是真正的盈利引擎？<\/h3>\n<p>10-K 没有按分部披露毛利率，但根据业务结构可以推算：<\/p>\n<table>\n<thead>\n<tr>\n<th>分部（FY2026）<\/th>\n<th>营收<\/th>\n<th>估算毛利率<\/th>\n<th>估算毛利贡献<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>Data Center<\/td>\n<td>$193.7B<\/td>\n<td>~75-77%<\/td>\n<td>~$148B<\/td>\n<\/tr>\n<tr>\n<td>Networking<\/td>\n<td>$31.4B（in Data Center）<\/td>\n<td>~70%<\/td>\n<td>~$22B<\/td>\n<\/tr>\n<tr>\n<td>Gaming<\/td>\n<td>$16B<\/td>\n<td>~55-60%<\/td>\n<td>~$9B<\/td>\n<\/tr>\n<tr>\n<td>Professional Viz<\/td>\n<td>$3.2B<\/td>\n<td>~65%<\/td>\n<td>~$2B<\/td>\n<\/tr>\n<tr>\n<td>Automotive<\/td>\n<td>$2.3B<\/td>\n<td>~40-50%<\/td>\n<td>~$1B<\/td>\n<\/tr>\n<tr>\n<td>其他<\/td>\n<td>$0.6B<\/td>\n<td>—<\/td>\n<td>—<\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<p>（公司整体 GAAP 毛利率 71.1%，受 H20 库存冲减拖累约 2.6pp，调整后\n~73.7%）<\/p>\n<p><strong>真相<\/strong>：<strong>Data Center\n是绝对的盈利引擎<\/strong>——占毛利的\n~90%。其他业务对净利润影响已经接近边际。<\/p>\n<h3>5.2 收入是一次性还是可循环的？<\/h3>\n<p><strong>表面看<\/strong>：每颗 GPU 都是单独售出的——客户买一颗、用 3-5\n年、然后买下一代。看起来是”一次性销售”。<\/p>\n<p><strong>真相<\/strong>：因为客户使用 CUDA + NVDA\n的软件栈，<strong>他们买下一代 GPU 时几乎必然继续买\nNVDA<\/strong>——切换成本太高。所以实际上是<strong>“事实上的订阅”<\/strong>——客户每\n3-5 年续约一次。<\/p>\n<p>更深入：因为 AI 模型规模在持续翻倍（GPT-3 → GPT-4 →\nGPT-5），客户每代都需要<strong>更多、更快的 GPU<\/strong>。NVDA 的客户从\nH100 升级到 Blackwell，<strong>单价没降反而升<\/strong>（从 $30K 涨到\n$50K+）。这是少见的”产品升级带来 ASP（平均售价）上升”。<\/p>\n<p><strong>Backlog（积压订单）<\/strong>：10-K\n未明确披露，但根据业绩会议口径，<strong>Blackwell 早在 2025\n年初就被完全订满到 2026 年<\/strong>。这种供不应求让 NVDA\n拥有事实上的定价权。<\/p>\n<h3>5.3 客户为什么选 NVDA？真正的游戏规则<\/h3>\n<p>按重要性排序：<\/p>\n<p><strong>第一位：CUDA 软件锁定<\/strong><\/p>\n<p>这是最深的护城河。客户已经在 CUDA\n上投入了大量工程师、训练好了模型、写好了管道。切换到 AMD 或 TPU 需要： -\n重写大部分代码 - 重新调优 - 重新培训工程师 -\n接受性能损失（特别是新模型，往往先在 NVDA 上跑通）<\/p>\n<p><strong>第二位：系统级整包<\/strong><\/p>\n<p>客户买的不是芯片，是一套能跑 AI 的”工厂”。NVDA 提供： - GPU +\nNetworking + 软件全栈 - 经过验证的参考架构（DGX、HGX、NVL 系列） - 7×24\n全球技术支持<\/p>\n<p>Hyperscaler 自研 ASIC\n能做出芯片，但做不出整套系统软件栈——所以<strong>即使有自研\nASIC，他们仍然需要 NVDA 来满足”最先进的需求”<\/strong>。<\/p>\n<p><strong>第三位：技术领先（架构 + 制程 + 软件）<\/strong><\/p>\n<p>每代 NVDA 产品在性能上对手领先 12-18 个月： - Blackwell 比 AMD MI300\n快约 30-50% - 比 Hopper 快 4 倍（同等功耗） - 软件优化让”声称的性能” vs\n“实际可用性能”接近 100%（对手往往是 60-80%）<\/p>\n<p><strong>第四位：管理简单性<\/strong><\/p>\n<p>对超大客户来说，“用\nNVDA”是”安全选择”——故障率低、文档完整、社区大、找到工程师容易。这是一种”消极优势”——客户选\nNVDA\n不一定因为它最好，而是因为<strong>不选它要冒不必要的风险<\/strong>。<\/p>\n<h3>5.4 护城河判断<\/h3>\n<p>按价值投资的分类法：<\/p>\n<ul>\n<li><strong>网络效应（developer\necosystem）<\/strong>：极强、目前还在加深<\/li>\n<li><strong>切换成本（CUDA 锁定）<\/strong>：极强但开始被开源 AI\n削弱<\/li>\n<li><strong>规模优势（制程领先 + 单一供应商可摊销\nR&amp;D）<\/strong>：强、与台积电关系是关键<\/li>\n<li><strong>品牌<\/strong>：极强——“NVDA = AI”的认知非常稳固<\/li>\n<li><strong>成本优势<\/strong>：相对小——毛利率高靠”系统溢价”而非”成本低”<\/li>\n<\/ul>\n<p><strong>总体判断<\/strong>：<strong>当前最深的科技公司护城河之一<\/strong>，但\n5-10 年时间尺度上面对持续侵蚀：<\/p>\n<ul>\n<li>上方挤压：开源 AI 模型（Llama、Mistral、DeepSeek 等）让 CUDA\n锁定弱化，模型可在多种硬件上跑<\/li>\n<li>下方挤压：超大客户自研 ASIC 持续推进，每个客户都希望减少对 NVDA\n的依赖<\/li>\n<li>侧面：AMD ROCm 软件栈持续改进，与 CUDA 差距缩小<\/li>\n<\/ul>\n<p>护城河\n<strong>绝对值仍然极宽<\/strong>，但<strong>变化方向正在被削弱<\/strong>。这与\nRKLB 那种”护城河有待建立”的状态完全不同——但同样需要密切跟踪。<\/p>\n<hr />\n"
     },
     {
-      "id": "ch-7",
+      "id": "ch-6",
       "title": "六、组织与人",
       "html": "<h3>6.1 Jensen Huang：当代最长寿的创始人 CEO<\/h3>\n<p>Jensen Huang（中文名黄仁勋）1963 年 2 月 17 日生于台湾台南，3\n岁时随家人移居美国（最初到肯塔基州，后到俄勒冈州）。<\/p>\n<p><strong>关键早期经历<\/strong>： - 9\n岁时父母把他和哥哥送到肯塔基州一所”问题少年寄宿学校”（实为农村基督教学校）——他在那里学会扫厕所和与各类背景的人相处\n- 高中时是乒乓球少年组全美冠军 - 俄勒冈州立大学电子工程学士（1984） -\n斯坦福大学电子工程硕士（1992，<strong>边工作边读<\/strong>） - 在\nAMD、LSI Logic 任芯片工程师<\/p>\n<p><strong>1993 年 4 月在 Denny’s 创办 NVIDIA<\/strong>——和 Chris\nMalachowsky（仍是 NVDA 高级顾问）、Curtis Priem（已退）。<\/p>\n<p><strong>Jensen 的几个关键决定，按时间顺序<\/strong>： - <strong>1999\n年<\/strong>：决定做”GeForce”品牌，让消费者把图形显卡当作”显卡里的英特尔”\n- <strong>2006 年<\/strong>：押注 CUDA——业界都觉得 GPU\n通用计算没前途，他坚持 - <strong>2012 年<\/strong>：AlexNet 之后立刻把 AI\n列为公司核心战略 - <strong>2019-2020 年<\/strong>：买\nMellanox（成功）、尝试买 ARM（监管否决） - <strong>2023 年<\/strong>：在\nHopper 还在供不应求时已经把 Blackwell 准备好（“提前两代”的纪律） -\n<strong>2025 年<\/strong>：押注 Groq 推理芯片（$170 亿）——为下一波”AI\n推理”周期下注<\/p>\n<p><strong>Jensen 的领导哲学<\/strong>（从他多次公开访谈中总结）： -\n<strong>“扁平到极致”<\/strong>：他有 <strong>40-60\n个直接下属<\/strong>（典型大公司 CEO 只有 8-15 个） - <strong>“不开 1:1\n会议”<\/strong>：所有信息通过群组邮件和文档共享，避免私下小算盘 -\n<strong>“五件事每周”<\/strong>：每个员工每周向他汇报正在做的 5\n件最重要的事（用文档形式） - <strong>“Mission/Strategy/Execution”\n文档系统<\/strong>：每个项目都要回答这三个问题 -\n<strong>不容忍”凭时间拿钱”<\/strong>：他自己的薪酬 <strong>100%\n是业绩股票<\/strong>（无 time-based RSU），其他高管才有 RSU<\/p>\n<p><strong>Jensen 的资本与持股<\/strong>： - 持有 <strong>8.7\n亿股<\/strong>（按 24.27B 股本计 <strong>3.58%<\/strong>） - 按 $4-5T\n市值估算个人净值 <strong>$140-180B<\/strong>——是世界上最富有的人之一 -\n通过多个家族信托持有（Living Trust、Irrevocable Trust 等） - Huang\nFoundation（慈善基金）持有 5868 万股，资产 $12B - 配偶 Lori\n与他共同管理多数信托——<strong>家族整体掌控大量股权<\/strong><\/p>\n<p><strong>Jensen 是否会卸任？<\/strong> - 63 岁，公开表态”还有 30-40\n年想做” - 多次说”如果有一天我做不动了，我会找内部人接替” -\n但<strong>没有公开接班人<\/strong>——这是公司治理的一个隐性风险 -\n联合创始人 Chris Malachowsky 仍是高级顾问；Curtis Priem 已退休<\/p>\n<h3>6.2 资本配置 5 年（FY2021-FY2026）<\/h3>\n<p><strong>主要并购<\/strong>：<\/p>\n<table>\n<colgroup>\n<col style=\"width: 25%\" />\n<col style=\"width: 25%\" />\n<col style=\"width: 25%\" />\n<col style=\"width: 25%\" />\n<\/colgroup>\n<thead>\n<tr>\n<th>时间<\/th>\n<th>标的<\/th>\n<th>金额<\/th>\n<th>状态 / 评价<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>FY2021（2020-04）<\/td>\n<td>Mellanox<\/td>\n<td>$7.1B 现金<\/td>\n<td>✅ 战略关键：补全数据中心互联，5 年后成 $31B 业务<\/td>\n<\/tr>\n<tr>\n<td>FY2021（2020-09）<\/td>\n<td>ARM（尝试）<\/td>\n<td>$40B（现金+股票）<\/td>\n<td>⚪ 监管否决（2022-02 终止）；NVDA 保留 ARM 永久许可<\/td>\n<\/tr>\n<tr>\n<td>FY2026（2025-12）<\/td>\n<td>Groq<\/td>\n<td><strong>$17B<\/strong>（$13B 现 + $4B 应付）<\/td>\n<td>⚠️ 商誉 $14.4B 占交易 85%；2027-2028 才能看清<\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<p><strong>Jensen 在 ARM 失败上的处理<\/strong>： -\n没有恋战、没有对抗监管 - 接受现实，保留 ARM\n永久指令集许可（<strong>这是关键的”小赢”<\/strong>） -\n没有公开抱怨、没有起诉 - 这是”知道何时认输”的成熟资本配置，值得肯定<\/p>\n<p><strong>Groq 是个有意思的案例<\/strong>： - 时机：推理需求开始上量、但\nNVDA 的 GPU 推理性价比已经不如 ASIC 专用芯片 -\n战略意图：<strong>收购对手的人和技术<\/strong>，避免自己被”推理战”绕开 -\n风险：商誉占 85%，如果 Groq 团队和技术不能整合，要做 $10-15B 减值 - 这是\nJensen\n第一次做”防御性收购”——不是为了占领新市场，是为了堵住可能被绕过的角落<\/p>\n<p><strong>股票回购<\/strong>： - NVDA 5 年累计回购超过 $1000\n亿——是公司持续的资本返还方式 - 因为公司不付有意义的分红（每股\n$0.04/年的象征性分红），股票回购是主要”股东回馈” -\n但需要注意：<strong>很多回购发生在股价已经很高时<\/strong>——能否被未来的现金流持续支撑是个问题<\/p>\n<p><strong>R&amp;D 增长<\/strong>： - $3.9B（FY2021）→\n$18.5B（FY2026）——4.7 倍 - 占营收比例从 23% 降到 8.6%——规模效应明显 -\n这是真实有效的研发投入：5 年里推出 Volta → Ampere → Hopper → Blackwell →\nRubin 五代架构<\/p>\n<p><strong>总体资本配置评价<\/strong>：<\/p>\n<p>正面： - Mellanox 收购是教科书级的战略并购 - ARM\n失败的处理体现了”知道认输”的成熟 - 持续投资 R&amp;D，没有滥用股票回购 -\n不发分红、留现金做扩张——符合高增长公司的逻辑<\/p>\n<p>担忧： - Groq 大并购的回报有不确定性 - 5\n年大规模股票回购的时机有疑问（部分回购发生在 2024-2025 股价高位） -\n库存管理出问题：H20 $4.5B 冲减说明需求预测能力有限<\/p>\n<h3>6.3 董事会与高管<\/h3>\n<p><strong>董事会<\/strong>（10 人，2026 年增至 11 人）：<\/p>\n<table>\n<thead>\n<tr>\n<th>董事<\/th>\n<th>加入年份<\/th>\n<th>背景<\/th>\n<th>类型<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>Jensen Huang<\/td>\n<td>1993<\/td>\n<td>CEO 兼创始人<\/td>\n<td>执行<\/td>\n<\/tr>\n<tr>\n<td>Tench Coxe<\/td>\n<td>1993<\/td>\n<td>Sutter Hill 风投<\/td>\n<td>独立（<strong>32 年长任<\/strong>）<\/td>\n<\/tr>\n<tr>\n<td>Harvey C. Jones<\/td>\n<td>1993<\/td>\n<td>Square Wave 风投<\/td>\n<td>独立（<strong>32 年长任<\/strong>）<\/td>\n<\/tr>\n<tr>\n<td>A. Brooke Seawell<\/td>\n<td>1997<\/td>\n<td>NEA 风投合伙人<\/td>\n<td>独立<\/td>\n<\/tr>\n<tr>\n<td>Mark A. Stevens<\/td>\n<td>2008<\/td>\n<td>S-Cubed Capital<\/td>\n<td>独立<\/td>\n<\/tr>\n<tr>\n<td>Dawn Hudson<\/td>\n<td>2013<\/td>\n<td>百事可乐前 NA CEO<\/td>\n<td>独立<\/td>\n<\/tr>\n<tr>\n<td>Stephen C. Neal<\/td>\n<td>2019<\/td>\n<td>Cooley LLP 律所主席<\/td>\n<td><strong>首席独立董事<\/strong><\/td>\n<\/tr>\n<tr>\n<td>Aarti Shah<\/td>\n<td>2020<\/td>\n<td>Eli Lilly 前 SVP<\/td>\n<td>独立<\/td>\n<\/tr>\n<tr>\n<td>John O. Dabiri<\/td>\n<td>2020<\/td>\n<td>加州理工航空航天教授<\/td>\n<td>独立<\/td>\n<\/tr>\n<tr>\n<td>Melissa B. Lora<\/td>\n<td>2023<\/td>\n<td>Taco Bell Intl 前总裁<\/td>\n<td>独立<\/td>\n<\/tr>\n<tr>\n<td>Suzanne Nora Johnson<\/td>\n<td>2026.07<\/td>\n<td>前高盛副主席<\/td>\n<td>独立（即将加入）<\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<p><strong>关键观察<\/strong>： - <strong>三位 1993\n年加入的风投仍在董事会<\/strong>——延续 32 年的稳定治理结构 -\n学术背景（Dabiri）+ 法律（Neal）+ 消费品（Hudson、Lora）的多样性 -\n<strong>没有半导体行业资深人士<\/strong>——这一点有点意外，可能是 Jensen\n主导技术决策<\/p>\n<p><strong>高管薪酬纪律<\/strong>： - Jensen FY2026 薪酬\n$35.5M，<strong>97% 与业绩挂钩<\/strong>（其他高管约 48%） - Jensen\n的股票激励 <strong>100% 是 PSU<\/strong>——没有 time-based RSU -\n其他高管：50% PSU + 50% RSU - <strong>Say-on-Pay 92%\n股东支持率<\/strong>——市场认可这种激励结构<\/p>\n<h3>6.4 企业文化：用行为推断<\/h3>\n<p><strong>信号一：32 年创始人在岗 + 60%\n操作利润率<\/strong>——这种状态在历史上没有先例。它说明： -\n公司能够避免”创始人式公司常见的内斗与混乱” -\n同时保持”职业经理人公司很难做到的长期主义” - 这是文化的硬证据<\/p>\n<p><strong>信号二：扁平组织 + 不开 1:1<\/strong>——大胆的反传统设计： -\n优势：信息流动快、决策路径短、政治少 - 风险：Jensen\n一旦离开，组织能否运转？没有可参照的过渡案例 -\n这是文化”高效但脆弱”的体现<\/p>\n<p><strong>信号三：100% PSU 薪酬纪律<\/strong>——Jensen\n自己接受最严苛的激励： - 不”凭时间拿股票” - 业绩不达标股票就归零 -\n这种纪律自上而下渗透公司 - 是”言行一致”的文化证据<\/p>\n<p><strong>信号四：CUDA 16 年的耐心<\/strong>——从 2006 押注到 2022\n收获，<strong>16 年的”看似无用的投资”<\/strong>： - 几乎所有上市公司在\n3-5 年没回报就会放弃 - 这种长期主义在科技公司极其稀缺 - 反映 Jensen\n的个人坚持，但也是组织文化的一部分<\/p>\n<p><strong>信号五：ARM\n收购失败后的优雅退场<\/strong>——没有公开抱怨、没有起诉、保留 ARM\n许可作为”小赢”： - 这种”接受现实、继续前进”是健康的组织文化 -\n与某些公司”诉讼到死”的方式形成对比<\/p>\n<p><strong>文化总结<\/strong>：<strong>“工程师文化 + 创始人主导 +\n长期主义 +\n严格纪律”<\/strong>——可能是当代最成功的科技公司文化样本。<strong>但极度依赖\nJensen 个人<\/strong>——他在的时候是优势，不在的时候未经验证。<\/p>\n<hr />\n"
     },
     {
-      "id": "ch-8",
+      "id": "ch-7",
       "title": "七、财务全貌",
       "html": "<h3>7.1 营收：从 $16.7B 到 $216B 的 5 年<\/h3>\n<table>\n<thead>\n<tr>\n<th>财年<\/th>\n<th>总营收<\/th>\n<th>同比<\/th>\n<th>Data Center<\/th>\n<th>DC 占比<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>FY2021<\/td>\n<td>$16.7B<\/td>\n<td>+53%<\/td>\n<td>$6.7B<\/td>\n<td>40%<\/td>\n<\/tr>\n<tr>\n<td>FY2022<\/td>\n<td>$26.9B<\/td>\n<td>+61%<\/td>\n<td>$10.6B<\/td>\n<td>39%<\/td>\n<\/tr>\n<tr>\n<td>FY2023<\/td>\n<td>$27.0B<\/td>\n<td>0%<\/td>\n<td>$15.0B<\/td>\n<td>55%<\/td>\n<\/tr>\n<tr>\n<td>FY2024<\/td>\n<td>$60.9B<\/td>\n<td>+126%<\/td>\n<td>$47.5B<\/td>\n<td>78%<\/td>\n<\/tr>\n<tr>\n<td>FY2025<\/td>\n<td>$130.5B<\/td>\n<td>+114%<\/td>\n<td>$115.0B<\/td>\n<td>88%<\/td>\n<\/tr>\n<tr>\n<td>FY2026<\/td>\n<td><strong>$215.9B<\/strong><\/td>\n<td><strong>+65%<\/strong><\/td>\n<td><strong>$193.7B<\/strong><\/td>\n<td><strong>90%<\/strong><\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<p><strong>6 年累计营收\n$477B<\/strong>——这种规模的快速增长在大型科技公司历史上是空前的。<\/p>\n<h3>7.2 盈利能力：净利率从 26% 到 56%<\/h3>\n<table>\n<thead>\n<tr>\n<th>财年<\/th>\n<th>毛利率<\/th>\n<th>营业利润率<\/th>\n<th>净利率<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>FY2021<\/td>\n<td>62.3%<\/td>\n<td>27.2%<\/td>\n<td>26.0%<\/td>\n<\/tr>\n<tr>\n<td>FY2022<\/td>\n<td>64.9%<\/td>\n<td>37.3%<\/td>\n<td>36.2%<\/td>\n<\/tr>\n<tr>\n<td>FY2023<\/td>\n<td>56.9%<\/td>\n<td>15.7%<\/td>\n<td>16.2%<\/td>\n<\/tr>\n<tr>\n<td>FY2024<\/td>\n<td>72.7%<\/td>\n<td>54.1%<\/td>\n<td>48.8%<\/td>\n<\/tr>\n<tr>\n<td>FY2025<\/td>\n<td>75.0%<\/td>\n<td>62.4%<\/td>\n<td>55.8%<\/td>\n<\/tr>\n<tr>\n<td>FY2026<\/td>\n<td><strong>71.1%<\/strong><\/td>\n<td><strong>60.4%<\/strong><\/td>\n<td><strong>55.6%<\/strong><\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<p><strong>FY2023 是”低谷”<\/strong>——加密寒冬 + 游戏 GPU 库存调整 + Data\nCenter 增长放缓。这一年的数据是查看 NVDA “韧性”的关键。<\/p>\n<p><strong>FY2026 毛利率下降的解释<\/strong>： - 75% → 71.1%（-3.9pp） -\n主要因素：H20 库存与采购承诺冲减 $45 亿，影响 2.6pp - 调整后毛利率\n~73.7%——仍是 H100 时期之上<\/p>\n<h3>7.3 现金流：自由现金流极强<\/h3>\n<p>经营性现金流：<\/p>\n<table>\n<thead>\n<tr>\n<th>财年<\/th>\n<th>经营现金流<\/th>\n<th>YoY<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>FY2021<\/td>\n<td>$5.8B<\/td>\n<td>—<\/td>\n<\/tr>\n<tr>\n<td>FY2022<\/td>\n<td>$9.1B<\/td>\n<td>+57%<\/td>\n<\/tr>\n<tr>\n<td>FY2023<\/td>\n<td>$5.6B<\/td>\n<td>-38%<\/td>\n<\/tr>\n<tr>\n<td>FY2024<\/td>\n<td>$28.1B<\/td>\n<td>+402%<\/td>\n<\/tr>\n<tr>\n<td>FY2025<\/td>\n<td>$64.1B<\/td>\n<td>+128%<\/td>\n<\/tr>\n<tr>\n<td>FY2026<\/td>\n<td><strong>$102.7B<\/strong><\/td>\n<td><strong>+60%<\/strong><\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<p><strong>6 年累计经营性现金流 $215B<\/strong>——其中过去 3 年贡献\n$195B（91%）。<\/p>\n<p><strong>资本开支<\/strong>：NVDA 是\nfabless（无晶圆厂）模式，资本开支远低于 Intel、台积电等。FY2026\n资本开支估计 ~$5-10B 量级，<strong>自由现金流 ~$90-95B\n量级<\/strong>——惊人的现金生成能力。<\/p>\n<h3>7.4 资产负债结构<\/h3>\n<table>\n<thead>\n<tr>\n<th>财年<\/th>\n<th>总资产<\/th>\n<th>长期债务<\/th>\n<th>股东权益<\/th>\n<th>现金<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>FY2021<\/td>\n<td>$28.8B<\/td>\n<td>$5.9B<\/td>\n<td>$16.9B<\/td>\n<td>$0.85B<\/td>\n<\/tr>\n<tr>\n<td>FY2022<\/td>\n<td>$44.2B<\/td>\n<td>$10.9B<\/td>\n<td>$26.6B<\/td>\n<td>$2.0B<\/td>\n<\/tr>\n<tr>\n<td>FY2023<\/td>\n<td>$41.2B<\/td>\n<td>$9.7B<\/td>\n<td>$22.1B<\/td>\n<td>$3.4B<\/td>\n<\/tr>\n<tr>\n<td>FY2024<\/td>\n<td>$65.7B<\/td>\n<td>$8.5B<\/td>\n<td>$43.0B<\/td>\n<td>$7.3B<\/td>\n<\/tr>\n<tr>\n<td>FY2025<\/td>\n<td>$111.6B<\/td>\n<td>$8.5B<\/td>\n<td>$79.3B<\/td>\n<td>$8.6B<\/td>\n<\/tr>\n<tr>\n<td>FY2026<\/td>\n<td><strong>$206.8B<\/strong><\/td>\n<td><strong>$7.5B<\/strong><\/td>\n<td><strong>$157.3B<\/strong><\/td>\n<td><strong>$10.6B<\/strong><\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<p><strong>关键观察<\/strong>： - 股东权益 5 年增长 9.3\n倍——主要来自留存收益 - 长期债务相对稳定在\n$7-11B——基本是历史发的长期债券到期续约 - 现金维持在\n$5-10B（不算大）——大部分现金被用于回购 + R&amp;D + 并购 - <strong>总资产\n5 年增长 7.2 倍<\/strong>——主要是商誉、股票投资、库存的增加<\/p>\n<h3>7.5 R&amp;D 投入：质量与速度<\/h3>\n<table>\n<thead>\n<tr>\n<th>财年<\/th>\n<th>R&amp;D<\/th>\n<th>R&amp;D/营收<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>FY2021<\/td>\n<td>$3.9B<\/td>\n<td>23%<\/td>\n<\/tr>\n<tr>\n<td>FY2022<\/td>\n<td>$5.3B<\/td>\n<td>20%<\/td>\n<\/tr>\n<tr>\n<td>FY2023<\/td>\n<td>$7.3B<\/td>\n<td>27%<\/td>\n<\/tr>\n<tr>\n<td>FY2024<\/td>\n<td>$8.7B<\/td>\n<td>14%<\/td>\n<\/tr>\n<tr>\n<td>FY2025<\/td>\n<td>$12.9B<\/td>\n<td>10%<\/td>\n<\/tr>\n<tr>\n<td>FY2026<\/td>\n<td><strong>$18.5B<\/strong><\/td>\n<td><strong>8.6%<\/strong><\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<p><strong>R&amp;D 强度从 23% 降到\n8.6%<\/strong>——不是因为研发投入减少，而是因为营收增长太快。<strong>绝对数字\n5 年增长 4.7 倍<\/strong>——R&amp;D 团队规模也在快速扩张。<\/p>\n<p>每代芯片从设计到流片：约 2-3 年开发周期。NVDA 同时管理 3\n代芯片：当前在售（Blackwell）+ 设计完成准备量产（Rubin）+\n早期设计中（下一代）。<\/p>\n<h3>7.6 价值判断四柱：好不好、扛不扛得住、什么价<\/h3>\n<p>把前面散落的数字拧成四根承重柱——这门生意作为生意值不值得拥有、扛不扛得住、落到价格上有没有余地。下面每个数字都来自代码从财报算出的\nmetrics.json（可对账），判断是我下的。<\/p>\n<p>第一柱，复利引擎。这是 NVDA 最惊人的地方：FY2026 投入资本回报率 ROIC\n71.3%、净资产回报率 ROE 76.3%，而衡量新投入的钱赚不赚的增量 ROIC 高达\n80.4%。也就是说，它不光存量资产回报极高，每一块新投进去的钱还在以更高的速度生钱。它还是轻资产的——再投资只占经营现金流约\n1.4%（自身资本开支几乎为零、靠台积电的外包产能，见第三柱），增长靠研发和外包产能，不靠自己砌厂房。这是教科书级的复利机器。但有一个必须说破的前提：这串\nROIC 是 19.4% → 27.7% → 14.2% → 63.9% → 89.2% → 71.3%（FY2021 到\nFY2026），后面那根近乎垂直的拉升，喊的就是周期（见下面的周期校准）。<\/p>\n<p>第二柱，所有者盈余。一个被动股东每年能真正拿走多少现金？FY2026\n自由现金流利润率\n47.6%——每收一块钱，留下近五毛的自由现金。更要紧的是成色：股权激励只占自由现金流的\n6.2%。这一点要和 SITM 那种股权激励占自由现金流近三倍的公司分清——NVDA\n的现金是真的，不是靠会计加回去美化出来的。所有者盈余既大又干净。<\/p>\n<p>第三柱，资本配置。过去 5 年，NVDA 把约 46.0%\n的经营现金流还给股东（以回购为主、含少量股息）、自身再投资只占约\n1.4%（资本开支几乎为零、轻资产的另一面），其余主要在堆现金（见 6.2 与\n7.4）。回购是它还给股东的主要方式。这里要挂一个判断的钩子：回购的价值取决于价位——便宜时回购增厚每股价值、高位接盘则毁价值。NVDA\n这几年的回购大量发生在股价已经大涨之后，这部分回购的每股增厚效果远不如在低位时下手，这是把它的资本配置从满分往下拉的一点。<\/p>\n<p>第四柱，生存。这一柱几乎不用费笔墨：NVDA 是净现金（现金等 $10.6B\n对长期债（非流动）$7.5B，总有息负债 $8.5B 也仍是净现金），利息覆盖约 503\n倍，资本开支又极轻。在可预见的任何坏周期里，这家公司都不可能因为资产负债表出事。下行保护里不会归零这一条，它满分。<\/p>\n<p>周期校准（横切四柱）。代码已经给 NVDA 打了周期高峰存疑的旗：ROIC\n从历史基线约 31.9% 拉升到最新的\n71.3%，是典型的周期高峰特征。这不是说护城河是假的——CUDA\n生态、份额、定价权都是真的；而是说今天 71% 的 ROIC、47.6%\n的自由现金流利润率，很可能是 AI\n资本开支井喷催出来的高峰，不该被当成永久水平去资本化。回到中周期，NVDA\n的常态回报大概率仍然很高（护城河还在），但未必是 71%。所以在估值里把第 5\n年之后的稳态利润率往下压一档、并把 AI 资本开支见顶与消化写成核心\nBear（见 9.2），是纪律而不是悲观。<\/p>\n<p>四柱落到价格，就是安全边际。四柱合起来，结论很清楚：作为一门生意，NVDA\n近乎完美——极致复利、现金干净、堡垒资产负债表，唯一的减分是回购价位偏高、且当前\nROIC 处周期高峰。问题从来不在生意，在价格。以约 $211 的股价，反向 DCF\n隐含未来 5 年还要约 87% 的营收复合增长（见估值交互器），而按三情景 5\n年口径概率加权，内在价值中枢约 $114、区间约 $77 到\n$178，相对现价安全边际约\n−46%。这是那句老话的活样本：好生意不等于好股票。NVDA\n是真正贵的好生意——不是不能买，是要等它回落到给你留余地的价（观察区约\n$120 到 150）。<\/p>\n<hr />\n"
     },
     {
-      "id": "ch-9",
+      "id": "ch-8",
       "title": "八、管理层\"诚信记录\"：宣称的战略 vs 实际兑现",
       "html": "<p>NVDA 没有像 RKLB 那样的 IPO 7 年预测可对照。但 Jensen 在过去 5-10\n年的多次公开发言里给出了清晰的战略宣告，我们可以对照实际兑现：<\/p>\n<h3>8.1 关键战略宣告与兑现<\/h3>\n<table>\n<colgroup>\n<col style=\"width: 25%\" />\n<col style=\"width: 25%\" />\n<col style=\"width: 25%\" />\n<col style=\"width: 25%\" />\n<\/colgroup>\n<thead>\n<tr>\n<th>时间<\/th>\n<th>战略宣告<\/th>\n<th>实际兑现<\/th>\n<th>评价<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>2016 GTC<\/td>\n<td>“AI 将是计算的未来”<\/td>\n<td>2022-2026 完全兑现<\/td>\n<td>✅ 提前 6 年预见<\/td>\n<\/tr>\n<tr>\n<td>2018 财报会议<\/td>\n<td>“数据中心将超过游戏”<\/td>\n<td>2024 兑现（DC 78% vs Gaming 17%）<\/td>\n<td>✅ 提前 6 年预见<\/td>\n<\/tr>\n<tr>\n<td>2019 GTC<\/td>\n<td>“Mellanox 是 AI 系统的关键”<\/td>\n<td>2024-2026 Networking $31B<\/td>\n<td>✅ 战略基本正确<\/td>\n<\/tr>\n<tr>\n<td>2021 GTC<\/td>\n<td>“ARM + GPU 是未来”<\/td>\n<td>2022 收购失败<\/td>\n<td>⚪ 监管否决，非自身失误<\/td>\n<\/tr>\n<tr>\n<td>2022 GTC<\/td>\n<td>“Hopper 是 AI 时代的 GPU”<\/td>\n<td>2024-2025 兑现<\/td>\n<td>✅<\/td>\n<\/tr>\n<tr>\n<td>2023 GTC<\/td>\n<td>“Blackwell 将再次重新定义 AI”<\/td>\n<td>2025-2026 兑现<\/td>\n<td>✅<\/td>\n<\/tr>\n<tr>\n<td>2024 业绩会议<\/td>\n<td>“Blackwell 不会有问题”<\/td>\n<td>设计 issue 推迟了量产<\/td>\n<td>⚠️ 短期失准<\/td>\n<\/tr>\n<tr>\n<td>2025 GTC<\/td>\n<td>“AI 推理是下一个 $1 万亿市场”<\/td>\n<td>进行中（通过 Groq 并购下注）<\/td>\n<td>⏳ 待验证<\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<p><strong>总体评价<\/strong>：<\/p>\n<p><strong>Jensen 在 5-10 年时间尺度上的战略判断惊人地准确<\/strong>——AI\n浪潮、数据中心崛起、网络互联重要性、CUDA 护城河——他都在 3-6\n年前就预见到了。<\/p>\n<p><strong>短期承诺有时不准<\/strong>：例如 Blackwell 量产推迟（2024\n年初）、H20 库存灾难（2026）——说明在战术执行上有时跟不上战略雄心。<\/p>\n<p><strong>没有”系统性失信”<\/strong>：和很多企业”战略落空”不同，Jensen\n的方向几乎全部走对。“战略上的诚信记录”非常强。<\/p>\n<h3>8.2 分析师共识 vs 实际表现（FY2024 起）<\/h3>\n<table>\n<thead>\n<tr>\n<th>财年<\/th>\n<th>年初分析师营收共识<\/th>\n<th>实际营收<\/th>\n<th>兑现度<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>FY2024<\/td>\n<td>~$36B（2023-02 估计）<\/td>\n<td>$60.9B<\/td>\n<td><strong>169%<\/strong><\/td>\n<\/tr>\n<tr>\n<td>FY2025<\/td>\n<td>~$110B（2024-02 估计）<\/td>\n<td>$130.5B<\/td>\n<td><strong>119%<\/strong><\/td>\n<\/tr>\n<tr>\n<td>FY2026<\/td>\n<td>~$190B（2025-02 估计）<\/td>\n<td>$215.9B<\/td>\n<td><strong>114%<\/strong><\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<p><strong>5\n年里没有一年低于分析师共识——通常都大幅超出<\/strong>。这种”超预期”频率在大型科技公司中极少。<\/p>\n<hr />\n"
     },
     {
-      "id": "ch-10",
+      "id": "ch-9",
       "title": "九、主要风险（按重要性排序）",
       "html": "<h3>9.1 客户集中度的尾部风险（一级风险）<\/h3>\n<p><strong>Top 2 直接客户占 36%、Top 5 估计占 60%+\n营收<\/strong>。这种集中度对硬件公司是非典型的——通常硬件公司客户分散。<\/p>\n<p>具体场景： - 微软自研 Maia 2/3 性能达到 Blackwell 80% 水平，把内部 AI\n工作负载的 50% 切到 Maia - 谷歌完全弃用 NVDA（继续用 TPU），不再续约 -\n亚马逊把 80% 的客户工作负载推向 Trainium 2/3，NVDA 只剩”奢侈选项”<\/p>\n<p>任何一个超大客户大幅减少采购都会冲击营收。<\/p>\n<h3>9.2 AI capex 可持续性（一级风险）<\/h3>\n<p><strong>当前情况<\/strong>： - 微软、谷歌、Meta、亚马逊 2025 年合计 AI\ncapex 超 $3500 亿 - 全行业 AI 训练芯片采购规模超 $5000 亿 - 这种 capex\n强度<strong>历史上从未持续过<\/strong><\/p>\n<p><strong>风险<\/strong>： - 如果大模型”扩展规律”（Scaling\nLaws）失效——再多算力训练不出更好的模型 - 如果 AI\n商业化（变现）不及预期——客户回报不够，capex 收缩 - 如果出现”AI\n寒冬”——技术失望期，资本快速撤离<\/p>\n<p>NVDA 自己的 10-K 写：“我们难以精准估算 AI\n模型对营收的影响”——管理层自己也承认这部分不确定。<\/p>\n<h3>9.3 中国市场结构性损失（已经发生的风险）<\/h3>\n<ul>\n<li>从 2022 年约 25% 营收到 FY2026 几乎可忽略<\/li>\n<li>H20 $45 亿冲减是已经入账的损失<\/li>\n<li>即使政策放松，<strong>中国客户已经转向华为 Ascend\n等本土替代<\/strong>——回流困难<\/li>\n<li><strong>结构性永久损失<\/strong>——已经是公司估值里的折扣项<\/li>\n<\/ul>\n<h3>9.4 制程升级成本急升（中长期风险）<\/h3>\n<ul>\n<li>5nm → 3nm → 2nm 每代芯片设计与制造成本翻倍<\/li>\n<li>摩尔定律放缓 + EUV 设备成本极高<\/li>\n<li><strong>维持 70%+ 毛利率难度增加<\/strong>——除非 ASP 也大幅上升<\/li>\n<li>AMD 等对手在同一制程上竞争，定价空间收窄<\/li>\n<\/ul>\n<h3>9.5 CUDA 护城河被开源 AI 侵蚀（5-10 年风险）<\/h3>\n<ul>\n<li>开源大模型（Llama 4、Mistral、DeepSeek）让”模型移植”变容易<\/li>\n<li>越来越多的客户选择”两个供应商策略”减少 NVDA 依赖<\/li>\n<li>PyTorch + JAX 与 CUDA 的耦合在弱化（专门做”硬件无关”的努力）<\/li>\n<\/ul>\n<h3>9.6 创始人风险（中等风险）<\/h3>\n<ul>\n<li>Jensen 63 岁，<strong>没有公开接班人<\/strong><\/li>\n<li>公司高度依赖他的战略判断与组织文化<\/li>\n<li>健康问题、家庭变化、个人选择都可能触发不确定<\/li>\n<\/ul>\n<h3>9.7 地缘政治升级（持续风险）<\/h3>\n<ul>\n<li>出口管制规则可能 “at any time” 升级（10-K 原话）<\/li>\n<li>台湾问题：如果两岸局势恶化，台积电产能中断对 NVDA 是灾难性的<\/li>\n<li>美中关系：可能完全失去中国市场（已基本发生）<\/li>\n<\/ul>\n<h3>9.8 Groq 并购整合风险<\/h3>\n<ul>\n<li>$17B 投入，商誉 $14.4B 占 85%<\/li>\n<li>推理芯片市场胜负未定<\/li>\n<li>如果 Groq 团队大量离职 / 技术不能整合，需要 $10-15B 减值<\/li>\n<\/ul>\n<h3>9.9 高估值的市场风险<\/h3>\n<ul>\n<li>市值 $4-5T，市销率 18-23x，市盈率 ~33-40x<\/li>\n<li>这种估值隐含的预期是”持续 30%+ 增长 5-10 年”<\/li>\n<li>任何 1-2 个季度的”低于预期”可能触发 30-50% 估值调整<\/li>\n<li>这是市场情绪层面的风险，不是业务本身的风险<\/li>\n<\/ul>\n<hr />\n"
     },
     {
-      "id": "ch-11",
+      "id": "ch-10",
       "title": "十、还看不透的关键问题，以及能力圈思考",
       "html": "<h3>10.1 还看不透的关键问题<\/h3>\n<p>按重要性排序：<\/p>\n<p><strong>问题 1<\/strong>：超大客户的”切换速度”<\/p>\n<p>公开资料显示客户都在自研 ASIC，但<strong>自研产能从”试验”到”全面替代\nNVDA”需要多久？<\/strong> 1 年？3 年？5 年？这决定了 NVDA 未来 5\n年增长的天花板。<\/p>\n<p><strong>问题 2<\/strong>：AI 模型”扩展规律”是否会失效<\/p>\n<p>如果未来一代大模型（GPT-6、Claude 6\n等）的训练算力翻倍但智能提升边际递减，整个行业的 capex\n增长会突然刹车。<strong>这是 NVDA 估值最大的”二元化”风险<\/strong>。<\/p>\n<p><strong>问题 3<\/strong>：CUDA 护城河被削弱的真实速度<\/p>\n<p>开源 AI 生态发展很快，但具体”在多少比例的工作负载上 CUDA\n优势消失”没有量化数据。<strong>3-5 年时间尺度上 CUDA\n还是绝对必备吗？<\/strong><\/p>\n<p><strong>问题 4<\/strong>：Groq 并购的真实价值<\/p>\n<p>$17B 大并购，2-3 年内必须给出答案：是产品成功还是减值灾难。<\/p>\n<p><strong>问题 5<\/strong>：Jensen 之后<\/p>\n<p>完全没有公开接班计划。这家公司的文化、战略、组织能否在 Jensen\n离开后维持？<strong>没有公开信号<\/strong>。<\/p>\n<p><strong>问题 6<\/strong>：中国市场的最终结局<\/p>\n<p>是结构性永久失去还是周期性？10 年时间尺度上 NVDA\n还会有意义的中国市场吗？<\/p>\n<p><strong>问题 7<\/strong>：每代芯片成本曲线 vs 毛利率<\/p>\n<p>2nm、1.4nm 芯片的研发与制造成本如何？毛利率能否维持？<\/p>\n<h3>10.2 能力圈核心问题<\/h3>\n<p>按价值投资纪律，<strong>判断这门生意是否在你能力圈内，需要你能用自己的话回答下面这些<\/strong>：<\/p>\n<p><strong>关于业务<\/strong>：<\/p>\n<ol type=\"1\">\n<li>你能否在 2 分钟内向一个非技术人士解释 “为什么 GPU 比 CPU 更适合\nAI”，以及为什么 NVDA 在这件事上几乎垄断？<\/li>\n<li>你能否解释 “CUDA\n护城河”——它具体是什么，为什么客户难以切换，以及为什么这个护城河在被削弱？<\/li>\n<li>你能否区分 NVDA 的”硬件销售”和”系统销售”模式的不同利润潜力？<\/li>\n<\/ol>\n<p><strong>关于行业<\/strong>：<\/p>\n<ol start=\"4\" type=\"1\">\n<li>你对 hyperscaler 自研 ASIC\n的进展有持续跟踪能力吗？还是只看新闻标题？<\/li>\n<li>你能解释 AI 训练 vs AI 推理两个市场的不同特征、不同的 NVDA\n竞争地位吗？<\/li>\n<li>你对台积电的产能瓶颈、HBM 供应链、AI 模型规模 vs\n算力关系有自己的判断吗？<\/li>\n<\/ol>\n<p><strong>关于估值<\/strong>：<\/p>\n<ol start=\"7\" type=\"1\">\n<li>你愿意接受 NVDA 现在的高市盈率所隐含的”持续 30%+ 增长 5\n年”预期吗？<\/li>\n<li>如果 AI capex 在 2027-2028\n进入”消化期”（短期回调），你会怎么反应？<\/li>\n<li>你能用 DCF + 多情景方法处理”成长股 + 周期性 +\n单点客户依赖”的复合风险吗？<\/li>\n<\/ol>\n<p><strong>关于不确定性<\/strong>：<\/p>\n<ol start=\"10\" type=\"1\">\n<li>如果今天有一个超大客户宣布”自研芯片全面替代 NVDA”，股价\n-30%，你会怎么思考？是恐慌卖出、加仓、还是等待更多信息？这能告诉你这只股票是否在你能力圈内。<\/li>\n<\/ol>\n<h3>10.3 我（作为分析助手）的判断<\/h3>\n<p>NVDA <strong>比 RKLB\n友好得多<\/strong>——它是一个<strong>已盈利、高现金流、有明确护城河的成熟成长股<\/strong>。但它仍然有几个特征让”能力圈判断”不容易：<\/p>\n<p><strong>对支持的判断<\/strong>： - 业务可以用大白话讲清楚（卖 AI 芯片\n+ 软件） - 标准 DCF 可用（有大量正现金流） - 5-10\n年时间窗口里护城河仍然极宽 - 创始人 Jensen\n的纪律和战略判断历史上极优<\/p>\n<p><strong>对警惕的判断<\/strong>： -\n估值贵到<strong>任何一个季度低于预期都会触发显著回调<\/strong> -\n客户集中度极高（前 5 家占一半营收） - 关键变量（CUDA\n护城河持续性、超大客户切换速度、AI capex 持续性）需要持续跟踪能力 -\n<strong>不是”买完放着 10 年不操心”的标的<\/strong><\/p>\n<p><strong>最终建议<\/strong>：<\/p>\n<p>如果你判断<strong>自己能持续跟踪 AI 行业动态、能够接受未来 3-5 年\n30-50% 的潜在回撤、且认同”AI 是真实的长期趋势”<\/strong>，那 NVDA\n可能在你的能力圈内（或接近）。<\/p>\n<p>如果你<strong>更喜欢”低估值、可预测、不需要持续跟踪”的稳定生意<\/strong>（那种经典的稳健价值标的）——NVDA\n不在那个圈里。它是”高质量但估值贵的成长股”——估值上看上去不便宜的、需要持续工作的标的。<\/p>\n<p>读完这份报告，希望你能用自己的话回答上面 10\n个问题——能回答得出，说明这家公司在你能力圈附近；如果答不出 5\n条以上，建议<strong>先放下，回到更熟悉的领域<\/strong>。<\/p>\n<hr />\n<p><em>本报告基于 SEC 官方申报文件（FY2021-FY2026）、2026\n年委托书、以及对创始人背景、AI\n芯片行业格局、企业文化的联网检索。所有数字来自原始文件。分析观点为基于公开资料的推断，不构成投资建议。第\n1 层”理解生意”到此结束；下一步是否进入第 2\n层”价值分析”由用户决定。<\/em><\/p>\n"
     }
   ],
+  "ch1_card": null,
   "links": {
     "report_pdf": "NVDA_公司完整报告.pdf"
   },
@@ -3135,50 +3137,81 @@ function renderLayout() {
 
 // 完整深度报告：读 DATA.report_chapters（render_explorer 用 pandoc 把报告 .md 按章转成 HTML），
 // 渲染成章节导航 + 可折叠正文。交互器=唯一阅读家；正文真相源仍是报告 Markdown。静态、渲染一次。
+// 第一章判断卡：生意质量卡（本质 + 核心论点 + 质量光谱 + 护城河/证据/最强多头/认知差/钱权）+ 业务速览表。
+// 数字来自 segments.json（代码算）、判断来自 valuation_inputs.json 的 ch1 块、核心论点来自报告 markdown。
+function renderCh1Card() {
+  const box = document.getElementById('ch1-card');
+  const c = DATA.ch1_card;
+  if (!box) return;
+  if (!c) { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  const cy = DATA.currency || { symbol: '$', code: 'USD' };
+  const fmtRev = v => v == null ? '—'
+    : (cy.code === 'CNY' ? (cy.symbol + (v / 100).toFixed(2) + '亿') : (cy.symbol + Math.round(v).toLocaleString() + 'M'));
+  const q = c.quality || {};
+  const pos = Math.max(6, Math.min(94, (q.pos != null ? q.pos : 50)));
+  const mk = pos <= 40 ? 'var(--bull)' : (pos >= 62 ? 'var(--bear)' : 'var(--warn)');
+  const fld = (k, v, full) => v
+    ? '<div class="qc-f' + (full ? ' qc-full' : '') + '"><div class="qc-k">' + k + '</div><div class="qc-v">' + escTL(v) + '</div></div>' : '';
+  const kindCls = { eng: 'rk-eng', good: 'rk-good', warn: 'rk-warn', bad: 'rk-bad' };
+  const rows = (c.segments || []).map(s => {
+    const tag = s.role ? '<span class="rk ' + (kindCls[s.kind] || 'rk-warn') + '">' + escTL(s.role) + '</span>' : '—';
+    const src = s.source ? '<span class="qc-src">' + escTL(s.source) + '</span>' : '';
+    const yoy = s.yoy == null ? '—' : ((s.yoy >= 0 ? '+' : '') + s.yoy + '%');
+    return '<tr><td>' + escTL(s.name) + '</td><td>' + fmtRev(s.revenue) + '</td><td>' + (s.pct == null ? '—' : s.pct + '%')
+      + '</td><td>' + (s.margin == null ? '—' : s.margin + '%') + '</td><td>' + yoy + '</td><td>' + src + '</td><td>' + tag + '</td></tr>';
+  }).join('');
+  const segBlock = rows
+    ? '<div class="qc-lab" style="margin-top:18px">业务速览 · 每块业务扮什么角色</div>'
+      + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>业务</th><th>营收</th><th>占比</th><th>毛利率</th><th>同比</th><th>来源</th><th>角色判断</th></tr></thead><tbody>'
+      + rows + '</tbody></table></div>'
+    : '';
+  box.innerHTML =
+    '<section class="card">'
+    + '<div class="qc-lab">第一章 · 这是门什么生意</div>'
+    + (c.essence ? '<div class="qc-ess">' + escTL(c.essence) + '</div>' : '')
+    + (c.thesis_html ? '<div class="qc-thesis">' + c.thesis_html + '</div>' : '')
+    + '<div class="qc-spec"><div class="qc-spec-v" style="left:' + pos + '%;color:' + mk + '">' + escTL(q.verdict || '') + '</div>'
+    + '<div class="qc-spec-mk" style="left:' + pos + '%;background:' + mk + '"></div></div>'
+    + '<div class="qc-spec-lab"><span>复利机器</span><span>有壁垒但受困</span><span>稳健低回报</span><span>无壁垒苦力活</span><span>题材故事</span></div>'
+    + '<div class="qc-grid">'
+    + fld('价值内核(护城河)', c.moat) + fld('证据', c.evidence)
+    + fld('最强多头(先给善意解释)', c.steelman) + fld('钱和权在谁手里', c.power_center)
+    + fld('市场看错在哪', c.variant, true)
+    + '</div>'
+    + segBlock
+    + '</section>';
+}
+
 function renderReport() {
-  const sec = document.getElementById('section-report');
+  const cont = document.getElementById('section-report');
   const chs = DATA.report_chapters;
-  if (!sec) return;
-  if (!chs || !chs.length) { sec.style.display = 'none'; return; }
-  sec.style.display = 'block';
-  // 章节导航（点击：展开目标章并滚动到位）
+  if (!cont) return;
+  if (!chs || !chs.length) { cont.style.display = 'none'; return; }
+  cont.style.display = 'block';
+  // 顶部章节跳转条（点击滚到对应章）
   const toc = document.getElementById('report-toc');
   toc.innerHTML = chs.map(c =>
     '<a href="#' + c.id + '" class="rtoc-pill" data-target="' + c.id + '">' + escTL(c.title) + '</a>'
   ).join('');
-  // 章节正文：首章(导读)默认展开、其余折叠；正文 HTML 已由 pandoc 转好，直接注入
+  // 每章按文档顺序铺成一张独立的卡，正文直接可见——作为交互器主干的一部分（不再是单独的"完整报告"区块）
   const body = document.getElementById('report-body');
-  body.innerHTML = chs.map((c, i) =>
-    '<details class="report-chapter" id="' + c.id + '"' + (i === 0 ? ' open' : '') + '>'
-    + '<summary class="rchap-summary">' + escTL(c.title) + '</summary>'
+  body.innerHTML = chs.map(c =>
+    '<section class="card report-chapter" id="' + c.id + '">'
+    + '<h2 class="rchap-h">' + escTL(c.title) + '</h2>'
     + '<div class="rchap-body">' + (c.html || '<p class="muted">（本章无正文）</p>') + '</div>'
-    + '</details>'
+    + '</section>'
   ).join('');
   toc.querySelectorAll('.rtoc-pill').forEach(a => {
     a.addEventListener('click', ev => {
       ev.preventDefault();
       const t = document.getElementById(a.dataset.target);
-      if (t) { t.open = true; t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
   const nav = document.getElementById('nav-report');
   if (nav) nav.style.display = 'inline-flex';
 }
-
-function toggleAllChapters() {
-  const items = document.querySelectorAll('#report-body .report-chapter');
-  const anyClosed = Array.from(items).some(d => !d.open);
-  items.forEach(d => { d.open = anyClosed; });
-}
-
-function printReport() {
-  document.querySelectorAll('#report-body .report-chapter').forEach(d => { d.open = true; });
-  window.print();
-}
-// 原生 Ctrl+P 也确保所有章展开（CSS 另有 print 兜底强制显示折叠章正文）
-window.addEventListener('beforeprint', () => {
-  document.querySelectorAll('#report-body .report-chapter').forEach(d => { d.open = true; });
-});
 
 function renderCommentary() {
   const c = DATA.reverse_dcf_commentary;
@@ -3221,7 +3254,8 @@ function loadDataIntoUI() {
   renderCommentary();
   renderTimeline();  // 催化剂时间线（静态，渲染一次）
   renderLayout();    // 产业布局雷达（静态，渲染一次）
-  renderReport();    // 完整深度报告正文（静态，渲染一次）
+  renderReport();    // 报告正文按章嵌入（静态，渲染一次）
+  renderCh1Card();   // 第一章判断卡（生意质量卡 + 业务速览 + 核心论点）
   // 报价新鲜度：当前价=今日收盘（免费刷新）时，标一下日期，让人知道这是哪天的价
   if (DATA.quote && DATA.quote.as_of) {
     const det = document.getElementById('summary-current-detail');
