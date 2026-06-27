@@ -1215,7 +1215,7 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "300085",
   "company_name": "银之杰",
   "as_of": "2025-12-31",
-  "generated_at": "2026-06-28 00:28:40",
+  "generated_at": "2026-06-28 01:16:34",
   "facts": {
     "revenue_today": 758,
     "cash": 266,
@@ -3295,6 +3295,12 @@ function _scenarioPerShare(s, f, revY10, mY10, disc, N) {
 }
 function scenarioValueRange(s, f, N) {
   N = N || PRIMARY_YEARS;
+  // 资产口径：情景给了每股资产价值(value_per_share)时直接用它，不走现金流折现——
+  // 适合当期不赚钱、价值在资产/分部加总的公司（DCF 会把它们估到接近零、严重失真）。
+  if (s.value_per_share != null) {
+    const v = s.value_per_share;
+    return { low: s.value_low != null ? s.value_low : v, high: s.value_high != null ? s.value_high : v, mid: v };
+  }
   const mb = _marginBand(s.mY10);
   const lo = _scenarioPerShare(s, f, s.revY10 * (1 - RANGE_BAND.revY10), s.mY10 - mb, s.discount + RANGE_BAND.discount, N);
   const hi = _scenarioPerShare(s, f, s.revY10 * (1 + RANGE_BAND.revY10), s.mY10 + mb, s.discount - RANGE_BAND.discount, N);

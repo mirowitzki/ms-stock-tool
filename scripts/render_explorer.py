@@ -208,15 +208,15 @@ def load_report_chapters(ticker):
     # 抽出"核心论点"做判断卡的 thesis；丢掉无意义的导读/前言/元信息段（分析时点·口径声明这类）。
     thesis_md = None
     if n_h1 >= 3:
-        # 一级模式：首章是报告名(# XX完整报告)、正文含元信息 + ## 核心论点；抽出核心论点、整章移除。
-        m_core = re.search(r"(?m)^##\s*核心论点[^\n]*$", chapters[0][1])
+        # 一级模式：首章是报告名(# XX完整报告)、正文含元信息 + ## 核心论点/核心结论；抽出来、整章移除。
+        m_core = re.search(r"(?m)^##\s*核心(论点|结论)[^\n]*$", chapters[0][1])
         if m_core:
             thesis_md = chapters[0][1][m_core.end():].strip()
         chapters.pop(0)
     else:
-        # 二级模式：核心论点 是独立的 ## 章，抽出来；# 报告名 + 元信息前言已落在 preface、自然丢弃。
+        # 二级模式：核心论点/核心结论 是独立的 ## 章，抽出来；# 报告名 + 元信息前言已落在 preface、自然丢弃。
         for i, (title, body) in enumerate(chapters):
-            if title.startswith("核心论点"):
+            if title.startswith("核心论点") or title.startswith("核心结论"):
                 thesis_md = body.strip()
                 chapters.pop(i)
                 break
@@ -245,20 +245,24 @@ def build_ch1_card(inputs, base, thesis_html):
         except Exception:
             data = {}
         roles = ch1.get("segment_roles", {})
-        for key in ("by_product", "by_industry", "by_market", "by_region"):
+        # 可选 segment_dim 强制用某维度（如 600327 用 by_industry 才干净）；否则按默认顺序取第一个有数的
+        dims = [ch1["segment_dim"]] if ch1.get("segment_dim") else ["by_product", "by_industry", "by_market", "by_region"]
+        for key in dims:
             grp = data.get(key) or {}
             annual = sorted(p for p in grp if str(p).endswith("12-31")) or sorted(grp.keys())
             if not annual:
                 continue
-            cur = [s for s in grp[annual[-1]] if s.get("revenue")]
+            cur = [s for s in grp[annual[-1]] if (s.get("revenue") or 0) > 0]  # 跳过抵消等非正项
             if not cur:
                 continue
             prev = {s.get("name"): s.get("revenue")
                     for s in (grp[annual[-2]] if len(annual) >= 2 else [])}
-            total = sum(s.get("revenue") or 0 for s in cur)
+            total = sum(s.get("revenue") or 0 for s in cur)  # 占比按主营全口径算（含未单列的残差），分母诚实
             for s in cur:
                 name, rev = s.get("name"), (s.get("revenue") or 0)
-                r = roles.get(name, {})
+                if name not in roles:  # 只显示我打了角色判断的业务；残差/补充项不进表
+                    continue
+                r = roles[name]
                 yoy = round((rev / prev[name] - 1) * 100, 1) if prev.get(name) else None
                 rows.append({
                     "name": name, "revenue": to_millions(rev),
@@ -268,9 +272,11 @@ def build_ch1_card(inputs, base, thesis_html):
                     "role": r.get("role", ""), "kind": r.get("kind", ""),
                 })
             break
+    # 卡片里的核心论点：优先用 ch1.thesis（我写的精炼版），否则用从报告抽出的核心论点/核心结论
+    thesis_out = ("<p>" + ch1["thesis"] + "</p>") if ch1.get("thesis") else (thesis_html or "")
     return {
         "essence": ch1.get("essence", ""),
-        "thesis_html": thesis_html or "",
+        "thesis_html": thesis_out,
         "quality": ch1.get("quality", {}),
         "moat": ch1.get("moat", ""),
         "evidence": ch1.get("evidence", ""),
