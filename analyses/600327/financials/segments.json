@@ -1,0 +1,1496 @@
+{
+  "by_product": {
+    "2025-12-31": [
+      {
+        "name": "医疗服务",
+        "revenue": 2571947127.63,
+        "cost": 2330661270.41,
+        "gross_profit": 241285857.22,
+        "margin": 0.093814
+      },
+      {
+        "name": "百货零售销售",
+        "revenue": 349460142.21,
+        "cost": 196702585.97,
+        "gross_profit": 152757556.24,
+        "margin": 0.437124
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 181811685.39,
+        "cost": 103246944.33,
+        "gross_profit": 78564741.06,
+        "margin": 0.432122
+      },
+      {
+        "name": "超市零售",
+        "revenue": 73064003.81,
+        "cost": 49480802.58,
+        "gross_profit": 23583201.23,
+        "margin": 0.322775
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 72247775.24,
+        "cost": 12298494.03,
+        "gross_profit": 59949281.21,
+        "margin": 0.829773
+      },
+      {
+        "name": "其他",
+        "revenue": 604274.18,
+        "cost": 2432210.89,
+        "gross_profit": -1827936.71,
+        "margin": -3.025012
+      }
+    ],
+    "2025-06-30": [
+      {
+        "name": "医疗",
+        "revenue": 1430471887.51,
+        "cost": 1291158088.31,
+        "gross_profit": 139313799.2,
+        "margin": 0.09739
+      },
+      {
+        "name": "商业零售",
+        "revenue": 269153545.11,
+        "cost": 141795126.83,
+        "gross_profit": 127358418.28,
+        "margin": 0.473181
+      },
+      {
+        "name": "食品",
+        "revenue": 102960945.61,
+        "cost": 56706513.04,
+        "gross_profit": 46254432.57,
+        "margin": 0.449242
+      },
+      {
+        "name": "其他",
+        "revenue": 10323874.36,
+        "cost": 10164105.07,
+        "gross_profit": 159769.29,
+        "margin": 0.015476
+      },
+      {
+        "name": "分部间抵销",
+        "revenue": -7997233.55,
+        "cost": -4200457.43,
+        "gross_profit": -3796776.12,
+        "margin": null
+      }
+    ],
+    "2024-12-31": [
+      {
+        "name": "医疗服务",
+        "revenue": 2838008877.16,
+        "cost": 2623808065.31,
+        "gross_profit": 214200811.85,
+        "margin": 0.075476
+      },
+      {
+        "name": "百货零售销售",
+        "revenue": 435719094.74,
+        "cost": 269628470.09,
+        "gross_profit": 166090624.65,
+        "margin": 0.381187
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 186505495.81,
+        "cost": 97676915.11,
+        "gross_profit": 88828580.7,
+        "margin": 0.476279
+      },
+      {
+        "name": "超市零售",
+        "revenue": 104809076.3,
+        "cost": 87998492.54,
+        "gross_profit": 16810583.76,
+        "margin": 0.160392
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 77461250.19,
+        "cost": 12382002.46,
+        "gross_profit": 65079247.73,
+        "margin": 0.840152
+      }
+    ],
+    "2024-06-30": [
+      {
+        "name": "医疗服务",
+        "revenue": 1433545006.49,
+        "cost": 1315678356.9,
+        "gross_profit": 117866649.59,
+        "margin": 0.08222
+      },
+      {
+        "name": "百货零售销售",
+        "revenue": 240885005.28,
+        "cost": 139034699.44,
+        "gross_profit": 101850305.84,
+        "margin": 0.422817
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 117620484.9,
+        "cost": 63609534.82,
+        "gross_profit": 54010950.08,
+        "margin": 0.459197
+      },
+      {
+        "name": "超市零售",
+        "revenue": 69521343.42,
+        "cost": 63143258.13,
+        "gross_profit": 6378085.29,
+        "margin": 0.091743
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 42228681.11,
+        "cost": 11567804.96,
+        "gross_profit": 30660876.15,
+        "margin": 0.726068
+      }
+    ],
+    "2023-12-31": [
+      {
+        "name": "医疗服务",
+        "revenue": 2623870119.07,
+        "cost": 2442930729.64,
+        "gross_profit": 180939389.43,
+        "margin": 0.068959
+      },
+      {
+        "name": "百货零售销售",
+        "revenue": 496555970.59,
+        "cost": 277384283.55,
+        "gross_profit": 219171687.04,
+        "margin": 0.441384
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 220944567.57,
+        "cost": 125146683.4,
+        "gross_profit": 95797884.17,
+        "margin": 0.433583
+      },
+      {
+        "name": "超市零售",
+        "revenue": 115710665.41,
+        "cost": 85395435.48,
+        "gross_profit": 30315229.93,
+        "margin": 0.261992
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 76680489.76,
+        "cost": 13523684.63,
+        "gross_profit": 63156805.13,
+        "margin": 0.823636
+      }
+    ],
+    "2023-06-30": [
+      {
+        "name": "医疗服务",
+        "revenue": 1223460567.88,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "百货零售销售",
+        "revenue": 275573286.81,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 129155753.07,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "超市零售",
+        "revenue": 94525089.49,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 40937167.64,
+        "cost": 10564921.81,
+        "gross_profit": 30372245.83,
+        "margin": 0.741923
+      }
+    ],
+    "2022-12-31": [
+      {
+        "name": "医疗服务",
+        "revenue": 2241357546.93,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "百货零售销售",
+        "revenue": 500614204.54,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 165048096.67,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "超市零售",
+        "revenue": 143997219.4,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 78561535.81,
+        "cost": 13726967.97,
+        "gross_profit": 64834567.84,
+        "margin": 0.825271
+      }
+    ],
+    "2022-06-30": [
+      {
+        "name": "医疗",
+        "revenue": 1059383685.64,
+        "cost": 957408301.17,
+        "gross_profit": 101975384.47,
+        "margin": 0.096259
+      },
+      {
+        "name": "商业零售",
+        "revenue": 385472379.89,
+        "cost": 216315701.17,
+        "gross_profit": 169156678.72,
+        "margin": 0.43883
+      },
+      {
+        "name": "食品",
+        "revenue": 96158736.99,
+        "cost": 57737592.52,
+        "gross_profit": 38421144.47,
+        "margin": 0.39956
+      },
+      {
+        "name": "其他",
+        "revenue": 11391160.02,
+        "cost": 9335454.09,
+        "gross_profit": 2055705.93,
+        "margin": 0.180465
+      },
+      {
+        "name": "房地产",
+        "revenue": 209994.34,
+        "cost": 176459.6,
+        "gross_profit": 33534.74,
+        "margin": 0.159694
+      },
+      {
+        "name": "分部间抵销",
+        "revenue": -4298769.85,
+        "cost": -724133.04,
+        "gross_profit": -3574636.81,
+        "margin": null
+      }
+    ],
+    "2021-12-31": [
+      {
+        "name": "汽车销售及维修",
+        "revenue": 4658284093.77,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "医疗服务",
+        "revenue": 1076232084.42,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "百货零售销售",
+        "revenue": 604687760.82,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 220593753.75,
+        "cost": 28649355.76,
+        "gross_profit": 191944397.99,
+        "margin": 0.870126
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 192179462.3,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "超市零售",
+        "revenue": 152835975.71,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2021-06-30": [
+      {
+        "name": "汽车销售及维修",
+        "revenue": 3601287901.6,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "百货零售销售",
+        "revenue": 344255236.83,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 149441357.54,
+        "cost": 20888999.59,
+        "gross_profit": 128552357.95,
+        "margin": 0.860219
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 118422369.47,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "超市零售",
+        "revenue": 35189174.89,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2020-12-31": [
+      {
+        "name": "汽车销售及维修",
+        "revenue": 6879105159.33,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "百货零售销售",
+        "revenue": 545163490.83,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 269316384.81,
+        "cost": 22873270.05,
+        "gross_profit": 246443114.76,
+        "margin": 0.915069
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 164178143.35,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "超市零售",
+        "revenue": 78531628.66,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他",
+        "revenue": 12453.31,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2020-06-30": [
+      {
+        "name": "汽车销售及维修",
+        "revenue": 2938606642.22,
+        "cost": 2602869415.66,
+        "gross_profit": 335737226.56,
+        "margin": 0.11425
+      },
+      {
+        "name": "商业零售",
+        "revenue": 297001996.41,
+        "cost": 158730362.46,
+        "gross_profit": 138271633.95,
+        "margin": 0.465558
+      },
+      {
+        "name": "食品",
+        "revenue": 84875883.54,
+        "cost": 52704439.14,
+        "gross_profit": 32171444.4,
+        "margin": 0.379041
+      },
+      {
+        "name": "其他",
+        "revenue": 9897248.96,
+        "cost": 8363104.41,
+        "gross_profit": 1534144.55,
+        "margin": 0.155007
+      },
+      {
+        "name": "分部间抵销",
+        "revenue": -6846184.46,
+        "cost": -762859.9,
+        "gross_profit": -6083324.56,
+        "margin": null
+      }
+    ],
+    "2019-12-31": [
+      {
+        "name": "汽车销售及维修",
+        "revenue": 6759246663.53,
+        "cost": 6286288720.3,
+        "gross_profit": 472957943.23,
+        "margin": 0.069972
+      },
+      {
+        "name": "商业零售",
+        "revenue": 2004968845.19,
+        "cost": 1684176331.03,
+        "gross_profit": 320792514.16,
+        "margin": 0.159999
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 419386832.1,
+        "cost": 110074246.05,
+        "gross_profit": 309312586.05,
+        "margin": 0.737535
+      },
+      {
+        "name": "食品",
+        "revenue": 179962709.8,
+        "cost": 106410475.27,
+        "gross_profit": 73552234.53,
+        "margin": 0.408708
+      },
+      {
+        "name": "其他",
+        "revenue": 195192.64,
+        "cost": 193257.96,
+        "gross_profit": 1934.68,
+        "margin": 0.009912
+      },
+      {
+        "name": "分部间抵销",
+        "revenue": -1602994.02,
+        "cost": -1553360.64,
+        "gross_profit": -49633.38,
+        "margin": null
+      }
+    ],
+    "2019-06-30": [
+      {
+        "name": "汽车销售及维修",
+        "revenue": 3396915277.69,
+        "cost": 3026250702.82,
+        "gross_profit": 370664574.87,
+        "margin": 0.109118
+      },
+      {
+        "name": "百货",
+        "revenue": 1109301079.62,
+        "cost": 904219978.29,
+        "gross_profit": 205081101.33,
+        "margin": 0.184874
+      },
+      {
+        "name": "餐饮",
+        "revenue": 110512367.74,
+        "cost": 63536939.59,
+        "gross_profit": 46975428.15,
+        "margin": 0.425069
+      },
+      {
+        "name": "其他",
+        "revenue": 62343364.54,
+        "cost": 53035168.5,
+        "gross_profit": 9308196.04,
+        "margin": 0.149305
+      },
+      {
+        "name": "分部间抵销",
+        "revenue": -6979216.51,
+        "cost": -1382519.23,
+        "gross_profit": -5596697.28,
+        "margin": null
+      }
+    ],
+    "2018-12-31": [
+      {
+        "name": "汽车销售及服务",
+        "revenue": 6561440453.91,
+        "cost": 6141996582.9,
+        "gross_profit": 419443871.01,
+        "margin": 0.063926
+      },
+      {
+        "name": "百货零售",
+        "revenue": 2068414191.2,
+        "cost": 1731430460.36,
+        "gross_profit": 336983730.84,
+        "margin": 0.162919
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 339889552.01,
+        "cost": 47817918.68,
+        "gross_profit": 292071633.33,
+        "margin": 0.859313
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 189420479.5,
+        "cost": 104226683.17,
+        "gross_profit": 85193796.33,
+        "margin": 0.44976
+      },
+      {
+        "name": "平衡项目",
+        "revenue": 438480.97,
+        "cost": 577354.27,
+        "gross_profit": -138873.3,
+        "margin": -0.316715
+      },
+      {
+        "name": "抵消",
+        "revenue": -6034880.67,
+        "cost": -5628905.22,
+        "gross_profit": -405975.45,
+        "margin": null
+      }
+    ],
+    "2018-06-30": [
+      {
+        "name": "汽车销售及服务",
+        "revenue": 3171828125.53,
+        "cost": 2871705691.46,
+        "gross_profit": 300122434.07,
+        "margin": 0.094621
+      },
+      {
+        "name": "百货零售",
+        "revenue": 1083973994.3,
+        "cost": 898493324.35,
+        "gross_profit": 185480669.95,
+        "margin": 0.171112
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 154633074.67,
+        "cost": 18279137.71,
+        "gross_profit": 136353936.96,
+        "margin": 0.88179
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 115540526.69,
+        "cost": 63593661.2,
+        "gross_profit": 51946865.49,
+        "margin": 0.449599
+      },
+      {
+        "name": "其他",
+        "revenue": 360165.86,
+        "cost": 315529.53,
+        "gross_profit": 44636.33,
+        "margin": 0.123933
+      },
+      {
+        "name": "抵消",
+        "revenue": -2543380.48,
+        "cost": -2323205.07,
+        "gross_profit": -220175.41,
+        "margin": null
+      }
+    ]
+  },
+  "by_industry": {
+    "2025-12-31": [
+      {
+        "name": "医疗服务",
+        "revenue": 2571947127.63,
+        "cost": 2330661270.41,
+        "gross_profit": 241285857.22,
+        "margin": 0.093814
+      },
+      {
+        "name": "商业零售",
+        "revenue": 427693445.95,
+        "cost": 251354230.41,
+        "gross_profit": 176339215.54,
+        "margin": 0.412303
+      },
+      {
+        "name": "餐饮及食品",
+        "revenue": 182700765.09,
+        "cost": 104136024.03,
+        "gross_profit": 78564741.06,
+        "margin": 0.430019
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 72247775.24,
+        "cost": 12298494.03,
+        "gross_profit": 59949281.21,
+        "margin": 0.829773
+      },
+      {
+        "name": "其他",
+        "revenue": 604274.18,
+        "cost": 2432210.89,
+        "gross_profit": -1827936.71,
+        "margin": -3.025012
+      },
+      {
+        "name": "抵消",
+        "revenue": -6058379.63,
+        "cost": -6059921.56,
+        "gross_profit": 1541.93,
+        "margin": null
+      }
+    ],
+    "2025-06-30": [
+      {
+        "name": "医疗服务",
+        "revenue": 1429783062.65,
+        "cost": 1291097577.38,
+        "gross_profit": 138685485.27,
+        "margin": 0.096998
+      },
+      {
+        "name": "百货零售销售",
+        "revenue": 188449638.92,
+        "cost": 101708854.53,
+        "gross_profit": 86740784.39,
+        "margin": 0.460286
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 103068756.03,
+        "cost": 56706513.89,
+        "gross_profit": 46362242.14,
+        "margin": 0.449819
+      },
+      {
+        "name": "超市零售",
+        "revenue": 47687335.29,
+        "cost": 38201585.97,
+        "gross_profit": 9485749.32,
+        "margin": 0.198915
+      },
+      {
+        "name": "其他主营业务",
+        "revenue": 35924226.15,
+        "cost": 7908844.05,
+        "gross_profit": 28015382.1,
+        "margin": 0.779847
+      }
+    ],
+    "2024-12-31": [
+      {
+        "name": "医疗服务",
+        "revenue": 2838008877.16,
+        "cost": 2623808065.31,
+        "gross_profit": 214200811.85,
+        "margin": 0.075476
+      },
+      {
+        "name": "百货零售销售",
+        "revenue": 435719094.74,
+        "cost": 269628470.09,
+        "gross_profit": 166090624.65,
+        "margin": 0.381187
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 186505495.81,
+        "cost": 97676915.11,
+        "gross_profit": 88828580.7,
+        "margin": 0.476279
+      },
+      {
+        "name": "超市零售",
+        "revenue": 104809076.3,
+        "cost": 87998492.54,
+        "gross_profit": 16810583.76,
+        "margin": 0.160392
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 77461250.19,
+        "cost": 12382002.46,
+        "gross_profit": 65079247.73,
+        "margin": 0.840152
+      }
+    ],
+    "2024-06-30": [
+      {
+        "name": "医疗服务",
+        "revenue": 1433545006.49,
+        "cost": 1315678356.9,
+        "gross_profit": 117866649.59,
+        "margin": 0.08222
+      },
+      {
+        "name": "百货零售销售",
+        "revenue": 240885005.28,
+        "cost": 139034699.44,
+        "gross_profit": 101850305.84,
+        "margin": 0.422817
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 117620484.9,
+        "cost": 63609534.82,
+        "gross_profit": 54010950.08,
+        "margin": 0.459197
+      },
+      {
+        "name": "超市零售",
+        "revenue": 69521343.42,
+        "cost": 63143258.13,
+        "gross_profit": 6378085.29,
+        "margin": 0.091743
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 42228681.11,
+        "cost": 11567804.96,
+        "gross_profit": 30660876.15,
+        "margin": 0.726068
+      }
+    ],
+    "2023-12-31": [
+      {
+        "name": "医疗服务",
+        "revenue": 2623870119.07,
+        "cost": 2442930729.64,
+        "gross_profit": 180939389.43,
+        "margin": 0.068959
+      },
+      {
+        "name": "商业零售",
+        "revenue": 618237187.32,
+        "cost": 369983059.68,
+        "gross_profit": 248254127.64,
+        "margin": 0.401552
+      },
+      {
+        "name": "餐饮及食品",
+        "revenue": 221973053.48,
+        "cost": 126175169.31,
+        "gross_profit": 95797884.17,
+        "margin": 0.431574
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 76680489.76,
+        "cost": 13523684.63,
+        "gross_profit": 63156805.13,
+        "margin": 0.823636
+      },
+      {
+        "name": "抵消",
+        "revenue": -6999037.23,
+        "cost": -8231826.56,
+        "gross_profit": 1232789.33,
+        "margin": null
+      }
+    ],
+    "2023-06-30": [
+      {
+        "name": "医疗服务",
+        "revenue": 1223460567.88,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "百货零售",
+        "revenue": 370098376.3,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 131663307.41,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 40937167.64,
+        "cost": 10564921.81,
+        "gross_profit": 30372245.83,
+        "margin": 0.741923
+      },
+      {
+        "name": "抵消",
+        "revenue": -2507554.34,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2022-12-31": [
+      {
+        "name": "医疗服务",
+        "revenue": 2241357546.93,
+        "cost": 2056202850.73,
+        "gross_profit": 185154696.2,
+        "margin": 0.082608
+      },
+      {
+        "name": "商业零售",
+        "revenue": 646218562.35,
+        "cost": 402372900.47,
+        "gross_profit": 243845661.88,
+        "margin": 0.377342
+      },
+      {
+        "name": "餐饮及食品",
+        "revenue": 165621355.13,
+        "cost": 102267692.05,
+        "gross_profit": 63353663.08,
+        "margin": 0.382521
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 78561535.81,
+        "cost": 13726967.97,
+        "gross_profit": 64834567.84,
+        "margin": 0.825271
+      },
+      {
+        "name": "抵消",
+        "revenue": -2180396.87,
+        "cost": -1597012.43,
+        "gross_profit": -583384.44,
+        "margin": null
+      }
+    ],
+    "2022-06-30": [
+      {
+        "name": "医疗服务",
+        "revenue": 1057599711.72,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "货零售销售",
+        "revenue": 281370320.23,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 95697994.42,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "超市零售",
+        "revenue": 74905221.3,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 38743939.36,
+        "cost": 12157417.28,
+        "gross_profit": 26586522.08,
+        "margin": 0.686211
+      }
+    ],
+    "2021-12-31": [
+      {
+        "name": "汽车销售及维修",
+        "revenue": 4658305964.56,
+        "cost": 4296969182.48,
+        "gross_profit": 361336782.08,
+        "margin": 0.077568
+      },
+      {
+        "name": "医疗服务",
+        "revenue": 1076232084.42,
+        "cost": 993541650.02,
+        "gross_profit": 82690434.4,
+        "margin": 0.076833
+      },
+      {
+        "name": "商业零售",
+        "revenue": 757711163.15,
+        "cost": 452155559.88,
+        "gross_profit": 305555603.27,
+        "margin": 0.403261
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 220593753.75,
+        "cost": 28649355.76,
+        "gross_profit": 191944397.99,
+        "margin": 0.870126
+      },
+      {
+        "name": "餐饮及食品",
+        "revenue": 195214399.89,
+        "cost": 112896748.92,
+        "gross_profit": 82317650.97,
+        "margin": 0.421678
+      },
+      {
+        "name": "抵消",
+        "revenue": -3244235.0,
+        "cost": -3232980.14,
+        "gross_profit": -11254.86,
+        "margin": null
+      }
+    ],
+    "2021-06-30": [
+      {
+        "name": "汽车销售及维修",
+        "revenue": 3601287901.6,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "百货零售销售",
+        "revenue": 344255236.83,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 149441357.54,
+        "cost": 20888999.59,
+        "gross_profit": 128552357.95,
+        "margin": 0.860219
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 118422369.47,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "超市零售",
+        "revenue": 35189174.89,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2020-12-31": [
+      {
+        "name": "汽车销售及服务",
+        "revenue": 6879282388.2,
+        "cost": 6423135921.04,
+        "gross_profit": 456146467.16,
+        "margin": 0.066307
+      },
+      {
+        "name": "百货零售",
+        "revenue": 624902763.14,
+        "cost": 364084593.2,
+        "gross_profit": 260818169.94,
+        "margin": 0.417374
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 269316384.81,
+        "cost": 22873270.05,
+        "gross_profit": 246443114.76,
+        "margin": 0.915069
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 166487791.63,
+        "cost": 101725001.66,
+        "gross_profit": 64762789.97,
+        "margin": 0.388994
+      },
+      {
+        "name": "抵消",
+        "revenue": -3694520.8,
+        "cost": -3696145.01,
+        "gross_profit": 1624.21,
+        "margin": null
+      }
+    ],
+    "2020-06-30": [
+      {
+        "name": "汽车销售及服务",
+        "revenue": 2832411152.81,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "百货零售",
+        "revenue": 274499631.21,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 132487174.75,
+        "cost": 15955759.98,
+        "gross_profit": 116531414.77,
+        "margin": 0.879568
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 84584711.39,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他",
+        "revenue": 12468.71,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "抵消",
+        "revenue": -459552.2,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2019-12-31": [
+      {
+        "name": "汽车销售及服务",
+        "revenue": 6759246663.53,
+        "cost": 6286288720.3,
+        "gross_profit": 472957943.23,
+        "margin": 0.069972
+      },
+      {
+        "name": "百货零售",
+        "revenue": 2004968845.19,
+        "cost": 1684176331.03,
+        "gross_profit": 320792514.16,
+        "margin": 0.159999
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 419386832.1,
+        "cost": 110074246.05,
+        "gross_profit": 309312586.05,
+        "margin": 0.737535
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 179962709.8,
+        "cost": 106410475.27,
+        "gross_profit": 73552234.53,
+        "margin": 0.408708
+      },
+      {
+        "name": "平衡项目",
+        "revenue": 185615.92,
+        "cost": 193257.96,
+        "gross_profit": -7642.04,
+        "margin": -0.041171
+      },
+      {
+        "name": "抵消",
+        "revenue": -1593417.3,
+        "cost": -1553360.64,
+        "gross_profit": -40056.66,
+        "margin": null
+      }
+    ],
+    "2019-06-30": [
+      {
+        "name": "汽车销售及服务",
+        "revenue": 3278112585.41,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "百货零售",
+        "revenue": 1077149985.29,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 202990672.46,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 109941726.55,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他",
+        "revenue": 4848208.1,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "抵消",
+        "revenue": -950304.73,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2018-12-31": [
+      {
+        "name": "汽车销售及服务",
+        "revenue": 6561440453.91,
+        "cost": 6141996582.9,
+        "gross_profit": 419443871.01,
+        "margin": 0.063926
+      },
+      {
+        "name": "百货零售",
+        "revenue": 2068414191.2,
+        "cost": 1731430460.36,
+        "gross_profit": 336983730.84,
+        "margin": 0.162919
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 339889552.01,
+        "cost": 47817918.68,
+        "gross_profit": 292071633.33,
+        "margin": 0.859313
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 189420479.5,
+        "cost": 104226683.17,
+        "gross_profit": 85193796.33,
+        "margin": 0.44976
+      },
+      {
+        "name": "平衡项目",
+        "revenue": 438480.97,
+        "cost": 577354.27,
+        "gross_profit": -138873.3,
+        "margin": -0.316715
+      },
+      {
+        "name": "抵消",
+        "revenue": -6034880.67,
+        "cost": -5628905.22,
+        "gross_profit": -405975.45,
+        "margin": null
+      }
+    ],
+    "2018-06-30": [
+      {
+        "name": "汽车销售及服务",
+        "revenue": 3171828125.53,
+        "cost": 2871705691.46,
+        "gross_profit": 300122434.07,
+        "margin": 0.094621
+      },
+      {
+        "name": "百货零售",
+        "revenue": 1083973994.3,
+        "cost": 898493324.35,
+        "gross_profit": 185480669.95,
+        "margin": 0.171112
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 154633074.67,
+        "cost": 18279137.71,
+        "gross_profit": 136353936.96,
+        "margin": 0.88179
+      },
+      {
+        "name": "餐饮与食品销售",
+        "revenue": 115540526.69,
+        "cost": 63593661.2,
+        "gross_profit": 51946865.49,
+        "margin": 0.449599
+      },
+      {
+        "name": "其他",
+        "revenue": 360165.86,
+        "cost": 315529.53,
+        "gross_profit": 44636.33,
+        "margin": 0.123933
+      },
+      {
+        "name": "抵消",
+        "revenue": -2543380.48,
+        "cost": -2323205.07,
+        "gross_profit": -220175.41,
+        "margin": null
+      }
+    ],
+    "2017-12-31": [
+      {
+        "name": "汽车销售及维修",
+        "revenue": 6762386581.49,
+        "cost": 6137961015.06,
+        "gross_profit": 624425566.43,
+        "margin": 0.092338
+      },
+      {
+        "name": "百货",
+        "revenue": 2187262681.36,
+        "cost": 1759475697.82,
+        "gross_profit": 427786983.54,
+        "margin": 0.195581
+      },
+      {
+        "name": "餐饮",
+        "revenue": 206001745.84,
+        "cost": 111421935.08,
+        "gross_profit": 94579810.76,
+        "margin": 0.459121
+      },
+      {
+        "name": "其他",
+        "revenue": 28071764.55,
+        "cost": 18459192.07,
+        "gross_profit": 9612572.48,
+        "margin": 0.342429
+      }
+    ]
+  },
+  "by_region": {
+    "2025-12-31": [
+      {
+        "name": "境内",
+        "revenue": 3176887233.22,
+        "cost": 2682523814.18,
+        "gross_profit": 494363419.04,
+        "margin": 0.155613
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 72247775.24,
+        "cost": 12298494.03,
+        "gross_profit": 59949281.21,
+        "margin": 0.829773
+      }
+    ],
+    "2025-06-30": [
+      {
+        "name": "境内",
+        "revenue": 1765258450.41,
+        "cost": 1483984189.29,
+        "gross_profit": 281274261.12,
+        "margin": 0.159339
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 39654568.63,
+        "cost": 11639186.53,
+        "gross_profit": 28015382.1,
+        "margin": 0.706486
+      }
+    ],
+    "2024-12-31": [
+      {
+        "name": "境内",
+        "revenue": 3565042544.01,
+        "cost": 3079111943.05,
+        "gross_profit": 485930600.96,
+        "margin": 0.136304
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 77461250.19,
+        "cost": 12382002.46,
+        "gross_profit": 65079247.73,
+        "margin": 0.840152
+      }
+    ],
+    "2024-06-30": [
+      {
+        "name": "境内",
+        "revenue": 1861571840.09,
+        "cost": 1581465849.29,
+        "gross_profit": 280105990.8,
+        "margin": 0.150467
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 42228681.11,
+        "cost": 11567804.96,
+        "gross_profit": 30660876.15,
+        "margin": 0.726068
+      }
+    ],
+    "2023-12-31": [
+      {
+        "name": "境内",
+        "revenue": 3457081322.64,
+        "cost": 2930857132.07,
+        "gross_profit": 526224190.57,
+        "margin": 0.152216
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 76680489.76,
+        "cost": 13523684.63,
+        "gross_profit": 63156805.13,
+        "margin": 0.823636
+      }
+    ],
+    "2023-06-30": [
+      {
+        "name": "境内",
+        "revenue": 1722714697.25,
+        "cost": 1442861302.63,
+        "gross_profit": 279853394.62,
+        "margin": 0.162449
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 40937167.64,
+        "cost": 10564921.81,
+        "gross_profit": 30372245.83,
+        "margin": 0.741923
+      }
+    ],
+    "2022-12-31": [
+      {
+        "name": "境内",
+        "revenue": 3051017067.54,
+        "cost": 2559246430.82,
+        "gross_profit": 491770636.72,
+        "margin": 0.161183
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 78561535.81,
+        "cost": 13726967.97,
+        "gross_profit": 64834567.84,
+        "margin": 0.825271
+      }
+    ],
+    "2022-06-30": [
+      {
+        "name": "境内",
+        "revenue": 1509573247.67,
+        "cost": 1228091958.23,
+        "gross_profit": 281481289.44,
+        "margin": 0.186464
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 38743939.36,
+        "cost": 12157417.28,
+        "gross_profit": 26586522.08,
+        "margin": 0.686211
+      }
+    ],
+    "2021-12-31": [
+      {
+        "name": "境内",
+        "revenue": 6684219377.02,
+        "cost": 5852330161.16,
+        "gross_profit": 831889215.86,
+        "margin": 0.124456
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 220593753.75,
+        "cost": 28649355.76,
+        "gross_profit": 191944397.99,
+        "margin": 0.870126
+      }
+    ],
+    "2021-06-30": [
+      {
+        "name": "境内",
+        "revenue": 4099154682.79,
+        "cost": 3605770331.49,
+        "gross_profit": 493384351.3,
+        "margin": 0.120362
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 149441357.54,
+        "cost": 20888999.59,
+        "gross_profit": 128552357.95,
+        "margin": 0.860219
+      }
+    ],
+    "2020-12-31": [
+      {
+        "name": "境内",
+        "revenue": 7666990875.48,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 269316384.81,
+        "cost": 22873270.05,
+        "gross_profit": 246443114.76,
+        "margin": 0.915069
+      }
+    ]
+  }
+}
