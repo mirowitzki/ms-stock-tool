@@ -1,8 +1,10 @@
 # 【MS股票价值分析工具】—— Agent 工作说明
 
-## 交接备忘（2026-06-23 更新）
+## 交接备忘（2026-06-27 更新）
 
 > 给下一个会话的当前状态，先读这一段：
+
+- 🟢 **架构大修改：交互器内嵌完整报告正文＝唯一阅读家，PDF 改按需导出（2026-06-27，本会话——用户问"输出 PDF 是不是 super heavy work，不如做成一个交互器装下所有章节、再导出 PDF"）**：先纠正误解——**输出 PDF 根本不是 heavy work**（`render_pdf.py` 是 pandoc 几秒纯代码、免费），真正重的是写 5 万字深度分析 + 五道质检关，这两样和输出格式无关、换成交互器一字都省不掉；用户原方案（正文改写在 HTML 里、浏览器导出 PDF）反而让写作变难、导出 PDF 变丑、质检指纹机器要重做。**但用户方向（统一两个割裂交付物）对**，故走推荐方案：**正文仍在 Markdown 里写（最顺手、质检照常跑、qc_gate 指纹照常锁），交互器把报告每章嵌进来、PDF 退成按需导出**。**实现**：① `render_explorer.py` 新增 `load_report_chapters()`——找 `*完整报告.md`、**自动判标题层级切章**（一级 `#` 标题≥3 个就按 `# 第X章` 切；否则按 `## 第X章` 切——报告有两种约定：601012/000925/002091/SITM 用一级、其余 10 家用二级）、每章用 **pandoc `-f markdown-auto_identifiers -t html5`** 转 HTML 片段（与 PDF 同渲染器、口径一致、关掉重复 heading id）、注入 `data.report_chapters=[{id,title,html}]`；导读处理：一级模式把报告名章改名"核心论点 · 导读"，二级模式把 `# 报告名` 与首个 `##` 间的前言/口径声明作"导读"章插最前；并加 `data_json.replace("</","<\\/")` 防嵌入 HTML 里万一含 `</script` 截断数据块。② 模板 `tools/valuation_explorer.html` 新增 `#section-report`（章节导航 pill 点击展开+滚动 / `<details>` 可折叠章·首章默认开 / 展开收起全部 / 🖨打印按钮 + `beforeprint` 自动展开所有章）+ `renderReport()`（`loadDataIntoUI` 里调、静态一次）+ 报告排版 CSS（880px 可读栏宽、h2/h3/表格/引用块）+ **`@media print` 只出报告正文**（隐藏交互件、强制展开折叠章、每章分页——浏览器导 PDF 的便捷版；**打印质量权威 PDF 仍走 pandoc 的 `render_pdf.py`**）；topnav 加"📖 阅读完整报告"、`links.report_pdf` 改成**只在真有 .pdf 时才给**（不再 fallback 裸 .md）。③ `refresh_dashboard.py` + `dashboard.html`：卡片主入口改"估值交互器 · 含完整报告"、"下载 PDF"降为**仅当真有 PDF 才显示**的次级按钮（`status.report_pdf` 只认真 PDF）、"分析中"判定改以交互器存在为准。**工作流变化（重要）**：流水线＝写报告.md → 五道质检关 + `qc_gate.py --record` → 写 valuation_inputs/decision → `render_explorer`（**此时把报告正文嵌进交互器，所以报告必须先于最终 render_explorer 写好；改了报告要重跑 render_explorer 重新嵌入**）→ **PDF 不再每次出、用户要时才 `render_pdf`**（仍走 qc_gate 硬闸门、打印质量）。**质检纪律没变**：五关 + qc_gate --record 仍是出交付物前必做、render_pdf 仍硬拦。已把 14 家全部重渲（每家 10-12 章嵌入成功）、浏览器验证（601012 十章/NVDA 十二章带引用块/dashboard 主次入口/TOC 点击展开/展开收起全部/估值核心无回归/控制台零错误；截图在本无头沙箱不绘制属已知怪癖、以 DOM+计算样式+实际文本三重确认）、已 git 提交。**待推广**：①细节 skills（report-writing/explorer-update/report-template）里"两个交付物"旧措辞按需同步；②打印版 `@media print` 只做到"能读"未逐像素打磨（权威 PDF 走 pandoc）；③`refresh_quotes.py` 重渲交互器时自动带上报告嵌入（同一 render_explorer）、无需额外改。
 
 - 🟢 **300085 银之杰·异动更新（2026-06-23，本会话——用户点名"更新300085 最近有异动 包括报告及估值交互器"）**：异动＝我 6-9 分析里 P1 预测的"控制权落定"催化剂兑现 + 题材两连板。**6-18 第一次临时股东会已落定换届**：创始人陈向军李军出局、炒股大V"狂龙十八段"/开盘啦创始人卓海杭(持股仅7%)当选董事长、宋卢亮(据报东亚前海证券背景)任总经理、法人代表由董事长改总经理——但落定的是领导权非股权控制权(卓仅7%、公司仍无控股股东无实控人)。随后 **6-22、6-23 连续两个 20CM 涨停**把现价 ¥28.4→¥38.82(市值约200亿→274亿/PS36/PB64)。**关键洞察(异动后更尖锐)**：现价 ¥38.82≈牛市十年口径每股价值 ¥39、市值≈牛市平台目标约270亿——两连板把"缩小版东方财富十年后完全跑通"当成既成事实当期定价，反解隐含成功概率从68%抬到≈100%、安全边际深化至 -73%(10yr)/-92%(5yr)。**结论方向未变、更尖锐**：控制权落定是真事件(P1兑现、价值释放第一步)、但本身没创造价值，价格却被题材买空；P2(拓扑首笔收入)/P3(东亚前海并表)仍未动。**纪律处理(守 guard-optimism 铁律)**：催化剂朝牛市兑现，但保持概率 40/40/20 不动（领导权落定是必要非充分、且新增散户大神董事长[双刃:推转型 vs 题材市值管理] + 创始人套现19-22亿悄然退场[卖壳路径]两项对冲），让上涨37%带来的更差安全边际自己说话。**这报告早于五关+硬闸门(2026-06-09 写的)、本次首过五关**：补写 `_thesis.md`、五道关全过无🔴（fact pass/discipline pass[软化"卖壳让贤"·"市值管理"·身份外推风险三处措辞]/depth pass[补 6.4 担保 91.06% 累计口径]/insight pass[thesis 贯穿9章、现价≈牛市十年价值≈隐含100%洞察讲透]）、qc_gate 已登记、render_pdf 放行(371KB)。decision.json P1 标 resolved（按 driver 记分:控制权落定方向命中、价格层市场定价过激）、review_by 改 2026-08-31。已刷 prices.json/_quotes.json(38.82)、重渲交互器(今日价¥38.82/市值274亿/市场vs我新判词)+dashboard 梯队(银之杰 -73%/赔率0.3x/现价38.82→中枢10.5)、浏览器验证无控制台错误。已 git 提交。**数据管线小坑**：refresh_quotes 的新浪日线源在本沙箱滞后(取到 6-18 旧价 26.96)，用实时源 hq.sinajs.cn 补到 6-23 收盘 38.82(两连板)、手工 patch 价格；下次别只信 refresh_quotes 的 EOD、异动期回 realtime 源核。**无新增 LESSONS**——本次是既有方法论(异动轻更新 + guard-optimism + postmortem 按 driver 记分)的干净应用。
 - 🟢 **601012 隆基绿能分析完成（2026-06-21，本会话——用户点名"分析601012"，第一条直接走完整五关+硬闸门的周期股样板）**：结论＝好生意、按复苏定价、当前无安全边际（优质周期股·Track C）。隆基是光伏内卷消耗战里技术最强（单晶硅片全球第一、BC/HPBC 2.0、510项BC专利、HIBC/钙钛矿叠层世界纪录）、财务最稳（约200亿净现金/最高可融资评级/低质押）、治理干净（实控人李振国+李喜燕+李春安约21%、2025创始人零薪酬共渡）、最不可能倒下的全球龙头，是被周期低谷暂时按住、正常化能赚10-15% ROIC的真复利机器。但全行业跌破成本线：2025营收703亿(-14.8%)/归母亏64亿/扣非亏74亿/综合毛利率仅0.81%(从2023的18%塌下来)、2026Q1仍亏19亿且同比走阔；关键洞察＝"减亏"是会计意义的（减值87→30亿+降本约17亿盖过经营毛利恶化约55亿）、经营毛利反而恶化（组件毛利6.27→0.19%），经营现金流转正+43.6亿但质量靠拉账期+去库存等一次性营运资本释放打折。**价值不在当期亏损、在中周期正常化盈利(40-70亿)**；现价¥12.84/市值973亿/1.8倍PB已按复苏定价（隐含正常化65-81亿、接近2020/2023健康年份）。三情景(熊¥6-9/中¥7-12/牛¥16-28)概率加权(35/42/23)中枢约¥11.7、期望安全边际约-9%、保守口径(现价vs净资产地板¥7.2)约-44%。**主变量=供给侧出清(它控制不了)、二阶胜负手=BC溢价毛利兑现**（2025 BC卖22.87GW但组件毛利仅0.19%＝溢价销量未变溢价毛利、被飙升银成本[银浆已是电池组件第一大成本]+守约固定价合同两头吃掉，钥匙在ACM无银化2026-06建20GW线把BC银成本打下来；约120亿谷底BC重注要不搁浅、BC需相对TOPCon维持每瓦几分钱稳定净溢价）。下行有净资产+净现金托底不会归零(非泡沫、有真护城河)。资本配置:景气期慷慨分红(三年57亿/76%)、寒冬果断停扩张停分红、谷底all-in BC约120亿(改转债募资10.8亿投BC)、顺周期参股通威系硅料厂是已兑现失误、70亿可转债2028到期(转股价17.5远高于现价、99.92%未转股、几乎必现金偿还)。**2026-04-01取消光伏出口退税**是当口逆风(出口是唯一正毛利渠道)。**Track C周期股交互器DCF处理**：DCF抓不住周期正常化、加权约¥10.7/-13%（更保守、当现金流地板交叉验证），主口径用正常化盈利×倍数（¥11.7/-9%）、已在valuation_inputs的primary_method+reverse_dcf_commentary显式写明两口径关系、dashboard梯队用decision.json的-9%(第二梯队·大致公允)。**质检五关全过无🔴**（fact 7🟡口径/精度全改:减值88.8→87亿/加权ROE-11.15/回购1984.5万/FCF口径/担保3.56亿联营+203.6亿>70%子公司;discipline 4🟡:孤注一掷→逆共识重注/信仰般执念软化;depth 3🟡:补ACM银浆成本机制[闭合BC溢价毛利胜负手]+总账表加出货GW行[BC爬坡17→22.87GW]+关联交易川禾7.6亿拆分;insight 3项:BC溢价量化阈值+机会成本权衡+加权中枢统一¥11.7）、qc_gate硬闸门已登记、segments.json修正（原抓取毛利率口径错~35%、重建为真实0.19%/-5.3%）。PDF 467KB/约5.3万字、已进速查表/梯队榜、_quotes.json(¥12.84)、已浏览器验证(无控制台错误)。**review_by 2026-09-15**（看2026中报：减亏是否转真复苏/毛利率回升斜率/BC毛利）。**无新增LESSONS**——本次顺畅复用既有方法论（Track C周期/DCF背离已在SPCX/000009条），证明五关+硬闸门流程已成熟。已 git 提交。
@@ -47,7 +49,7 @@
 
 ## 工具身份与语言（最高优先级）
 - 本工具名为 **【MS股票价值分析工具】**。
-- **始终用中文与用户交流**；所有产出（完整报告、估值交互器）一律用中文。**最终交付物只有两个：一份机构级完整报告 + 估值交互器**（dossier 和 memo 已删除，别再生成）。
+- **始终用中文与用户交流**；所有产出（完整报告、估值交互器）一律用中文。**主交付物＝估值交互器（2026-06-27 起内嵌完整报告九章正文、是唯一阅读家）；报告 Markdown 仍是正文源与质检对象、PDF 改按需导出**（dossier 和 memo 已删除，别再生成）。
 - **用户不是程序员。** 遇到任何技术步骤（安装依赖、设置环境变量、运行脚本等），
   **由你（Claude Code）直接执行**，并用大白话解释你在做什么、为什么这么做。
   不要让用户自己写代码、敲命令或调试；用户只需用中文告诉你目标即可。
@@ -144,13 +146,13 @@
 - **Claude 负责**：理解生意、判断护城河、评估管理层与文化、写备忘录。判断密集、价值最高的部分。
 
 ## 流水线（按顺序）
-> ⚠️ 用户 2026-05-31 **删掉了 dossier 和 memo 两个模块**——最终交付物只有两个：**一份非常完整的机构级报告 + 估值交互器**。
+> ⚠️ 用户 2026-05-31 删掉了 dossier 和 memo；**2026-06-27 起：估值交互器内嵌完整报告正文＝唯一阅读家、PDF 改按需导出**（见交接备忘顶条）。报告仍写成 Markdown（正文源、质检对象），`render_explorer.py` 用 pandoc 把它每章嵌进交互器。
 0. **取数**（`scripts/fetch_a_stocks.py` A股 / `scripts/fetch_filings.py` 美股 + `scripts/fetch_prices.py` 股价）：抓 **招股说明书（必抓，给起源/历史/原始竞争打底）+ 近 5 年年报 + 近 5 年高信号公告** + 财务/分部/季报，落到 `analyses/<TICKER>/`。纯代码。**另跑 `python scripts/fetch_prices.py <代码>` 抓近 5 年月度收盘价**（美股走新浪 stock_us_daily、A 股走新浪 stock_zh_a_daily，都免费、避开被沙箱代理掐断的 eastmoney）→ `financials/prices.json`，喂交互器的"股价走势"图。
    - **数据规模规矩（用户 2026-05-31）**：上市 ≤5 年 → 招股书 + 全部年报+披露；上市 >5 年 → **招股书 + 只抓近 5 年年报+披露**（别想读 20 年资料、会消化不过来）。`--years` 控制年报/披露窗口；招股书无论上市多久都抓（`fetch_prospectus`，落到 `filings/招股说明书.txt`）。**分析时也照这个范围读，聚焦深挖、别贪多。**
 1. **写一份完整报告**（加载 `skills/business-understanding.md` + `skills/moat-analysis.md` + `skills/valuation.md` + **`skills/value-judgment.md`（价值判断四柱）** + **`skills/report-writing.md`（写作铁律）** + **`skills/analysis-depth.md`（分析深度·把事实拧成价值判断、寻找价值）**）：先读 `reviews/LESSONS.md`，**先跑 `python scripts/compute_metrics.py <代码>` 生成 metrics.json（四柱硬数字真相源）**，**深读 `filings/` 的招股书 + 近 5 年年报 + 高信号公告**，写出**唯一的 `analyses/<TICKER>/<TICKER>_公司完整报告.md`**。
    - **章节结构**看 `templates/report-template.md`（业务概述 → 发展历程 → 行业与竞争格局 → 商业模式与盈利引擎 → 资本配置 → 组织治理与诚信 → 财务全貌 → 投资分析与估值[三情景+反向DCF，替代原 memo] → 风险全景）。
    - **每段怎么写**看 `skills/report-writing.md`（最高写作标准）：**展示别断言（show, don't tell）**，每个判断后面必须跟具体数字/机制/画面；**一章一章深挖、写透一章再下一章**，深度优先于覆盖面；**绝不写成"放大版摘要"**（教训：写水过、被用户连批两次）。追求完整度、不限页数。
-2. **出 PDF + 交互器 + 决策记录**：`compute_metrics.py` 生成 `financials/metrics.json`（四柱真相源，喂报告+交互器仪表盘+质检关）；`render_pdf.py` 渲报告 PDF；据报告"估值"章写 `valuation_inputs.json`（每情景含 story+governance）；写 `decision.json`（**先于** render_explorer，喂交互器催化剂时间线）→ `render_explorer.py` 出交互器（读 valuation_inputs + decision）；`refresh_dashboard.py` 刷新。
+2. **出交互器 + 决策记录（PDF 按需）**：`compute_metrics.py` 生成 `financials/metrics.json`（四柱真相源，喂报告+交互器仪表盘+质检关）；据报告"估值"章写 `valuation_inputs.json`（每情景含 story+governance）；写 `decision.json`（**先于** render_explorer，喂催化剂时间线）→ `render_explorer.py` 出交互器（读 valuation_inputs + decision，**并把报告 .md 每章用 pandoc 嵌进交互器**——所以报告必须先写好、改了报告要重跑 render_explorer 重新嵌入）；`refresh_dashboard.py` 刷新。**PDF 不再每次出**：用户要时才 `render_pdf.py`（仍走 qc_gate 硬闸门、打印质量）。
 
 ## Dashboard 待办队列（hook 自动触发）
 - 用户在 `dashboard.html` 的"开始分析"输入框打股票代码（美股 1-5 字母 / A 股 6 数字），Dashboard 通过 pywebview API 把代码写入 `analyses/_queue.json`。
@@ -161,7 +163,7 @@
   3. **每分析完一只，必须用 Edit 工具修改 `analyses/_queue.json` 把对应条目从数组里移除**。否则 hook 会无限触发。
   4. 按流水线 **第 1 层 → 自动接第 2 层** 一路跑完（用户 2026-05-31 要求：不再停下来问能力圈，自动生成第 2 层）。能力圈判断仍写进报告，但不作为停下问用户的闸门。
 
-- **dashboard UI 已简化（2026-05-31；2026-06-10 再清一轮后台话语）**：删掉了标准流水线说明区、顶部标语、memo/dossier 徽章按钮、取数/报告/交互器流水线徽章行、链卡片闸门进度芯片（`tools/dashboard.html` 模板都已清掉，**别再加回来**）。公司卡片现在只有：观察区/财报/检验芯片 + 营收/市值/P/S + 报告与交互器两个入口（分析未完成时显示"⏳ 分析中"）；**2026-06-10 经用户同意新增值班台层**（🔔值班台汇总区 + 卡片芯片，这是有意为之、别当成要清理的杂物）。**所有 UI 文案守"用户视角"铁律（见交接备忘 2026-06-10 Dashboard 文案铁律条）**。
+- **dashboard UI 已简化（2026-05-31；2026-06-10 再清一轮后台话语）**：删掉了标准流水线说明区、顶部标语、memo/dossier 徽章按钮、取数/报告/交互器流水线徽章行、链卡片闸门进度芯片（`tools/dashboard.html` 模板都已清掉，**别再加回来**）。公司卡片现在只有：观察区/财报/检验芯片 + 营收/市值/P/S + 主入口"估值交互器·含完整报告"（次级"下载 PDF"仅当真出过 PDF 才显示；分析未完成即无交互器时显示"⏳ 分析中"）；**2026-06-10 经用户同意新增值班台层**（🔔值班台汇总区 + 卡片芯片，这是有意为之、别当成要清理的杂物）。**所有 UI 文案守"用户视角"铁律（见交接备忘 2026-06-10 Dashboard 文案铁律条）**。
 
 ## 关键纪律
 - **能力圈判断仍要做、写进报告**，但不再是“停下来问用户”的闸门——自动一路写到估值（用户 2026-05-31 改）。真讲不出可信的故事时，在报告的估值章里如实说“估值不可靠 / 太难”，而不是停下。
@@ -171,21 +173,21 @@
 - **数字用代码算。** 估值一律用 `scripts/valuation.py` 基于 `financials/financials.csv` 的精确计算。
 - **保持交互式运行**，吃 Max 订阅额度，不要包装成无人值守脚本。
 
-## 帮用户分析一家公司的流程（输入：股票代码；输出：一份完整报告 PDF + 估值交互器）
+## 帮用户分析一家公司的流程（输入：股票代码；输出：估值交互器·内嵌完整报告；PDF 按需导出）
 
 1. **取数**：`python scripts/fetch_a_stocks.py <代码> --years 5`（A股）/ `fetch_filings.py`（美股）+ `python scripts/fetch_prices.py <代码>`（近 5 年月度股价）
 2. **写唯一一份完整报告**：**先读 `reviews/LESSONS.md` + `skills/report-writing.md`（写作铁律：展示别断言）**；**先跑 `compute_metrics.py` 出 metrics.json**；加载 business-understanding + moat-analysis + valuation + **value-judgment（四柱）** + **analysis-depth（分析深度·寻找价值）** 技能，**动笔前先做 analysis-depth 的四步（定一句核心论点 / 找认知差 / 诊断价值困在哪靠什么释放 / 定主变量），把判断的脊梁立起来再写、并落成 `analyses/<代码>/_thesis.md`（这是出 PDF 硬闸门的必需项，强制"分析先于码字"）**；**深读 `filings/` 的招股书 + 近 5 年年报 + 高信号公告**（问询函/控制权/重组等）+ 联网补全组织/管理/文化（含管理层激励/内部人持股，喂第三柱），写出 `<TICKER>_公司完整报告.md`——**机构级；章节结构按 `templates/report-template.md`，每段写法按 `skills/report-writing.md`（show-don't-tell、给具体数字/机制/画面、一章一章深挖）；含"投资分析与估值"章节（替代原 memo）**。追求完整度、不限页数、**绝不写成放大版摘要**。（不再写 dossier / memo）
-3. **过『质检关』**（必做，见专节）：跑 `check_numbers.py` + 四个检查 agent（防幻觉 + 防成见 + 防写水/depth-check + 防浅析/insight-check），🔴清零才出 PDF。
-4. **出 PDF**：`python scripts/render_pdf.py <代码>`——**出 PDF 前自动过 `qc_gate.py` 硬闸门**：必须 ① `_thesis.md`（动笔前四步）在 ② 五道关已 `--record` 全 pass ③ 报告指纹未过期（登记后没再改报告），三者满足才放行、否则拒绝出 PDF（确需草稿用 `--draft`）。
+3. **过『质检关』**（必做，见专节）：跑 `check_numbers.py` + 四个检查 agent（防幻觉 + 防成见 + 防写水/depth-check + 防浅析/insight-check），🔴清零才放行交付。
+4. **登记质检（PDF 按需）**：五道关跑完用 `python scripts/qc_gate.py <代码> --record check_numbers=pass fact=pass discipline=pass depth=pass insight=pass` 登记结论（锁报告 sha256 指纹）。**交互器即主交付物（下一步生成、内嵌报告）；PDF 改按需**——用户要 PDF 时才 `python scripts/render_pdf.py <代码>`，它出 PDF 前自动过 `qc_gate.py` 硬闸门（① `_thesis.md` 在 ② 五关 `--record` 全 pass ③ 指纹未过期，否则拒绝、确需草稿 `--draft`）。改了报告→指纹不符→必须重跑质检重登记 + 重跑 render_explorer 重新嵌入。
 5. **出交互器 + 决策记录**：
    - 把报告"估值"章的三情景 + 基础事实 + 概率写成 `valuation_inputs.json`——**每情景必写 `story` + `governance`**（交互器拿它们当卡片主面，价值显示成毛估区间）；**还必写 `pillars` 块**（四柱判断仪表盘）：每柱一句话判断 + `pillars.details.<柱>` 这家公司的详细分析（引用本公司具体数字、落到这只股票、**不写课本定义**）。详见 `skills/value-judgment.md`。
    - **【美股必做】生成 `financials/segments.json` 让桑基图能画出收入组成。** A 股的 segments.json 由 `fetch_a_stocks.py` 自动抓；**美股的分部数据不在 XBRL companyfacts 里、要从 10-K 的收入拆分表（按产品/终端市场/地区）+ 季度财报读出来、手工写 segments.json**（schema 见 002091 的：维度键 `by_product`/`by_industry`/`by_market`/`by_region` → 期间日期 → `[{name, revenue, cost, gross_profit, margin}]`，revenue 用原始货币单位、`_seg_latest_annual` 已支持非日历财年取最新期）。优先用最能体现业务 performance 的拆分：多分部公司(如 NVDA 的 Data Center/Gaming 等)用 10-K 审计分部；单一报告分部公司(如 SWKS)用财报口径的终端市场拆分(Mobile/Broad Markets)并在 `_note` 标注是估算口径、cost/margin 未披露留 null。没有 segments.json 时桑基图只能从"营业收入"起步、看不到收入组成。
    - 写 `decision.json`（决策记录，供后台复盘 + 喂交互器的「催化剂时间线」：predictions/review_by/next_earnings）——**在 render_explorer 之前写**，否则时间线为空（缺 decision.json 时时间线会自动隐藏、不报错；若顺序反了，写完 decision.json 再重跑一次 render_explorer 即可）
-   - `python scripts/render_explorer.py <代码>` 生成交互器（读 `valuation_inputs.json` + `decision.json`）
+   - `python scripts/render_explorer.py <代码>` 生成交互器（读 `valuation_inputs.json` + `decision.json` + **`*完整报告.md`——按章用 pandoc 嵌进交互器的「完整深度报告」区**；报告缺失或没 pandoc 时该区自动隐藏、其余照常）
    - ⚠️ `reverse_dcf_commentary` / `market_story` 引用的数字要和交互器算出来的一致
 6. **刷新仪表盘**：`python scripts/refresh_dashboard.py`
 
-**用户的主界面是 `dashboard.html`**——他在那里看所有公司、点开**完整报告 PDF** 和**交互器**（就这两个交付物）。.md 是 Claude 的源文件、.pdf 是用户的阅读版本。
+**用户的主界面是 `dashboard.html`**——他在那里看所有公司、点开**估值交互器（主入口、内嵌完整报告九章）**；卡片上的"下载 PDF"只在按需出过 PDF 后才显示。.md 是 Claude 的正文源、交互器是用户的阅读版本、.pdf 是可选的离线/打印版本。
 
 ## 出报告前必过的『质检关』（防幻觉 + 防成见 + 防写水 + 防浅析，纯后台、不显示在 dashboard）
 
@@ -231,7 +233,7 @@ ms-stock-tool/
 │   ├── compute_metrics.py          # 价值判断四柱真相源：financials → metrics.json（复利引擎/所有者盈余/资本配置/生存）
 │   ├── review.py                   # 后台复盘助手：扫 decision.json，找"该复盘了"的公司
 │   ├── render_pdf.py               # .md → .pdf（默认渲染 3 份）
-│   ├── render_explorer.py          # 生成专属交互器（桑基图 + 市场vs我对照 + 催化剂时间线；读 _quotes.json 用今日价覆盖现价）
+│   ├── render_explorer.py          # 生成专属交互器（桑基图 + 市场vs我对照 + 催化剂时间线 + 内嵌完整报告正文[pandoc 按章转]；读 _quotes.json 用今日价覆盖现价）
 │   ├── fetch_prices.py             # 近5年月度收盘价 → prices.json（免费新浪日线源）
 │   ├── refresh_quotes.py           # 免费报价刷新（纯代码、零Max）：抓最新收盘 → _quotes.json + 刷 prices/重渲交互器
 │   ├── refresh_dashboard.py        # 扫描 analyses/ 刷新 dashboard（梯队榜/值班台/今日价）
@@ -252,9 +254,9 @@ ms-stock-tool/
     ├── financials/                 # financials.csv + quarterly.csv（季报）+ segments.json（分板块收入）+ metrics.json（四柱真相源）+ prices.json（近5年月度股价，fetch_prices.py 产出）
     ├── _check_numbers.txt          # 质检关·数字对账报告（check_numbers.py 产出，过关后可不留）
     ├── <TICKER>_公司完整报告.md    # 唯一的报告（源）——机构级、含估值章
-    ├── <TICKER>_公司完整报告.pdf   # 报告阅读版（用户读这个）
+    ├── <TICKER>_公司完整报告.pdf   # 报告 PDF（按需导出·可选离线/打印版；不再每次生成）
     ├── valuation_inputs.json       # 情景假设（喂给 explorer；每情景含 story + governance）
-    ├── valuation_explorer.html     # 第 2 层交互器（业务板块桑基图 + 情景故事/治理/价值区间）
+    ├── valuation_explorer.html     # 主交付物·交互器（桑基图 + 情景故事/治理/价值区间 + 内嵌完整报告九章正文=唯一阅读家）
     ├── decision.json               # 决策记录（后台复盘用：判断+价值区间+入场区+概率+催化剂）
     ├── layout.json                 # 产业布局雷达（近期布局动作+源链接 + 推断指向的产业→接力产业链分析；吃Max联网产出，缺则交互器自动隐藏该区）
     └── review_<日期>.md            # 复盘记录（出现新数据后回头对照论点的产物）

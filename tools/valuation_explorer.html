@@ -721,6 +721,66 @@ footer a { color: var(--accent); text-decoration: none; }
 .lr-ind-handoff a:hover { text-decoration:underline; }
 .lr-ind-handoff .cmd { font-family:var(--mono,monospace); background:var(--grid); padding:1px 6px; border-radius:4px; font-size:11px; color:var(--text); }
 @media (max-width:680px){ .lr-inds { grid-template-columns:1fr; } .lr-move { grid-template-columns:64px 1fr; } }
+
+/* ===================== 完整深度报告（正文嵌入）===================== */
+.report-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.report-head h2 { margin:0; }
+.report-tools { display:flex; gap:8px; flex-wrap:wrap; }
+.rpt-btn { font-size:12.5px; padding:6px 12px; border:1px solid var(--border); background:#fff;
+  color:var(--text); border-radius:8px; cursor:pointer; transition:all .15s ease; }
+.rpt-btn:hover { border-color:var(--accent); color:var(--accent); box-shadow:var(--shadow); }
+.report-toc { display:flex; flex-wrap:wrap; gap:6px; margin:14px 0 6px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+.rtoc-pill { font-size:12.5px; padding:5px 11px; border-radius:999px; background:#eef2f6; color:var(--primary);
+  text-decoration:none; border:1px solid transparent; transition:all .15s ease; }
+.rtoc-pill:hover { background:var(--accent); color:#fff; }
+.report-chapter { border-bottom:1px solid var(--grid); }
+.report-chapter:last-child { border-bottom:none; }
+.rchap-summary { cursor:pointer; list-style:none; padding:14px 4px 14px 28px; position:relative;
+  font-size:17px; font-weight:700; color:var(--primary); user-select:none; }
+.rchap-summary::-webkit-details-marker { display:none; }
+.rchap-summary::before { content:'▸'; position:absolute; left:6px; top:14px; color:var(--accent);
+  transition:transform .15s ease; font-size:14px; }
+.report-chapter[open] > .rchap-summary::before { transform:rotate(90deg); }
+.rchap-summary:hover { color:var(--accent); }
+.rchap-body { padding:2px 4px 26px; max-width:880px; }
+/* —— 章内正文排版（pandoc 转出来的 HTML）—— */
+.rchap-body h2 { font-size:16px; color:var(--primary); margin:26px 0 10px; padding-bottom:5px; border-bottom:1px solid var(--grid); }
+.rchap-body h3 { font-size:14.5px; color:var(--accent); margin:20px 0 8px; }
+.rchap-body h4 { font-size:13.5px; color:var(--text); margin:16px 0 6px; }
+.rchap-body p { line-height:1.95; margin:10px 0; color:#23303a; }
+.rchap-body ul, .rchap-body ol { line-height:1.9; margin:10px 0; padding-left:24px; }
+.rchap-body li { margin:4px 0; }
+.rchap-body strong { font-weight:700; }
+.rchap-body blockquote { margin:12px 0; padding:8px 14px; border-left:3px solid var(--accent);
+  background:#f3f6f9; color:var(--text-muted); border-radius:0 6px 6px 0; }
+.rchap-body code { background:#eef2f6; padding:1px 5px; border-radius:4px; font-size:12.5px;
+  font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace; }
+.rchap-body table { display:block; overflow-x:auto; max-width:100%; border-collapse:collapse;
+  margin:14px 0; font-size:12.5px; }
+.rchap-body th, .rchap-body td { border:1px solid var(--border); padding:6px 10px; text-align:left; vertical-align:top; white-space:nowrap; }
+.rchap-body thead th { background:#eef2f6; color:var(--primary); font-weight:700; }
+.rchap-body tbody tr:nth-child(even) { background:#fafbfc; }
+.rchap-body hr { border:none; border-top:1px solid var(--grid); margin:20px 0; }
+@media (max-width:680px){ .rchap-body { max-width:none; } .rchap-summary { font-size:15.5px; } }
+
+/* ===================== 打印 / 存为 PDF：只出报告正文（其余交互件隐藏）===================== */
+@media print {
+  body { padding:0; margin:0; background:#fff; color:#000; font-size:11.5pt; }
+  .topnav, .earnings-banner, footer, .report-tools, .report-toc, .reset-btn { display:none !important; }
+  .container > section:not(#section-report), .container > details { display:none !important; }
+  header { margin:0 0 6px; }
+  #section-report { display:block !important; box-shadow:none; border:none; padding:0; margin:0; }
+  .report-head h2 .card-note { display:none; }
+  .report-chapter { border:none; }
+  .report-chapter:not(:first-child) { break-before:page; }
+  details.report-chapter > .rchap-body { display:block !important; }  /* 折叠的章在打印时也展开 */
+  .rchap-summary { padding-left:0; font-size:15pt; break-after:avoid; }
+  .rchap-summary::before { display:none; }
+  .rchap-body { max-width:none; }
+  .rchap-body table, .rchap-body tr, .rchap-body img { break-inside:avoid; }
+  .rchap-body th, .rchap-body td { white-space:normal; }
+  * { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
 </style>
 </head>
 <body>
@@ -728,7 +788,8 @@ footer a { color: var(--accent); text-decoration: none; }
 
 <nav class="topnav">
   <a href="../../dashboard.html">← 返回仪表盘</a>
-  <a href="#" id="nav-pdf" class="primary" style="display: none;">📄 完整报告 (PDF)</a>
+  <a href="#section-report" id="nav-report" class="primary" style="display: none;">📖 阅读完整报告</a>
+  <a href="#" id="nav-pdf" style="display: none;">📄 下载 PDF</a>
 </nav>
 
 <header>
@@ -1118,6 +1179,19 @@ footer a { color: var(--accent); text-decoration: none; }
     </div>
   </div>
 </details>
+
+<!-- ========================= 完整深度报告（与按需 PDF 同源·正文嵌入）========================= -->
+<section class="card" id="section-report" style="display:none;">
+  <div class="report-head">
+    <h2>📖 完整深度报告 <span class="card-note">九章全文 · 与 PDF 同一份源</span></h2>
+    <div class="report-tools">
+      <button type="button" class="rpt-btn" onclick="toggleAllChapters()">展开 / 收起全部</button>
+      <button type="button" class="rpt-btn" onclick="printReport()">🖨 打印 / 存为 PDF</button>
+    </div>
+  </div>
+  <nav class="report-toc" id="report-toc"></nav>
+  <div class="report-body" id="report-body"></div>
+</section>
 
 <footer>
   <p><span id="footer-ticker">—</span> · 生成时间 <span id="footer-time">—</span></p>
@@ -1847,6 +1921,53 @@ function renderLayout() {
   }).join('');
 }
 
+// 完整深度报告：读 DATA.report_chapters（render_explorer 用 pandoc 把报告 .md 按章转成 HTML），
+// 渲染成章节导航 + 可折叠正文。交互器=唯一阅读家；正文真相源仍是报告 Markdown。静态、渲染一次。
+function renderReport() {
+  const sec = document.getElementById('section-report');
+  const chs = DATA.report_chapters;
+  if (!sec) return;
+  if (!chs || !chs.length) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  // 章节导航（点击：展开目标章并滚动到位）
+  const toc = document.getElementById('report-toc');
+  toc.innerHTML = chs.map(c =>
+    '<a href="#' + c.id + '" class="rtoc-pill" data-target="' + c.id + '">' + escTL(c.title) + '</a>'
+  ).join('');
+  // 章节正文：首章(导读)默认展开、其余折叠；正文 HTML 已由 pandoc 转好，直接注入
+  const body = document.getElementById('report-body');
+  body.innerHTML = chs.map((c, i) =>
+    '<details class="report-chapter" id="' + c.id + '"' + (i === 0 ? ' open' : '') + '>'
+    + '<summary class="rchap-summary">' + escTL(c.title) + '</summary>'
+    + '<div class="rchap-body">' + (c.html || '<p class="muted">（本章无正文）</p>') + '</div>'
+    + '</details>'
+  ).join('');
+  toc.querySelectorAll('.rtoc-pill').forEach(a => {
+    a.addEventListener('click', ev => {
+      ev.preventDefault();
+      const t = document.getElementById(a.dataset.target);
+      if (t) { t.open = true; t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+  const nav = document.getElementById('nav-report');
+  if (nav) nav.style.display = 'inline-flex';
+}
+
+function toggleAllChapters() {
+  const items = document.querySelectorAll('#report-body .report-chapter');
+  const anyClosed = Array.from(items).some(d => !d.open);
+  items.forEach(d => { d.open = anyClosed; });
+}
+
+function printReport() {
+  document.querySelectorAll('#report-body .report-chapter').forEach(d => { d.open = true; });
+  window.print();
+}
+// 原生 Ctrl+P 也确保所有章展开（CSS 另有 print 兜底强制显示折叠章正文）
+window.addEventListener('beforeprint', () => {
+  document.querySelectorAll('#report-body .report-chapter').forEach(d => { d.open = true; });
+});
+
 function renderCommentary() {
   const c = DATA.reverse_dcf_commentary;
   const el = document.getElementById('rev-commentary');
@@ -1888,6 +2009,7 @@ function loadDataIntoUI() {
   renderCommentary();
   renderTimeline();  // 催化剂时间线（静态，渲染一次）
   renderLayout();    // 产业布局雷达（静态，渲染一次）
+  renderReport();    // 完整深度报告正文（静态，渲染一次）
   // 报价新鲜度：当前价=今日收盘（免费刷新）时，标一下日期，让人知道这是哪天的价
   if (DATA.quote && DATA.quote.as_of) {
     const det = document.getElementById('summary-current-detail');

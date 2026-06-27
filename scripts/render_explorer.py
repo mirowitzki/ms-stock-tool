@@ -22,9 +22,26 @@ import argparse
 import csv
 import json
 import re
+import shutil
+import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
+
+
+def _find_pandoc():
+    """定位 pandoc（把报告 Markdown 转成 HTML 片段嵌进交互器用；与 render_pdf 同一渲染器、口径一致）。"""
+    found = shutil.which("pandoc")
+    if found:
+        return found
+    import os
+    for p in (
+        r"C:\Program Files\Pandoc\pandoc.exe",
+        r"C:\Users\%s\AppData\Local\Pandoc\pandoc.exe" % os.environ.get("USERNAME", ""),
+    ):
+        if Path(p).exists():
+            return p
+    return None
 
 
 # 把 SEC XBRL 原始美元（10 亿级整数）规范化成"百万美元"，便于人类阅读
@@ -114,6 +131,82 @@ def load_decision(ticker):
         "entry_watch": d.get("entry_watch"),
         "predictions": preds,
     }
+
+
+def load_report_chapters(ticker):
+    """把 <TICKER>_公司完整报告.md 按一级标题(# 第X章)拆成章节、各自用 pandoc 转 HTML 片段，
+    返回 [{id, title, html}, ...]，喂交互器的「完整深度报告」嵌入区。
+
+    设计：报告 Markdown 仍是唯一正文真相源（最顺手写、质检照常跑）；这里只做渲染层转换，
+    与 render_pdf 走同一个 pandoc、口径一致。找不到报告 / 没有 pandoc → 返回 None（交互器自动隐藏该区）。
+    """
+    base = Path("analyses") / ticker.upper()
+    mds = sorted(base.glob("*完整报告.md"))
+    if not mds:
+        return None
+    pandoc = _find_pandoc()
+    if not pandoc:
+        print("  ⚠ 找不到 pandoc，跳过报告正文嵌入（交互器其余部分照常）。")
+        return None
+
+    text = mds[0].read_text(encoding="utf-8")
+    lines = text.splitlines()
+
+    # 报告标题层级不统一：有的用 # 第X章(一级)、有的用 ## 第X章(二级、一级只留给报告名)。
+    # 自动判层：一级标题≥3 个 → 章节是一级；否则章节是二级。
+    n_h1 = sum(1 for l in lines if re.match(r"^# (?!#)", l))
+    chap_re = re.compile(r"^# (?!#)(.+?)\s*$") if n_h1 >= 3 else re.compile(r"^## (?!#)(.+?)\s*$")
+
+    chapters = []      # [title, body_md]
+    preface = []       # 第一个章标题之前的内容（二级模式下含 # 报告名 + 导读正文）
+    cur_title, cur_body = None, []
+    for ln in lines:
+        m = chap_re.match(ln)
+        if m:
+            if cur_title is not None:
+                chapters.append([cur_title, "\n".join(cur_body).strip()])
+            cur_title, cur_body = m.group(1).strip(), []
+        elif cur_title is not None:
+            cur_body.append(ln)
+        else:
+            preface.append(ln)
+    if cur_title is not None:
+        chapters.append([cur_title, "\n".join(cur_body).strip()])
+    if not chapters:
+        return None
+
+    if n_h1 >= 3:
+        # 一级模式：首章就是报告名(# XX完整报告)，其正文是核心论点/导读——改名，空则丢弃
+        if "完整报告" in chapters[0][0] or chapters[0][0].endswith("报告"):
+            if chapters[0][1]:
+                chapters[0][0] = "核心论点 · 导读"
+            else:
+                chapters.pop(0)
+    else:
+        # 二级模式：preface 去掉 # 报告名行后若还有正文(前言/口径声明)，作为导读章插到最前
+        # （这里是前言/口径，核心论点在这类报告里通常是单独一章，故只叫"导读"）
+        intro = "\n".join(l for l in preface if not re.match(r"^# (?!#)", l)).strip()
+        if intro:
+            chapters.insert(0, ["导读", intro])
+
+    out = []
+    for i, (title, body) in enumerate(chapters):
+        html = ""
+        if body:
+            try:
+                r = subprocess.run(
+                    [pandoc, "-f", "markdown-auto_identifiers", "-t", "html5"],
+                    input=body, capture_output=True, text=True,
+                    encoding="utf-8", errors="replace",
+                )
+                if r.returncode == 0:
+                    html = r.stdout
+                else:
+                    print(f"  ⚠ pandoc 转换「{title}」失败：{r.stderr.strip()[:120]}")
+            except Exception as e:
+                print(f"  ⚠ pandoc 转换「{title}」异常：{e}")
+        out.append({"id": f"ch-{i}", "title": title, "html": html})
+    return out or None
 
 
 def build_history(fin):
@@ -664,12 +757,10 @@ def render(ticker, starter=False):
     # 优先 PDF，fallback 到 MD
     base = Path("analyses") / ticker
     links = {}
+    # 正文已嵌进交互器；这里只在真有 PDF 时给一个「下载 PDF」链（PDF 改按需导出，可能不存在）。
     report_pdfs = list(base.glob("*完整报告.pdf"))
-    report_mds = list(base.glob("*完整报告.md"))
     if report_pdfs:
         links["report_pdf"] = report_pdfs[0].name
-    elif report_mds:
-        links["report_pdf"] = report_mds[0].name
 
     # 组装完整数据对象
     data = {
@@ -693,6 +784,7 @@ def render(ticker, starter=False):
         "next_earnings": inputs.get("next_earnings"),  # 下一份财报日期（喂交互器顶部提醒横幅；可空）
         "decision": load_decision(ticker),         # 催化剂/检验时间线（decision.json 的 predictions/review_by/entry_watch）
         "layout": load_layout(ticker),             # 产业布局雷达（layout.json：近期动作 + 指向的产业 → 接力产业链分析）
+        "report_chapters": load_report_chapters(ticker),  # 完整报告正文(按章嵌入)：交互器=唯一阅读家；PDF 改按需导出
         "links": links,
     }
 
@@ -714,6 +806,9 @@ def render(ticker, starter=False):
 
     # 替换数据块
     data_json = json.dumps(data, ensure_ascii=False, indent=2)
+    # 安全：数据块嵌在 <script type="application/json"> 里，把 </ 转义成 <\/（JSON 里等价、可逆），
+    # 防止嵌入的报告 HTML 万一含 </script> 之类把脚本块提前截断。
+    data_json = data_json.replace("</", "<\\/")
     new_block = (
         "<!-- RENDER_DATA_START -->\n"
         '<script id="initial-data" type="application/json">\n'
@@ -738,6 +833,11 @@ def render(ticker, starter=False):
     print(f"  当前营收：${data['facts']['revenue_today']:,.1f}M")
     print(f"  当前市值：${data['facts']['market_cap']:,.0f}M")
     print(f"  当前股价（隐含）：${data['facts']['market_cap'] / data['facts']['diluted_shares_today']:,.2f}")
+    chs = data.get("report_chapters")
+    if chs:
+        print(f"  已嵌入完整报告正文：{len(chs)} 章（{'、'.join(c['title'] for c in chs[:3])}…）")
+    else:
+        print(f"  （未嵌入报告正文：缺 *完整报告.md 或 pandoc——交互器仍可用）")
     print(f"  浏览器打开即可使用，所有假设可拖动滑块实时调整。")
     return out_path
 

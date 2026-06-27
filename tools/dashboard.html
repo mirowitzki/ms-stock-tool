@@ -1079,7 +1079,7 @@ function renderCompanies() {
           </div>
         </div>
 
-        ${(!s.report_pdf && !s.explorer) ? `<div class="watch-row"><span class="wchip soon">⏳ 分析中，报告还没出来</span></div>` : ''}
+        ${!s.explorer ? `<div class="watch-row"><span class="wchip soon">⏳ 分析中，报告还没出来</span></div>` : ''}
 
         ${(() => {
           const wi = watchInfo(c);
@@ -1105,12 +1105,12 @@ function renderCompanies() {
         `; })() : ''}
 
         <div class="actions">
-          <a class="action primary ${s.report_pdf ? '' : 'disabled'}" href="${f.report_pdf || '#'}" target="_blank">
-            <span class="icon">📄</span><span class="label">深度研究报告${fileKind(f.report_pdf)}</span><span class="arrow">→</span>
+          <a class="action primary ${s.explorer ? '' : 'disabled'}" href="${f.explorer_html || '#'}" target="_blank">
+            <span class="icon">📊</span><span class="label">估值交互器 · 含完整报告</span><span class="arrow">→</span>
           </a>
-          <a class="action ${s.explorer ? '' : 'disabled'}" href="${f.explorer_html || '#'}" target="_blank">
-            <span class="icon">📊</span><span class="label">估值交互器</span><span class="arrow">→</span>
-          </a>
+          ${s.report_pdf ? `<a class="action" href="${f.report_pdf}" target="_blank">
+            <span class="icon">📄</span><span class="label">下载 PDF</span><span class="arrow">→</span>
+          </a>` : ''}
         </div>
       </div>
     `;

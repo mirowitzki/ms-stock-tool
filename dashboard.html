@@ -770,9 +770,9 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
 <!-- DASHBOARD_DATA_START -->
 <script id="dashboard-data" type="application/json">
 {
-  "scanned_at": "2026-06-27 19:17:39",
+  "scanned_at": "2026-06-27 23:06:26",
   "tool_version": "0.2",
-  "quotes_refreshed_at": "2026-06-27 19:17:39",
+  "quotes_refreshed_at": "2026-06-27 22:38:14",
   "companies": [
     {
       "ticker": "000009",
@@ -1459,73 +1459,6 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
       }
     },
     {
-      "ticker": "RKLB",
-      "company_name": "Rocket Lab",
-      "as_of": "2025-12-31",
-      "status": {
-        "filings": true,
-        "financials": true,
-        "report_pdf": true,
-        "explorer": true
-      },
-      "files": {
-        "report_pdf": "analyses/RKLB/RKLB_公司完整报告.md",
-        "explorer_html": "analyses/RKLB/valuation_explorer.html",
-        "inputs_json": "analyses/RKLB/valuation_inputs.json"
-      },
-      "stats": {
-        "revenue_today": 601.8,
-        "market_cap": 67283,
-        "diluted_shares": 621.7
-      },
-      "currency": {
-        "code": "USD",
-        "symbol": "$"
-      },
-      "watch": {
-        "entry_low": 3.8,
-        "entry_high": 7.9,
-        "entry_note": "毛估价值区间内的观察区；现价到此区间前不构成价值命题",
-        "review_by": "2026-09-15",
-        "pred_dates": [
-          "2027-01-31",
-          "2027-03-31",
-          "2027-03-31",
-          "2027-12-31"
-        ],
-        "last_close": 107.24,
-        "last_close_month": "2026-06-18",
-        "next_earnings": {
-          "date": "2026-08-06",
-          "period": "2026 二季报（Q2）",
-          "estimated": false
-        }
-      },
-      "rank": {
-        "to_center_pct": -91,
-        "ratio_up_vs_down": null,
-        "downside_pct": -99,
-        "upside_pct": -81,
-        "weighted_center": 6.1,
-        "low": 0.7,
-        "high": 13.8,
-        "unit": "美元/股",
-        "current_price": 71.74,
-        "archetype": [
-          "烧钱期权/故事股"
-        ],
-        "decision_short": "观察/不可投资",
-        "verdict": "speculative_bubble",
-        "chain": "commercial-space",
-        "sector": "火箭发射",
-        "date": "2026-06-05"
-      },
-      "live": {
-        "price": 107.24,
-        "as_of": "2026-06-18"
-      }
-    },
-    {
       "ticker": "SITM",
       "company_name": "SiTime",
       "as_of": "2025-12-31",
@@ -1732,18 +1665,82 @@ footer .meta span { margin: 0 8px; font-variant-numeric: tabular-nums; }
       }
     },
     {
+      "ticker": "RKLB",
+      "company_name": "Rocket Lab",
+      "as_of": "2025-12-31",
+      "status": {
+        "filings": true,
+        "financials": true,
+        "report_pdf": false,
+        "explorer": true
+      },
+      "files": {
+        "explorer_html": "analyses/RKLB/valuation_explorer.html",
+        "inputs_json": "analyses/RKLB/valuation_inputs.json"
+      },
+      "stats": {
+        "revenue_today": 601.8,
+        "market_cap": 67283,
+        "diluted_shares": 621.7
+      },
+      "currency": {
+        "code": "USD",
+        "symbol": "$"
+      },
+      "watch": {
+        "entry_low": 3.8,
+        "entry_high": 7.9,
+        "entry_note": "毛估价值区间内的观察区；现价到此区间前不构成价值命题",
+        "review_by": "2026-09-15",
+        "pred_dates": [
+          "2027-01-31",
+          "2027-03-31",
+          "2027-03-31",
+          "2027-12-31"
+        ],
+        "last_close": 107.24,
+        "last_close_month": "2026-06-18",
+        "next_earnings": {
+          "date": "2026-08-06",
+          "period": "2026 二季报（Q2）",
+          "estimated": false
+        }
+      },
+      "rank": {
+        "to_center_pct": -91,
+        "ratio_up_vs_down": null,
+        "downside_pct": -99,
+        "upside_pct": -81,
+        "weighted_center": 6.1,
+        "low": 0.7,
+        "high": 13.8,
+        "unit": "美元/股",
+        "current_price": 71.74,
+        "archetype": [
+          "烧钱期权/故事股"
+        ],
+        "decision_short": "观察/不可投资",
+        "verdict": "speculative_bubble",
+        "chain": "commercial-space",
+        "sector": "火箭发射",
+        "date": "2026-06-05"
+      },
+      "live": {
+        "price": 107.24,
+        "as_of": "2026-06-18"
+      }
+    },
+    {
       "ticker": "600327",
       "company_name": "大东方",
       "as_of": "2025-12-31",
       "status": {
         "filings": true,
         "financials": true,
-        "report_pdf": true,
+        "report_pdf": false,
         "explorer": false
       },
-      "files": {
-        "report_pdf": "analyses/600327/600327_公司完整报告.md"
-      },
+      "files": {},
       "stats": {},
       "currency": {
         "code": "CNY",
@@ -2363,7 +2360,7 @@ function renderCompanies() {
           </div>
         </div>
 
-        ${(!s.report_pdf && !s.explorer) ? `<div class="watch-row"><span class="wchip soon">⏳ 分析中，报告还没出来</span></div>` : ''}
+        ${!s.explorer ? `<div class="watch-row"><span class="wchip soon">⏳ 分析中，报告还没出来</span></div>` : ''}
 
         ${(() => {
           const wi = watchInfo(c);
@@ -2389,12 +2386,12 @@ function renderCompanies() {
         `; })() : ''}
 
         <div class="actions">
-          <a class="action primary ${s.report_pdf ? '' : 'disabled'}" href="${f.report_pdf || '#'}" target="_blank">
-            <span class="icon">📄</span><span class="label">深度研究报告${fileKind(f.report_pdf)}</span><span class="arrow">→</span>
+          <a class="action primary ${s.explorer ? '' : 'disabled'}" href="${f.explorer_html || '#'}" target="_blank">
+            <span class="icon">📊</span><span class="label">估值交互器 · 含完整报告</span><span class="arrow">→</span>
           </a>
-          <a class="action ${s.explorer ? '' : 'disabled'}" href="${f.explorer_html || '#'}" target="_blank">
-            <span class="icon">📊</span><span class="label">估值交互器</span><span class="arrow">→</span>
-          </a>
+          ${s.report_pdf ? `<a class="action" href="${f.report_pdf}" target="_blank">
+            <span class="icon">📄</span><span class="label">下载 PDF</span><span class="arrow">→</span>
+          </a>` : ''}
         </div>
       </div>
     `;

@@ -169,10 +169,10 @@ def scan_company(ticker_dir):
     def rel(p):
         return str(p.relative_to(ticker_dir.parent.parent)).replace("\\", "/")
 
-    # 优先链接 PDF；不存在则 fallback 到 MD（避免老分析卡片打不开）
+    # 交互器=主交付物(已内嵌完整报告正文)；PDF 改按需导出，只在真有 PDF 时给"下载 PDF"链
+    # （不再 fallback 到裸 .md——正文现在在交互器里读，链 .md 没意义）
     files = {}
     if has_report_pdf: files["report_pdf"] = rel(report_pdf_files[0])
-    elif has_report_md: files["report_pdf"] = rel(report_md_files[0])
     if has_explorer: files["explorer_html"] = rel(explorer_html)
     if inputs_json.exists(): files["inputs_json"] = rel(inputs_json)
 
@@ -183,7 +183,7 @@ def scan_company(ticker_dir):
         "status": {
             "filings": has_filings,
             "financials": has_financials,
-            "report_pdf": has_report_pdf or has_report_md,
+            "report_pdf": has_report_pdf,   # 只有真 PDF 才算（按需导出）
             "explorer": has_explorer,
         },
         "files": files,
