@@ -321,6 +321,55 @@ def build_ch2_card(inputs, fin):
     }
 
 
+def build_ch3_card(inputs, base):
+    """组装第三章行业判断卡：竞争结构地图的营收/占比由代码从 segments.json 算（复用第一章那套机制），
+    竞争判断（行业/结构/位置/谁掌握价值/市场往哪走）来自 valuation_inputs.json 的 ch3 块。
+    没有 ch3 块就返回 None（卡片自动隐藏）。门道细节留在正文，卡片只做精炼的判断速览。"""
+    ch3 = inputs.get("ch3")
+    if not ch3:
+        return None
+    segs = ch3.get("segments", {})
+    rows = []
+    seg_path = base / "financials" / "segments.json"
+    if seg_path.exists():
+        try:
+            data = json.loads(seg_path.read_text(encoding="utf-8"))
+        except Exception:
+            data = {}
+        dims = [ch3["segment_dim"]] if ch3.get("segment_dim") else ["by_industry", "by_product", "by_market", "by_region"]
+        for key in dims:
+            grp = data.get(key) or {}
+            annual = sorted(p for p in grp if str(p).endswith("12-31")) or sorted(grp.keys())
+            if not annual:
+                continue
+            cur = [s for s in grp[annual[-1]] if (s.get("revenue") or 0) > 0]
+            if not cur:
+                continue
+            total = sum(s.get("revenue") or 0 for s in cur)
+            for s in cur:
+                name, rev = s.get("name"), (s.get("revenue") or 0)
+                if name not in segs:            # 只显示我打了竞争判断的业务
+                    continue
+                j = segs[name]
+                rows.append({
+                    "name": name, "revenue": to_millions(rev),
+                    "pct": round(rev / total * 100, 1) if total else None,
+                    "industry": j.get("industry", ""), "structure": j.get("structure", ""),
+                    "position": j.get("position", ""), "kind": j.get("kind", ""),
+                    "control": j.get("control", ""), "control_kind": j.get("control_kind", ""),
+                    "control_note": j.get("control_note", ""), "market": j.get("market", ""),
+                })
+            break
+    return {
+        "spine": ch3.get("spine", ""),
+        "moat": ch3.get("moat", ""),
+        "value_concentration": ch3.get("value_concentration", ""),
+        "pressure": ch3.get("pressure", ""),
+        "key_variable": ch3.get("key_variable", ""),
+        "segments": rows,
+    }
+
+
 def build_history(fin):
     """从财务数据提取年度历史，返回按年份排序的 list。"""
     revenue_keys = [
@@ -881,6 +930,7 @@ def render(ticker, starter=False):
     if ch1_card is None and report_thesis_html:
         report_chapters = [{"id": "ch-core", "title": "核心论点", "html": report_thesis_html}] + (report_chapters or [])
     ch2_card = build_ch2_card(inputs, fin)     # 第二章历程判断卡（脊梁/四段/行为模式/暗线/总账速览）
+    ch3_card = build_ch3_card(inputs, base)    # 第三章行业判断卡（格局脊梁/竞争结构地图/谁掌握价值/价值压力/决胜变量）
 
     # 组装完整数据对象
     data = {
@@ -907,6 +957,7 @@ def render(ticker, starter=False):
         "report_chapters": report_chapters,        # 报告正文(按章嵌入交互器主干；已剔除导读/执行摘要/核心论点)
         "ch1_card": ch1_card,                      # 第一章判断卡（生意质量卡 + 业务速览 + 核心论点）
         "ch2_card": ch2_card,                      # 第二章历程判断卡（脊梁 + 四段时间轴 + 行为模式 + 暗线 + 总账速览）
+        "ch3_card": ch3_card,                      # 第三章行业判断卡（格局脊梁 + 竞争结构地图 + 谁掌握价值 + 价值/压力 + 决胜变量）
         "links": links,
     }
 

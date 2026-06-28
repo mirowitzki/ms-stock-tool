@@ -776,6 +776,13 @@ footer a { color: var(--accent); text-decoration: none; }
 .ch2-read-warn { color:#9a7400; }
 .ch2-read-good { color:#1f7a6e; }
 .ch2-read-v { font-size:13px; color:#23303a; line-height:1.6; }
+.ch3-segs { margin:8px 0 4px; }
+.ch3-seg { padding:9px 0; border-top:1px solid var(--grid); }
+.ch3-seg:first-child { border-top:none; padding-top:2px; }
+.ch3-seg-h { font-size:13.5px; font-weight:600; color:var(--text); margin-bottom:3px; }
+.ch3-seg-b { font-size:12.5px; color:#23303a; line-height:1.6; }
+.ch3-seg-m { font-size:12px; color:var(--text-muted); line-height:1.55; margin-top:3px; }
+.ch3-seg-mk { color:var(--accent); margin-right:6px; font-weight:600; }
 /* —— 章内正文排版（pandoc 转出来的 HTML）—— */
 .rchap-body h2 { font-size:16px; color:var(--primary); margin:26px 0 10px; padding-bottom:5px; border-bottom:1px solid var(--grid); }
 .rchap-body h3 { font-size:14.5px; color:var(--accent); margin:20px 0 8px; }
@@ -2038,6 +2045,52 @@ function ch2CardHTML() {
     + '<div class="rchap-sep">第二章 · 正文</div>';
 }
 
+// 返回第三章行业判断卡的内部 HTML——格局脊梁 + 竞争结构地图(营收占比代码算) + 各业务谁掌握价值与往哪走
+// + 核心护城河 + 价值集中vs压力 + 决胜变量；门道细节留正文。没有 ch3_card 数据就返回 ''。
+function ch3CardHTML() {
+  const c = DATA.ch3_card;
+  if (!c) return '';
+  const cy = DATA.currency || { symbol: '$', code: 'USD' };
+  const fmtRev = v => v == null ? '—'
+    : (cy.code === 'CNY' ? (cy.symbol + (v / 100).toFixed(2) + '亿') : (cy.symbol + Math.round(v).toLocaleString() + 'M'));
+  const kindCls = { eng: 'rk-eng', good: 'rk-good', warn: 'rk-warn', bad: 'rk-bad', neutral: 'rk-neutral' };
+  const segs = c.segments || [];
+  const rows = segs.map(s => {
+    const pos = s.position ? '<span class="rk ' + (kindCls[s.kind] || 'rk-neutral') + '">' + escTL(s.position) + '</span>' : '—';
+    const pct = s.pct == null ? '—' : s.pct + '%';
+    return '<tr><td>' + escTL(s.name) + '</td><td>' + fmtRev(s.revenue) + ' · ' + pct + '</td><td>' + escTL(s.structure || '') + '</td><td>' + pos + '</td></tr>';
+  }).join('');
+  const tbl = rows
+    ? '<div class="qc-lab" style="margin-top:18px">竞争结构地图 · 各业务在什么市场、什么位置</div>'
+      + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>业务</th><th>营收·占比</th><th>竞争结构</th><th>公司位置</th></tr></thead><tbody>'
+      + rows + '</tbody></table></div>'
+    : '';
+  const ctrlCls = { good: 'rk-good', bad: 'rk-bad', warn: 'rk-warn', neutral: 'rk-neutral' };
+  const ctrlBlocks = segs.map(s => {
+    const chip = s.control ? '<span class="rk ' + (ctrlCls[s.control_kind] || 'rk-neutral') + '">' + escTL(s.control) + '</span>' : '';
+    return '<div class="ch3-seg"><div class="ch3-seg-h">' + escTL(s.name) + ' ' + chip + '</div>'
+      + (s.control_note ? '<div class="ch3-seg-b">' + escTL(s.control_note) + '</div>' : '')
+      + (s.market ? '<div class="ch3-seg-m"><span class="ch3-seg-mk">往哪走</span>' + escTL(s.market) + '</div>' : '')
+      + '</div>';
+  }).join('');
+  const ctrlBlock = ctrlBlocks
+    ? '<div class="qc-lab" style="margin-top:18px">各业务谁掌握价值 · 这块往哪走</div><div class="ch3-segs">' + ctrlBlocks + '</div>'
+    : '';
+  return ''
+    + '<div class="qc-lab">判断速览 · 行业格局</div>'
+    + (c.spine ? '<div class="qc-ess" style="font-size:15px">' + escTL(c.spine) + '</div>' : '')
+    + tbl
+    + ctrlBlock
+    + (c.moat ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">核心护城河</div><div class="qc-v">' + escTL(c.moat) + '</div></div></div>' : '')
+    + ((c.value_concentration || c.pressure) ?
+        '<div class="ch2-read">'
+        + (c.value_concentration ? '<div><div class="ch2-read-k ch2-read-good">价值集中在哪</div><div class="ch2-read-v">' + escTL(c.value_concentration) + '</div></div>' : '')
+        + (c.pressure ? '<div><div class="ch2-read-k ch2-read-warn">压力来自哪</div><div class="ch2-read-v">' + escTL(c.pressure) + '</div></div>' : '')
+        + '</div>' : '')
+    + (c.key_variable ? '<div class="ch2-darkline" style="background:rgba(26,84,144,.07);border-color:rgba(26,84,144,.25)"><div class="ch2-dl-k" style="color:var(--accent)">决胜变量</div><div class="ch2-dl-v">' + escTL(c.key_variable) + '</div></div>' : '')
+    + '<div class="rchap-sep">第三章 · 正文</div>';
+}
+
 function renderReport() {
   const cont = document.getElementById('section-report');
   const chs = DATA.report_chapters;
@@ -2054,7 +2107,7 @@ function renderReport() {
   body.innerHTML = chs.map((c, i) =>
     '<section class="card report-chapter" id="' + c.id + '">'
     + '<h2 class="rchap-h">' + escTL(c.title) + '</h2>'
-    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : ''))   // 第一/二章：判断卡(执行摘要)在上 + 正文在下，同框
+    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : '')))   // 第一/二/三章：判断卡在上 + 正文在下，同框
     + '<div class="rchap-body">' + (c.html || '<p class="muted">（本章无正文）</p>') + '</div>'
     + '</section>'
   ).join('');

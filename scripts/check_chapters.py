@@ -35,11 +35,16 @@ REQUIRED_CARDS = {
         "fields": ["spine", "phases", "revealed_behavior", "darkline.text",
                    "scorecard_read.exposes", "scorecard_read.hidden_strength"],
     },
+    "ch3": {
+        "name": "第三章 行业判断卡",
+        "fields": ["spine", "segments", "moat", "value_concentration", "pressure", "key_variable"],
+    },
 }
 
 # 报告对应章必须含的结构脚手架（在该章正文里数 markdown 表格）。键＝章标题关键词。
 CHAPTER_SCAFFOLDS = {
     "第二章": {"min_tables": 2, "desc": "大事记表 + 上市以来总账表"},
+    "第三章": {"min_tables": 1, "desc": "竞争结构表"},
 }
 
 
