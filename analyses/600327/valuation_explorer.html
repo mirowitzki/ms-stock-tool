@@ -732,6 +732,8 @@ footer a { color: var(--accent); text-decoration: none; }
 .rchap-h { font-size:18px; color:var(--primary); margin:0 0 14px; padding-bottom:8px;
   border-bottom:2px solid var(--accent); display:inline-block; }
 .rchap-body { max-width:none; }  /* 填满卡片宽度（网页口径）；不再用 PDF 那种窄阅读栏、避免右侧大片留白 */
+.rchap-sep { margin:24px 0 18px; padding-top:14px; border-top:1px dashed var(--border); font-size:12px;
+  color:var(--text-muted); letter-spacing:1px; }
 /* —— 第一章判断卡（生意质量卡 + 业务速览）—— */
 .qc-lab { font-size:12px; color:var(--text-muted); margin-bottom:8px; }
 .qc-ess { font-size:18px; font-weight:700; color:var(--text); line-height:1.5; margin-bottom:12px; }
@@ -1194,7 +1196,6 @@ footer a { color: var(--accent); text-decoration: none; }
 
 <!-- ========================= 报告正文（按章嵌入交互器主干）========================= -->
 <div id="section-report" style="display:none;">
-  <div id="ch1-card"></div>
   <nav class="report-toc" id="report-toc"></nav>
   <div id="report-body"></div>
 </div>
@@ -1215,7 +1216,7 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "600327",
   "company_name": "大东方",
   "as_of": "2025-12-31",
-  "generated_at": "2026-06-28 19:49:22",
+  "generated_at": "2026-06-28 19:56:15",
   "facts": {
     "revenue_today": 3249,
     "cash": 387,
@@ -3200,12 +3201,11 @@ function renderLayout() {
 // 渲染成章节导航 + 可折叠正文。交互器=唯一阅读家；正文真相源仍是报告 Markdown。静态、渲染一次。
 // 第一章判断卡：生意质量卡（本质 + 核心论点 + 质量光谱 + 护城河/证据/最强多头/认知差/钱权）+ 业务速览表。
 // 数字来自 segments.json（代码算）、判断来自 valuation_inputs.json 的 ch1 块、核心论点来自报告 markdown。
-function renderCh1Card() {
-  const box = document.getElementById('ch1-card');
+// 返回第一章判断卡（执行摘要）的内部 HTML——不带外框，由 renderReport 嵌进第一章那张卡的顶部
+// （执行摘要在上、正文在下，同一个框）。没有 ch1_card 数据就返回 ''。
+function ch1CardHTML() {
   const c = DATA.ch1_card;
-  if (!box) return;
-  if (!c) { box.style.display = 'none'; return; }
-  box.style.display = 'block';
+  if (!c) return '';
   const cy = DATA.currency || { symbol: '$', code: 'USD' };
   const fmtRev = v => v == null ? '—'
     : (cy.code === 'CNY' ? (cy.symbol + (v / 100).toFixed(2) + '亿') : (cy.symbol + Math.round(v).toLocaleString() + 'M'));
@@ -3227,9 +3227,8 @@ function renderCh1Card() {
       + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>业务</th><th>营收</th><th>占比</th><th>毛利率</th><th>同比</th><th>来源</th><th>角色判断</th></tr></thead><tbody>'
       + rows + '</tbody></table></div>'
     : '';
-  box.innerHTML =
-    '<section class="card">'
-    + '<div class="qc-lab">第一章 · 这是门什么生意</div>'
+  return ''
+    + '<div class="qc-lab">判断速览（执行摘要）</div>'
     + (c.essence ? '<div class="qc-ess">' + escTL(c.essence) + '</div>' : '')
     + (c.thesis_html ? '<div class="qc-thesis">' + c.thesis_html + '</div>' : '')
     + '<div class="qc-spec"><div class="qc-spec-v" style="left:' + pos + '%;color:' + mk + '">' + escTL(q.verdict || '') + '</div>'
@@ -3241,7 +3240,7 @@ function renderCh1Card() {
     + fld('市场看错在哪', c.variant, true)
     + '</div>'
     + segBlock
-    + '</section>';
+    + '<div class="rchap-sep">第一章 · 正文</div>';
 }
 
 function renderReport() {
@@ -3257,9 +3256,10 @@ function renderReport() {
   ).join('');
   // 每章按文档顺序铺成一张独立的卡，正文直接可见——作为交互器主干的一部分（不再是单独的"完整报告"区块）
   const body = document.getElementById('report-body');
-  body.innerHTML = chs.map(c =>
+  body.innerHTML = chs.map((c, i) =>
     '<section class="card report-chapter" id="' + c.id + '">'
     + '<h2 class="rchap-h">' + escTL(c.title) + '</h2>'
+    + (i === 0 ? ch1CardHTML() : '')   // 第一章这张卡里：执行摘要(判断卡)在上 + 正文在下，同一个框
     + '<div class="rchap-body">' + (c.html || '<p class="muted">（本章无正文）</p>') + '</div>'
     + '</section>'
   ).join('');
@@ -3315,8 +3315,7 @@ function loadDataIntoUI() {
   renderCommentary();
   renderTimeline();  // 催化剂时间线（静态，渲染一次）
   renderLayout();    // 产业布局雷达（静态，渲染一次）
-  renderReport();    // 报告正文按章嵌入（静态，渲染一次）
-  renderCh1Card();   // 第一章判断卡（生意质量卡 + 业务速览 + 核心论点）
+  renderReport();    // 报告正文按章嵌入（第一章那张卡里含判断卡=执行摘要 + 正文）
   // 报价新鲜度：当前价=今日收盘（免费刷新）时，标一下日期，让人知道这是哪天的价
   if (DATA.quote && DATA.quote.as_of) {
     const det = document.getElementById('summary-current-detail');
