@@ -788,9 +788,8 @@ footer a { color: var(--accent); text-decoration: none; }
   background:#f3f6f9; color:var(--text-muted); border-radius:0 6px 6px 0; }
 .rchap-body code { background:#eef2f6; padding:1px 5px; border-radius:4px; font-size:12.5px;
   font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace; }
-.rchap-body table { display:block; overflow-x:auto; max-width:100%; border-collapse:collapse;
-  margin:14px 0; font-size:12.5px; }
-.rchap-body th, .rchap-body td { border:1px solid var(--border); padding:6px 10px; text-align:left; vertical-align:top; white-space:nowrap; }
+.rchap-body table { width:100%; border-collapse:collapse; margin:14px 0; font-size:12.5px; table-layout:auto; }
+.rchap-body th, .rchap-body td { border:1px solid var(--border); padding:6px 10px; text-align:left; vertical-align:top; white-space:normal; overflow-wrap:anywhere; }
 .rchap-body thead th { background:#eef2f6; color:var(--primary); font-weight:700; }
 .rchap-body tbody tr:nth-child(even) { background:#fafbfc; }
 .rchap-body hr { border:none; border-top:1px solid var(--grid); margin:20px 0; }
@@ -1235,7 +1234,7 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "600327",
   "company_name": "大东方",
   "as_of": "2025-12-31",
-  "generated_at": "2026-06-28 20:54:44",
+  "generated_at": "2026-06-28 21:24:36",
   "facts": {
     "revenue_today": 3249,
     "cash": 387,

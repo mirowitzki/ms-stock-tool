@@ -757,6 +757,25 @@ footer a { color: var(--accent); text-decoration: none; }
 .rk-good { background:rgba(42,157,143,.16); color:#1f7a6e; }
 .rk-warn { background:rgba(212,160,23,.18); color:#9a7400; }
 .rk-bad { background:rgba(230,57,70,.12); color:var(--bear); }
+.rk-neutral { background:#eef2f6; color:var(--text-muted); }
+.ch2-timeline { margin:10px 0 4px; }
+.ch2-node { padding:11px 0; border-top:1px solid var(--grid); }
+.ch2-node:first-child { border-top:none; padding-top:4px; }
+.ch2-node-h { display:flex; align-items:center; gap:10px; margin-bottom:5px; }
+.ch2-period { font-size:12px; color:var(--text-muted); }
+.ch2-node-b { font-size:13px; color:#23303a; line-height:1.65; }
+.ch2-tags { margin-top:5px; }
+.ch2-tag { display:inline-block; font-size:11px; padding:1px 8px; border-radius:999px; background:#eef2f6; color:var(--text-muted); margin-right:6px; }
+.ch2-darkline { margin-top:14px; padding:12px 16px; border-radius:10px; background:rgba(212,160,23,.10); border:1px solid rgba(212,160,23,.32); }
+.ch2-dl-k { font-size:12px; color:#9a7400; font-weight:700; margin-bottom:4px; }
+.ch2-dl-v { font-size:13px; color:#23303a; line-height:1.7; }
+.ch2-peak { margin-top:12px; font-size:12.5px; color:var(--text); background:#eff3f7; border-radius:8px; padding:9px 12px; }
+.ch2-peak-k { color:var(--text-muted); margin-right:8px; }
+.ch2-read { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px 22px; margin-top:14px; }
+.ch2-read-k { font-size:12px; font-weight:700; margin-bottom:3px; }
+.ch2-read-warn { color:#9a7400; }
+.ch2-read-good { color:#1f7a6e; }
+.ch2-read-v { font-size:13px; color:#23303a; line-height:1.6; }
 /* —— 章内正文排版（pandoc 转出来的 HTML）—— */
 .rchap-body h2 { font-size:16px; color:var(--primary); margin:26px 0 10px; padding-bottom:5px; border-bottom:1px solid var(--grid); }
 .rchap-body h3 { font-size:14.5px; color:var(--accent); margin:20px 0 8px; }
@@ -769,9 +788,8 @@ footer a { color: var(--accent); text-decoration: none; }
   background:#f3f6f9; color:var(--text-muted); border-radius:0 6px 6px 0; }
 .rchap-body code { background:#eef2f6; padding:1px 5px; border-radius:4px; font-size:12.5px;
   font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace; }
-.rchap-body table { display:block; overflow-x:auto; max-width:100%; border-collapse:collapse;
-  margin:14px 0; font-size:12.5px; }
-.rchap-body th, .rchap-body td { border:1px solid var(--border); padding:6px 10px; text-align:left; vertical-align:top; white-space:nowrap; }
+.rchap-body table { width:100%; border-collapse:collapse; margin:14px 0; font-size:12.5px; table-layout:auto; }
+.rchap-body th, .rchap-body td { border:1px solid var(--border); padding:6px 10px; text-align:left; vertical-align:top; white-space:normal; overflow-wrap:anywhere; }
 .rchap-body thead th { background:#eef2f6; color:var(--primary); font-weight:700; }
 .rchap-body tbody tr:nth-child(even) { background:#fafbfc; }
 .rchap-body hr { border:none; border-top:1px solid var(--grid); margin:20px 0; }
@@ -1216,7 +1234,7 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "NVTS",
   "company_name": "Navitas Semiconductor",
   "as_of": "2025-12-31",
-  "generated_at": "2026-06-28 20:00:32",
+  "generated_at": "2026-06-28 21:24:37",
   "facts": {
     "revenue_today": 45.9,
     "cash": 237,
@@ -2238,6 +2256,7 @@ footer a { color: var(--accent); text-decoration: none; }
     }
   ],
   "ch1_card": null,
+  "ch2_card": null,
   "links": {
     "report_pdf": "NVTS_公司完整报告.pdf"
   },
@@ -2965,6 +2984,52 @@ function ch1CardHTML() {
     + '<div class="rchap-sep">第一章 · 正文</div>';
 }
 
+// 返回第二章历程判断卡的内部 HTML——不带外框，由 renderReport 嵌进第二章那张卡顶部
+// （脊梁 + 四段时间轴 + 行为模式 + 暗线 + 峰值坐标 + 总账速览 + 双面判读；执行摘要在上、正文在下同框）。
+// 没有 ch2_card 数据就返回 ''。
+function ch2CardHTML() {
+  const c = DATA.ch2_card;
+  if (!c) return '';
+  const cy = DATA.currency || { symbol: '$', code: 'USD' };
+  const fmt = v => v == null ? '—'
+    : (cy.code === 'CNY' ? (cy.symbol + (v / 100).toFixed(2) + '亿') : (cy.symbol + Math.round(v).toLocaleString() + 'M'));
+  const kindCls = { neutral: 'rk-neutral', warn: 'rk-warn', bad: 'rk-bad', good: 'rk-good', eng: 'rk-eng' };
+  const phases = (c.phases || []).map(p => {
+    const chip = '<span class="rk ' + (kindCls[p.kind] || 'rk-neutral') + '">' + escTL(p.label || '') + '</span>';
+    const tags = (p.tags || []).map(t => '<span class="ch2-tag">' + escTL(t) + '</span>').join('');
+    return '<div class="ch2-node"><div class="ch2-node-h">' + chip
+      + '<span class="ch2-period">' + escTL(p.period || '') + '</span></div>'
+      + '<div class="ch2-node-b">' + escTL(p.text || '')
+      + (tags ? '<div class="ch2-tags">' + tags + '</div>' : '') + '</div></div>';
+  }).join('');
+  const sc = (c.scorecard || []).map(r =>
+    '<tr><td>' + r.year + '</td><td>' + fmt(r.revenue) + '</td><td>' + fmt(r.net_income) + '</td><td>' + fmt(r.cfo) + '</td></tr>'
+  ).join('');
+  const scBlock = sc
+    ? '<div class="qc-lab" style="margin-top:18px">总账速览 · 多年轨迹（代码从财务数据自动算）</div>'
+      + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>财年</th><th>营业收入</th><th>归母净利</th><th>经营现金流</th></tr></thead><tbody>'
+      + sc + '</tbody></table></div>'
+    : '';
+  const dl = c.darkline || {};
+  const read = c.scorecard_read || {};
+  return ''
+    + '<div class="qc-lab">判断速览 · 发展历程</div>'
+    + (c.spine ? '<div class="qc-ess" style="font-size:15px">' + escTL(c.spine) + '</div>' : '')
+    + '<div class="qc-lab" style="margin-top:14px">这家公司怎么变成今天的样子'
+    + '（颜色＝这步对小股东：<span style="color:var(--text-muted)">中性</span> ／ <span style="color:#9a7400">要盯</span> ／ <span style="color:var(--bear)">利空已兑现</span>）</div>'
+    + '<div class="ch2-timeline">' + phases + '</div>'
+    + (c.revealed_behavior ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">看行为读出的模式</div><div class="qc-v">' + escTL(c.revealed_behavior) + '</div></div></div>' : '')
+    + (dl.text ? '<div class="ch2-darkline"><div class="ch2-dl-k">' + escTL(dl.label || '会重演的暗线') + '</div><div class="ch2-dl-v">' + escTL(dl.text) + '</div></div>' : '')
+    + (c.peak_anchor ? '<div class="ch2-peak"><span class="ch2-peak-k">规模峰值坐标</span>' + escTL(c.peak_anchor) + '</div>' : '')
+    + scBlock
+    + ((read.exposes || read.hidden_strength) ?
+        '<div class="ch2-read">'
+        + (read.exposes ? '<div><div class="ch2-read-k ch2-read-warn">数字暴露什么</div><div class="ch2-read-v">' + escTL(read.exposes) + '</div></div>' : '')
+        + (read.hidden_strength ? '<div><div class="ch2-read-k ch2-read-good">没讲完的底气</div><div class="ch2-read-v">' + escTL(read.hidden_strength) + '</div></div>' : '')
+        + '</div>' : '')
+    + '<div class="rchap-sep">第二章 · 正文</div>';
+}
+
 function renderReport() {
   const cont = document.getElementById('section-report');
   const chs = DATA.report_chapters;
@@ -2981,7 +3046,7 @@ function renderReport() {
   body.innerHTML = chs.map((c, i) =>
     '<section class="card report-chapter" id="' + c.id + '">'
     + '<h2 class="rchap-h">' + escTL(c.title) + '</h2>'
-    + (i === 0 ? ch1CardHTML() : '')   // 第一章这张卡里：执行摘要(判断卡)在上 + 正文在下，同一个框
+    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : ''))   // 第一/二章：判断卡(执行摘要)在上 + 正文在下，同框
     + '<div class="rchap-body">' + (c.html || '<p class="muted">（本章无正文）</p>') + '</div>'
     + '</section>'
   ).join('');
