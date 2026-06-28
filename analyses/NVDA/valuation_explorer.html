@@ -1216,7 +1216,7 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "NVDA",
   "company_name": "NVIDIA Corporation",
   "as_of": "2026-01-25",
-  "generated_at": "2026-06-28 19:56:15",
+  "generated_at": "2026-06-28 20:00:31",
   "facts": {
     "revenue_today": 215938,
     "cash": 10605,
@@ -3167,7 +3167,7 @@ function ch1CardHTML() {
       + rows + '</tbody></table></div>'
     : '';
   return ''
-    + '<div class="qc-lab">判断速览（执行摘要）</div>'
+    + '<div class="qc-lab">判断速览</div>'
     + (c.essence ? '<div class="qc-ess">' + escTL(c.essence) + '</div>' : '')
     + (c.thesis_html ? '<div class="qc-thesis">' + c.thesis_html + '</div>' : '')
     + '<div class="qc-spec"><div class="qc-spec-v" style="left:' + pos + '%;color:' + mk + '">' + escTL(q.verdict || '') + '</div>'
@@ -3175,8 +3175,8 @@ function ch1CardHTML() {
     + '<div class="qc-spec-lab"><span>复利机器</span><span>有壁垒但受困</span><span>稳健低回报</span><span>无壁垒苦力活</span><span>题材故事</span></div>'
     + '<div class="qc-grid">'
     + fld('价值内核(护城河)', c.moat) + fld('证据', c.evidence)
-    + fld('最强多头(先给善意解释)', c.steelman) + fld('钱和权在谁手里', c.power_center)
-    + fld('市场看错在哪', c.variant, true)
+    + fld('最强多头', c.steelman) + fld('钱和权在谁手里', c.power_center)
+    + fld('我跟市场哪里不一样', c.variant, true)
     + '</div>'
     + segBlock
     + '<div class="rchap-sep">第一章 · 正文</div>';
