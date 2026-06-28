@@ -176,7 +176,10 @@ def load_report_chapters(ticker):
                 [pandoc, "-f", "markdown-auto_identifiers", "-t", "html5"],
                 input=md, capture_output=True, text=True, encoding="utf-8", errors="replace")
             if r.returncode == 0:
-                return r.stdout
+                # 去掉 pandoc 给表格塞的等宽 <colgroup>（它按分隔行 --- 等长把每列锁成等宽，
+                # 长文本列被挤窄换行、短列留大片白）；去掉后由 CSS(table-layout:auto + width:100%)
+                # 按内容分配列宽——长列自然变宽、短列收紧。
+                return re.sub(r"<colgroup>.*?</colgroup>", "", r.stdout, flags=re.S)
             print(f"  ⚠ pandoc 转换失败：{r.stderr.strip()[:120]}")
         except Exception as e:
             print(f"  ⚠ pandoc 转换异常：{e}")
