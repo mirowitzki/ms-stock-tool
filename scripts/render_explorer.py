@@ -287,6 +287,37 @@ def build_ch1_card(inputs, base, thesis_html):
     }
 
 
+def build_ch2_card(inputs, fin):
+    """组装第二章历程判断卡：判断（脊梁/四段时间轴/行为模式/暗线/双面判读/峰值坐标）来自
+    valuation_inputs.json 的 ch2 块，总账速览（多年营收/归母/经营现金流）由代码从 financials.csv
+    算（复用 build_history）。没有 ch2 块就返回 None（卡片自动隐藏）。"""
+    ch2 = inputs.get("ch2")
+    if not ch2:
+        return None
+    cfo_keys = ["NetCashProvidedByUsedInOperatingActivities"]
+    rows = []
+    for h in build_history(fin):
+        if h.get("revenue") is None and h.get("net_income") is None:
+            continue
+        y = h["year"]
+        cfo = next((fin[k][y] for k in cfo_keys if k in fin and y in fin[k]), None)
+        rows.append({
+            "year": y,
+            "revenue": h.get("revenue"),       # 已是百万本币（build_history 里 to_millions 过）
+            "net_income": h.get("net_income"),
+            "cfo": to_millions(cfo) if cfo is not None else None,
+        })
+    return {
+        "spine": ch2.get("spine", ""),
+        "phases": ch2.get("phases", []),
+        "revealed_behavior": ch2.get("revealed_behavior", ""),
+        "darkline": ch2.get("darkline", {}),
+        "peak_anchor": ch2.get("peak_anchor", ""),
+        "scorecard_read": ch2.get("scorecard_read", {}),
+        "scorecard": rows[-6:],                # 最近 6 个年度，避免铺满 20 余年历史
+    }
+
+
 def build_history(fin):
     """从财务数据提取年度历史，返回按年份排序的 list。"""
     revenue_keys = [
@@ -846,6 +877,7 @@ def render(ticker, starter=False):
     # 没有第一章判断卡的公司（尚未写 ch1 块）：核心论点回退成正文首章，避免凭空消失
     if ch1_card is None and report_thesis_html:
         report_chapters = [{"id": "ch-core", "title": "核心论点", "html": report_thesis_html}] + (report_chapters or [])
+    ch2_card = build_ch2_card(inputs, fin)     # 第二章历程判断卡（脊梁/四段/行为模式/暗线/总账速览）
 
     # 组装完整数据对象
     data = {
@@ -871,6 +903,7 @@ def render(ticker, starter=False):
         "layout": load_layout(ticker),             # 产业布局雷达（layout.json：近期动作 + 指向的产业 → 接力产业链分析）
         "report_chapters": report_chapters,        # 报告正文(按章嵌入交互器主干；已剔除导读/执行摘要/核心论点)
         "ch1_card": ch1_card,                      # 第一章判断卡（生意质量卡 + 业务速览 + 核心论点）
+        "ch2_card": ch2_card,                      # 第二章历程判断卡（脊梁 + 四段时间轴 + 行为模式 + 暗线 + 总账速览）
         "links": links,
     }
 
@@ -925,6 +958,16 @@ def render(ticker, starter=False):
     else:
         print(f"  （未嵌入报告正文：缺 *完整报告.md 或 pandoc——交互器仍可用）")
     print(f"  浏览器打开即可使用，所有假设可拖动滑块实时调整。")
+    # 章节卡完备性提醒（非致命，一行、不刷屏批量重渲）——已定标准的章若没出卡/报告缺脚手架，当场报缺。
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from check_chapters import verify_chapters
+        ch_ok, ch_problems = verify_chapters(ticker)
+        if not ch_ok:
+            print(f"  ⚠ 章节卡未完备：{len(ch_problems)} 项待补"
+                  f"（跑 python scripts/check_chapters.py {ticker} 看详情；qc_gate 出 PDF 时会硬拦）")
+    except Exception:
+        pass
     return out_path
 
 

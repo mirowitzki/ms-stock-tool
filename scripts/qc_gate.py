@@ -31,6 +31,9 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from check_chapters import verify_chapters  # 章节卡完备闸门（防"有标准不照做"）
+
 # 五道关的内部键 + 对外名（顺序即流水线顺序）
 LINES = [
     ("check_numbers", "代码对账 check_numbers"),
@@ -70,19 +73,24 @@ def verify_qc(ticker: str):
         problems.append("缺『动笔前四步』_thesis.md（核心论点/认知差/价值阶梯诊断/主变量，>200字）"
                         "——分析必须先于码字、且落成文件")
 
-    # ② 质检登记存在
+    # ② 章节卡完备（已定交付标准的章必须出卡 + 报告含脚手架）——独立于质检登记、总是检查，防"有标准不照做"
+    ch_ok, ch_problems = verify_chapters(ticker)
+    if not ch_ok:
+        problems.extend("章节卡：" + p for p in ch_problems)
+
+    # ③ 质检登记存在
     status_path = base / "_qc_status.json"
     if not status_path.exists():
         problems.append("无 _qc_status.json：五道质检关结论未登记。先跑完五道关、再 qc_gate.py --record")
         return False, "；\n  ".join(problems)
     status = json.loads(status_path.read_text(encoding="utf-8"))
 
-    # ③ 报告指纹未过期（登记后没再改过报告）
+    # ④ 报告指纹未过期（登记后没再改过报告）
     cur = sha256_of(report)
     if status.get("report_sha256") != cur:
         problems.append("报告在质检登记后被改动过（指纹不符）→ 质检结论已过期，需重跑五道关并重新 --record")
 
-    # ④ 五道关全部 pass
+    # ⑤ 五道关全部 pass
     lines = status.get("lines", {})
     for k, name in LINES:
         v = lines.get(k)
@@ -91,7 +99,7 @@ def verify_qc(ticker: str):
 
     if problems:
         return False, "；\n  ".join(problems)
-    return True, f"五道质检关全部通过、_thesis.md 在、指纹匹配（登记于 {status.get('recorded_at','?')}）"
+    return True, f"五道质检关全部通过、章节卡完备、_thesis.md 在、指纹匹配（登记于 {status.get('recorded_at','?')}）"
 
 
 def do_record(ticker: str, kvs, note: str):
@@ -121,7 +129,14 @@ def do_record(ticker: str, kvs, note: str):
     if missing:
         print("  ⚠ 尚未全部通过：" + "、".join(missing) + " —— render_pdf 仍会拦下")
     else:
-        print("  ✓ 五道关全部 pass —— render_pdf 放行")
+        print("  ✓ 五道关全部 pass")
+    ch_ok, ch_problems = verify_chapters(ticker)
+    if ch_ok:
+        print("  ✓ 章节卡完备（判断卡 + 报告脚手架齐全）—— render_pdf 放行")
+    else:
+        print("  ⚠ 章节卡未完备（render_pdf 会一并拦下）：")
+        for p in ch_problems:
+            print("     · " + p)
 
 
 def main():
