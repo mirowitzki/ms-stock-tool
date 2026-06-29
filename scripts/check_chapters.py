@@ -40,8 +40,8 @@ REQUIRED_CARDS = {
         "fields": ["spine", "segments", "moat", "value_concentration", "pressure", "key_variable"],
     },
     "ch4": {
-        "name": "第四章 盈利引擎判断卡",
-        "fields": ["spine", "segments", "who_really_earns", "profit_quality", "health_switches"],
+        "name": "第四章 经营判断卡（商业模式+游戏规则）",
+        "fields": ["spine", "segments", "who_earns", "ceo_levers"],
     },
 }
 
@@ -49,7 +49,7 @@ REQUIRED_CARDS = {
 CHAPTER_SCAFFOLDS = {
     "第二章": {"min_tables": 2, "desc": "大事记表 + 上市以来总账表"},
     "第三章": {"min_tables": 1, "desc": "竞争结构表"},
-    "第四章": {"min_tables": 2, "desc": "上下游/盈利模式表 + 盈利引擎全景表"},
+    "第四章": {"min_tables": 1, "desc": "三门生意总览表（本质/客户/怎么赢/赚不赚钱）"},
 }
 
 

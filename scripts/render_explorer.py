@@ -371,9 +371,9 @@ def build_ch3_card(inputs, base):
 
 
 def build_ch4_card(inputs, base):
-    """组装第四章盈利引擎判断卡：盈利引擎全景的营收/占比/毛利率由代码从 segments.json 算（同第一/三章机制），
-    盈利角色与含金量判断来自 valuation_inputs.json 的 ch4 块。没有 ch4 块就返回 None（卡片自动隐藏）。
-    钱流与盈利门道细节留正文，卡片只做精炼的盈利速览。"""
+    """组装第四章经营判断卡（商业模式 + 游戏规则，CEO 经营说明书视角）：每门生意的营收/占比由代码从
+    segments.json 算（同第一/三章机制），本质/怎么玩/赚不赚钱/谁真赚钱/CEO 操作杆来自 valuation_inputs.json
+    的 ch4 块。没有 ch4 块就返回 None（卡片自动隐藏）。财务报表分析不在本章、在第七章。"""
     ch4 = inputs.get("ch4")
     if not ch4:
         return None
@@ -400,20 +400,17 @@ def build_ch4_card(inputs, base):
                 if name not in segs:            # 只显示我打了盈利角色的业务
                     continue
                 j = segs[name]
-                m = s.get("margin")
                 rows.append({
                     "name": name, "revenue": to_millions(rev),
                     "pct": round(rev / total * 100, 1) if total else None,
-                    "margin": round(m * 100, 1) if m is not None else None,
+                    "essence": j.get("essence", ""), "play": j.get("play", ""),
                     "role": j.get("role", ""), "role_kind": j.get("role_kind", ""),
-                    "role_note": j.get("role_note", ""),
                 })
             break
     return {
         "spine": ch4.get("spine", ""),
-        "who_really_earns": ch4.get("who_really_earns", ""),
-        "profit_quality": ch4.get("profit_quality", ""),
-        "health_switches": ch4.get("health_switches", ""),
+        "who_earns": ch4.get("who_earns", ""),
+        "ceo_levers": ch4.get("ceo_levers", ""),
         "segments": rows,
     }
 

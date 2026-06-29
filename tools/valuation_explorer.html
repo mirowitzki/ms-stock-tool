@@ -2091,6 +2091,45 @@ function ch3CardHTML() {
     + '<div class="rchap-sep">第三章 · 正文</div>';
 }
 
+// 返回第四章经营判断卡的内部 HTML（CEO 经营说明书视角）——经营脊梁 + 三门生意速览(本质/营收占比/赚不赚钱)
+// + 每门怎么玩(游戏规则明暗) + 哪门真赚钱 + CEO 操作杆；财务报表分析在第七章。没有 ch4_card 数据就返回 ''。
+function ch4CardHTML() {
+  const c = DATA.ch4_card;
+  if (!c) return '';
+  const cy = DATA.currency || { symbol: '$', code: 'USD' };
+  const fmtRev = v => v == null ? '—'
+    : (cy.code === 'CNY' ? (cy.symbol + (v / 100).toFixed(2) + '亿') : (cy.symbol + Math.round(v).toLocaleString() + 'M'));
+  const kindCls = { eng: 'rk-eng', good: 'rk-good', warn: 'rk-warn', bad: 'rk-bad', neutral: 'rk-neutral' };
+  const segs = c.segments || [];
+  const rows = segs.map(s => {
+    const role = s.role ? '<span class="rk ' + (kindCls[s.role_kind] || 'rk-neutral') + '">' + escTL(s.role) + '</span>' : '—';
+    const pct = s.pct == null ? '—' : s.pct + '%';
+    return '<tr><td>' + escTL(s.name) + '</td><td>' + escTL(s.essence || '') + '</td><td>' + fmtRev(s.revenue) + ' · ' + pct + '</td><td>' + role + '</td></tr>';
+  }).join('');
+  const tbl = rows
+    ? '<div class="qc-lab" style="margin-top:18px">三门生意 · 各是门什么生意、赚不赚钱</div>'
+      + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>业务</th><th>本质</th><th>营收·占比</th><th>赚不赚钱</th></tr></thead><tbody>'
+      + rows + '</tbody></table></div>'
+    : '';
+  const playBlocks = segs.map(s => {
+    const chip = s.role ? '<span class="rk ' + (kindCls[s.role_kind] || 'rk-neutral') + '">' + escTL(s.role) + '</span>' : '';
+    return '<div class="ch3-seg"><div class="ch3-seg-h">' + escTL(s.name) + ' ' + chip + '</div>'
+      + (s.play ? '<div class="ch3-seg-b">' + escTL(s.play) + '</div>' : '')
+      + '</div>';
+  }).join('');
+  const playBlock = playBlocks
+    ? '<div class="qc-lab" style="margin-top:18px">每门生意怎么玩 · 游戏规则明暗</div><div class="ch3-segs">' + playBlocks + '</div>'
+    : '';
+  return ''
+    + '<div class="qc-lab">判断速览 · 经营说明书</div>'
+    + (c.spine ? '<div class="qc-ess" style="font-size:15px">' + escTL(c.spine) + '</div>' : '')
+    + tbl
+    + playBlock
+    + (c.who_earns ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">哪门真赚钱</div><div class="qc-v">' + escTL(c.who_earns) + '</div></div></div>' : '')
+    + (c.ceo_levers ? '<div class="ch2-darkline" style="background:rgba(26,84,144,.07);border-color:rgba(26,84,144,.25)"><div class="ch2-dl-k" style="color:var(--accent)">当 CEO 该拉的操作杆</div><div class="ch2-dl-v">' + escTL(c.ceo_levers) + '</div></div>' : '')
+    + '<div class="rchap-sep">第四章 · 正文</div>';
+}
+
 function renderReport() {
   const cont = document.getElementById('section-report');
   const chs = DATA.report_chapters;
@@ -2107,7 +2146,7 @@ function renderReport() {
   body.innerHTML = chs.map((c, i) =>
     '<section class="card report-chapter" id="' + c.id + '">'
     + '<h2 class="rchap-h">' + escTL(c.title) + '</h2>'
-    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : '')))   // 第一/二/三章：判断卡在上 + 正文在下，同框
+    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : (i === 3 ? ch4CardHTML() : ''))))   // 第一/二/三/四章：判断卡在上 + 正文在下，同框
     + '<div class="rchap-body">' + (c.html || '<p class="muted">（本章无正文）</p>') + '</div>'
     + '</section>'
   ).join('');
