@@ -415,6 +415,44 @@ def build_ch4_card(inputs, base):
     }
 
 
+def build_ch5_card(inputs, fin):
+    """组装第五章资本配置记录卡：判断（脊梁/阶段诊断/资金来去/大决策剖检/分红轨迹/为谁配置/激励/分级结论/
+    最强反方）来自 valuation_inputs.json 的 ch5 块；每股记分牌里的归母、经营现金流两行由代码从 financials.csv
+    算（÷ 总股本），扣非、分红两行因不在 XBRL 里、由 ch5 块手工供（已对年报核）。没有 ch5 块就返回 None。"""
+    ch5 = inputs.get("ch5")
+    if not ch5:
+        return None
+    shares = ch5.get("shares")                                              # 总股本（股）
+    years = ch5.get("years") or []
+    deps = {int(k): v for k, v in (ch5.get("deducted_eps") or {}).items()}  # 扣非每股（手抄·已核）
+    dps = {int(k): v for k, v in (ch5.get("dividend_ps") or {}).items()}    # 每股分红（手抄·已核）
+    ni = fin.get("NetIncomeLoss", {})
+    cfo = fin.get("NetCashProvidedByUsedInOperatingActivities", {})
+    def ps(v):
+        return round(v / shares, 2) if (v is not None and shares) else None
+    rows = [{
+        "year": y,
+        "eps": ps(ni.get(y)),          # 归母每股（代码算）
+        "deducted_eps": deps.get(y),   # 扣非每股（手抄）
+        "cfo_ps": ps(cfo.get(y)),      # 经营现金流每股（代码算）
+        "div_ps": dps.get(y),          # 每股分红（手抄）
+    } for y in years]
+    return {
+        "spine": ch5.get("spine", ""),
+        "stage": ch5.get("stage", ""),
+        "sources_uses": ch5.get("sources_uses", ""),
+        "track_record": ch5.get("track_record", []),
+        "dividend_arc": ch5.get("dividend_arc", {}),
+        "per_share": rows,
+        "per_share_verdict": ch5.get("per_share_verdict", ""),
+        "shares_yi": round(shares / 1e8, 2) if shares else None,
+        "for_whom": ch5.get("for_whom", {}),
+        "incentive": ch5.get("incentive", ""),
+        "verdict": ch5.get("verdict", ""),
+        "bear_case": ch5.get("bear_case", ""),
+    }
+
+
 def build_history(fin):
     """从财务数据提取年度历史，返回按年份排序的 list。"""
     revenue_keys = [
@@ -977,6 +1015,7 @@ def render(ticker, starter=False):
     ch2_card = build_ch2_card(inputs, fin)     # 第二章历程判断卡（脊梁/四段/行为模式/暗线/总账速览）
     ch3_card = build_ch3_card(inputs, base)    # 第三章行业判断卡（格局脊梁/竞争结构地图/谁掌握价值/价值压力/决胜变量）
     ch4_card = build_ch4_card(inputs, base)    # 第四章盈利引擎判断卡（盈利引擎脊梁/全景/谁真赚钱/利润含金量/健康度开关）
+    ch5_card = build_ch5_card(inputs, fin)     # 第五章资本配置记录卡（脊梁/阶段诊断/资金来去/大决策剖检/每股记分牌/为谁配置/最强反方）
 
     # 组装完整数据对象
     data = {
@@ -1005,6 +1044,7 @@ def render(ticker, starter=False):
         "ch2_card": ch2_card,                      # 第二章历程判断卡（脊梁 + 四段时间轴 + 行为模式 + 暗线 + 总账速览）
         "ch3_card": ch3_card,                      # 第三章行业判断卡（格局脊梁 + 竞争结构地图 + 谁掌握价值 + 价值/压力 + 决胜变量）
         "ch4_card": ch4_card,                      # 第四章盈利引擎判断卡（盈利引擎脊梁 + 全景 + 谁真赚钱 + 利润含金量 + 健康度开关）
+        "ch5_card": ch5_card,                      # 第五章资本配置记录卡（脊梁 + 阶段诊断 + 资金来去 + 大决策剖检 + 每股记分牌 + 为谁配置 + 最强反方）
         "links": links,
     }
 

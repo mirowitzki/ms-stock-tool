@@ -2130,6 +2130,53 @@ function ch4CardHTML() {
     + '<div class="rchap-sep">第四章 · 正文</div>';
 }
 
+// 返回第五章资本配置记录卡的内部 HTML——脊梁 + 阶段诊断(判断前置闸门) + 资金来去 + 大决策剖检 + 每股记分牌
+// (归母/经营现金流代码算、扣非/分红已核年报) + 分红轨迹/激励 + 为谁配置(忠诚) + 分级结论 + 最强反方。没有 ch5_card 就返回 ''。
+function ch5CardHTML() {
+  const c = DATA.ch5_card;
+  if (!c) return '';
+  const cy = DATA.currency || { symbol: '$', code: 'USD' };
+  const unit = cy.code === 'CNY' ? '元' : '本币';
+  const psFmt = v => v == null ? '—' : (v < 0 ? '−' : '') + Math.abs(v).toFixed(2);
+  const kindCls = { eng: 'rk-eng', good: 'rk-good', warn: 'rk-warn', bad: 'rk-bad', neutral: 'rk-neutral' };
+  const trBlocks = (c.track_record || []).map(t => {
+    const chip = '<span class="rk ' + (kindCls[t.kind] || 'rk-neutral') + '">' + escTL(t.label || '') + '</span>';
+    return '<div class="ch3-seg"><div class="ch3-seg-h">' + chip + '</div>'
+      + (t.text ? '<div class="ch3-seg-b">' + escTL(t.text) + '</div>' : '') + '</div>';
+  }).join('');
+  const trBlock = trBlocks
+    ? '<div class="qc-lab" style="margin-top:18px">每一笔大决策 · 按当时该不该做来判（结果是证据、不是判据）</div><div class="ch3-segs">' + trBlocks + '</div>'
+    : '';
+  const ps = (c.per_share || []).map(r =>
+    '<tr><td>' + r.year + '</td><td>' + psFmt(r.eps) + '</td><td>' + psFmt(r.deducted_eps) + '</td><td>' + psFmt(r.cfo_ps) + '</td><td>' + psFmt(r.div_ps) + '</td></tr>'
+  ).join('');
+  const psBlock = ps
+    ? '<div class="qc-lab" style="margin-top:18px">每股记分牌 · 这些年每股价值有没有长（归母/经营现金流代码算，扣非/分红已核年报'
+      + (c.shares_yi ? '｜总股本 ' + c.shares_yi + ' 亿股·未变' : '') + '）</div>'
+      + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>每股(' + unit + ')</th><th>归母</th><th>扣非</th><th>经营现金流</th><th>分红</th></tr></thead><tbody>'
+      + ps + '</tbody></table></div>'
+      + (c.per_share_verdict ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">记分牌读数</div><div class="qc-v">' + escTL(c.per_share_verdict) + '</div></div></div>' : '')
+    : '';
+  const da = c.dividend_arc || {};
+  const fw = c.for_whom || {};
+  return ''
+    + '<div class="qc-lab">判断速览 · 资本配置</div>'
+    + (c.spine ? '<div class="qc-ess" style="font-size:15px">' + escTL(c.spine) + '</div>' : '')
+    + (c.stage ? '<div class="ch2-darkline" style="background:rgba(26,84,144,.07);border-color:rgba(26,84,144,.25)"><div class="ch2-dl-k" style="color:var(--accent)">这门生意在什么阶段 · 因此什么叫好配置</div><div class="ch2-dl-v">' + escTL(c.stage) + '</div></div>' : '')
+    + (c.sources_uses ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">钱从哪来、到哪去</div><div class="qc-v">' + escTL(c.sources_uses) + '</div></div></div>' : '')
+    + trBlock
+    + psBlock
+    + ((da.text || c.incentive) ?
+        '<div class="ch2-read">'
+        + (da.text ? '<div><div class="ch2-read-k ch2-read-warn">分红与回购轨迹</div><div class="ch2-read-v">' + escTL(da.text) + '</div></div>' : '')
+        + (c.incentive ? '<div><div class="ch2-read-k ch2-read-warn">管理层激励结构</div><div class="ch2-read-v">' + escTL(c.incentive) + '</div></div>' : '')
+        + '</div>' : '')
+    + (fw.text ? '<div class="ch2-darkline"><div class="ch2-dl-k">为谁配置 · 全体股东还是控股股东</div><div class="ch2-dl-v">' + escTL(fw.text) + '</div></div>' : '')
+    + (c.verdict ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">分级结论</div><div class="qc-v">' + escTL(c.verdict) + '</div></div></div>' : '')
+    + (c.bear_case ? '<div class="ch2-read"><div><div class="ch2-read-k ch2-read-good">最强反方 · 先给最善意的解释</div><div class="ch2-read-v">' + escTL(c.bear_case) + '</div></div></div>' : '')
+    + '<div class="rchap-sep">第五章 · 正文</div>';
+}
+
 function renderReport() {
   const cont = document.getElementById('section-report');
   const chs = DATA.report_chapters;
@@ -2146,7 +2193,7 @@ function renderReport() {
   body.innerHTML = chs.map((c, i) =>
     '<section class="card report-chapter" id="' + c.id + '">'
     + '<h2 class="rchap-h">' + escTL(c.title) + '</h2>'
-    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : (i === 3 ? ch4CardHTML() : ''))))   // 第一/二/三/四章：判断卡在上 + 正文在下，同框
+    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : (i === 3 ? ch4CardHTML() : (i === 4 ? ch5CardHTML() : '')))))   // 第一~五章：判断卡在上 + 正文在下，同框
     + '<div class="rchap-body">' + (c.html || '<p class="muted">（本章无正文）</p>') + '</div>'
     + '</section>'
   ).join('');

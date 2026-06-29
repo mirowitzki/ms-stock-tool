@@ -43,6 +43,11 @@ REQUIRED_CARDS = {
         "name": "第四章 经营判断卡（商业模式+游戏规则）",
         "fields": ["spine", "segments", "who_earns", "ceo_levers"],
     },
+    "ch5": {
+        "name": "第五章 资本配置记录卡",
+        "fields": ["spine", "stage", "track_record", "per_share_verdict",
+                   "for_whom.text", "verdict", "bear_case"],
+    },
 }
 
 # 报告对应章必须含的结构脚手架（在该章正文里数 markdown 表格）。键＝章标题关键词。
@@ -50,6 +55,7 @@ CHAPTER_SCAFFOLDS = {
     "第二章": {"min_tables": 2, "desc": "大事记表 + 上市以来总账表"},
     "第三章": {"min_tables": 1, "desc": "竞争结构表"},
     "第四章": {"min_tables": 1, "desc": "三门生意总览表（本质/客户/怎么赢/赚不赚钱）"},
+    "第五章": {"min_tables": 1, "desc": "收购成色表 或 资金去向表 或 每股记分牌表"},
 }
 
 
