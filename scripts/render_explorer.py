@@ -370,6 +370,54 @@ def build_ch3_card(inputs, base):
     }
 
 
+def build_ch4_card(inputs, base):
+    """组装第四章盈利引擎判断卡：盈利引擎全景的营收/占比/毛利率由代码从 segments.json 算（同第一/三章机制），
+    盈利角色与含金量判断来自 valuation_inputs.json 的 ch4 块。没有 ch4 块就返回 None（卡片自动隐藏）。
+    钱流与盈利门道细节留正文，卡片只做精炼的盈利速览。"""
+    ch4 = inputs.get("ch4")
+    if not ch4:
+        return None
+    segs = ch4.get("segments", {})
+    rows = []
+    seg_path = base / "financials" / "segments.json"
+    if seg_path.exists():
+        try:
+            data = json.loads(seg_path.read_text(encoding="utf-8"))
+        except Exception:
+            data = {}
+        dims = [ch4["segment_dim"]] if ch4.get("segment_dim") else ["by_industry", "by_product", "by_market", "by_region"]
+        for key in dims:
+            grp = data.get(key) or {}
+            annual = sorted(p for p in grp if str(p).endswith("12-31")) or sorted(grp.keys())
+            if not annual:
+                continue
+            cur = [s for s in grp[annual[-1]] if (s.get("revenue") or 0) > 0]
+            if not cur:
+                continue
+            total = sum(s.get("revenue") or 0 for s in cur)
+            for s in cur:
+                name, rev = s.get("name"), (s.get("revenue") or 0)
+                if name not in segs:            # 只显示我打了盈利角色的业务
+                    continue
+                j = segs[name]
+                m = s.get("margin")
+                rows.append({
+                    "name": name, "revenue": to_millions(rev),
+                    "pct": round(rev / total * 100, 1) if total else None,
+                    "margin": round(m * 100, 1) if m is not None else None,
+                    "role": j.get("role", ""), "role_kind": j.get("role_kind", ""),
+                    "role_note": j.get("role_note", ""),
+                })
+            break
+    return {
+        "spine": ch4.get("spine", ""),
+        "who_really_earns": ch4.get("who_really_earns", ""),
+        "profit_quality": ch4.get("profit_quality", ""),
+        "health_switches": ch4.get("health_switches", ""),
+        "segments": rows,
+    }
+
+
 def build_history(fin):
     """从财务数据提取年度历史，返回按年份排序的 list。"""
     revenue_keys = [
@@ -931,6 +979,7 @@ def render(ticker, starter=False):
         report_chapters = [{"id": "ch-core", "title": "核心论点", "html": report_thesis_html}] + (report_chapters or [])
     ch2_card = build_ch2_card(inputs, fin)     # 第二章历程判断卡（脊梁/四段/行为模式/暗线/总账速览）
     ch3_card = build_ch3_card(inputs, base)    # 第三章行业判断卡（格局脊梁/竞争结构地图/谁掌握价值/价值压力/决胜变量）
+    ch4_card = build_ch4_card(inputs, base)    # 第四章盈利引擎判断卡（盈利引擎脊梁/全景/谁真赚钱/利润含金量/健康度开关）
 
     # 组装完整数据对象
     data = {
@@ -958,6 +1007,7 @@ def render(ticker, starter=False):
         "ch1_card": ch1_card,                      # 第一章判断卡（生意质量卡 + 业务速览 + 核心论点）
         "ch2_card": ch2_card,                      # 第二章历程判断卡（脊梁 + 四段时间轴 + 行为模式 + 暗线 + 总账速览）
         "ch3_card": ch3_card,                      # 第三章行业判断卡（格局脊梁 + 竞争结构地图 + 谁掌握价值 + 价值/压力 + 决胜变量）
+        "ch4_card": ch4_card,                      # 第四章盈利引擎判断卡（盈利引擎脊梁 + 全景 + 谁真赚钱 + 利润含金量 + 健康度开关）
         "links": links,
     }
 

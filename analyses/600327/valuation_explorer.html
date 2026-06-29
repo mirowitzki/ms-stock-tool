@@ -1241,7 +1241,7 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "600327",
   "company_name": "大东方",
   "as_of": "2025-12-31",
-  "generated_at": "2026-06-29 14:48:07",
+  "generated_at": "2026-06-29 15:29:31",
   "facts": {
     "revenue_today": 3249,
     "cash": 387,
@@ -2687,6 +2687,41 @@ footer a { color: var(--accent); text-decoration: none; }
       }
     ]
   },
+  "ch4_card": {
+    "spine": "三套互不相干的赚钱机器拼在一起——医疗赚院外药品的渠道差价、百货赚自有物业的租金抽成、三凤桥赚老字号的品牌溢价。三套里真正赚钱的是百货和三凤桥两块小的，最大的医疗在亏；过去多年撑起账面利润的是一块搬到表外的汽车参股投资收益，2025 年这个支撑塌掉、公司转入上市以来首次亏损。",
+    "who_really_earns": "收入和利润错位：占八成收入的医疗在亏，真正赚钱的是百货和三凤桥两块小的。而过去多年撑起账面利润的其实在表外——汽车参股的投资收益；2025 年这条输血断裂、再叠加东方易谷（股权投资平台亏 6816 万）和吉道航新能源（参股亏 3.31 亿）两个窟窿，转入首亏。更要命的是一台总部抽水机：分部都有利润，减去 2.87 亿管理费用后合并营业利润落到 −1.75 亿，好资产的价值在合并层被吃掉——这正是第八章要用资产法、而非现金流折现的根本原因。",
+    "profit_quality": "亏损却有现金，但含金量低。2025 年归母亏 2.45 亿、经营现金流仍正 2.28 亿——亏在账面（减值、权益法投资亏损等非现金项），百货食品的日常生意还在产现金、短期不会断粮。两个折扣：产现金的只有两块小业务、最大的医疗几乎不产现金；公司手里货币资金 3.87 亿、短期借款却有 5.99 亿，是背着净负债、靠滚动银行借款维持流动性的。",
+    "health_switches": "三个开关决定这套盈利模式能不能转健康：医疗能不能止血、甚至从卖药转向更高毛利的诊疗；百货那块核心物业能不能被盘活、释放出账面之外的价值；以及均瑶系到底把这个平台当资产做实、还是当提款机抽。",
+    "segments": [
+      {
+        "name": "医疗服务",
+        "revenue": 2571.95,
+        "pct": 79.0,
+        "margin": 9.4,
+        "role": "规模最大、却在亏",
+        "role_kind": "bad",
+        "role_note": "一条赚渠道差价的卖药流水线：向金赛进货（占采购 52.39%）、靠健高 23 城 32 家门诊获客黏客、赚把生长激素卖到院外的渠道差价。门诊是入口、真钱在卖药那一环，所以 22.4 亿收入只有 8.84% 毛利。承载它的均瑶医疗 2025 年净亏 0.33 亿。"
+      },
+      {
+        "name": "商业零售",
+        "revenue": 427.69,
+        "pct": 13.1,
+        "margin": 41.2,
+        "role": "真赚钱的好资产",
+        "role_kind": "good",
+        "role_note": "一块自有物业上的二房东抽成：联营扣点 1.36 亿、毛利率 100% 是纯抽成、利润主力；自有物业没有租金成本，是它在零售下行里还守住四成多板块毛利的根。这家公司最稳的一块现金来源。"
+      },
+      {
+        "name": "餐饮及食品",
+        "revenue": 182.7,
+        "pct": 5.6,
+        "margin": 43.0,
+        "role": "稳定压舱石",
+        "role_kind": "good",
+        "role_note": "一块老字号牌子上的自营食品：靠无锡排骨招牌赚 43% 品牌溢价，但自营门店、餐饮、人工把溢价吃掉一大半——肉庄 2025 年营收 1.84 亿、净利只有 613.73 万、净利率约 3%。给不了成长、也不太出事。"
+      }
+    ]
+  },
   "links": {}
 }
 </script>
@@ -3499,6 +3534,47 @@ function ch3CardHTML() {
     + '<div class="rchap-sep">第三章 · 正文</div>';
 }
 
+// 返回第四章盈利引擎判断卡的内部 HTML——盈利引擎脊梁 + 盈利引擎全景(营收/占比/毛利率代码算) + 各业务盈利角色
+// + 谁在真正赚钱 + 利润含金量 + 健康度开关；钱流与盈利门道细节留正文。没有 ch4_card 数据就返回 ''。
+function ch4CardHTML() {
+  const c = DATA.ch4_card;
+  if (!c) return '';
+  const cy = DATA.currency || { symbol: '$', code: 'USD' };
+  const fmtRev = v => v == null ? '—'
+    : (cy.code === 'CNY' ? (cy.symbol + (v / 100).toFixed(2) + '亿') : (cy.symbol + Math.round(v).toLocaleString() + 'M'));
+  const kindCls = { eng: 'rk-eng', good: 'rk-good', warn: 'rk-warn', bad: 'rk-bad', neutral: 'rk-neutral' };
+  const segs = c.segments || [];
+  const rows = segs.map(s => {
+    const role = s.role ? '<span class="rk ' + (kindCls[s.role_kind] || 'rk-neutral') + '">' + escTL(s.role) + '</span>' : '—';
+    const pct = s.pct == null ? '—' : s.pct + '%';
+    const mg = s.margin == null ? '—' : s.margin + '%';
+    return '<tr><td>' + escTL(s.name) + '</td><td>' + fmtRev(s.revenue) + ' · ' + pct + '</td><td>' + mg + '</td><td>' + role + '</td></tr>';
+  }).join('');
+  const tbl = rows
+    ? '<div class="qc-lab" style="margin-top:18px">盈利引擎全景 · 谁在真正赚钱</div>'
+      + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>业务</th><th>营收·占比</th><th>毛利率</th><th>盈利角色</th></tr></thead><tbody>'
+      + rows + '</tbody></table></div>'
+    : '';
+  const noteBlocks = segs.map(s => {
+    const chip = s.role ? '<span class="rk ' + (kindCls[s.role_kind] || 'rk-neutral') + '">' + escTL(s.role) + '</span>' : '';
+    return '<div class="ch3-seg"><div class="ch3-seg-h">' + escTL(s.name) + ' ' + chip + '</div>'
+      + (s.role_note ? '<div class="ch3-seg-b">' + escTL(s.role_note) + '</div>' : '')
+      + '</div>';
+  }).join('');
+  const noteBlock = noteBlocks
+    ? '<div class="qc-lab" style="margin-top:18px">每块怎么赚钱 · 盈利角色</div><div class="ch3-segs">' + noteBlocks + '</div>'
+    : '';
+  return ''
+    + '<div class="qc-lab">判断速览 · 盈利引擎</div>'
+    + (c.spine ? '<div class="qc-ess" style="font-size:15px">' + escTL(c.spine) + '</div>' : '')
+    + tbl
+    + noteBlock
+    + (c.who_really_earns ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">谁在真正赚钱</div><div class="qc-v">' + escTL(c.who_really_earns) + '</div></div></div>' : '')
+    + (c.profit_quality ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">利润含金量 · 利润 vs 现金</div><div class="qc-v">' + escTL(c.profit_quality) + '</div></div></div>' : '')
+    + (c.health_switches ? '<div class="ch2-darkline" style="background:rgba(26,84,144,.07);border-color:rgba(26,84,144,.25)"><div class="ch2-dl-k" style="color:var(--accent)">健康度开关</div><div class="ch2-dl-v">' + escTL(c.health_switches) + '</div></div>' : '')
+    + '<div class="rchap-sep">第四章 · 正文</div>';
+}
+
 function renderReport() {
   const cont = document.getElementById('section-report');
   const chs = DATA.report_chapters;
@@ -3515,7 +3591,7 @@ function renderReport() {
   body.innerHTML = chs.map((c, i) =>
     '<section class="card report-chapter" id="' + c.id + '">'
     + '<h2 class="rchap-h">' + escTL(c.title) + '</h2>'
-    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : '')))   // 第一/二/三章：判断卡在上 + 正文在下，同框
+    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : (i === 3 ? ch4CardHTML() : ''))))   // 第一/二/三/四章：判断卡在上 + 正文在下，同框
     + '<div class="rchap-body">' + (c.html || '<p class="muted">（本章无正文）</p>') + '</div>'
     + '</section>'
   ).join('');
