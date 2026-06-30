@@ -54,6 +54,12 @@ REQUIRED_CARDS = {
         "fields": ["spine", "power_structure", "key_people", "controller_record",
                    "integrity_record", "verdict", "swing", "bear_case"],
     },
+    "ch7": {
+        "name": "第七章 财务判断卡",
+        # value_ladder 是把第七章做深的核心（资产地板/按盈利折出的价值/分部加总/成长 + 诊断）。
+        "fields": ["spine", "segment_earnings", "earnings_quality", "value_ladder",
+                   "reverse_read", "survival", "verdict"],
+    },
 }
 
 # 报告对应章必须含的结构脚手架（在该章正文里数 markdown 表格）。键＝章标题关键词。
@@ -63,6 +69,7 @@ CHAPTER_SCAFFOLDS = {
     "第四章": {"min_tables": 1, "desc": "三门生意总览表（本质/客户/怎么赢/赚不赚钱）"},
     "第五章": {"min_tables": 1, "desc": "收购成色表 或 资金去向表 或 每股记分牌表"},
     "第六章": {"min_tables": 1, "desc": "关键人背景背调表"},
+    "第七章": {"min_tables": 1, "desc": "5年利润表总览表 或 价值阶梯表"},
 }
 
 

@@ -2206,6 +2206,48 @@ function ch6CardHTML() {
     + '<div class="rchap-sep">第六章 · 正文</div>';
 }
 
+// 返回第七章财务判断卡的内部 HTML——剥开会计/一次性后真实能赚多少、价值在利润还是资产：脊梁 + 利润表透视(代码算)
+// + 谁真赚钱(分部) + 盈利质量与会计可信度 + 价值阶梯(资产地板/按盈利折出的价值/分部加总/成长 + 诊断) + 反向画像 + 生存 + 交底第八章。
+// 没有 ch7_card 就返回 ''。
+function ch7CardHTML() {
+  const c = DATA.ch7_card;
+  if (!c) return '';
+  const cy = DATA.currency || { symbol: '$', code: 'USD' };
+  const yi = v => v == null ? '—' : (cy.code === 'CNY' ? ((v < 0 ? '−' : '') + '¥' + Math.abs(v).toFixed(2) + '亿') : ((v < 0 ? '−' : '') + '$' + Math.abs(v).toFixed(2) + 'B'));
+  const pct = v => v == null ? '—' : (v < 0 ? '−' : '') + Math.abs(v).toFixed(1) + '%';
+  const rows = (c.pl_table || []).map(r =>
+    '<tr><td>' + r.year + '</td><td>' + yi(r.revenue) + '</td><td>' + yi(r.net_income) + '</td><td>' + yi(r.deducted) + '</td><td>' + yi(r.op_income) + '</td><td>' + yi(r.invest_income) + '</td><td>' + pct(r.roic) + '</td></tr>'
+  ).join('');
+  const plBlock = rows
+    ? '<div class="qc-lab" style="margin-top:18px">利润表透视 · 利润转负、越来越靠表外投资收益</div>'
+      + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>财年</th><th>营收</th><th>归母</th><th>扣非</th><th>营业利润</th><th>投资收益</th><th>资本回报率</th></tr></thead><tbody>' + rows + '</tbody></table></div>'
+      + (c.pl_read ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-v">' + escTL(c.pl_read) + '</div></div></div>' : '')
+    : '';
+  const vl = c.value_ladder || {};
+  const vlRows = (vl.rungs || []).map(r =>
+    '<tr><td>' + escTL(r.label || '') + '</td><td>' + escTL(r.value || '') + '</td><td>' + escTL(r.note || '') + '</td></tr>'
+  ).join('');
+  const vlBlock = vlRows
+    ? '<div class="qc-lab" style="margin-top:18px">价值阶梯 · 价值锚在资产、利润这条线贴零</div>'
+      + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>哪一层</th><th>值多少</th><th>说明</th></tr></thead><tbody>' + vlRows + '</tbody></table></div>'
+      + (vl.diagnosis ? '<div class="ch2-darkline" style="background:rgba(26,84,144,.07);border-color:rgba(26,84,144,.25)"><div class="ch2-dl-k" style="color:var(--accent)">诊断 · 为什么用资产法</div><div class="ch2-dl-v">' + escTL(vl.diagnosis) + '</div></div>' : '')
+    : '';
+  return ''
+    + '<div class="qc-lab">判断速览 · 财务全貌</div>'
+    + (c.spine ? '<div class="qc-ess" style="font-size:15px">' + escTL(c.spine) + '</div>' : '')
+    + plBlock
+    + (c.segment_earnings ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">谁真赚钱</div><div class="qc-v">' + escTL(c.segment_earnings) + '</div></div></div>' : '')
+    + (c.earnings_quality ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">盈利质量 · 巨亏却有现金、账可不可信</div><div class="qc-v">' + escTL(c.earnings_quality) + '</div></div></div>' : '')
+    + vlBlock
+    + ((c.reverse_read || c.survival) ?
+        '<div class="ch2-read">'
+        + (c.reverse_read ? '<div><div class="ch2-read-k ch2-read-warn">数据反推这是家什么公司</div><div class="ch2-read-v">' + escTL(c.reverse_read) + '</div></div>' : '')
+        + (c.survival ? '<div><div class="ch2-read-k ch2-read-warn">扛不扛得住</div><div class="ch2-read-v">' + escTL(c.survival) + '</div></div>' : '')
+        + '</div>' : '')
+    + (c.verdict ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">交给第八章的底子</div><div class="qc-v">' + escTL(c.verdict) + '</div></div></div>' : '')
+    + '<div class="rchap-sep">第七章 · 正文</div>';
+}
+
 function renderReport() {
   const cont = document.getElementById('section-report');
   const chs = DATA.report_chapters;
@@ -2222,7 +2264,7 @@ function renderReport() {
   body.innerHTML = chs.map((c, i) =>
     '<section class="card report-chapter" id="' + c.id + '">'
     + '<h2 class="rchap-h">' + escTL(c.title) + '</h2>'
-    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : (i === 3 ? ch4CardHTML() : (i === 4 ? ch5CardHTML() : (i === 5 ? ch6CardHTML() : ''))))))   // 第一~六章：判断卡在上 + 正文在下，同框
+    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : (i === 3 ? ch4CardHTML() : (i === 4 ? ch5CardHTML() : (i === 5 ? ch6CardHTML() : (i === 6 ? ch7CardHTML() : '')))))))   // 第一~七章：判断卡在上 + 正文在下，同框
     + '<div class="rchap-body">' + (c.html || '<p class="muted">（本章无正文）</p>') + '</div>'
     + '</section>'
   ).join('');

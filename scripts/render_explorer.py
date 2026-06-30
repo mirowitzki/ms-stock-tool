@@ -473,6 +473,49 @@ def build_ch6_card(inputs):
     }
 
 
+def build_ch7_card(inputs, fin, metrics):
+    """组装第七章财务判断卡：利润表透视（营收/归母/营业利润/投资收益/资本回报率）由代码从 financials.csv +
+    metrics 算（扣非不在 XBRL 里、由 ch7 块手工供、已核年报）；价值阶梯诊断/分部盈利真相/盈利质量与会计可信度/
+    反向体质画像/交底第八章＝我写进 ch7 块。这章代码供数最多（四柱硬数字另在顶部仪表盘）。没有 ch7 块返回 None。"""
+    ch7 = inputs.get("ch7")
+    if not ch7:
+        return None
+    years = ch7.get("years") or []
+    ded = {int(k): v for k, v in (ch7.get("deducted") or {}).items()}   # 扣非（亿，手抄·已核）
+    rev = fin.get("Revenues", {})
+    ni = fin.get("NetIncomeLoss", {})
+    op = fin.get("OperatingIncomeLoss", {})
+    iv = fin.get("InvestmentIncome", {})
+    roic = {}
+    try:
+        for r in (metrics or {}).get("metrics", {}).get("compounding_engine", {}).get("roic_series", []):
+            roic[r["fy"]] = r["roic"]
+    except Exception:
+        pass
+    def yi(v):
+        return round(v / 1e8, 2) if v is not None else None
+    rows = [{
+        "year": y,
+        "revenue": yi(rev.get(y)),         # 营收（亿，代码）
+        "net_income": yi(ni.get(y)),       # 归母（亿，代码）
+        "deducted": ded.get(y),            # 扣非（亿，手抄）
+        "op_income": yi(op.get(y)),        # 营业利润（亿，代码）
+        "invest_income": yi(iv.get(y)),    # 投资收益（亿，代码）
+        "roic": round(roic[y] * 100, 1) if y in roic else None,  # 资本回报率（代码）
+    } for y in years]
+    return {
+        "spine": ch7.get("spine", ""),
+        "pl_table": rows,
+        "pl_read": ch7.get("pl_read", ""),
+        "segment_earnings": ch7.get("segment_earnings", ""),
+        "earnings_quality": ch7.get("earnings_quality", ""),
+        "value_ladder": ch7.get("value_ladder", {}),
+        "survival": ch7.get("survival", ""),
+        "reverse_read": ch7.get("reverse_read", ""),
+        "verdict": ch7.get("verdict", ""),
+    }
+
+
 def build_history(fin):
     """从财务数据提取年度历史，返回按年份排序的 list。"""
     revenue_keys = [
@@ -1037,6 +1080,8 @@ def render(ticker, starter=False):
     ch4_card = build_ch4_card(inputs, base)    # 第四章盈利引擎判断卡（盈利引擎脊梁/全景/谁真赚钱/利润含金量/健康度开关）
     ch5_card = build_ch5_card(inputs, fin)     # 第五章资本配置记录卡（脊梁/阶段诊断/资金来去/大决策剖检/每股记分牌/为谁配置/最强反方）
     ch6_card = build_ch6_card(inputs)          # 第六章治理判断卡（权力结构/关键人背调/控股股东跨主体记录/诚信记录/分级结论/胜负手/最强反方）
+    metrics_obj = load_metrics(ticker)         # 四柱真相源（顶部仪表盘 + 第七章利润表透视复用）
+    ch7_card = build_ch7_card(inputs, fin, metrics_obj)  # 第七章财务判断卡（利润表透视/分部盈利/盈利质量+会计可信度/价值阶梯/生存/反向画像）
 
     # 组装完整数据对象
     data = {
@@ -1054,7 +1099,7 @@ def render(ticker, starter=False):
         "probabilities": inputs.get("probabilities", {"bear": 25, "base": 50, "bull": 25}),
         "currency": {"code": currency_code, "symbol": currency_symbol},
         "reverse_dcf_commentary": inputs.get("reverse_dcf_commentary"),
-        "metrics": load_metrics(ticker),          # 价值判断四柱真相源（compute_metrics.py 产出）
+        "metrics": metrics_obj,                   # 价值判断四柱真相源（compute_metrics.py 产出）
         "pillars": inputs.get("pillars", {}),      # 我写的判断一句话（资本配置/安全边际等）
         "prices": load_prices(ticker),             # 近 5 年月度收盘价（fetch_prices.py 产出）
         "next_earnings": inputs.get("next_earnings"),  # 下一份财报日期（喂交互器顶部提醒横幅；可空）
@@ -1067,6 +1112,7 @@ def render(ticker, starter=False):
         "ch4_card": ch4_card,                      # 第四章盈利引擎判断卡（盈利引擎脊梁 + 全景 + 谁真赚钱 + 利润含金量 + 健康度开关）
         "ch5_card": ch5_card,                      # 第五章资本配置记录卡（脊梁 + 阶段诊断 + 资金来去 + 大决策剖检 + 每股记分牌 + 为谁配置 + 最强反方）
         "ch6_card": ch6_card,                      # 第六章治理判断卡（权力结构 + 关键人背调 + 控股股东跨主体记录 + 诚信记录 + 分级结论 + 胜负手 + 最强反方）
+        "ch7_card": ch7_card,                      # 第七章财务判断卡（利润表透视 + 分部盈利 + 盈利质量与会计可信度 + 价值阶梯 + 生存 + 反向画像 + 交底第八章）
         "links": links,
     }
 
