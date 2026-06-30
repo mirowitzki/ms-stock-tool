@@ -66,6 +66,10 @@ REQUIRED_CARDS = {
         "fields": ["spine", "business_value", "safety", "asymmetry",
                    "catalysts", "verdict"],
     },
+    "ch9": {
+        "name": "第九章 风险判断卡",
+        "fields": ["spine", "top_risks", "premortem", "verdict"],
+    },
 }
 
 # 报告对应章必须含的结构脚手架（在该章正文里数 markdown 表格）。键＝章标题关键词。
@@ -77,6 +81,7 @@ CHAPTER_SCAFFOLDS = {
     "第六章": {"min_tables": 1, "desc": "关键人背景背调表"},
     "第七章": {"min_tables": 1, "desc": "5年利润表总览表 或 价值阶梯表"},
     "第八章": {"min_tables": 1, "desc": "三情景表（情景/每股价值/概率/故事/关键前提）"},
+    "第九章": {"min_tables": 1, "desc": "风险矩阵表（风险/可能性/影响/等级/缓释）"},
 }
 
 

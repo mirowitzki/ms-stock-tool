@@ -2279,6 +2279,34 @@ function ch8CardHTML() {
     + '<div class="rchap-sep">第八章 · 正文</div>';
 }
 
+// 返回第九章风险判断卡的内部 HTML——风险脊梁 + 风险矩阵(等级/已被定价/盯什么) + 事前验尸(往下错/往上错)
+// + 净风险画像与监控清单。风险全景判断密集、代码不供数。没有 ch9_card 就返回 ''。
+function ch9CardHTML() {
+  const c = DATA.ch9_card;
+  if (!c) return '';
+  const levelCls = { 高: 'rk-bad', 中高: 'rk-bad', 中: 'rk-warn', 低中: 'rk-warn', 低: 'rk-neutral' };
+  const rows = (c.top_risks || []).map(r => {
+    const lv = r.level ? '<span class="rk ' + (levelCls[r.level] || 'rk-warn') + '">' + escTL(r.level) + '</span>' : '—';
+    return '<tr><td>' + escTL(r.name || '') + '</td><td>' + lv + '</td><td>' + escTL(r.priced || '') + '</td><td>' + escTL(r.watch || '') + '</td></tr>';
+  }).join('');
+  const tbl = rows
+    ? '<div class="qc-lab" style="margin-top:18px">风险矩阵 · 越靠前越该盯</div>'
+      + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>风险</th><th>综合等级</th><th>已被定价</th><th>盯什么信号</th></tr></thead><tbody>' + rows + '</tbody></table></div>'
+    : '';
+  const pm = c.premortem || {};
+  return ''
+    + '<div class="qc-lab">判断速览 · 风险全景</div>'
+    + (c.spine ? '<div class="qc-ess" style="font-size:15px">' + escTL(c.spine) + '</div>' : '')
+    + tbl
+    + ((pm.down || pm.up) ?
+        '<div class="qc-lab" style="margin-top:18px">假设三年后 · 这笔投资会怎么亏钱、又会怎么错过</div><div class="ch2-read">'
+        + (pm.down ? '<div><div class="ch2-read-k ch2-read-warn">往下错 · 怎么亏钱</div><div class="ch2-read-v">' + escTL(pm.down) + '</div></div>' : '')
+        + (pm.up ? '<div><div class="ch2-read-k ch2-read-good">往上错 · 怎么错过</div><div class="ch2-read-v">' + escTL(pm.up) + '</div></div>' : '')
+        + '</div>' : '')
+    + (c.verdict ? '<div class="ch2-darkline"><div class="ch2-dl-k">净风险画像 · 监控清单</div><div class="ch2-dl-v">' + escTL(c.verdict) + '</div></div>' : '')
+    + '<div class="rchap-sep">第九章 · 正文</div>';
+}
+
 function renderReport() {
   const cont = document.getElementById('section-report');
   const chs = DATA.report_chapters;
@@ -2295,7 +2323,7 @@ function renderReport() {
   body.innerHTML = chs.map((c, i) =>
     '<section class="card report-chapter" id="' + c.id + '">'
     + '<h2 class="rchap-h">' + escTL(c.title) + '</h2>'
-    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : (i === 3 ? ch4CardHTML() : (i === 4 ? ch5CardHTML() : (i === 5 ? ch6CardHTML() : (i === 6 ? ch7CardHTML() : (i === 7 ? ch8CardHTML() : ''))))))))   // 第一~八章：判断卡在上 + 正文在下，同框
+    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : (i === 3 ? ch4CardHTML() : (i === 4 ? ch5CardHTML() : (i === 5 ? ch6CardHTML() : (i === 6 ? ch7CardHTML() : (i === 7 ? ch8CardHTML() : (i === 8 ? ch9CardHTML() : '')))))))))   // 第一~九章：判断卡在上 + 正文在下，同框
     + '<div class="rchap-body">' + (c.html || '<p class="muted">（本章无正文）</p>') + '</div>'
     + '</section>'
   ).join('');

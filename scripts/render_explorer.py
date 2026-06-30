@@ -533,6 +533,21 @@ def build_ch8_card(inputs):
     }
 
 
+def build_ch9_card(inputs):
+    """组装第九章风险判断卡：风险脊梁 + 排序的风险矩阵（每条 等级/已被定价/盯什么）+ 事前验尸（往下错/往上错）
+    + 净风险画像与监控清单，全部来自 valuation_inputs.json 的 ch9 块。风险全景是判断密集、代码不供数（透传）。
+    没有 ch9 块就返回 None（卡片自动隐藏）。"""
+    ch9 = inputs.get("ch9")
+    if not ch9:
+        return None
+    return {
+        "spine": ch9.get("spine", ""),
+        "top_risks": ch9.get("top_risks", []),
+        "premortem": ch9.get("premortem", {}),
+        "verdict": ch9.get("verdict", ""),
+    }
+
+
 def build_history(fin):
     """从财务数据提取年度历史，返回按年份排序的 list。"""
     revenue_keys = [
@@ -1100,6 +1115,7 @@ def render(ticker, starter=False):
     metrics_obj = load_metrics(ticker)         # 四柱真相源（顶部仪表盘 + 第七章利润表透视复用）
     ch7_card = build_ch7_card(inputs, fin, metrics_obj)  # 第七章财务判断卡（利润表透视/分部盈利/盈利质量+会计可信度/价值阶梯/生存/反向画像）
     ch8_card = build_ch8_card(inputs)          # 第八章投资决策卡（capstone：作为生意值多少/安全边际+市场买了什么/不对称性/催化剂/决策；不重复情景表）
+    ch9_card = build_ch9_card(inputs)          # 第九章风险判断卡（风险脊梁/风险矩阵/事前验尸/净风险画像+监控清单）
 
     # 组装完整数据对象
     data = {
@@ -1132,6 +1148,7 @@ def render(ticker, starter=False):
         "ch6_card": ch6_card,                      # 第六章治理判断卡（权力结构 + 关键人背调 + 控股股东跨主体记录 + 诚信记录 + 分级结论 + 胜负手 + 最强反方）
         "ch7_card": ch7_card,                      # 第七章财务判断卡（利润表透视 + 分部盈利 + 盈利质量与会计可信度 + 价值阶梯 + 生存 + 反向画像 + 交底第八章）
         "ch8_card": ch8_card,                      # 第八章投资决策卡（作为生意值多少 + 安全边际与市场买了什么 + 不对称性 + 催化剂 + 决策）
+        "ch9_card": ch9_card,                      # 第九章风险判断卡（风险脊梁 + 风险矩阵 + 事前验尸 + 净风险画像与监控清单）
         "links": links,
     }
 
