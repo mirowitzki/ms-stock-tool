@@ -516,6 +516,23 @@ def build_ch7_card(inputs, fin, metrics):
     }
 
 
+def build_ch8_card(inputs):
+    """组装第八章投资决策卡（整份报告的收口 capstone）：作为生意值多少 + 安全边际/市场买了什么 + 不对称性 +
+    催化剂 + 决策，全部来自 valuation_inputs.json 的 ch8 块。三情景/安全边际/反向DCF 的活数字已在交互器顶部
+    的仪表盘、三情景滑块、市场vs我里（**这张卡刻意不重复情景表**），只做判断综合。没有 ch8 块就返回 None。"""
+    ch8 = inputs.get("ch8")
+    if not ch8:
+        return None
+    return {
+        "spine": ch8.get("spine", ""),
+        "business_value": ch8.get("business_value", ""),
+        "safety": ch8.get("safety", ""),
+        "asymmetry": ch8.get("asymmetry", {}),
+        "catalysts": ch8.get("catalysts", []),
+        "verdict": ch8.get("verdict", ""),
+    }
+
+
 def build_history(fin):
     """从财务数据提取年度历史，返回按年份排序的 list。"""
     revenue_keys = [
@@ -1082,6 +1099,7 @@ def render(ticker, starter=False):
     ch6_card = build_ch6_card(inputs)          # 第六章治理判断卡（权力结构/关键人背调/控股股东跨主体记录/诚信记录/分级结论/胜负手/最强反方）
     metrics_obj = load_metrics(ticker)         # 四柱真相源（顶部仪表盘 + 第七章利润表透视复用）
     ch7_card = build_ch7_card(inputs, fin, metrics_obj)  # 第七章财务判断卡（利润表透视/分部盈利/盈利质量+会计可信度/价值阶梯/生存/反向画像）
+    ch8_card = build_ch8_card(inputs)          # 第八章投资决策卡（capstone：作为生意值多少/安全边际+市场买了什么/不对称性/催化剂/决策；不重复情景表）
 
     # 组装完整数据对象
     data = {
@@ -1113,6 +1131,7 @@ def render(ticker, starter=False):
         "ch5_card": ch5_card,                      # 第五章资本配置记录卡（脊梁 + 阶段诊断 + 资金来去 + 大决策剖检 + 每股记分牌 + 为谁配置 + 最强反方）
         "ch6_card": ch6_card,                      # 第六章治理判断卡（权力结构 + 关键人背调 + 控股股东跨主体记录 + 诚信记录 + 分级结论 + 胜负手 + 最强反方）
         "ch7_card": ch7_card,                      # 第七章财务判断卡（利润表透视 + 分部盈利 + 盈利质量与会计可信度 + 价值阶梯 + 生存 + 反向画像 + 交底第八章）
+        "ch8_card": ch8_card,                      # 第八章投资决策卡（作为生意值多少 + 安全边际与市场买了什么 + 不对称性 + 催化剂 + 决策）
         "links": links,
     }
 

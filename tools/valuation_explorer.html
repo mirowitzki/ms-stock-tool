@@ -2248,6 +2248,37 @@ function ch7CardHTML() {
     + '<div class="rchap-sep">第七章 · 正文</div>';
 }
 
+// 返回第八章投资决策卡的内部 HTML（整份报告收口 capstone）——作为生意值多少 + 安全边际/市场买了什么 + 不对称性
+// + 关键价值变量(催化剂) + 决策。三情景/反向DCF 活数字在顶部仪表盘+三情景滑块+市场vs我里，这张卡刻意不重复情景表。
+// 没有 ch8_card 就返回 ''。
+function ch8CardHTML() {
+  const c = DATA.ch8_card;
+  if (!c) return '';
+  const kindCls = { eng: 'rk-eng', good: 'rk-good', warn: 'rk-warn', bad: 'rk-bad', neutral: 'rk-neutral' };
+  const asym = c.asymmetry || {};
+  const catBlocks = (c.catalysts || []).map(t => {
+    const chip = '<span class="rk ' + (kindCls[t.kind] || 'rk-neutral') + '">' + escTL(t.name || '') + '</span>';
+    return '<div class="ch3-seg"><div class="ch3-seg-h">' + chip + '</div>'
+      + (t.watch ? '<div class="ch3-seg-b">' + escTL(t.watch) + '</div>' : '') + '</div>';
+  }).join('');
+  const catBlock = catBlocks
+    ? '<div class="qc-lab" style="margin-top:18px">关键价值变量 · 盯什么决定往哪个情景走</div><div class="ch3-segs">' + catBlocks + '</div>'
+    : '';
+  return ''
+    + '<div class="qc-lab">判断速览 · 投资决策</div>'
+    + (c.spine ? '<div class="qc-ess" style="font-size:15px">' + escTL(c.spine) + '</div>' : '')
+    + (c.business_value ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">作为生意值多少</div><div class="qc-v">' + escTL(c.business_value) + '</div></div></div>' : '')
+    + (c.safety ? '<div class="ch2-darkline" style="background:rgba(26,84,144,.07);border-color:rgba(26,84,144,.25)"><div class="ch2-dl-k" style="color:var(--accent)">安全边际 · 市场在为什么故事付钱</div><div class="ch2-dl-v">' + escTL(c.safety) + '</div></div>' : '')
+    + ((asym.downside || asym.upside) ?
+        '<div class="qc-lab" style="margin-top:18px">不对称性 · 下行 vs 上行</div><div class="ch2-read">'
+        + (asym.downside ? '<div><div class="ch2-read-k ch2-read-warn">下行</div><div class="ch2-read-v">' + escTL(asym.downside) + '</div></div>' : '')
+        + (asym.upside ? '<div><div class="ch2-read-k ch2-read-good">上行</div><div class="ch2-read-v">' + escTL(asym.upside) + '</div></div>' : '')
+        + '</div>' : '')
+    + catBlock
+    + (c.verdict ? '<div class="ch2-darkline"><div class="ch2-dl-k">决策 · 生意和价格分开答</div><div class="ch2-dl-v">' + escTL(c.verdict) + '</div></div>' : '')
+    + '<div class="rchap-sep">第八章 · 正文</div>';
+}
+
 function renderReport() {
   const cont = document.getElementById('section-report');
   const chs = DATA.report_chapters;
@@ -2264,7 +2295,7 @@ function renderReport() {
   body.innerHTML = chs.map((c, i) =>
     '<section class="card report-chapter" id="' + c.id + '">'
     + '<h2 class="rchap-h">' + escTL(c.title) + '</h2>'
-    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : (i === 3 ? ch4CardHTML() : (i === 4 ? ch5CardHTML() : (i === 5 ? ch6CardHTML() : (i === 6 ? ch7CardHTML() : '')))))))   // 第一~七章：判断卡在上 + 正文在下，同框
+    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : (i === 3 ? ch4CardHTML() : (i === 4 ? ch5CardHTML() : (i === 5 ? ch6CardHTML() : (i === 6 ? ch7CardHTML() : (i === 7 ? ch8CardHTML() : ''))))))))   // 第一~八章：判断卡在上 + 正文在下，同框
     + '<div class="rchap-body">' + (c.html || '<p class="muted">（本章无正文）</p>') + '</div>'
     + '</section>'
   ).join('');

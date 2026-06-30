@@ -60,6 +60,12 @@ REQUIRED_CARDS = {
         "fields": ["spine", "segment_earnings", "earnings_quality", "value_ladder",
                    "reverse_read", "survival", "verdict"],
     },
+    "ch8": {
+        "name": "第八章 投资决策卡",
+        # 三情景/安全边际活数字在交互器顶部仪表盘+三情景滑块，卡刻意不重复情景表、只做判断综合。
+        "fields": ["spine", "business_value", "safety", "asymmetry",
+                   "catalysts", "verdict"],
+    },
 }
 
 # 报告对应章必须含的结构脚手架（在该章正文里数 markdown 表格）。键＝章标题关键词。
@@ -70,6 +76,7 @@ CHAPTER_SCAFFOLDS = {
     "第五章": {"min_tables": 1, "desc": "收购成色表 或 资金去向表 或 每股记分牌表"},
     "第六章": {"min_tables": 1, "desc": "关键人背景背调表"},
     "第七章": {"min_tables": 1, "desc": "5年利润表总览表 或 价值阶梯表"},
+    "第八章": {"min_tables": 1, "desc": "三情景表（情景/每股价值/概率/故事/关键前提）"},
 }
 
 
@@ -99,15 +106,16 @@ def find_report(base):
 
 def _count_tables_in_chapter(md_text, chapter_kw):
     """数 chapter_kw 那一章正文里的 markdown 表格数量（按表头分隔行 |---| 计）。
-    兼容报告两种标题约定（# 第X章 一级 / ## 第X章 二级）：以第一个含关键词的标题层级为章级，
-    数到下一个同级或更高级标题为止。"""
+    兼容报告两种标题约定（# 第X章 一级 / ## 第X章 二级）：以第一个【以关键词开头】的标题层级为章级，
+    数到下一个同级或更高级标题为止。用 startswith 而非 in——否则子标题里提到别的章名（如
+    『7.7 小结：交给第八章的底子』含"第八章"）会被误当成那一章的开头、错数成 0 张表。"""
     in_chap, chap_level, count = False, None, 0
     for ln in md_text.splitlines():
         m = re.match(r"^(#{1,4})\s+(.+?)\s*$", ln)
         if m:
             lvl, title = len(m.group(1)), m.group(2)
             if not in_chap:
-                if chapter_kw in title:
+                if title.startswith(chapter_kw):
                     in_chap, chap_level = True, lvl
             elif lvl <= chap_level:
                 in_chap = False
