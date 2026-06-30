@@ -876,7 +876,7 @@ footer a { color: var(--accent); text-decoration: none; }
 
 <!-- ========================= 价值判断仪表盘（四柱 + 周期 + 安全边际）========================= -->
 <section class="card" id="section-gauges" style="display:none;">
-  <h2>价值判断 · 一眼看清 <span class="card-note">四柱硬数字来自 financials/metrics.json（代码算）；一句话是判断</span></h2>
+  <h2>价值判断 · 一眼看清 <span class="card-note">硬数字 + 一句话判断</span></h2>
   <div id="cycle-banner" class="cycle-banner" style="display:none;"></div>
   <div id="safety-headline" class="safety-headline"></div>
   <div class="gauges" id="gauges"></div>
@@ -2021,7 +2021,7 @@ function ch2CardHTML() {
     '<tr><td>' + r.year + '</td><td>' + fmt(r.revenue) + '</td><td>' + fmt(r.net_income) + '</td><td>' + fmt(r.cfo) + '</td></tr>'
   ).join('');
   const scBlock = sc
-    ? '<div class="qc-lab" style="margin-top:18px">总账速览 · 多年轨迹（代码从财务数据自动算）</div>'
+    ? '<div class="qc-lab" style="margin-top:18px">总账速览 · 多年轨迹</div>'
       + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>财年</th><th>营业收入</th><th>归母净利</th><th>经营现金流</th></tr></thead><tbody>'
       + sc + '</tbody></table></div>'
     : '';
@@ -2145,17 +2145,17 @@ function ch5CardHTML() {
       + (t.text ? '<div class="ch3-seg-b">' + escTL(t.text) + '</div>' : '') + '</div>';
   }).join('');
   const trBlock = trBlocks
-    ? '<div class="qc-lab" style="margin-top:18px">每一笔大决策 · 按当时该不该做来判（结果是证据、不是判据）</div><div class="ch3-segs">' + trBlocks + '</div>'
+    ? '<div class="qc-lab" style="margin-top:18px">每一笔大决策 · 当时该不该这么做</div><div class="ch3-segs">' + trBlocks + '</div>'
     : '';
   const ps = (c.per_share || []).map(r =>
     '<tr><td>' + r.year + '</td><td>' + psFmt(r.eps) + '</td><td>' + psFmt(r.deducted_eps) + '</td><td>' + psFmt(r.cfo_ps) + '</td><td>' + psFmt(r.div_ps) + '</td></tr>'
   ).join('');
   const psBlock = ps
-    ? '<div class="qc-lab" style="margin-top:18px">每股记分牌 · 这些年每股价值有没有长（归母/经营现金流代码算，扣非/分红已核年报'
-      + (c.shares_yi ? '｜总股本 ' + c.shares_yi + ' 亿股·未变' : '') + '）</div>'
+    ? '<div class="qc-lab" style="margin-top:18px">每股记分牌 · 这些年每股价值有没有长'
+      + (c.shares_yi ? '（总股本 ' + c.shares_yi + ' 亿股·五年未变）' : '') + '</div>'
       + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>每股(' + unit + ')</th><th>归母</th><th>扣非</th><th>经营现金流</th><th>分红</th></tr></thead><tbody>'
       + ps + '</tbody></table></div>'
-      + (c.per_share_verdict ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">记分牌读数</div><div class="qc-v">' + escTL(c.per_share_verdict) + '</div></div></div>' : '')
+      + (c.per_share_verdict ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">这张表说明什么</div><div class="qc-v">' + escTL(c.per_share_verdict) + '</div></div></div>' : '')
     : '';
   const da = c.dividend_arc || {};
   const fw = c.for_whom || {};
@@ -2172,8 +2172,8 @@ function ch5CardHTML() {
         + (c.incentive ? '<div><div class="ch2-read-k ch2-read-warn">管理层激励结构</div><div class="ch2-read-v">' + escTL(c.incentive) + '</div></div>' : '')
         + '</div>' : '')
     + (fw.text ? '<div class="ch2-darkline"><div class="ch2-dl-k">为谁配置 · 全体股东还是控股股东</div><div class="ch2-dl-v">' + escTL(fw.text) + '</div></div>' : '')
-    + (c.verdict ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">分级结论</div><div class="qc-v">' + escTL(c.verdict) + '</div></div></div>' : '')
-    + (c.bear_case ? '<div class="ch2-read"><div><div class="ch2-read-k ch2-read-good">最强反方 · 先给最善意的解释</div><div class="ch2-read-v">' + escTL(c.bear_case) + '</div></div></div>' : '')
+    + (c.verdict ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">结论</div><div class="qc-v">' + escTL(c.verdict) + '</div></div></div>' : '')
+    + (c.bear_case ? '<div class="ch2-read"><div><div class="ch2-read-k ch2-read-good">另一面 · 对它最善意的解读</div><div class="ch2-read-v">' + escTL(c.bear_case) + '</div></div></div>' : '')
     + '<div class="rchap-sep">第五章 · 正文</div>';
 }
 
@@ -2189,7 +2189,7 @@ function ch6CardHTML() {
     return '<tr><td>' + escTL(p.name || '') + (chip ? '<br>' + chip : '') + '</td><td>' + escTL(p.holding_pay || '') + '</td><td>' + escTL(p.background || '') + '</td><td>' + escTL(p.judgment || '') + '</td></tr>';
   }).join('');
   const tbl = rows
-    ? '<div class="qc-lab" style="margin-top:18px">关键人背景背调 · 这些人是谁、什么底细</div>'
+    ? '<div class="qc-lab" style="margin-top:18px">关键人 · 这些人是谁、什么底细</div>'
       + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>关键人</th><th>持股·薪酬</th><th>背景</th><th>判读</th></tr></thead><tbody>'
       + rows + '</tbody></table></div>'
     : '';
@@ -2198,11 +2198,11 @@ function ch6CardHTML() {
     + (c.spine ? '<div class="qc-ess" style="font-size:15px">' + escTL(c.spine) + '</div>' : '')
     + (c.power_structure ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">谁说了算</div><div class="qc-v">' + escTL(c.power_structure) + '</div></div></div>' : '')
     + tbl
-    + (c.controller_record ? '<div class="ch2-darkline"><div class="ch2-dl-k">控股股东的跨主体记录 · 它在别处怎么对小股东</div><div class="ch2-dl-v">' + escTL(c.controller_record) + '</div></div>' : '')
+    + (c.controller_record ? '<div class="ch2-darkline"><div class="ch2-dl-k">控股股东在别处的记录 · 它怎么对待小股东</div><div class="ch2-dl-v">' + escTL(c.controller_record) + '</div></div>' : '')
     + (c.integrity_record ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">诚信记录 · 警示函与退市清单</div><div class="qc-v">' + escTL(c.integrity_record) + '</div></div></div>' : '')
     + (c.verdict ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">能不能信任 · 治理折价</div><div class="qc-v">' + escTL(c.verdict) + '</div></div></div>' : '')
     + (c.swing ? '<div class="ch2-darkline" style="background:rgba(26,84,144,.07);border-color:rgba(26,84,144,.25)"><div class="ch2-dl-k" style="color:var(--accent)">胜负手 · 什么会改变判断</div><div class="ch2-dl-v">' + escTL(c.swing) + '</div></div>' : '')
-    + (c.bear_case ? '<div class="ch2-read"><div><div class="ch2-read-k ch2-read-good">最强反方 · 先给最善意的解释</div><div class="ch2-read-v">' + escTL(c.bear_case) + '</div></div></div>' : '')
+    + (c.bear_case ? '<div class="ch2-read"><div><div class="ch2-read-k ch2-read-good">另一面 · 对它最善意的解读</div><div class="ch2-read-v">' + escTL(c.bear_case) + '</div></div></div>' : '')
     + '<div class="rchap-sep">第六章 · 正文</div>';
 }
 
