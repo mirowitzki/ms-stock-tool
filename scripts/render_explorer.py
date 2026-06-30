@@ -453,6 +453,26 @@ def build_ch5_card(inputs, fin):
     }
 
 
+def build_ch6_card(inputs):
+    """组装第六章治理判断卡：能不能信任掌控公司的人——权力结构 / 关键人背景背调 / 控股股东跨主体记录 /
+    诚信记录 / 分级结论 / 胜负手 / 最强反方，全部来自 valuation_inputs.json 的 ch6 块。这一章研究/判断
+    密集、几乎没有可由代码计算的结构化数据（无 segments / 财务那种），背调与治理记录全由人第一手从年报+
+    公开工商/监管/裁判文书挖，故代码只做透传。没有 ch6 块就返回 None（卡片自动隐藏）。"""
+    ch6 = inputs.get("ch6")
+    if not ch6:
+        return None
+    return {
+        "spine": ch6.get("spine", ""),
+        "power_structure": ch6.get("power_structure", ""),
+        "key_people": ch6.get("key_people", []),
+        "controller_record": ch6.get("controller_record", ""),
+        "integrity_record": ch6.get("integrity_record", ""),
+        "verdict": ch6.get("verdict", ""),
+        "swing": ch6.get("swing", ""),
+        "bear_case": ch6.get("bear_case", ""),
+    }
+
+
 def build_history(fin):
     """从财务数据提取年度历史，返回按年份排序的 list。"""
     revenue_keys = [
@@ -1016,6 +1036,7 @@ def render(ticker, starter=False):
     ch3_card = build_ch3_card(inputs, base)    # 第三章行业判断卡（格局脊梁/竞争结构地图/谁掌握价值/价值压力/决胜变量）
     ch4_card = build_ch4_card(inputs, base)    # 第四章盈利引擎判断卡（盈利引擎脊梁/全景/谁真赚钱/利润含金量/健康度开关）
     ch5_card = build_ch5_card(inputs, fin)     # 第五章资本配置记录卡（脊梁/阶段诊断/资金来去/大决策剖检/每股记分牌/为谁配置/最强反方）
+    ch6_card = build_ch6_card(inputs)          # 第六章治理判断卡（权力结构/关键人背调/控股股东跨主体记录/诚信记录/分级结论/胜负手/最强反方）
 
     # 组装完整数据对象
     data = {
@@ -1045,6 +1066,7 @@ def render(ticker, starter=False):
         "ch3_card": ch3_card,                      # 第三章行业判断卡（格局脊梁 + 竞争结构地图 + 谁掌握价值 + 价值/压力 + 决胜变量）
         "ch4_card": ch4_card,                      # 第四章盈利引擎判断卡（盈利引擎脊梁 + 全景 + 谁真赚钱 + 利润含金量 + 健康度开关）
         "ch5_card": ch5_card,                      # 第五章资本配置记录卡（脊梁 + 阶段诊断 + 资金来去 + 大决策剖检 + 每股记分牌 + 为谁配置 + 最强反方）
+        "ch6_card": ch6_card,                      # 第六章治理判断卡（权力结构 + 关键人背调 + 控股股东跨主体记录 + 诚信记录 + 分级结论 + 胜负手 + 最强反方）
         "links": links,
     }
 

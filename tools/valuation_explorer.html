@@ -2177,6 +2177,35 @@ function ch5CardHTML() {
     + '<div class="rchap-sep">第五章 · 正文</div>';
 }
 
+// 返回第六章治理判断卡的内部 HTML——能不能信任掌控公司的人：脊梁 + 谁说了算(权力结构) + 关键人背景背调表
+// + 控股股东跨主体记录(它在别处怎么对小股东) + 诚信记录 + 分级结论(能不能信/治理折价) + 胜负手 + 最强反方。
+// 这一章代码不供数（无可算结构化数据），全部透传 ch6 块。没有 ch6_card 就返回 ''。
+function ch6CardHTML() {
+  const c = DATA.ch6_card;
+  if (!c) return '';
+  const kindCls = { eng: 'rk-eng', good: 'rk-good', warn: 'rk-warn', bad: 'rk-bad', neutral: 'rk-neutral' };
+  const rows = (c.key_people || []).map(p => {
+    const chip = p.role ? '<span class="rk ' + (kindCls[p.kind] || 'rk-neutral') + '">' + escTL(p.role) + '</span>' : '';
+    return '<tr><td>' + escTL(p.name || '') + (chip ? '<br>' + chip : '') + '</td><td>' + escTL(p.holding_pay || '') + '</td><td>' + escTL(p.background || '') + '</td><td>' + escTL(p.judgment || '') + '</td></tr>';
+  }).join('');
+  const tbl = rows
+    ? '<div class="qc-lab" style="margin-top:18px">关键人背景背调 · 这些人是谁、什么底细</div>'
+      + '<div style="overflow-x:auto"><table class="qc-tbl"><thead><tr><th>关键人</th><th>持股·薪酬</th><th>背景</th><th>判读</th></tr></thead><tbody>'
+      + rows + '</tbody></table></div>'
+    : '';
+  return ''
+    + '<div class="qc-lab">判断速览 · 组织治理与诚信</div>'
+    + (c.spine ? '<div class="qc-ess" style="font-size:15px">' + escTL(c.spine) + '</div>' : '')
+    + (c.power_structure ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">谁说了算</div><div class="qc-v">' + escTL(c.power_structure) + '</div></div></div>' : '')
+    + tbl
+    + (c.controller_record ? '<div class="ch2-darkline"><div class="ch2-dl-k">控股股东的跨主体记录 · 它在别处怎么对小股东</div><div class="ch2-dl-v">' + escTL(c.controller_record) + '</div></div>' : '')
+    + (c.integrity_record ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">诚信记录 · 警示函与退市清单</div><div class="qc-v">' + escTL(c.integrity_record) + '</div></div></div>' : '')
+    + (c.verdict ? '<div class="qc-grid"><div class="qc-f qc-full"><div class="qc-k">能不能信任 · 治理折价</div><div class="qc-v">' + escTL(c.verdict) + '</div></div></div>' : '')
+    + (c.swing ? '<div class="ch2-darkline" style="background:rgba(26,84,144,.07);border-color:rgba(26,84,144,.25)"><div class="ch2-dl-k" style="color:var(--accent)">胜负手 · 什么会改变判断</div><div class="ch2-dl-v">' + escTL(c.swing) + '</div></div>' : '')
+    + (c.bear_case ? '<div class="ch2-read"><div><div class="ch2-read-k ch2-read-good">最强反方 · 先给最善意的解释</div><div class="ch2-read-v">' + escTL(c.bear_case) + '</div></div></div>' : '')
+    + '<div class="rchap-sep">第六章 · 正文</div>';
+}
+
 function renderReport() {
   const cont = document.getElementById('section-report');
   const chs = DATA.report_chapters;
@@ -2193,7 +2222,7 @@ function renderReport() {
   body.innerHTML = chs.map((c, i) =>
     '<section class="card report-chapter" id="' + c.id + '">'
     + '<h2 class="rchap-h">' + escTL(c.title) + '</h2>'
-    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : (i === 3 ? ch4CardHTML() : (i === 4 ? ch5CardHTML() : '')))))   // 第一~五章：判断卡在上 + 正文在下，同框
+    + (i === 0 ? ch1CardHTML() : (i === 1 ? ch2CardHTML() : (i === 2 ? ch3CardHTML() : (i === 3 ? ch4CardHTML() : (i === 4 ? ch5CardHTML() : (i === 5 ? ch6CardHTML() : ''))))))   // 第一~六章：判断卡在上 + 正文在下，同框
     + '<div class="rchap-body">' + (c.html || '<p class="muted">（本章无正文）</p>') + '</div>'
     + '</section>'
   ).join('');

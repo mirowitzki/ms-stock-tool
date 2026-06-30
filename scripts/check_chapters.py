@@ -48,6 +48,12 @@ REQUIRED_CARDS = {
         "fields": ["spine", "stage", "track_record", "per_share_verdict",
                    "for_whom.text", "verdict", "bear_case"],
     },
+    "ch6": {
+        "name": "第六章 治理判断卡",
+        # controller_record 对控股型标的填跨主体记录；独立/无实控人公司可填"无控股股东·独立"。
+        "fields": ["spine", "power_structure", "key_people", "controller_record",
+                   "integrity_record", "verdict", "swing", "bear_case"],
+    },
 }
 
 # 报告对应章必须含的结构脚手架（在该章正文里数 markdown 表格）。键＝章标题关键词。
@@ -56,6 +62,7 @@ CHAPTER_SCAFFOLDS = {
     "第三章": {"min_tables": 1, "desc": "竞争结构表"},
     "第四章": {"min_tables": 1, "desc": "三门生意总览表（本质/客户/怎么赢/赚不赚钱）"},
     "第五章": {"min_tables": 1, "desc": "收购成色表 或 资金去向表 或 每股记分牌表"},
+    "第六章": {"min_tables": 1, "desc": "关键人背景背调表"},
 }
 
 
