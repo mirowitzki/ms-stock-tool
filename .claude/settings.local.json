@@ -18,7 +18,9 @@
       "Bash(rm -f /Users/miro/cxl/.claude/launch.json)",
       "Bash(rmdir /Users/miro/cxl/.claude)",
       "mcp__visualize__read_me",
-      "mcp__visualize__show_widget"
+      "mcp__visualize__show_widget",
+      "mcp__claude-in-chrome__navigate",
+      "mcp__claude-in-chrome__tabs_context_mcp"
     ],
     "defaultMode": "acceptEdits"
   }
