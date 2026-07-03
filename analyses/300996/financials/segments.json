@@ -1,0 +1,1464 @@
+{
+  "by_product": {
+    "2025-12-31": [
+      {
+        "name": "业财融合",
+        "revenue": 262114803.22,
+        "cost": 187873995.47,
+        "gross_profit": 74240807.75,
+        "margin": 0.283238
+      },
+      {
+        "name": "集团财务",
+        "revenue": 206876613.54,
+        "cost": 157529435.01,
+        "gross_profit": 49347178.53,
+        "margin": 0.238534
+      },
+      {
+        "name": "集团司库",
+        "revenue": 191199009.28,
+        "cost": 124893530.5,
+        "gross_profit": 66305478.78,
+        "margin": 0.346788
+      },
+      {
+        "name": "数字生产",
+        "revenue": 94716714.37,
+        "cost": 60677312.8,
+        "gross_profit": 34039401.57,
+        "margin": 0.359381
+      },
+      {
+        "name": "XBRL应用产品",
+        "revenue": 36585401.62,
+        "cost": 18168991.11,
+        "gross_profit": 18416410.51,
+        "margin": 0.503381
+      },
+      {
+        "name": "服务外包",
+        "revenue": 29092659.5,
+        "cost": 23176838.19,
+        "gross_profit": 5915821.31,
+        "margin": 0.203344
+      },
+      {
+        "name": "硬件产品",
+        "revenue": 3861123.34,
+        "cost": 2466207.39,
+        "gross_profit": 1394915.95,
+        "margin": 0.361272
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 499094.05,
+        "cost": 278285.87,
+        "gross_profit": 220808.18,
+        "margin": 0.442418
+      }
+    ],
+    "2025-06-30": [
+      {
+        "name": "业财融合",
+        "revenue": 65375900.25,
+        "cost": 42190404.28,
+        "gross_profit": 23185495.97,
+        "margin": 0.354649
+      },
+      {
+        "name": "集团司库",
+        "revenue": 58629494.74,
+        "cost": 37591996.29,
+        "gross_profit": 21037498.45,
+        "margin": 0.358821
+      },
+      {
+        "name": "集团财务",
+        "revenue": 47696801.76,
+        "cost": 33930635.49,
+        "gross_profit": 13766166.27,
+        "margin": 0.288618
+      },
+      {
+        "name": "服务外包",
+        "revenue": 14936649.64,
+        "cost": 11606702.48,
+        "gross_profit": 3329947.16,
+        "margin": 0.222938
+      },
+      {
+        "name": "数字生产",
+        "revenue": 11506851.92,
+        "cost": 6932051.37,
+        "gross_profit": 4574800.55,
+        "margin": 0.397572
+      },
+      {
+        "name": "XBRL应用产品",
+        "revenue": 9821129.26,
+        "cost": 2679823.72,
+        "gross_profit": 7141305.54,
+        "margin": 0.727137
+      },
+      {
+        "name": "硬件产品",
+        "revenue": 1788801.74,
+        "cost": 1299042.19,
+        "gross_profit": 489759.55,
+        "margin": 0.273792
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 389883.05,
+        "cost": 255191.54,
+        "gross_profit": 134691.51,
+        "margin": 0.345466
+      }
+    ],
+    "2024-12-31": [
+      {
+        "name": "业财融合",
+        "revenue": 351483606.34,
+        "cost": 240814498.35,
+        "gross_profit": 110669107.99,
+        "margin": 0.314863
+      },
+      {
+        "name": "集团财务",
+        "revenue": 178864174.53,
+        "cost": 124740031.51,
+        "gross_profit": 54124143.02,
+        "margin": 0.302599
+      },
+      {
+        "name": "集团司库",
+        "revenue": 153673609.06,
+        "cost": 99722626.65,
+        "gross_profit": 53950982.41,
+        "margin": 0.351075
+      },
+      {
+        "name": "数字生产",
+        "revenue": 79294567.24,
+        "cost": 44851818.07,
+        "gross_profit": 34442749.17,
+        "margin": 0.434365
+      },
+      {
+        "name": "XBRL应用产品",
+        "revenue": 31875377.08,
+        "cost": 13540932.87,
+        "gross_profit": 18334444.21,
+        "margin": 0.575191
+      },
+      {
+        "name": "服务外包",
+        "revenue": 31050673.82,
+        "cost": 26868480.73,
+        "gross_profit": 4182193.09,
+        "margin": 0.134689
+      },
+      {
+        "name": "硬件产品",
+        "revenue": 8529645.25,
+        "cost": 6637099.79,
+        "gross_profit": 1892545.46,
+        "margin": 0.221879
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 1358596.3,
+        "cost": 1067215.84,
+        "gross_profit": 291380.46,
+        "margin": 0.214472
+      }
+    ],
+    "2024-06-30": [
+      {
+        "name": "集团财务",
+        "revenue": 64920978.46,
+        "cost": 37745081.26,
+        "gross_profit": 27175897.2,
+        "margin": 0.4186
+      },
+      {
+        "name": "集团司库",
+        "revenue": 47159883.17,
+        "cost": 28668627.71,
+        "gross_profit": 18491255.46,
+        "margin": 0.392097
+      },
+      {
+        "name": "业财融合",
+        "revenue": 39033017.72,
+        "cost": 25916270.19,
+        "gross_profit": 13116747.53,
+        "margin": 0.336042
+      },
+      {
+        "name": "数字生产",
+        "revenue": 18766078.65,
+        "cost": 13214512.22,
+        "gross_profit": 5551566.43,
+        "margin": 0.29583
+      },
+      {
+        "name": "XBRL应用产品",
+        "revenue": 9626653.49,
+        "cost": 2740406.29,
+        "gross_profit": 6886247.2,
+        "margin": 0.715331
+      },
+      {
+        "name": "服务外包",
+        "revenue": 8969774.53,
+        "cost": 6930035.29,
+        "gross_profit": 2039739.24,
+        "margin": 0.227401
+      },
+      {
+        "name": "硬件产品",
+        "revenue": 2844667.48,
+        "cost": 2225662.87,
+        "gross_profit": 619004.61,
+        "margin": 0.217602
+      },
+      {
+        "name": "其他产品",
+        "revenue": 673692.67,
+        "cost": 539862.87,
+        "gross_profit": 133829.8,
+        "margin": 0.198651
+      }
+    ],
+    "2023-12-31": [
+      {
+        "name": "集团管控",
+        "revenue": 661854265.64,
+        "cost": 404410676.78,
+        "gross_profit": 257443588.86,
+        "margin": 0.388973
+      },
+      {
+        "name": "XBRL应用",
+        "revenue": 41466430.65,
+        "cost": 18485814.24,
+        "gross_profit": 22980616.41,
+        "margin": 0.554198
+      },
+      {
+        "name": "服务外包",
+        "revenue": 29752617.09,
+        "cost": 25935394.05,
+        "gross_profit": 3817223.04,
+        "margin": 0.128299
+      },
+      {
+        "name": "硬件产品",
+        "revenue": 10920061.34,
+        "cost": 7125008.6,
+        "gross_profit": 3795052.74,
+        "margin": 0.34753
+      },
+      {
+        "name": "数字建造",
+        "revenue": 3943396.23,
+        "cost": 4344707.4,
+        "gross_profit": -401311.17,
+        "margin": -0.101768
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 1317018.34,
+        "cost": 1023163.56,
+        "gross_profit": 293854.78,
+        "margin": 0.223121
+      },
+      {
+        "name": "平台软件",
+        "revenue": 0.0,
+        "cost": 0.0,
+        "gross_profit": 0.0,
+        "margin": null
+      }
+    ],
+    "2023-06-30": [
+      {
+        "name": "集团管控产品",
+        "revenue": 119887124.63,
+        "cost": 67171594.32,
+        "gross_profit": 52715530.31,
+        "margin": 0.43971
+      },
+      {
+        "name": "XBRL应用产品",
+        "revenue": 15231132.45,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "服务外包",
+        "revenue": 14446381.33,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "硬件产品",
+        "revenue": 2249114.64,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 651564.21,
+        "cost": 509874.09,
+        "gross_profit": 141690.12,
+        "margin": 0.217461
+      }
+    ],
+    "2022-12-31": [
+      {
+        "name": "定制软件",
+        "revenue": 457384470.82,
+        "cost": 233667137.38,
+        "gross_profit": 223717333.44,
+        "margin": 0.489123
+      },
+      {
+        "name": "技术服务",
+        "revenue": 161464680.87,
+        "cost": 83302300.81,
+        "gross_profit": 78162380.06,
+        "margin": 0.484083
+      },
+      {
+        "name": "产品化软件",
+        "revenue": 43856246.05,
+        "cost": 18001394.12,
+        "gross_profit": 25854851.93,
+        "margin": 0.589536
+      },
+      {
+        "name": "服务外包",
+        "revenue": 24592980.2,
+        "cost": 21384180.7,
+        "gross_profit": 3208799.5,
+        "margin": 0.130476
+      },
+      {
+        "name": "硬件产品",
+        "revenue": 6270427.24,
+        "cost": 5297332.04,
+        "gross_profit": 973095.2,
+        "margin": 0.155188
+      },
+      {
+        "name": "其他(补充)",
+        "revenue": 712613.5,
+        "cost": 661204.24,
+        "gross_profit": 51409.26,
+        "margin": 0.072142
+      }
+    ],
+    "2022-06-30": [
+      {
+        "name": "集团管控产品",
+        "revenue": 136631286.27,
+        "cost": 65879859.44,
+        "gross_profit": 70751426.83,
+        "margin": 0.517827
+      },
+      {
+        "name": "服务外包",
+        "revenue": 10923893.9,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "XBRL应用产品",
+        "revenue": 10093961.12,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "硬件产品",
+        "revenue": 4499695.3,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他产品",
+        "revenue": 236438.08,
+        "cost": 218545.51,
+        "gross_profit": 17892.57,
+        "margin": 0.075676
+      }
+    ],
+    "2021-12-31": [
+      {
+        "name": "定制软件",
+        "revenue": 379852969.17,
+        "cost": 202937919.07,
+        "gross_profit": 176915050.1,
+        "margin": 0.465746
+      },
+      {
+        "name": "技术服务",
+        "revenue": 112326430.19,
+        "cost": 56881781.82,
+        "gross_profit": 55444648.37,
+        "margin": 0.493603
+      },
+      {
+        "name": "产品化软件",
+        "revenue": 61103616.24,
+        "cost": 28449052.17,
+        "gross_profit": 32654564.07,
+        "margin": 0.534413
+      },
+      {
+        "name": "服务外包",
+        "revenue": 21694203.56,
+        "cost": 17762862.51,
+        "gross_profit": 3931341.05,
+        "margin": 0.181216
+      },
+      {
+        "name": "硬件产品",
+        "revenue": 6482364.08,
+        "cost": 5327246.6,
+        "gross_profit": 1155117.48,
+        "margin": 0.178194
+      },
+      {
+        "name": "其他产品",
+        "revenue": 472876.17,
+        "cost": 435982.51,
+        "gross_profit": 36893.66,
+        "margin": 0.07802
+      }
+    ]
+  },
+  "by_industry": {
+    "2025-12-31": [
+      {
+        "name": "石油石化",
+        "revenue": 437905349.31,
+        "cost": 313718457.0,
+        "gross_profit": 124186892.31,
+        "margin": 0.283593
+      },
+      {
+        "name": "煤炭电力",
+        "revenue": 104184855.04,
+        "cost": 75247703.37,
+        "gross_profit": 28937151.67,
+        "margin": 0.277748
+      },
+      {
+        "name": "建筑地产",
+        "revenue": 95134072.24,
+        "cost": 60185441.92,
+        "gross_profit": 34948630.32,
+        "margin": 0.367362
+      },
+      {
+        "name": "金融行业",
+        "revenue": 79444717.69,
+        "cost": 54586834.0,
+        "gross_profit": 24857883.69,
+        "margin": 0.312895
+      },
+      {
+        "name": "其他行业",
+        "revenue": 72786742.12,
+        "cost": 49839469.22,
+        "gross_profit": 22947272.9,
+        "margin": 0.315267
+      },
+      {
+        "name": "电子信息",
+        "revenue": 29227576.12,
+        "cost": 17665154.33,
+        "gross_profit": 11562421.79,
+        "margin": 0.3956
+      },
+      {
+        "name": "文化教育",
+        "revenue": 6262106.4,
+        "cost": 3821536.5,
+        "gross_profit": 2440569.9,
+        "margin": 0.389736
+      }
+    ],
+    "2025-06-30": [
+      {
+        "name": "石油石化",
+        "revenue": 101454405.44,
+        "cost": 62912213.26,
+        "gross_profit": 38542192.18,
+        "margin": 0.379897
+      },
+      {
+        "name": "建筑地产",
+        "revenue": 36349893.96,
+        "cost": 21081103.31,
+        "gross_profit": 15268790.65,
+        "margin": 0.42005
+      },
+      {
+        "name": "煤炭电力",
+        "revenue": 24898637.54,
+        "cost": 21362155.48,
+        "gross_profit": 3536482.06,
+        "margin": 0.142035
+      },
+      {
+        "name": "金融行业",
+        "revenue": 20596796.04,
+        "cost": 16077692.77,
+        "gross_profit": 4519103.27,
+        "margin": 0.219408
+      },
+      {
+        "name": "其他行业",
+        "revenue": 18916431.48,
+        "cost": 11514448.2,
+        "gross_profit": 7401983.28,
+        "margin": 0.391299
+      },
+      {
+        "name": "电子信息",
+        "revenue": 4787742.91,
+        "cost": 1978609.08,
+        "gross_profit": 2809133.83,
+        "margin": 0.586734
+      },
+      {
+        "name": "文化教育",
+        "revenue": 3141604.99,
+        "cost": 1559625.26,
+        "gross_profit": 1581979.73,
+        "margin": 0.503558
+      }
+    ],
+    "2024-12-31": [
+      {
+        "name": "石油石化",
+        "revenue": 444626490.56,
+        "cost": 314412501.16,
+        "gross_profit": 130213989.4,
+        "margin": 0.292862
+      },
+      {
+        "name": "建筑地产",
+        "revenue": 152704277.71,
+        "cost": 93431132.92,
+        "gross_profit": 59273144.79,
+        "margin": 0.388156
+      },
+      {
+        "name": "煤炭电力",
+        "revenue": 89430159.6,
+        "cost": 61857110.81,
+        "gross_profit": 27573048.79,
+        "margin": 0.308319
+      },
+      {
+        "name": "金融行业",
+        "revenue": 70532236.38,
+        "cost": 36731391.39,
+        "gross_profit": 33800844.99,
+        "margin": 0.479225
+      },
+      {
+        "name": "其他行业",
+        "revenue": 47057820.29,
+        "cost": 33916925.14,
+        "gross_profit": 13140895.15,
+        "margin": 0.27925
+      },
+      {
+        "name": "电子信息",
+        "revenue": 22294193.26,
+        "cost": 12338689.53,
+        "gross_profit": 9955503.73,
+        "margin": 0.446551
+      },
+      {
+        "name": "文化教育",
+        "revenue": 9485071.82,
+        "cost": 5554952.86,
+        "gross_profit": 3930118.96,
+        "margin": 0.414348
+      }
+    ],
+    "2024-06-30": [
+      {
+        "name": "石油石化",
+        "revenue": 93986008.06,
+        "cost": 58967425.68,
+        "gross_profit": 35018582.38,
+        "margin": 0.372594
+      },
+      {
+        "name": "建筑地产",
+        "revenue": 42053375.85,
+        "cost": 25539527.68,
+        "gross_profit": 16513848.17,
+        "margin": 0.392688
+      },
+      {
+        "name": "金融行业",
+        "revenue": 17215465.81,
+        "cost": 6031053.29,
+        "gross_profit": 11184412.52,
+        "margin": 0.649672
+      },
+      {
+        "name": "其他行业",
+        "revenue": 17017198.88,
+        "cost": 11677719.0,
+        "gross_profit": 5339479.88,
+        "margin": 0.31377
+      },
+      {
+        "name": "煤炭电力",
+        "revenue": 16519139.16,
+        "cost": 12715395.41,
+        "gross_profit": 3803743.75,
+        "margin": 0.230263
+      },
+      {
+        "name": "电子信息",
+        "revenue": 3582051.43,
+        "cost": 2163038.93,
+        "gross_profit": 1419012.5,
+        "margin": 0.396145
+      },
+      {
+        "name": "文化教育",
+        "revenue": 1621506.98,
+        "cost": 886298.71,
+        "gross_profit": 735208.27,
+        "margin": 0.45341
+      }
+    ],
+    "2023-12-31": [
+      {
+        "name": "石油石化",
+        "revenue": 384563878.85,
+        "cost": 242286097.23,
+        "gross_profit": 142277781.62,
+        "margin": 0.369972
+      },
+      {
+        "name": "建筑地产",
+        "revenue": 127602608.94,
+        "cost": 74470399.08,
+        "gross_profit": 53132209.86,
+        "margin": 0.416388
+      },
+      {
+        "name": "金融行业",
+        "revenue": 81094123.77,
+        "cost": 42179983.3,
+        "gross_profit": 38914140.47,
+        "margin": 0.479864
+      },
+      {
+        "name": "煤炭电力",
+        "revenue": 68801099.62,
+        "cost": 47855229.64,
+        "gross_profit": 20945869.98,
+        "margin": 0.304441
+      },
+      {
+        "name": "其他行业",
+        "revenue": 45603632.47,
+        "cost": 29066044.9,
+        "gross_profit": 16537587.57,
+        "margin": 0.362638
+      },
+      {
+        "name": "电子信息",
+        "revenue": 35533690.59,
+        "cost": 21825127.26,
+        "gross_profit": 13708563.33,
+        "margin": 0.385791
+      },
+      {
+        "name": "文化教育",
+        "revenue": 6054755.05,
+        "cost": 3641883.22,
+        "gross_profit": 2412871.83,
+        "margin": 0.398509
+      }
+    ],
+    "2023-06-30": [
+      {
+        "name": "石油石化",
+        "revenue": 67570407.88,
+        "cost": 40195406.87,
+        "gross_profit": 27375001.01,
+        "margin": 0.405133
+      },
+      {
+        "name": "建筑地产",
+        "revenue": 41611485.11,
+        "cost": 22800098.08,
+        "gross_profit": 18811387.03,
+        "margin": 0.452072
+      },
+      {
+        "name": "金融行业",
+        "revenue": 19971661.79,
+        "cost": 8222862.85,
+        "gross_profit": 11748798.94,
+        "margin": 0.588273
+      },
+      {
+        "name": "其他行业",
+        "revenue": 8884510.37,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "煤炭电力",
+        "revenue": 8073186.39,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "电子信息",
+        "revenue": 4019557.49,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "文化教育",
+        "revenue": 2334508.23,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2022-12-31": [
+      {
+        "name": "石油石化",
+        "revenue": 426606439.7,
+        "cost": 223805670.03,
+        "gross_profit": 202800769.67,
+        "margin": 0.475381
+      },
+      {
+        "name": "建筑地产",
+        "revenue": 134671160.51,
+        "cost": 69784103.86,
+        "gross_profit": 64887056.65,
+        "margin": 0.481819
+      },
+      {
+        "name": "金融行业",
+        "revenue": 61698899.31,
+        "cost": 22614666.5,
+        "gross_profit": 39084232.81,
+        "margin": 0.633467
+      },
+      {
+        "name": "煤炭电力",
+        "revenue": 26540370.99,
+        "cost": 19669055.8,
+        "gross_profit": 6871315.19,
+        "margin": 0.2589
+      },
+      {
+        "name": "其他行业",
+        "revenue": 23234177.41,
+        "cost": 14044985.01,
+        "gross_profit": 9189192.4,
+        "margin": 0.395503
+      },
+      {
+        "name": "电子信息",
+        "revenue": 16247427.65,
+        "cost": 8994544.68,
+        "gross_profit": 7252882.97,
+        "margin": 0.446402
+      },
+      {
+        "name": "文化教育",
+        "revenue": 5282943.11,
+        "cost": 3400523.41,
+        "gross_profit": 1882419.7,
+        "margin": 0.35632
+      }
+    ],
+    "2022-06-30": [
+      {
+        "name": "石油石化",
+        "revenue": 75433847.67,
+        "cost": 39580253.47,
+        "gross_profit": 35853594.2,
+        "margin": 0.475298
+      },
+      {
+        "name": "地产建筑",
+        "revenue": 51912285.39,
+        "cost": 21661216.33,
+        "gross_profit": 30251069.06,
+        "margin": 0.582734
+      },
+      {
+        "name": "金融行业",
+        "revenue": 14639091.36,
+        "cost": 4403417.1,
+        "gross_profit": 10235674.26,
+        "margin": 0.699201
+      },
+      {
+        "name": "电子信息",
+        "revenue": 14023243.83,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "煤炭电力",
+        "revenue": 2579561.43,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "文化教育",
+        "revenue": 2025045.4,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "其他行业",
+        "revenue": 1772199.59,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2021-12-31": [
+      {
+        "name": "石油石化",
+        "revenue": 299819333.85,
+        "cost": 177514526.99,
+        "gross_profit": 122304806.86,
+        "margin": 0.407928
+      },
+      {
+        "name": "地产建筑",
+        "revenue": 183019677.9,
+        "cost": 86360522.87,
+        "gross_profit": 96659155.03,
+        "margin": 0.528135
+      },
+      {
+        "name": "金融行业",
+        "revenue": 38460686.93,
+        "cost": 12762815.09,
+        "gross_profit": 25697871.84,
+        "margin": 0.668159
+      },
+      {
+        "name": "其他行业",
+        "revenue": 22121589.4,
+        "cost": 11410100.03,
+        "gross_profit": 10711489.37,
+        "margin": 0.48421
+      },
+      {
+        "name": "煤炭电力",
+        "revenue": 18552680.14,
+        "cost": 9683446.47,
+        "gross_profit": 8869233.67,
+        "margin": 0.478057
+      },
+      {
+        "name": "电子信息",
+        "revenue": 15993029.79,
+        "cost": 11882236.82,
+        "gross_profit": 4110792.97,
+        "margin": 0.257037
+      },
+      {
+        "name": "文化教育",
+        "revenue": 3965461.4,
+        "cost": 2181196.41,
+        "gross_profit": 1784264.99,
+        "margin": 0.449951
+      }
+    ],
+    "2021-06-30": [
+      {
+        "name": "石油石化",
+        "revenue": 67665143.78,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "地产建筑",
+        "revenue": 44631595.8,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "金融行业",
+        "revenue": 9719076.96,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "电子信息",
+        "revenue": 8034787.33,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ]
+  },
+  "by_region": {
+    "2025-12-31": [
+      {
+        "name": "华北地区",
+        "revenue": 494101165.09,
+        "cost": 351310461.98,
+        "gross_profit": 142790703.11,
+        "margin": 0.288991
+      },
+      {
+        "name": "华东地区",
+        "revenue": 140411259.13,
+        "cost": 96202254.6,
+        "gross_profit": 44209004.53,
+        "margin": 0.314854
+      },
+      {
+        "name": "西北地区",
+        "revenue": 64585125.18,
+        "cost": 43660947.05,
+        "gross_profit": 20924178.13,
+        "margin": 0.323978
+      },
+      {
+        "name": "华南地区",
+        "revenue": 41057031.8,
+        "cost": 33703292.13,
+        "gross_profit": 7353739.67,
+        "margin": 0.17911
+      },
+      {
+        "name": "境外地区",
+        "revenue": 33210765.58,
+        "cost": 17675767.9,
+        "gross_profit": 15534997.68,
+        "margin": 0.46777
+      },
+      {
+        "name": "华中地区",
+        "revenue": 25004811.14,
+        "cost": 16653219.35,
+        "gross_profit": 8351591.79,
+        "margin": 0.333999
+      },
+      {
+        "name": "西南地区",
+        "revenue": 15921617.07,
+        "cost": 10017243.96,
+        "gross_profit": 5904373.11,
+        "margin": 0.37084
+      },
+      {
+        "name": "东北地区",
+        "revenue": 10653643.93,
+        "cost": 5841409.37,
+        "gross_profit": 4812234.56,
+        "margin": 0.451698
+      }
+    ],
+    "2025-06-30": [
+      {
+        "name": "华北地区",
+        "revenue": 129357054.09,
+        "cost": 79949569.4,
+        "gross_profit": 49407484.69,
+        "margin": 0.381947
+      },
+      {
+        "name": "华南地区",
+        "revenue": 22928522.05,
+        "cost": 22122566.74,
+        "gross_profit": 805955.31,
+        "margin": 0.035151
+      },
+      {
+        "name": "华东地区",
+        "revenue": 22453493.39,
+        "cost": 12927633.64,
+        "gross_profit": 9525859.75,
+        "margin": 0.424248
+      },
+      {
+        "name": "西北地区",
+        "revenue": 19610399.15,
+        "cost": 12360675.13,
+        "gross_profit": 7249724.02,
+        "margin": 0.369688
+      },
+      {
+        "name": "境外地区",
+        "revenue": 6718330.2,
+        "cost": 3822725.19,
+        "gross_profit": 2895605.01,
+        "margin": 0.431001
+      },
+      {
+        "name": "西南地区",
+        "revenue": 4143798.51,
+        "cost": 2624004.71,
+        "gross_profit": 1519793.8,
+        "margin": 0.366763
+      },
+      {
+        "name": "华中地区",
+        "revenue": 3158922.15,
+        "cost": 1934133.53,
+        "gross_profit": 1224788.62,
+        "margin": 0.387724
+      },
+      {
+        "name": "东北地区",
+        "revenue": 1774992.82,
+        "cost": 744539.02,
+        "gross_profit": 1030453.8,
+        "margin": 0.58054
+      }
+    ],
+    "2024-12-31": [
+      {
+        "name": "华北地区",
+        "revenue": 537994298.38,
+        "cost": 377235311.54,
+        "gross_profit": 160758986.84,
+        "margin": 0.298812
+      },
+      {
+        "name": "华东地区",
+        "revenue": 109278339.25,
+        "cost": 70843385.76,
+        "gross_profit": 38434953.49,
+        "margin": 0.351716
+      },
+      {
+        "name": "西北地区",
+        "revenue": 72173866.12,
+        "cost": 47357501.28,
+        "gross_profit": 24816364.84,
+        "margin": 0.343841
+      },
+      {
+        "name": "华南地区",
+        "revenue": 34394999.08,
+        "cost": 17677402.99,
+        "gross_profit": 16717596.09,
+        "margin": 0.486047
+      },
+      {
+        "name": "境外地区",
+        "revenue": 28217760.66,
+        "cost": 15607211.41,
+        "gross_profit": 12610549.25,
+        "margin": 0.446901
+      },
+      {
+        "name": "华中地区",
+        "revenue": 25411120.67,
+        "cost": 15150909.83,
+        "gross_profit": 10260210.84,
+        "margin": 0.403769
+      },
+      {
+        "name": "西南地区",
+        "revenue": 20848166.45,
+        "cost": 10814294.17,
+        "gross_profit": 10033872.28,
+        "margin": 0.481283
+      },
+      {
+        "name": "东北地区",
+        "revenue": 7811699.01,
+        "cost": 3556686.83,
+        "gross_profit": 4255012.18,
+        "margin": 0.544697
+      }
+    ],
+    "2024-06-30": [
+      {
+        "name": "华北地区",
+        "revenue": 126035550.65,
+        "cost": 78479743.47,
+        "gross_profit": 47555807.18,
+        "margin": 0.377321
+      },
+      {
+        "name": "华东地区",
+        "revenue": 27532237.54,
+        "cost": 16939988.86,
+        "gross_profit": 10592248.68,
+        "margin": 0.384722
+      },
+      {
+        "name": "西北地区",
+        "revenue": 11981017.88,
+        "cost": 7651615.21,
+        "gross_profit": 4329402.67,
+        "margin": 0.361355
+      },
+      {
+        "name": "华南地区",
+        "revenue": 8269248.76,
+        "cost": 4634131.42,
+        "gross_profit": 3635117.34,
+        "margin": 0.439595
+      },
+      {
+        "name": "西南地区",
+        "revenue": 7148592.33,
+        "cost": 4143510.69,
+        "gross_profit": 3005081.64,
+        "margin": 0.420374
+      },
+      {
+        "name": "境外地区",
+        "revenue": 5489079.95,
+        "cost": 2923542.11,
+        "gross_profit": 2565537.84,
+        "margin": 0.467389
+      },
+      {
+        "name": "东北地区",
+        "revenue": 2890346.21,
+        "cost": 1742895.5,
+        "gross_profit": 1147450.71,
+        "margin": 0.396994
+      },
+      {
+        "name": "华中地区",
+        "revenue": 2648672.85,
+        "cost": 1465031.44,
+        "gross_profit": 1183641.41,
+        "margin": 0.446881
+      }
+    ],
+    "2023-12-31": [
+      {
+        "name": "华北地区",
+        "revenue": 460971603.58,
+        "cost": 288379268.91,
+        "gross_profit": 172592334.67,
+        "margin": 0.37441
+      },
+      {
+        "name": "华东地区",
+        "revenue": 96630281.43,
+        "cost": 62058855.13,
+        "gross_profit": 34571426.3,
+        "margin": 0.35777
+      },
+      {
+        "name": "西北地区",
+        "revenue": 81074900.01,
+        "cost": 44990234.22,
+        "gross_profit": 36084665.79,
+        "margin": 0.445078
+      },
+      {
+        "name": "境外地区",
+        "revenue": 36721129.46,
+        "cost": 20449405.6,
+        "gross_profit": 16271723.86,
+        "margin": 0.443116
+      },
+      {
+        "name": "华南地区",
+        "revenue": 26569986.47,
+        "cost": 16853272.52,
+        "gross_profit": 9716713.95,
+        "margin": 0.365703
+      },
+      {
+        "name": "西南地区",
+        "revenue": 20384543.1,
+        "cost": 11137603.76,
+        "gross_profit": 9246939.34,
+        "margin": 0.453625
+      },
+      {
+        "name": "华中地区",
+        "revenue": 18283604.27,
+        "cost": 11004946.2,
+        "gross_profit": 7278658.07,
+        "margin": 0.398098
+      },
+      {
+        "name": "东北地区",
+        "revenue": 8617740.97,
+        "cost": 6451178.29,
+        "gross_profit": 2166562.68,
+        "margin": 0.251407
+      }
+    ],
+    "2023-06-30": [
+      {
+        "name": "华北地区",
+        "revenue": 94854646.3,
+        "cost": 57105323.78,
+        "gross_profit": 37749322.52,
+        "margin": 0.39797
+      },
+      {
+        "name": "华东地区",
+        "revenue": 17498722.42,
+        "cost": 8248711.52,
+        "gross_profit": 9250010.9,
+        "margin": 0.528611
+      },
+      {
+        "name": "西北地区",
+        "revenue": 13224581.64,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "境外地区",
+        "revenue": 8210858.82,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "西南地区",
+        "revenue": 7461042.23,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "华南地区",
+        "revenue": 5894511.13,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "华中地区",
+        "revenue": 3133555.62,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "东北地区",
+        "revenue": 2187399.1,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2022-12-31": [
+      {
+        "name": "华北地区",
+        "revenue": 444371725.19,
+        "cost": 230044109.38,
+        "gross_profit": 214327615.81,
+        "margin": 0.482316
+      },
+      {
+        "name": "华东地区",
+        "revenue": 96299691.18,
+        "cost": 48651428.96,
+        "gross_profit": 47648262.22,
+        "margin": 0.494791
+      },
+      {
+        "name": "西北地区",
+        "revenue": 52895165.59,
+        "cost": 32804596.46,
+        "gross_profit": 20090569.13,
+        "margin": 0.379819
+      },
+      {
+        "name": "境外地区",
+        "revenue": 32783747.72,
+        "cost": 17404950.12,
+        "gross_profit": 15378797.6,
+        "margin": 0.469098
+      },
+      {
+        "name": "西南地区",
+        "revenue": 23800517.7,
+        "cost": 11867310.03,
+        "gross_profit": 11933207.67,
+        "margin": 0.501384
+      },
+      {
+        "name": "华中地区",
+        "revenue": 17900673.46,
+        "cost": 10343095.63,
+        "gross_profit": 7557577.83,
+        "margin": 0.422195
+      },
+      {
+        "name": "华南地区",
+        "revenue": 16361164.51,
+        "cost": 7562380.82,
+        "gross_profit": 8798783.69,
+        "margin": 0.537785
+      },
+      {
+        "name": "东北地区",
+        "revenue": 9868733.33,
+        "cost": 3635677.89,
+        "gross_profit": 6233055.44,
+        "margin": 0.631596
+      }
+    ],
+    "2022-06-30": [
+      {
+        "name": "华北地区",
+        "revenue": 104379906.85,
+        "cost": 49574012.2,
+        "gross_profit": 54805894.65,
+        "margin": 0.525062
+      },
+      {
+        "name": "华东地区",
+        "revenue": 23035867.79,
+        "cost": 12173442.54,
+        "gross_profit": 10862425.25,
+        "margin": 0.471544
+      },
+      {
+        "name": "境外地区",
+        "revenue": 11067578.63,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "西北地区",
+        "revenue": 9698456.13,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "华南地区",
+        "revenue": 5501464.99,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "西南地区",
+        "revenue": 5238426.91,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "东北地区",
+        "revenue": 1881390.05,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      },
+      {
+        "name": "华中地区",
+        "revenue": 1582183.32,
+        "cost": null,
+        "gross_profit": null,
+        "margin": null
+      }
+    ],
+    "2021-12-31": [
+      {
+        "name": "华北地区",
+        "revenue": 404273225.02,
+        "cost": 224468026.69,
+        "gross_profit": 179805198.33,
+        "margin": 0.444762
+      },
+      {
+        "name": "西北地区",
+        "revenue": 50517316.43,
+        "cost": 27832253.95,
+        "gross_profit": 22685062.48,
+        "margin": 0.449055
+      },
+      {
+        "name": "华东地区",
+        "revenue": 49665600.97,
+        "cost": 22018189.97,
+        "gross_profit": 27647411.0,
+        "margin": 0.556671
+      },
+      {
+        "name": "海外地区",
+        "revenue": 28242703.38,
+        "cost": 12165153.38,
+        "gross_profit": 16077550.0,
+        "margin": 0.569264
+      },
+      {
+        "name": "华南地区",
+        "revenue": 18369195.92,
+        "cost": 7495271.85,
+        "gross_profit": 10873924.07,
+        "margin": 0.591965
+      },
+      {
+        "name": "西南地区",
+        "revenue": 13189658.55,
+        "cost": 7390639.13,
+        "gross_profit": 5799019.42,
+        "margin": 0.439664
+      },
+      {
+        "name": "华中地区",
+        "revenue": 10672635.6,
+        "cost": 6860243.84,
+        "gross_profit": 3812391.76,
+        "margin": 0.357212
+      },
+      {
+        "name": "东北地区",
+        "revenue": 7002123.54,
+        "cost": 3565065.87,
+        "gross_profit": 3437057.67,
+        "margin": 0.490859
+      }
+    ]
+  }
+}
