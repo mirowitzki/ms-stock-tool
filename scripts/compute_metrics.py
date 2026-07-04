@@ -75,6 +75,15 @@ def main(ticker):
     if dc.get("missing"):
         print(f"  · 净债口径覆盖：找到 {len(dc.get('found', {}))} 项、缺 {len(dc['missing'])} 项"
               f"（{'、'.join(dc['missing'])}）——全口径以年报附注为准")
+    cdp = sv.get("cash_debt_paradox") or {}
+    if cdp.get("flag"):
+        legs = []
+        if cdp.get("both_high"):
+            legs.append(f"存贷双高（现金占总资产{pct(cdp.get('cash_pct_assets'))}、有息负债占{pct(cdp.get('debt_pct_assets'))}）")
+        if cdp.get("net_cash_but_paying"):
+            legs.append("净现金却付净财务费用")
+        print(f"  ⚠ 现金验真：{'；'.join(legs)}——回年报附注抄利息收入、倒算隐含存款收益率"
+              f"（fact-check 现金验真查项，康得新/康美式指纹初筛）")
     eq = metrics.get("earnings_quality") or {}
     for fl in eq.get("flags", []):
         print(f"  ⚠ 盈利质量：{fl}")
@@ -87,6 +96,10 @@ def main(ticker):
               f"——别把当前数字当常态")
     else:
         print(f"  · 周期校准：无明显高峰拉升")
+    rt = metrics.get("revenue_trend") or {}
+    if rt.get("flag"):
+        print(f"  ⚠ 量层剪刀差候选：营收连续 {rt.get('consecutive_down_years')} 个财年下滑"
+              f"——护城河结论降级为待证假设、先走周期vs塌方判别（skills/moat-analysis.md）")
     return out_path
 
 

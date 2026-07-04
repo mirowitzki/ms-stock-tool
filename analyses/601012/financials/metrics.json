@@ -213,6 +213,15 @@
           "debt_current_fallback"
         ],
         "note": "应付债券/租赁负债等科目当前取数管道未覆盖；判生存柱前以年报附注的全口径为准"
+      },
+      "cash_debt_paradox": {
+        "flag": false,
+        "both_high": false,
+        "net_cash_but_paying": false,
+        "cash_pct_assets": 0.36246142675555243,
+        "debt_pct_assets": 0.1752880832555373,
+        "finance_expense": 117000000.0,
+        "note": null
       }
     },
     "cycle_calibration": {
@@ -287,6 +296,45 @@
       ],
       "coverage_missing": [],
       "note": "代码初筛非定论；flags 逐项回年报附注核，结论由报告第七章会计可信度节下"
+    },
+    "revenue_trend": {
+      "series": [
+        {
+          "fy": 2018,
+          "revenue": 21988000000.0
+        },
+        {
+          "fy": 2019,
+          "revenue": 32897000000.000004
+        },
+        {
+          "fy": 2020,
+          "revenue": 54583000000.00001
+        },
+        {
+          "fy": 2021,
+          "revenue": 80608000000.0
+        },
+        {
+          "fy": 2022,
+          "revenue": 128998000000.0
+        },
+        {
+          "fy": 2023,
+          "revenue": 129498000000.0
+        },
+        {
+          "fy": 2024,
+          "revenue": 82582000000.0
+        },
+        {
+          "fy": 2025,
+          "revenue": 70347000000.0
+        }
+      ],
+      "consecutive_down_years": 2,
+      "flag": true,
+      "note": "营收已连续 2 个财年下滑——量层剪刀差候选：利润率/EPS 若靠提价、回购、砍成本维持，护城河结论降级为待证假设（先走周期vs塌方判别、判周期须给供给侧证据留痕）"
     }
   },
   "_note": "纯代码算出的硬数字 + 粗分档；最终判断由报告结合定性证据下，但须引用这些数字。"

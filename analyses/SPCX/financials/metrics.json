@@ -159,6 +159,15 @@
           "debt_current_fallback"
         ],
         "note": "应付债券/租赁负债等科目当前取数管道未覆盖；判生存柱前以年报附注的全口径为准"
+      },
+      "cash_debt_paradox": {
+        "flag": false,
+        "both_high": false,
+        "net_cash_but_paying": null,
+        "cash_pct_assets": 0.2687583488091747,
+        "debt_pct_assets": 0.24865604535236047,
+        "finance_expense": null,
+        "note": null
       }
     },
     "cycle_calibration": {
@@ -206,6 +215,25 @@
         "存货（原表缺或取数管道未覆盖）"
       ],
       "note": "代码初筛非定论；flags 逐项回年报附注核，结论由报告第七章会计可信度节下"
+    },
+    "revenue_trend": {
+      "series": [
+        {
+          "fy": 2023,
+          "revenue": 10387000000.0
+        },
+        {
+          "fy": 2024,
+          "revenue": 14015000000.0
+        },
+        {
+          "fy": 2025,
+          "revenue": 18674000000.0
+        }
+      ],
+      "consecutive_down_years": 0,
+      "flag": false,
+      "note": null
     }
   },
   "_note": "纯代码算出的硬数字 + 粗分档；最终判断由报告结合定性证据下，但须引用这些数字。"

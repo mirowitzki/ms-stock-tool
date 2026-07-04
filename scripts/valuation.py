@@ -866,6 +866,35 @@ def survival_test(fin, fy=None):
         else:
             # 有净债但 EBITDA≤0、衡量不了杠杆——盈利不足以支撑债务，承压偏脆弱
             band = "承压（有净债、盈利不足以覆盖）"
+    # 现金验真初筛（2026-07-04 对照大师失误审计新增）：存贷双高 / 净现金却付净财务费用
+    # ＝康得新（账面153亿存款、122亿实际余额0）/康美（一次核减299亿）式造假指纹的代码初筛。
+    # 旗亮不是定论——回年报财务费用附注抄利息收入、倒算隐含存款收益率（见 skills/fact-check.md 现金验真查项）。
+    d_total = total_debt(fin, fy)
+    ta = _g(fin, "Assets", fy)
+    if ta is None or ta != ta:
+        liab, eq_ = _g(fin, "Liabilities", fy), _g(fin, "StockholdersEquity", fy)
+        ta = (liab + eq_) if (liab is not None and liab == liab and eq_ is not None and eq_ == eq_) else None
+    cash_pct = (cash / ta) if (cash is not None and ta and ta > 0) else None
+    debt_pct = (d_total / ta) if (d_total is not None and ta and ta > 0) else None
+    both_high = (cash_pct is not None and debt_pct is not None
+                 and cash_pct >= 0.25 and debt_pct >= 0.25)
+    # 财务费用（FinanceExpense）是 A 股净额口径（已扣利息收入）；美股无此概念、这一腿自动不触发，
+    # 不会把"总债+更多现金+有毛利息支出"的正常美股误伤。阈值 0.5% 现金规模，挡手续费/汇兑小额噪声。
+    fe = _g(fin, "FinanceExpense", fy)
+    fe = fe if (fe is not None and fe == fe) else None
+    net_cash_but_paying = bool(fe is not None and cash is not None and d_total is not None
+                               and cash > d_total and cash > 0 and fe > 0.005 * cash)
+    paradox = {
+        "flag": bool(both_high or net_cash_but_paying),
+        "both_high": both_high if (cash_pct is not None and debt_pct is not None) else None,
+        "net_cash_but_paying": net_cash_but_paying if fe is not None else None,
+        "cash_pct_assets": cash_pct,
+        "debt_pct_assets": debt_pct,
+        "finance_expense": fe,
+        "note": ("存贷双高或净现金却付净财务费用——现金真实性存疑的代码初筛：回年报财务费用附注抄利息收入、"
+                 "倒算隐含存款收益率验现金（skills/fact-check.md 现金验真查项）"
+                 ) if (both_high or net_cash_but_paying) else None,
+    }
     return {
         "fy": fy,
         "net_debt": nd,
@@ -880,6 +909,7 @@ def survival_test(fin, fy=None):
         "cash_runway_years": runway_years,
         "band": band,
         "debt_components": debt_components(fin, fy),
+        "cash_debt_paradox": paradox,
     }
 
 
@@ -987,6 +1017,34 @@ def cycle_calibration(fin, default_tax=0.21):
     }
 
 
+def revenue_decline(fin, n=8):
+    """量层趋势初筛（2026-07-04 对照大师失误审计新增）：营收连续下滑的财年数。
+    连续 ≥2 个财年下滑＝量层剪刀差候选——若利润率/EPS 反而靠提价、回购、砍成本撑住，
+    护城河结论必须降级为待证假设、先走"周期波次 vs 护城河塌方"判别（skills/moat-analysis.md）。
+    IBM 教训：营收连降 20+ 个季度、利润表还体面，护城河结论滞后约 5 年才认错。
+    季度口径（连续 4 期同比下滑）不在本函数——回 quarterly.csv 由作者/核查 agent 人工核。"""
+    years = _fy_list(fin, _REV_KEYS, n)
+    series = []
+    for y in years:
+        r = revenue(fin, y)
+        if r is not None and r == r:
+            series.append({"fy": y, "revenue": r})
+    k = 0
+    for i in range(len(series) - 1, 0, -1):
+        if series[i]["revenue"] < series[i - 1]["revenue"]:
+            k += 1
+        else:
+            break
+    flag = k >= 2
+    return {
+        "series": series,
+        "consecutive_down_years": k,
+        "flag": flag,
+        "note": (f"营收已连续 {k} 个财年下滑——量层剪刀差候选：利润率/EPS 若靠提价、回购、砍成本维持，"
+                 "护城河结论降级为待证假设（先走周期vs塌方判别、判周期须给供给侧证据留痕）") if flag else None,
+    }
+
+
 def compute_value_metrics(fin, n=5, default_tax=0.21):
     """汇总四柱 + 周期校准 + 盈利质量取证 → metrics.json 的内容。纯数字 + 粗分档，不下最终判断。"""
     return {
@@ -996,6 +1054,7 @@ def compute_value_metrics(fin, n=5, default_tax=0.21):
         "survival": survival_test(fin),
         "cycle_calibration": cycle_calibration(fin, default_tax),
         "earnings_quality": earnings_quality(fin, n),
+        "revenue_trend": revenue_decline(fin),
     }
 
 
