@@ -190,6 +190,23 @@ def main():
         print("\n【已分析但缺决策记录 decision.json】（建议补上，否则无法复盘）：")
         print("  " + ", ".join(no_journal))
 
+    # 判例库查缺（2026-07-05）：结案归档是流水线固定一步——已交付的公司必须归进
+    # reviews/ARCHETYPES.md 的某个原型，否则这个案子的经验没进机构记忆、下个同类案子用不上。
+    arch_path = Path("reviews/ARCHETYPES.md")
+    if arch_path.exists():
+        arch_text = arch_path.read_text(encoding="utf-8")
+        not_archived = []
+        for d in sorted(base.glob("*")):
+            if not d.is_dir():
+                continue
+            code = d.name
+            delivered = (d / f"{code}_公司完整报告.md").exists() or (d / "valuation_explorer.html").exists()
+            if delivered and code not in arch_text:
+                not_archived.append(code)
+        if not_archived:
+            print("\n【已交付但判例未入库】（结案归档欠账——把案子的经验归进 reviews/ARCHETYPES.md 对应原型）：")
+            print("  " + ", ".join(not_archived))
+
     chs = chains_due()
     if chs:
         print("\n" + "=" * 56)
