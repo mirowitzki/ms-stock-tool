@@ -127,19 +127,41 @@ def main():
         if due_preds:
             reasons.append(f"{len(due_preds)} 条预测到期待打分（最早 {min(p['check_by'] for p in due_preds)}）")
         ew = rec.get("entry_watch") or {}
+        # 价格带作废条件（2026-07-04，摊平预承诺——Miller 2008/Ackman Valeant 教训）：
+        # 任一条件触发＝带作废，价格再进带提示"这是刀不是折扣、须完整重分析"，不做机会复盘。
+        inval = [iv for iv in (ew.get("invalidation") or []) if isinstance(iv, dict)]
+        preds_by_id = {p.get("id"): p for p in (rec.get("predictions") or []) if isinstance(p, dict)}
+        triggered = []
+        for iv in inval:
+            if iv.get("prediction_id"):
+                p = preds_by_id.get(iv["prediction_id"])
+                if p and p.get("status") == iv.get("triggers_when", "hit"):
+                    triggered.append(iv.get("event") or f"预测 {iv['prediction_id']} 已{p.get('status')}")
+            elif iv.get("status") == "triggered":
+                triggered.append(iv.get("event", "作废事件"))
         close, month = last_close(d / "financials")
         if close is not None and ew.get("high") is not None and close <= ew["high"]:
-            note = ew.get("note", "")
-            reasons.append(f"价格进入入场观察区（{month} 收盘 {close} ≤ {ew['high']}）→ 机会复盘"
-                           + (f"；注意：{note[:36]}" if note else ""))
+            if triggered:
+                reasons.append(f"价格进入观察区（{month} 收盘 {close} ≤ {ew['high']}）但价格带已作废："
+                               f"{('；'.join(triggered))[:60]} → 这是刀不是折扣、须按今天事实完整重分析（不做机会复盘）")
+            else:
+                note = ew.get("note", "")
+                reasons.append(f"价格进入入场观察区（{month} 收盘 {close} ≤ {ew['high']}）→ 机会复盘"
+                               + (f"；注意：{note[:36]}" if note else ""))
+                if inval:
+                    evts = "；".join(iv.get("event", "")[:24] for iv in inval)
+                    reasons.append(f"进带前先核作废条件（任一被公告级证据证实即带作废）：{evts[:90]}")
+        elif triggered:
+            reasons.append(f"入场观察带已作废（{('；'.join(triggered))[:50]}）——旧价格带失效、须完整重分析后重设")
         if reasons:
-            due.append((code, rec.get("verdict", "?"), date, reasons, rec.get("drivers") or [], due_preds))
+            due.append((code, rec.get("verdict", "?"), date, reasons, rec.get("drivers") or [], due_preds,
+                        d / "_thesis.md" if ((rb and rb <= today) or due_preds) else None))
 
     print("=" * 56)
     print("【该复盘的公司】自上次分析后出现了新数据 / 新公告：")
     if not due:
         print("  （暂无——要么没新料，要么这些公司还没建决策记录）")
-    for code, verdict, date, reasons, drivers, due_preds in due:
+    for code, verdict, date, reasons, drivers, due_preds, thesis_path in due:
         print(f"  ● {code}  上次判断「{verdict[:60]}」({date})")
         for r in reasons:
             print(f"      → {r}")
@@ -156,6 +178,14 @@ def main():
                     print(f"        · {name}" + (f" → 盯 {watch}" if watch else ""))
                 else:
                     print(f"        · {dv}")
+        # 论点漂移对照底稿（2026-07-04）：复盘到期/预测到期时打印旧 _thesis.md，
+        # 复盘按 postmortem 动作二把四步逐项判 存活/已死/被替换——理由换血而结论不变＝漂移、须完整重分析。
+        if thesis_path is not None and thesis_path.exists():
+            txt = thesis_path.read_text(encoding="utf-8").strip()
+            print("      论点漂移对照底稿（旧 _thesis.md 四步，逐项判 存活/已死/被替换）：")
+            for ln in txt.splitlines()[:14]:
+                if ln.strip():
+                    print(f"        ｜{ln.strip()[:64]}")
     if no_journal:
         print("\n【已分析但缺决策记录 decision.json】（建议补上，否则无法复盘）：")
         print("  " + ", ".join(no_journal))
