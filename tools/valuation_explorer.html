@@ -850,7 +850,6 @@ footer a { color: var(--accent); text-decoration: none; }
 
 <header>
   <h1><span class="ticker-badge" id="ticker-badge">TICKER</span><span id="company-name">价值分析交互器</span></h1>
-  <p class="subtitle" id="subtitle">三情景价值区间 · 安全边际看现价离保守端多远</p>
 </header>
 
 <!-- ========================= 下一份财报提醒 ========================= -->
@@ -859,7 +858,7 @@ footer a { color: var(--accent); text-decoration: none; }
 <!-- ========================= 基础事实 ========================= -->
 <section class="card">
   <h2>
-    <span>基础事实 <span class="card-note">可调整，下方所有计算实时更新</span></span>
+    <span>基础事实</span>
     <button class="reset-btn" onclick="resetSection('facts')" title="恢复到默认值">↻ 重置基础事实</button>
   </h2>
   <div class="facts-grid">
@@ -901,7 +900,7 @@ footer a { color: var(--accent); text-decoration: none; }
 
 <!-- ========================= 市场在讲什么 vs 我的判断 ========================= -->
 <section class="card" id="section-mvm" style="display:none;">
-  <h2>市场在讲什么 vs 我的判断 <span class="card-note">同一个现价，市场押注的未来 vs 我的价值区间——差额就是预期差</span></h2>
+  <h2>市场在讲什么 vs 我的判断</h2>
   <div class="mvm">
     <div class="mvm-col market">
       <div class="mvm-h">🗣️ 市场在讲什么 <span class="mvm-verdict-tag" id="mvm-verdict"></span></div>
@@ -941,9 +940,6 @@ footer a { color: var(--accent); text-decoration: none; }
 <!-- ========================= 最新年报 · 业务板块与利润流向（桑基图） ========================= -->
 <section class="card" id="section-sankey" style="display:none;">
   <h2><span id="sankey-title">业务板块 → 利润流向</span> <span class="card-note" id="sankey-subtitle"></span></h2>
-  <p class="muted" style="font-size:14px; margin-bottom:6px;" id="sankey-desc">
-    左边是各项业务板块（条越粗＝营收越大），汇成营业收入后，一路分流成成本、各项费用，最后剩下净利润。
-  </p>
   <div class="chart-container" id="chart-sankey"></div>
   <div class="income-note" id="sankey-note" style="display:none;"></div>
   <div class="legend" id="legend-sankey"></div>
@@ -953,9 +949,6 @@ footer a { color: var(--accent); text-decoration: none; }
 <section>
   <div class="card" style="margin-bottom: 16px;">
     <h2>三个情景：故事 + 管理层应对 + 价值区间</h2>
-    <p class="muted" style="font-size: 14px; margin-bottom: 4px;">
-      每个情景先是一个故事——公司会变成什么样、管理层该怎么应对——再挂一个毛估的价值区间。想自己调假设，展开每张卡片底部的“高级”即可。
-    </p>
   </div>
   <div class="scenarios">
     <!-- Bear -->
@@ -1119,10 +1112,7 @@ footer a { color: var(--accent); text-decoration: none; }
 
 <!-- ========================= 催化剂与检验时间线 ========================= -->
 <section class="card" id="section-timeline" style="display:none;">
-  <h2>催化剂与检验时间线 <span class="card-note">这套判断接下来靠什么、什么时候被证实或证伪</span></h2>
-  <p class="muted" style="font-size:14.5px; margin-top:-4px; margin-bottom:10px;">
-    每条都是明确的检验点：到期回来对一次，朝中性 / 乐观 / 悲观哪个方向走，决定价值落在区间的哪一端。颜色＝这条兑现利好哪个情景。
-  </p>
+  <h2>催化剂与检验时间线</h2>
   <div class="tl" id="timeline"></div>
 </section>
 
@@ -1146,7 +1136,6 @@ footer a { color: var(--accent); text-decoration: none; }
 
 <footer>
   <p><span id="footer-ticker">—</span> · 生成时间 <span id="footer-time">—</span></p>
-  <p>由 <a href="#">ms-stock-tool</a> 自动生成 · 假设全部可拖动调整 · 关闭后下次打开会保留你的调整</p>
 </footer>
 
 </div><!-- /container -->
@@ -2754,16 +2743,9 @@ function renderSankey() {
   const t = sk.totals || {};
   const hasSeg = !!sk.seg_dim;
   const isLoss = !!sk.is_loss || (t.net_income != null && t.net_income < 0);
-  // 标题/描述据"有无业务板块层"与"盈亏"动态切换，避免名不副实（美股无分部、亏损另一套措辞）
+  // 标题据"有无业务板块层"与"盈亏"动态切换，避免名不副实（美股无分部、亏损另一套措辞）
   document.getElementById('sankey-title').textContent =
     hasSeg ? '业务板块 → 利润流向' : '营业收入 → 成本费用流向';
-  document.getElementById('sankey-desc').textContent = isLoss
-    ? (hasSeg
-        ? '这一年是亏损：左边各业务板块汇成营业收入，再加上以自有资金弥补的净亏损（红色虚线），一起覆盖了全部成本和费用。红色虚线越粗＝自掏腰包补的窟窿越大。'
-        : '这一年是亏损：营业收入加上以自有资金弥补的净亏损（红色虚线），一起覆盖了全部成本和费用。红色虚线越粗＝自掏腰包补的窟窿越大。')
-    : (hasSeg
-        ? '左边是各项业务板块（条越粗＝营收越大），汇成营业收入后，一路分流成成本、各项费用，最后剩下净利润。'
-        : '营业收入一路分流成成本、各项费用，最后剩下净利润。');
   document.getElementById('sankey-subtitle').textContent = isLoss
     ? `${sk.year} 年度${sk.seg_dim ? ' · ' + sk.seg_dim + '拆分' : ''} · 营收 ${CSYM}${fmtMoney(t.revenue)}，净亏损 ${CSYM}${fmtMoney(Math.abs(t.net_income))}（自有资金弥补）`
     : `${sk.year} 年度${sk.seg_dim ? ' · ' + sk.seg_dim + '拆分' : ''} · 营收 ${CSYM}${fmtMoney(t.revenue)} → 净利润 ${CSYM}${fmtMoney(t.net_income)}`;
