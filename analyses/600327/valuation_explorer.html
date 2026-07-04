@@ -1149,7 +1149,7 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "600327",
   "company_name": "大东方",
   "as_of": "2025-12-31",
-  "generated_at": "2026-07-04 21:46:35",
+  "generated_at": "2026-07-04 23:34:29",
   "facts": {
     "revenue_today": 3249,
     "cash": 387,
@@ -1998,6 +1998,15 @@ footer a { color: var(--accent); text-decoration: none; }
             "debt_current_fallback"
           ],
           "note": "应付债券/租赁负债等科目当前取数管道未覆盖；判生存柱前以年报附注的全口径为准"
+        },
+        "cash_debt_paradox": {
+          "flag": false,
+          "both_high": false,
+          "net_cash_but_paying": false,
+          "cash_pct_assets": 0.08187168607298118,
+          "debt_pct_assets": 0.14465055646615213,
+          "finance_expense": 41120300.0,
+          "note": null
         }
       },
       "cycle_calibration": {
@@ -2070,6 +2079,45 @@ footer a { color: var(--accent); text-decoration: none; }
         "flags": [],
         "coverage_missing": [],
         "note": "代码初筛非定论；flags 逐项回年报附注核，结论由报告第七章会计可信度节下"
+      },
+      "revenue_trend": {
+        "series": [
+          {
+            "fy": 2018,
+            "revenue": 9154000000.0
+          },
+          {
+            "fy": 2019,
+            "revenue": 9362000000.0
+          },
+          {
+            "fy": 2020,
+            "revenue": 7936000000.0
+          },
+          {
+            "fy": 2021,
+            "revenue": 6905000000.0
+          },
+          {
+            "fy": 2022,
+            "revenue": 3130000000.0
+          },
+          {
+            "fy": 2023,
+            "revenue": 3534000000.0000005
+          },
+          {
+            "fy": 2024,
+            "revenue": 3643000000.0
+          },
+          {
+            "fy": 2025,
+            "revenue": 3249000000.0
+          }
+        ],
+        "consecutive_down_years": 1,
+        "flag": false,
+        "note": null
       }
     },
     "_note": "纯代码算出的硬数字 + 粗分档；最终判断由报告结合定性证据下，但须引用这些数字。"
@@ -2882,22 +2930,34 @@ footer a { color: var(--accent); text-decoration: none; }
       {
         "name": "母体抽血是否兑现",
         "kind": "bad",
-        "watch": "均瑶集团母体债务/到期、控股股东质押比例与用途、对均瑶系的异常关联往来或偏离公允的资产处置——出现即利空、往熊市走。最重要的下行变量。"
+        "watch": "均瑶集团母体债务/到期、控股股东质押比例与用途、对均瑶系的异常关联往来或偏离公允的资产处置——出现即利空、往熊市走。最重要的下行变量。",
+        "who": "均瑶集团母体（经无锡商业大厦集团持股44.71%的控股股东）",
+        "mechanism": "绝对控股地位可主导分红与资产处置——这是下行变量的强制机制（2020年占净利210.61%的超额分红是先例），对中小股东无对等的反向强制",
+        "window": "持续存在、随母体债务到期滚动（母体负债2023约684亿、质押捆绑）——无到期日的慢性风险"
       },
       {
         "name": "医疗降价后能否止血",
         "kind": "neutral",
-        "watch": "医疗板块收入与毛利、整体扣非。毛利额大幅下滑、扣非重新转负=利空；扣非维持转正=中性、支撑中性情景。"
+        "watch": "医疗板块收入与毛利、整体扣非。毛利额大幅下滑、扣非重新转负=利空；扣非维持转正=中性、支撑中性情景。",
+        "who": "健高医疗经营层与上游金赛药业（定价权在上游、采购占比52.39%）",
+        "mechanism": "无强制机制——经营变量、不构成价值释放催化剂，只影响情景走向",
+        "window": "2026年起长效生长激素降价约75%落地，2026中报/年报见分晓"
       },
       {
         "name": "核心物业盘活/证券化",
         "kind": "good",
-        "watch": "业态转换/类REITs/合作开发的实质性公告——出现即利好、往牛市走。最重要的上行变量，但可控性在均瑶手里、动机不确定。"
+        "watch": "业态转换/类REITs/合作开发的实质性公告——出现即利好、往牛市走。最重要的上行变量，但可控性在均瑶手里、动机不确定。",
+        "who": "均瑶系（王均金/无锡商业大厦集团）单方可控",
+        "mechanism": "无强制机制——完全取决于控股股东意愿、没有任何法律或股权机制能强迫它盘活，按折价长期不收敛定价、只以远期期权进牛市",
+        "window": "无明确时间窗（未见公告或计划）——按3-5年以上甚至不发生看待"
       },
       {
         "name": "控制权与治理变化",
         "kind": "neutral",
-        "watch": "2026-02江苏证监局警示函有无后续更重处罚（下行）、控制权会不会落定到有动力为全体股东收敛折价的主体（上行）。双向变量。"
+        "watch": "2026-02江苏证监局警示函有无后续更重处罚（下行）、控制权会不会落定到有动力为全体股东收敛折价的主体（上行）。双向变量。",
+        "who": "下行看江苏证监局（警示函后续）；上行看母体债权人与潜在受让方（质押股权处置）",
+        "mechanism": "监管处罚有法定程序（2026-02警示函已发、若升级有明确程序）；控制权变化靠母体债务压力下质押股权被处置——债权人有强制力、但公司与中小股东都不可控",
+        "window": "警示函后续看12个月内有无升级；控制权无明确时间窗"
       }
     ],
     "verdict": "生意和价格分开答：生意是被困住的好资产、价值释放靠均瑶系把资本配置变好（盘活物业/剥离亏损/收敛折价），不靠业务变好；股票现价就在价值区间¥2.65到3.75的中部、按账面原价、没有安全边际、押的是均瑶处置意图。决策＝现价不是买点；等价格回到账面之下的¥2.5-2.8、或控制权落定/物业盘活这类催化兑现，才有不对称赔率。它是一门值得拥有的破净资产生意，合理与否不在公司、在价格。"
@@ -3966,8 +4026,15 @@ function ch8CardHTML() {
   const asym = c.asymmetry || {};
   const catBlocks = (c.catalysts || []).map(t => {
     const chip = '<span class="rk ' + (kindCls[t.kind] || 'rk-neutral') + '">' + escTL(t.name || '') + '</span>';
+    const trio = [
+      t.who ? '谁：' + escTL(t.who) : null,
+      t.mechanism ? '凭什么强制：' + escTL(t.mechanism) : null,
+      t.window ? '时间窗：' + escTL(t.window) : null,
+    ].filter(Boolean).join('　·　');
     return '<div class="ch3-seg"><div class="ch3-seg-h">' + chip + '</div>'
-      + (t.watch ? '<div class="ch3-seg-b">' + escTL(t.watch) + '</div>' : '') + '</div>';
+      + (t.watch ? '<div class="ch3-seg-b">' + escTL(t.watch) + '</div>' : '')
+      + (trio ? '<div class="ch3-seg-b" style="margin-top:4px;font-size:13.5px;color:var(--text-muted)">' + trio + '</div>' : '')
+      + '</div>';
   }).join('');
   const catBlock = catBlocks
     ? '<div class="qc-lab" style="margin-top:18px">关键价值变量 · 盯什么决定往哪个情景走</div><div class="ch3-segs">' + catBlocks + '</div>'
