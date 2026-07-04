@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# 花名：哈兰德 —— 团队花名册见 CLAUDE.md「团队花名册」节
 """
 check_explorers.py —— 交互器批量冒烟测试（O3，2026-07-05）。
 

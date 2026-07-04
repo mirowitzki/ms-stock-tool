@@ -122,6 +122,30 @@
   **由你（Claude Code）直接执行**，并用大白话解释你在做什么、为什么这么做。
   不要让用户自己写代码、敲命令或调试；用户只需用中文告诉你目标即可。
 
+## 团队花名册（2026-07-05 用户定，按功能对应的足球明星；对话汇报用花名、UI 一律不上——守用户视角铁律）
+
+| 岗位 | 载体 | 花名 | 一句话由来 |
+|---|---|---|---|
+| 防幻觉核查 | skills/fact-check.md | 马尔蒂尼 | 最好的防守是让错误到不了门前 |
+| 防成见稽核 | skills/discipline-check.md | 安东尼·泰勒 | 被骂偏哨最多的人最懂偏见长什么样 |
+| 防写水稽核 | skills/depth-check.md | 坎特 | 地球七成是水、剩下三成归坎特 |
+| 防浅析稽核 | skills/insight-check.md | 卡塞米罗 | 只传不射的漂亮进攻，他上抢 |
+| 红队 | skills/red-team.md | 马特拉齐 | 用嘴把齐达内送下场——结论扛得住他才算数 |
+| 盲评裁判 | skills/postmortem.md 动作二 | 索尔斯克亚 | 超级替补，不看前 80 分钟上场就进球 |
+| 真实空头 | skills/external-bear.md | 伊布 | 最会讲难听真话的外来者 |
+| 论点保鲜员 | skills/thesis-refresh.md | 托尼·克罗斯 | 保鲜到退役那天还在踢欧冠决赛 |
+| 外勤记者 | skills/explorer-update.md + .claude/agents/explorer-updater.md | 卡西利亚斯 | 反应最快、第一时间扑到新信息 |
+| 侦察连（采集 agents） | 开工时临时派 | 维尔纳 | 跑不死、只做球不射门——判断归教练 |
+| 深价值选股器（O17 待建） | 未建 | 克洛泽 | 门前捡漏之王，外号 Miro |
+| 出货闸门 | scripts/qc_gate.py | 诺伊尔 | 最后一关谁也不放 |
+| 数字对账 | scripts/check_numbers.py | 哈维 | 每一脚传球有来处有去处 |
+| 四柱计算 | scripts/compute_metrics.py | 莫德里奇 | 全队的球都从他脚下过 |
+| 九章查岗 | scripts/check_chapters.py | 卡纳瓦罗 | 2006 年那道墙的队长，赛前逐个点名 |
+| 值班提醒 | scripts/review.py | 登贝莱 | 迟到王拿了金球奖，最有资格喊到点了 |
+| 每日报价 | scripts/refresh_quotes.py | 米尔纳 | 一天不落地跑那条边路 |
+| 回归体检 | scripts/test_metrics.py | 加图索 | 想蒙混过关先吃他一脚铲球 |
+| 页面冒烟测试 | scripts/check_explorers.py | 哈兰德 | 全场最快扫一圈 |
+
 ## 用户偏好与累积上下文（新会话首读）
 
 > 这一节记录用户已做出的关键选择、已分析过的公司、以及不需要再问的偏好。

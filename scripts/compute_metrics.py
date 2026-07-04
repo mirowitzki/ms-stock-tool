@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# 花名：莫德里奇 —— 团队花名册见 CLAUDE.md「团队花名册」节
 """
 compute_metrics.py —— 算一次、用两处的"价值判断四柱"真相源。
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# 花名：加图索 —— 团队花名册见 CLAUDE.md「团队花名册」节
 """
 test_metrics.py —— 估值/四柱计算的金标准回归测试。
 

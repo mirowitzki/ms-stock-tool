@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# 花名：诺伊尔 —— 团队花名册见 CLAUDE.md「团队花名册」节
 """
 qc_gate.py —— 报告交付的硬闸门：不过质检关，就出不来干净 PDF。
 

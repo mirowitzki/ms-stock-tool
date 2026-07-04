@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# 花名：哈维 —— 团队花名册见 CLAUDE.md「团队花名册」节
 """
 check_numbers.py —— 报告数字对账（代码核查，免费、精确、不会幻觉）
 
