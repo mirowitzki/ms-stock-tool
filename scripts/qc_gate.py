@@ -67,11 +67,19 @@ def verify_qc(ticker: str):
 
     problems = []
 
-    # ① 动笔前四步 _thesis.md（强制"分析先于码字"：核心论点/认知差/价值阶梯诊断/主变量）
+    # ① 动笔前四步 _thesis.md（强制"分析先于码字"）。2026-07-05 起（O2）：不止查字数、查四步结构——
+    # 之前只查 >200 字是纸老虎（600327 那份 407 字的物业修正条混过去了），四步的关键词必须都在。
     thesis = base / "_thesis.md"
     if not thesis.exists() or len(thesis.read_text(encoding="utf-8").strip()) < 200:
-        problems.append("缺『动笔前四步』_thesis.md（核心论点/认知差/价值阶梯诊断/主变量，>200字）"
+        problems.append("缺『动笔前四步』_thesis.md（核心论点/认知差/价值困在哪/主变量，>200字）"
                         "——分析必须先于码字、且落成文件")
+    else:
+        ttext = thesis.read_text(encoding="utf-8")
+        need = {"核心论点": "核心论点", "认知差": "认知差", "价值困": "价值困在哪/靠什么释放", "主变量": "主变量"}
+        t_miss = [label for kw, label in need.items() if kw not in ttext]
+        if t_miss:
+            problems.append("_thesis.md 缺四步结构：" + "、".join(t_miss)
+                            + "——只有零散笔记不算完成『分析先于码字』（O2，2026-07-05 起）")
 
     # ② 章节卡完备（已定交付标准的章必须出卡 + 报告含脚手架）——独立于质检登记、总是检查，防"有标准不照做"
     ch_ok, ch_problems = verify_chapters(ticker)
@@ -89,6 +97,20 @@ def verify_qc(ticker: str):
     cur = sha256_of(report)
     if status.get("report_sha256") != cur:
         problems.append("报告在质检登记后被改动过（指纹不符）→ 质检结论已过期，需重跑五道关并重新 --record")
+
+    # ④.5 卡片数据指纹（2026-07-05 起，O1）：valuation_inputs.json 是交互器卡片的数据源、主交付物的主面——
+    # 600327 百货 28% 幻觉×7 处、300996 回路/净利率漏同步都出在这里（只改报告不改卡片、或反过来）。
+    # 登记后改卡片＝质检过期，与报告同权。decision.json 刻意不进指纹：predictions/invalidation 的状态结算
+    # 是复盘的日常簿记、不应作废质检（判断内核若变，本来就要走完整重分析+重登记）。
+    vi = base / "valuation_inputs.json"
+    if vi.exists():
+        cur_vi = sha256_of(vi)
+        if not status.get("inputs_sha256"):
+            problems.append("质检登记未覆盖卡片数据 valuation_inputs.json（旧版登记）→ 重跑质检并重新 --record"
+                            "（新登记会同时锁卡片指纹）")
+        elif status.get("inputs_sha256") != cur_vi:
+            problems.append("卡片数据 valuation_inputs.json 在质检登记后被改动过（指纹不符）"
+                            "→ 卡片与报告可能不同步，需复核后重新 --record")
 
     # ⑤ 五道关全部 pass
     lines = status.get("lines", {})
@@ -116,9 +138,12 @@ def do_record(ticker: str, kvs, note: str):
         if k not in LINE_KEYS:
             sys.exit(f"未知的质检关：{k}（应为 {sorted(LINE_KEYS)} 之一）")
         lines[k] = v.strip()
+    vi = base / "valuation_inputs.json"
     status = {
         "report_file": report.name,
         "report_sha256": sha256_of(report),
+        # O1（2026-07-05）：指纹同时盖住卡片数据源；decision.json 刻意不盖（状态结算属日常簿记）
+        "inputs_sha256": sha256_of(vi) if vi.exists() else None,
         "recorded_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "lines": lines,
         "note": note or "",

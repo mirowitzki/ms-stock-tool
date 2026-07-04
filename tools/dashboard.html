@@ -980,9 +980,16 @@ function watchInfo(c) {
     const zone = (w.entry_low != null ? sym + fmtPx(w.entry_low) + '–' : '≤' + sym) + fmtPx(w.entry_high);
     const closeTxt = (w.last_close_month || '') + '收盘 ' + sym + fmtPx(w.last_close);
     if (w.last_close <= w.entry_high) {
-      out.inZone = true;
-      out.zoneText = closeTxt + ' 已进观察区 ' + zone;
-      out.chips.push({ cls: 'in', text: '🎯 已进观察区 ' + zone + '（' + closeTxt + '）', title: w.entry_note || '' });
+      if (w.band_invalid) {
+        // 观察带已作废（作废条件被公告级证据触发）：这是刀不是折扣，红标提示重新分析、不当机会
+        out.zoneText = closeTxt + ' 观察带已作废';
+        out.chips.push({ cls: 'due', text: '⛔ 观察带已作废·须重新分析（' + closeTxt + '）', title: w.band_invalid });
+      } else {
+        out.inZone = true;
+        out.zoneText = closeTxt + ' 已进观察区 ' + zone;
+        const stay = (w.months_in_zone || 0) >= 3 ? '·已在区 ' + w.months_in_zone + ' 个月，该重看了' : '';
+        out.chips.push({ cls: 'in', text: '🎯 已进观察区 ' + zone + '（' + closeTxt + '）' + stay, title: w.entry_note || '' });
+      }
     } else {
       const prem = (w.last_close - w.entry_high) / w.entry_high * 100;
       const cls = prem <= 15 ? 'near' : 'far';

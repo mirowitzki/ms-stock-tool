@@ -154,12 +154,20 @@ def verify_chapters(ticker):
         if miss:
             problems.append(f"『{spec['name']}』字段未填全：{key} 缺 {', '.join(miss)}")
 
-    # ①.5 催化剂三要素（2026-07-04，对照大师失误审计）：折价/资产型标的（情景用 value_per_share）
-    # 的 ch8.catalysts 每条必须答出 who（谁）/ mechanism（凭什么强制价值分配）/ window（时间窗）。
+    # ①.5 催化剂三要素（2026-07-04，对照大师失误审计）：折价/资产型标的的 ch8.catalysts 每条
+    # 必须答出 who（谁）/ mechanism（凭什么强制价值分配）/ window（时间窗）。
     # 答不出的也要如实填（mechanism 写"无强制机制——按折价长期不收敛定价"），空着＝没想过＝拦。
-    scenarios = inputs.get("scenarios") or {}
-    is_asset_based = any(isinstance(s, dict) and s.get("value_per_share") is not None
-                         for s in scenarios.values()) if isinstance(scenarios, dict) else False
+    # 判定用 decision.json 的 archetype 标签（含 资产/折价/破净/控股/壳/无主 任一关键词）——
+    # 不用 value_per_share 判：判断带机制让非资产型公司（如 300996）也用该字段，会误伤。
+    is_asset_based = False
+    dec_path = base / "decision.json"
+    if dec_path.exists():
+        try:
+            arch = json.loads(dec_path.read_text(encoding="utf-8")).get("archetype") or ""
+            arch_text = " ".join(arch) if isinstance(arch, list) else str(arch)
+            is_asset_based = any(kw in arch_text for kw in ("资产", "折价", "破净", "控股", "壳", "无主"))
+        except Exception:
+            pass
     if is_asset_based and isinstance(inputs.get("ch8"), dict):
         for i, cat in enumerate(inputs["ch8"].get("catalysts") or [], 1):
             if not isinstance(cat, dict):

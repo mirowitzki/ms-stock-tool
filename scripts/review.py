@@ -14,6 +14,7 @@ review.py —— 后台复盘助手：扫描所有决策记录，找出"该复�
 
 import csv
 import json
+import sys
 from datetime import date
 from pathlib import Path
 
@@ -88,12 +89,66 @@ def chains_due():
     return out
 
 
+def cost_of_no_ledger(save=False):
+    """错过账本（O12，2026-07-05）：全部已分析公司按判断时点价 vs 最新价对照，
+    分「判偏低/观察」「判偏贵/说不」两栏——让"说不"也可证伪（说不的成本没人记账＝永远不可证伪）。
+    这是校准工具、不是投资建议；股价短期是噪声，按季度看、攒够样本再下结论。"""
+    base = Path("analyses")
+    qp = base / "_quotes.json"
+    quotes = {}
+    if qp.exists():
+        try:
+            quotes = json.loads(qp.read_text(encoding="utf-8")).get("quotes") or {}
+        except Exception as e:
+            print(f"⚠ _quotes.json 解析失败：{e}")
+    rows = []
+    for d in sorted(base.glob("*")):
+        dec = d / "decision.json"
+        if not d.is_dir() or not dec.exists():
+            continue
+        try:
+            rec = json.loads(dec.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        p0 = rec.get("current_price")
+        q = quotes.get(d.name) or {}
+        p1 = q.get("price")
+        chg = (p1 / p0 - 1) * 100 if (p0 and p1) else None
+        oc = (rec.get("odds") or {}).get("to_center_pct")
+        bullish = oc is not None and oc >= 0
+        rows.append({"code": d.name, "date": rec.get("date", ""), "bullish": bullish,
+                     "p0": p0, "p1": p1, "as_of": q.get("as_of", ""), "chg": chg, "oc": oc})
+    lines = []
+    lines.append("=" * 72)
+    lines.append("【错过账本】判断时点价 vs 最新价——让「说不」也可证伪（校准用、非建议）")
+    for title, flag in (("判偏低/进观察（抓住侧）", True), ("判偏贵/说不（放掉侧）", False)):
+        grp = [r for r in rows if r["bullish"] == flag]
+        lines.append(f"\n  ◆ {title}：{len(grp)} 家")
+        for r in sorted(grp, key=lambda x: -(x["chg"] if x["chg"] is not None else -999)):
+            chg_s = f"{r['chg']:+.0f}%" if r["chg"] is not None else "无最新价"
+            lines.append(f"    {r['code']:<8} {r['date']}  {r['p0'] if r['p0'] is not None else '—':>9} → "
+                         f"{r['p1'] if r['p1'] is not None else '—':>9}（{chg_s}）")
+        chgs = [r["chg"] for r in grp if r["chg"] is not None]
+        if chgs:
+            lines.append(f"    组平均涨跌：{sum(chgs)/len(chgs):+.0f}%")
+    lines.append("\n  读法：放掉侧大涨≠判断错（可能是题材泡沫更泡了），但连续两个季度放掉侧显著跑赢，")
+    lines.append("  就要回答是纪律还是系统性偏空（postmortem 动作三横截面综合）。")
+    out = "\n".join(lines)
+    print(out)
+    if save:
+        cal = Path("reviews/CALIBRATION.md")
+        stamp = f"\n\n## 错过账本快照 · {TODAY}\n\n```\n" + out + "\n```\n"
+        cal.write_text((cal.read_text(encoding="utf-8") if cal.exists() else "") + stamp, encoding="utf-8")
+        print(f"\n已存进 {cal}（季度一次即可）")
+
+
 def main():
     base = Path("analyses")
     if not base.exists():
         print("没有 analyses/ 目录")
         return
     due, no_journal = [], []
+    extras = {}  # code → {stage, paper_entry}（打印头行用）
     for d in sorted(base.glob("*")):
         if not d.is_dir():
             continue
@@ -114,7 +169,7 @@ def main():
         reasons = []
         nq = newest_quarter(d / "financials")
         if nq and date and nq > date:
-            reasons.append(f"新季报 {nq}")
+            reasons.append(f"新季报 {nq} → 先跑论点保鲜巡检（skills/thesis-refresh.md：重跑 metrics、承重判断逐条标 站得住/动摇/翻了）")
         new_anns = anns_after(d / "filings", date)
         if new_anns:
             top = new_anns[0]
@@ -146,7 +201,8 @@ def main():
                                f"{('；'.join(triggered))[:60]} → 这是刀不是折扣、须按今天事实完整重分析（不做机会复盘）")
             else:
                 note = ew.get("note", "")
-                reasons.append(f"价格进入入场观察区（{month} 收盘 {close} ≤ {ew['high']}）→ 机会复盘"
+                reasons.append(f"价格进入入场观察区（{month} 收盘 {close} ≤ {ew['high']}）→ 机会复盘，"
+                               f"复盘时必过红队关（skills/red-team.md 触发条件2）"
                                + (f"；注意：{note[:36]}" if note else ""))
                 if inval:
                     evts = "；".join(iv.get("event", "")[:24] for iv in inval)
@@ -154,6 +210,7 @@ def main():
         elif triggered:
             reasons.append(f"入场观察带已作废（{('；'.join(triggered))[:50]}）——旧价格带失效、须完整重分析后重设")
         if reasons:
+            extras[code] = {"stage": rec.get("stage", "观察"), "paper_entry": rec.get("paper_entry")}
             due.append((code, rec.get("verdict", "?"), date, reasons, rec.get("drivers") or [], due_preds,
                         d / "_thesis.md" if ((rb and rb <= today) or due_preds) else None))
 
@@ -162,7 +219,12 @@ def main():
     if not due:
         print("  （暂无——要么没新料，要么这些公司还没建决策记录）")
     for code, verdict, date, reasons, drivers, due_preds, thesis_path in due:
-        print(f"  ● {code}  上次判断「{verdict[:60]}」({date})")
+        ex = extras.get(code) or {}
+        print(f"  ● {code}  阶段「{ex.get('stage', '观察')}」 上次判断「{verdict[:60]}」({date})")
+        pe = ex.get("paper_entry")
+        if pe:
+            print(f"      纸面入场（校准用非建议）：{pe.get('date','?')} @ {pe.get('price','?')}"
+                  + (f" · {pe.get('note','')[:30]}" if pe.get('note') else ""))
         for r in reasons:
             print(f"      → {r}")
         if due_preds:
@@ -232,4 +294,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if "--ledger" in sys.argv:
+        cost_of_no_ledger(save="--save" in sys.argv)
+    else:
+        main()

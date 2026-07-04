@@ -124,6 +124,19 @@ def scan_company(ticker_dir):
             watch["entry_low"] = ew.get("low")
             watch["entry_high"] = ew.get("high")
             watch["entry_note"] = (ew.get("note") or "")[:80]
+            # 观察带作废状态（2026-07-05，O26）：任一作废条件已触发→芯片改红标、不再当机会显示
+            preds_by_id = {p.get("id"): p for p in (dec.get("predictions") or []) if isinstance(p, dict)}
+            triggered = []
+            for iv in (ew.get("invalidation") or []):
+                if not isinstance(iv, dict):
+                    continue
+                if iv.get("prediction_id"):
+                    p = preds_by_id.get(iv["prediction_id"])
+                    if p and p.get("status") == iv.get("triggers_when", "hit"):
+                        triggered.append(iv.get("event") or "")
+                elif iv.get("status") == "triggered":
+                    triggered.append(iv.get("event") or "")
+            watch["band_invalid"] = ("；".join(t[:40] for t in triggered if t) or "作废条件已触发") if triggered else None
             watch["review_by"] = dec.get("review_by")
             watch["pred_dates"] = sorted(p.get("check_by") for p in (dec.get("predictions") or [])
                                          if p.get("status", "open") == "open" and p.get("check_by"))
@@ -160,6 +173,17 @@ def scan_company(ticker_dir):
             if pts:
                 watch["last_close"] = pts[-1].get("c")
                 watch["last_close_month"] = pts[-1].get("m")
+                # 连续在观察区月数（2026-07-05，O21）：从最近一个月往回数收盘 ≤ 带上沿的连续月数
+                eh = watch.get("entry_high")
+                if eh is not None:
+                    k = 0
+                    for pt in reversed(pts):
+                        c_ = pt.get("c")
+                        if c_ is not None and c_ <= eh:
+                            k += 1
+                        else:
+                            break
+                    watch["months_in_zone"] = k
         except Exception as e:
             print(f"⚠ {prices_path} 解析失败：{e}")
     if next_earnings:

@@ -1,7 +1,8 @@
 {
   "report_file": "600327_公司完整报告.md",
-  "report_sha256": "4613e84b5b27f5dd9bba32d821b1b4908b3bc0e13b9286b43dff3fac2baa9e74",
-  "recorded_at": "2026-07-01 10:39:46",
+  "report_sha256": "f3ee2a9a9c2d4acfacda2c2a6922ef5048c0afe6991be49263d5e327fd08c0de",
+  "inputs_sha256": "3cd03d0e3ee2a385c164c032f2be5ac489f26751c9966c33ff893fbc7324533d",
+  "recorded_at": "2026-07-05 01:26:43",
   "lines": {
     "check_numbers": "pass",
     "fact": "pass",
@@ -9,5 +10,5 @@
     "depth": "pass",
     "insight": "pass"
   },
-  "note": "五关全过(含二次独立复核)。fact:核心结论+ch1.2百货净利1.10亿/ROE28%/杜撰主体名幻觉已删+改板块口径;ch7.5百货1.1亿溢出改板块毛利倒推估算(narrow复核确认清)。depth:ch7账干净拆两面(纳入2026-02江苏证监局警示函·参股核算瑕疵)、吉道航黑箱补成均瑶系造车基金6亿画像、ch6.4据全文写实(复核通过)。discipline/insight首轮即过。同步修valuation_inputs卡片百货幻觉7处+警示函误判、核心结论旧物业重估自相矛盾。"
+  "note": "增补8.7市场上真实的反方小节（O8首战）+质押率67.75%跨章传播+ch9矩阵控制权动荡重判+catalysts三要素+thesis四步重构；窄口径五关（fact联网核源/discipline/depth+insight合并/末次独立复核）全过、复核抓的3处变体漏网已清"
 }
