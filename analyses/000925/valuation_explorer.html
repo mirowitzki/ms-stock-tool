@@ -1149,7 +1149,7 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "000925",
   "company_name": "众合科技",
   "as_of": "2025-12-31",
-  "generated_at": "2026-07-04 21:46:33",
+  "generated_at": "2026-07-04 23:45:08",
   "facts": {
     "revenue_today": 2284,
     "cash": 1647,
@@ -1996,6 +1996,15 @@ footer a { color: var(--accent); text-decoration: none; }
             "debt_current_fallback"
           ],
           "note": "应付债券/租赁负债等科目当前取数管道未覆盖；判生存柱前以年报附注的全口径为准"
+        },
+        "cash_debt_paradox": {
+          "flag": false,
+          "both_high": false,
+          "net_cash_but_paying": false,
+          "cash_pct_assets": 0.17347632309752253,
+          "debt_pct_assets": 0.29228706532824833,
+          "finance_expense": 86803700.00000001,
+          "note": null
         }
       },
       "cycle_calibration": {
@@ -2066,6 +2075,45 @@ footer a { color: var(--accent); text-decoration: none; }
           "存货（原表缺或取数管道未覆盖）"
         ],
         "note": "代码初筛非定论；flags 逐项回年报附注核，结论由报告第七章会计可信度节下"
+      },
+      "revenue_trend": {
+        "series": [
+          {
+            "fy": 2018,
+            "revenue": 2089000000.0
+          },
+          {
+            "fy": 2019,
+            "revenue": 2778000000.0
+          },
+          {
+            "fy": 2020,
+            "revenue": 2927000000.0
+          },
+          {
+            "fy": 2021,
+            "revenue": 2906000000.0
+          },
+          {
+            "fy": 2022,
+            "revenue": 2560000000.0
+          },
+          {
+            "fy": 2023,
+            "revenue": 2325000000.0
+          },
+          {
+            "fy": 2024,
+            "revenue": 2023999999.9999998
+          },
+          {
+            "fy": 2025,
+            "revenue": 2284000000.0
+          }
+        ],
+        "consecutive_down_years": 0,
+        "flag": false,
+        "note": null
       }
     },
     "_note": "纯代码算出的硬数字 + 粗分档；最终判断由报告结合定性证据下，但须引用这些数字。"
@@ -3456,8 +3504,15 @@ function ch8CardHTML() {
   const asym = c.asymmetry || {};
   const catBlocks = (c.catalysts || []).map(t => {
     const chip = '<span class="rk ' + (kindCls[t.kind] || 'rk-neutral') + '">' + escTL(t.name || '') + '</span>';
+    const trio = [
+      t.who ? '谁：' + escTL(t.who) : null,
+      t.mechanism ? '凭什么强制：' + escTL(t.mechanism) : null,
+      t.window ? '时间窗：' + escTL(t.window) : null,
+    ].filter(Boolean).join('　·　');
     return '<div class="ch3-seg"><div class="ch3-seg-h">' + chip + '</div>'
-      + (t.watch ? '<div class="ch3-seg-b">' + escTL(t.watch) + '</div>' : '') + '</div>';
+      + (t.watch ? '<div class="ch3-seg-b">' + escTL(t.watch) + '</div>' : '')
+      + (trio ? '<div class="ch3-seg-b" style="margin-top:4px;font-size:13.5px;color:var(--text-muted)">' + trio + '</div>' : '')
+      + '</div>';
   }).join('');
   const catBlock = catBlocks
     ? '<div class="qc-lab" style="margin-top:18px">关键价值变量 · 盯什么决定往哪个情景走</div><div class="ch3-segs">' + catBlocks + '</div>'

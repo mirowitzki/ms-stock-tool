@@ -1149,7 +1149,7 @@ footer a { color: var(--accent); text-decoration: none; }
   "ticker": "SWKS",
   "company_name": "Skyworks Solutions",
   "as_of": "2025-10-03",
-  "generated_at": "2026-07-04 21:46:37",
+  "generated_at": "2026-07-04 23:45:12",
   "facts": {
     "revenue_today": 4087,
     "cash": 1388,
@@ -1777,6 +1777,15 @@ footer a { color: var(--accent); text-decoration: none; }
             "short_term_borrowings"
           ],
           "note": "应付债券/租赁负债等科目当前取数管道未覆盖；判生存柱前以年报附注的全口径为准"
+        },
+        "cash_debt_paradox": {
+          "flag": false,
+          "both_high": false,
+          "net_cash_but_paying": null,
+          "cash_pct_assets": 0.14668435013262598,
+          "debt_pct_assets": 0.1257799671592775,
+          "finance_expense": null,
+          "note": null
         }
       },
       "cycle_calibration": {
@@ -1852,6 +1861,41 @@ footer a { color: var(--accent); text-decoration: none; }
           "存货（原表缺或取数管道未覆盖）"
         ],
         "note": "代码初筛非定论；flags 逐项回年报附注核，结论由报告第七章会计可信度节下"
+      },
+      "revenue_trend": {
+        "series": [
+          {
+            "fy": 2019,
+            "revenue": 3376800000.0
+          },
+          {
+            "fy": 2020,
+            "revenue": 3355700000.0
+          },
+          {
+            "fy": 2021,
+            "revenue": 5109100000.0
+          },
+          {
+            "fy": 2022,
+            "revenue": 5485500000.0
+          },
+          {
+            "fy": 2023,
+            "revenue": 4772400000.0
+          },
+          {
+            "fy": 2024,
+            "revenue": 4178000000.0
+          },
+          {
+            "fy": 2025,
+            "revenue": 4086900000.0
+          }
+        ],
+        "consecutive_down_years": 3,
+        "flag": true,
+        "note": "营收已连续 3 个财年下滑——量层剪刀差候选：利润率/EPS 若靠提价、回购、砍成本维持，护城河结论降级为待证假设（先走周期vs塌方判别、判周期须给供给侧证据留痕）"
       }
     },
     "_note": "纯代码算出的硬数字 + 粗分档；最终判断由报告结合定性证据下，但须引用这些数字。"
@@ -3232,8 +3276,15 @@ function ch8CardHTML() {
   const asym = c.asymmetry || {};
   const catBlocks = (c.catalysts || []).map(t => {
     const chip = '<span class="rk ' + (kindCls[t.kind] || 'rk-neutral') + '">' + escTL(t.name || '') + '</span>';
+    const trio = [
+      t.who ? '谁：' + escTL(t.who) : null,
+      t.mechanism ? '凭什么强制：' + escTL(t.mechanism) : null,
+      t.window ? '时间窗：' + escTL(t.window) : null,
+    ].filter(Boolean).join('　·　');
     return '<div class="ch3-seg"><div class="ch3-seg-h">' + chip + '</div>'
-      + (t.watch ? '<div class="ch3-seg-b">' + escTL(t.watch) + '</div>' : '') + '</div>';
+      + (t.watch ? '<div class="ch3-seg-b">' + escTL(t.watch) + '</div>' : '')
+      + (trio ? '<div class="ch3-seg-b" style="margin-top:4px;font-size:13.5px;color:var(--text-muted)">' + trio + '</div>' : '')
+      + '</div>';
   }).join('');
   const catBlock = catBlocks
     ? '<div class="qc-lab" style="margin-top:18px">关键价值变量 · 盯什么决定往哪个情景走</div><div class="ch3-segs">' + catBlocks + '</div>'
