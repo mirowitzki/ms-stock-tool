@@ -2,7 +2,7 @@
   "chain": "optical-module",
   "created": "2026-06-15",
   "_usage": "季度 checkpoint（review.py 提醒到期）：派一个联网 agent 把每个指标拉一个新数据点 append 进 series（date/value/source），对照 reading_guide 判读哪条链判断在兑现/被证伪。只拉数判读、不重做判断；越线才升级完整复盘。判读结果若构成预测打分，登 reviews/CALIBRATION.md。",
-  "next_checkpoint": "2026-09-30",
+  "next_checkpoint": "2026-10-12",
   "cadence": "quarterly",
   "indicators": [
     {
@@ -12,11 +12,17 @@
       "linked_judgment": "上游 EML/InP=高壁垒结构护城河叠加当下短缺租金（O1）",
       "how_to_check": "WebSearch: EML laser chip lead time 2026 / InP substrate shortage 2026；Lumentum/Coherent/住友/AXT 财报 book-to-bill 与产能",
       "baseline": {
-        "value": "EML/200G 芯片缺口约 60-70%、交期 18-24 个月、新订单涨价 10-30%；InP 衬底缺口 >70%、龙头订单排满至 2026；Lumentum InP 激光售罄至 2027",
-        "as_of": "2025-2026（eastmoney 调研 / 36kr）"
+        "value": "EML 缺口约30%（200G 段最紧、延至2027[券商/媒体转述]）、交期18-24个月、2025→2026涨价15-20%；InP 衬底缺口>70%、2026年价格涨约3倍；（2025旧基线：缺口60-70%口径为200G单段、勿与全EML口径混）",
+        "as_of": "2026-07（闸门②修订）"
       },
       "reading_guide": "交期回落到 ≤12 个月、涨价停止或 book-to-bill 回到 1× = 短缺租金开始回吐（住友/AXT 扩产落成）；缺口维持+续涨 = 结构性短缺持续、价值锚更硬",
-      "series": []
+      "series": [
+        {
+          "date": "2026-07",
+          "value": "EML 涨价15-20%、交期18-24月、缺口约30%（LC：2026年底缓解、200G/100mW CW 延至2027[券商/媒体转述]）；InP 衬底2英寸$800→$2,300-2,500、6英寸$1,400→$5,000（+250%）、缺口口径>70%；NVIDIA $40亿锁 Coherent/Lumentum（2026-03-02）；全行业月产能2026翻倍至约5070万颗（TrendForce）——短缺顶点+供给墙在建",
+          "source": "闸门②采集 _collect_A1/A2/A4（TrendForce/LC/钛媒体/OFweek 多源）"
+        }
+      ]
     },
     {
       "id": "module-asp",
@@ -64,11 +70,17 @@
       "linked_judgment": "光芯片国产替代是 A 股最硬卡脖子+最大机会（但反噬风险）（O5）",
       "how_to_check": "WebSearch: 源杰科技 200G EML / 国产光芯片 数据中心 2026；源杰/仕佳/长光季报数据中心收入",
       "baseline": {
-        "value": "100G EML 源杰国内独家量产、过验证供旭创/新易盛；硅光 CW 光源国内份额 >60%；但 200G EML 国内 <10%、几乎空白；源杰 2025 数据中心收入 +719%、全球高端份额 2024 约 3%→2025 约 8%",
-        "as_of": "2025（源杰年报）"
+        "value": "100G EML 国产已批量出货（源杰量产交付/索尔思千万级/长光爬坡/云岭56GBaud量产）；200G：索尔思首家宣布量产（媒体口径、晶圆制造含台湾产线）、源杰2026底/长光26Q4/云岭送样；CW：源杰灼识口径硅光高速互连细分全球第二 23.6%；旧基线（'硅光 CW 国内>60%'[误挂源杰年报名下]、'源杰 100G 国内独家量产'、'全球高端份额 3%→8%'）查无一手出处、2026-07 闸门②核查作废",
+        "as_of": "2026-07（闸门②修订）"
       },
       "reading_guide": "国产 200G EML 量产+客户验证 = 卡脖子突破（机会兑现）；但同时多家国产涌入+价格战 = 反噬（替代后从高毛利塌成内卷，按双面卡读）；高端仍 <10% = 卡脖子持续、海外激光源价值锚更硬",
-      "series": []
+      "series": [
+        {
+          "date": "2026-07",
+          "value": "100G EML 国产已批量出货（源杰量产交付/索尔思千万级/长光爬坡/云岭56GBaud量产）；200G：索尔思首家宣布量产（媒体口径）、源杰2026底/长光26Q4/云岭送样；CW：源杰灼识口径硅光高速互连全球第二23.6%（'国内>60%'查无出处已废）、300mW 研发对接中；TrendForce 产能榜：EML 72%在Lumentum/Broadcom/三菱、CW-DFB 74%在Broadcom/住友/Coherent/联亚、两榜无大陆厂商；国产纯芯片扩产项目合计约35亿元+东山/索尔思12亿美元+云岭北交所受理",
+          "source": "闸门②采集 _collect_A1/A4（公司公告/年报/TrendForce/灼识转述）"
+        }
+      ]
     },
     {
       "id": "dsp-localization",
@@ -95,6 +107,25 @@
       },
       "reading_guide": "capex/收入收敛+1.6T 放量落实 = 需求地基变实（整链 β 上修）；超大厂 capex 指引下修/项目延期扩散+ASP 加速通缩 = 量价利润三杀（整链 Bear 权重上调）",
       "series": []
+    },
+    {
+      "id": "silicon-photonics-share",
+      "name": "硅光渗透率与每模块激光器颗数结构（EML 需求改写）",
+      "node": "laser-chip / silicon-photonics",
+      "linked_judgment": "需求三级改写第一级：硅光把每模块激光器从 8×EML 换成 2-4×CW，EML 需求增速被结构性腰斩（成本法_光芯片.md 第六节；O5/O8）",
+      "how_to_check": "WebSearch: LightCounting silicon photonics share / 硅光 渗透率 800G；旭创/新易盛财报硅光出货占比",
+      "baseline": {
+        "value": "硅光占光模块销售额 2018 10%→2024 33%→2026E 过半（LightCounting）；800G 单档约50%；每模块激光器 EML方案8颗 vs 硅光2-4颗CW；旭创2025硅光出货已过半；机制：NVIDIA 锁 EML 产能加速非 NVIDIA 阵营转向 CW+硅光（TrendForce）",
+        "as_of": "2026-07"
+      },
+      "reading_guide": "硅光份额提前冲过60% = EML 需求腰斩加速、CW 放量验证（利国产 CW 卡位）；停在40%以下 = EML 需求韧性上修、短缺更久；同时盯 CPO 侧（颗数8→4→1 是第二级改写、走 lpo-cpo-penetration）",
+      "series": [
+        {
+          "date": "2026-07",
+          "value": "销售额口径 2024 33%→2026E >50%（LC 官方 newsletter）；800G 内约50%（c-light）；1.6T 硅光用 2-4 颗 100mW CW",
+          "source": "闸门②采集 _collect_A3 第2节"
+        }
+      ]
     }
   ]
 }

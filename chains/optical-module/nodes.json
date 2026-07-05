@@ -20,27 +20,107 @@
         "rent_or_moat": "持久结构护城河（全链最深），但 LPO 是最近的替代威胁（限 AI 后端专用场景、跨厂互通难）"
       },
       "players": [
-        {"name": "Marvell（含收购 Inphi）", "ticker": "MRVL", "market": "美股", "note": "高速 800G/1.6T PAM4 oDSP 龙头；2021 约 $100 亿并购 Inphi"},
-        {"name": "Broadcom", "ticker": "AVGO", "market": "美股", "note": "最直接对手；3nm 200G/lane；既卖 DSP 又推 LPO 兼容（反互补品，想把利润收回自家 ASIC）"},
-        {"name": "Credo", "ticker": "CRDO", "market": "美股", "note": "LRO/linear-receive DSP、AEC，边缘玩家"},
-        {"name": "MaxLinear", "ticker": "MXL", "market": "美股", "note": "次要份额"},
-        {"name": "烽火通信", "ticker": "600498", "market": "A股", "note": "国内唯一全系列相干 DSP 量产（100G–800G）、1.6T 相干 DSP 验证完成预计 2026Q3 量产——注：相干口径，数通 PAM4 另说"},
-        {"name": "光迅科技", "ticker": "002281", "market": "A股", "note": "首款市场化 400G PAM4 DSP 已量产、800G 过头部验证批量出货，国产数通领先者之一"},
-        {"name": "橙群微/奥卡微", "ticker": "未上市", "market": "—", "note": "前博通团队；中国唯一可量产 50G+ PAM4 DSP，计划 2025-26 出 400G/800G/1.6T"},
-        {"name": "华为海思", "ticker": "未上市", "market": "—", "note": "自研高速 DSP（3.2T/CPO），自用不外供"},
-        {"name": "裕太微", "ticker": "688515", "market": "A股", "note": "⚠主业是以太网 PHY 芯片，光模块 800G oDSP 仍在研、目标 2027——媒体称其‘纯正光 DSP 标的’属夸大，当前无量产 oDSP"}
+        {
+          "name": "Marvell（含收购 Inphi）",
+          "ticker": "MRVL",
+          "market": "美股",
+          "note": "高速 800G/1.6T PAM4 oDSP 龙头；2021 约 $100 亿并购 Inphi"
+        },
+        {
+          "name": "Broadcom",
+          "ticker": "AVGO",
+          "market": "美股",
+          "note": "最直接对手；3nm 200G/lane；既卖 DSP 又推 LPO 兼容（反互补品，想把利润收回自家 ASIC）"
+        },
+        {
+          "name": "Credo",
+          "ticker": "CRDO",
+          "market": "美股",
+          "note": "LRO/linear-receive DSP、AEC，边缘玩家"
+        },
+        {
+          "name": "MaxLinear",
+          "ticker": "MXL",
+          "market": "美股",
+          "note": "次要份额"
+        },
+        {
+          "name": "烽火通信",
+          "ticker": "600498",
+          "market": "A股",
+          "note": "国内唯一全系列相干 DSP 量产（100G–800G）、1.6T 相干 DSP 验证完成预计 2026Q3 量产——注：相干口径，数通 PAM4 另说"
+        },
+        {
+          "name": "光迅科技",
+          "ticker": "002281",
+          "market": "A股",
+          "note": "首款市场化 400G PAM4 DSP 已量产、800G 过头部验证批量出货，国产数通领先者之一"
+        },
+        {
+          "name": "橙群微/奥卡微",
+          "ticker": "未上市",
+          "market": "—",
+          "note": "前博通团队；中国唯一可量产 50G+ PAM4 DSP，计划 2025-26 出 400G/800G/1.6T"
+        },
+        {
+          "name": "华为海思",
+          "ticker": "未上市",
+          "market": "—",
+          "note": "自研高速 DSP（3.2T/CPO），自用不外供"
+        },
+        {
+          "name": "裕太微",
+          "ticker": "688515",
+          "market": "A股",
+          "note": "⚠主业是以太网 PHY 芯片，光模块 800G oDSP 仍在研、目标 2027——媒体称其‘纯正光 DSP 标的’属夸大，当前无量产 oDSP"
+        }
       ],
       "key_numbers": [
-        {"metric": "DSP 占 800G 模块 BOM 成本", "value": "约 20–30%（随速率/方案波动；单模块拆解样本 $90/$320≈28%，硅光 800G 口径）", "as_of": "2026", "source": "hytoptodevice 800G 拆解 + fibermall/gigalight 多源", "confidence": "口径分歧大（7%~40% 都有出处，按速率/是否硅光/是否摊薄而变）—取区间"},
-        {"metric": "Marvell vs Broadcom 份额", "value": "双寡头合计绝对主导（Marvell+Broadcom+MaxLinear 约 70% PAM4）；二者谁第一随年份/口径（出货量 vs 收入）而变", "as_of": "2024-2026", "source": "matrixbcg / LightCounting 转引", "confidence": "两组权威口径打架（一说 Marvell≈70%、一说 Broadcom 2025 收入第一）—不钉单一"},
-        {"metric": "中国高速 oDSP（800G/1.6T）自给率", "value": "不足 5–10%、几乎零量产、仅小批量验证", "as_of": "2026", "source": "eastmoney/sina 纪要（多源一致）", "confidence": "方向高置信"},
-        {"metric": "光通信 IC 芯片组（含 DSP）市场", "value": "2024 约 $3.5B→2030 >$11B，CAGR 约 17%", "as_of": "2025", "source": "LightCounting（opticalconnectionsnews）", "confidence": "权威机构单源"}
+        {
+          "metric": "DSP 占 800G 模块 BOM 成本",
+          "value": "约 20–30%（随速率/方案波动；单模块拆解样本 $90/$320≈28%，硅光 800G 口径）",
+          "as_of": "2026",
+          "source": "hytoptodevice 800G 拆解 + fibermall/gigalight 多源",
+          "confidence": "口径分歧大（7%~40% 都有出处，按速率/是否硅光/是否摊薄而变）—取区间"
+        },
+        {
+          "metric": "Marvell vs Broadcom 份额",
+          "value": "双寡头合计绝对主导（Marvell+Broadcom+MaxLinear 约 70% PAM4）；二者谁第一随年份/口径（出货量 vs 收入）而变",
+          "as_of": "2024-2026",
+          "source": "matrixbcg / LightCounting 转引",
+          "confidence": "两组权威口径打架（一说 Marvell≈70%、一说 Broadcom 2025 收入第一）—不钉单一"
+        },
+        {
+          "metric": "中国高速 oDSP（800G/1.6T）自给率",
+          "value": "不足 5–10%、几乎零量产、仅小批量验证",
+          "as_of": "2026",
+          "source": "eastmoney/sina 纪要（多源一致）",
+          "confidence": "方向高置信"
+        },
+        {
+          "metric": "光通信 IC 芯片组（含 DSP）市场",
+          "value": "2024 约 $3.5B→2030 >$11B，CAGR 约 17%",
+          "as_of": "2025",
+          "source": "LightCounting（opticalconnectionsnews）",
+          "confidence": "权威机构单源"
+        }
       ],
       "threat_timeline": [
-        {"threat": "LPO/LRO 在 AI 后端 fabric 掏空 DSP", "watch_signal": "LPO MSA 跨厂互通是否解决、超大厂 AI 后端实采 LPO 比例", "horizon": "2026-2027（专用场景渗透，互通障碍使其专用而非通用）"},
-        {"threat": "CPO 把 DSP 一并消灭（光引擎旁置 ASIC）", "watch_signal": "NVIDIA/Broadcom CPO 转量产、scale-up 注入", "horizon": "2027-2029（scale-up）"}
+        {
+          "threat": "LPO/LRO 在 AI 后端 fabric 掏空 DSP",
+          "watch_signal": "LPO MSA 跨厂互通是否解决、超大厂 AI 后端实采 LPO 比例",
+          "horizon": "2026-2027（专用场景渗透，互通障碍使其专用而非通用）"
+        },
+        {
+          "threat": "CPO 把 DSP 一并消灭（光引擎旁置 ASIC）",
+          "watch_signal": "NVIDIA/Broadcom CPO 转量产、scale-up 注入",
+          "horizon": "2027-2029（scale-up）"
+        }
       ],
-      "linked_indicators": ["dsp-localization", "lpo-cpo-penetration"],
+      "linked_indicators": [
+        "dsp-localization",
+        "lpo-cpo-penetration"
+      ],
       "applicability": "全球需求（AI capex 驱动）；价值在美日设计 IP+台积电先进制程，中国是国产替代攻坚侧（最难的一关）",
       "last_reviewed": "2026-06-15"
     },
@@ -53,32 +133,176 @@
       "five_layer": {
         "necessity": "原理必须（任何光通信都要光源；硅基做不了光增益=激光，无替代材料路线临近）",
         "capture": "持久（InP 外延+晶圆制程+良率，高精度 InP fab 全球仅数家；客户验证周期长；海外产能被英伟达锁单）+ 当下短缺租金叠加",
-        "capital_cycle": "短缺顶点（200G EML 唯一规模商 Lumentum、InP 激光售罄至 2027、缺口大），但住友/Lumentum 同步大扩产=2027 后产能种子",
-        "rent_or_moat": "结构护城河叠加短缺租金；硅光/CPO 时代外置激光源结构上不可替代（硅做不了光增益），但不是单调越来越值钱——CPO 把激光从‘每模块一颗’重排成‘每交换机集中少数颗高功率’（NVIDIA Quantum-X 全机约 144 颗），总颗数下降、供应集中度上升（对 Lumentum/Coherent 是议价权升、对‘激光 TAM 随模块只数线性增长’是利空）；叠加住友/Lumentum 全员扩产，短缺租金部分回吐。底子是护城河硬、但单位经济双向夹"
+        "capital_cycle": "短缺顶点+资本倾泻的经典组合（涨价15-20%、交期18-24月、NVIDIA $40亿锁 Coherent/Lumentum 各$20亿产能；同时全行业月产能2026翻倍至约5070万颗、海外三强扩产40%-3倍、国产纯芯片扩产项目合计约35亿元+东山/索尔思12亿美元、IPO通道排队）——供给墙2027-28落成，缺口收窄次序：100G/低功率CW（2027）先于200G（2028-29）",
+        "rent_or_moat": "叠加态：结构壁垒（EML 4-6次外延的良率壁垒、200G代差约2年、大功率CW可靠性门槛）×短缺租金（2026涨价/交期/急单溢价）。分速率判：200G/400G=代差护城河+租金（护城河每代保鲜2-3年、要连续跨代重新挣）；100G=租金为主（国产5家在产/在验、缺口收窄=价格战起点，按25G原型利润塌方滞后2-3年渐进兑现）；CW 70-100mW=正在商品化；CW 200-300mW+（CPO用）=下一个结构高地。关键动态机制：NVIDIA锁EML产能把非NVIDIA阵营推向CW+硅光（TrendForce）——短缺正在自己制造自己的替代；CPO把颗数8→4→1集中化、单颗$10→$30-100（低置信）——净效应按NVIDIA规模价$30算与可插拔硅光大致持平、但较EML为主的世界缩约三成，总价值池不塌是相对硅光路径而言；形态剧变门槛上移利好头部；反向变量：LPO/LRO延长可插拔寿命、拖慢集中化节奏。详见 成本法_光芯片.md"
       },
       "players": [
-        {"name": "Lumentum", "ticker": "LITE", "market": "美股", "note": "200G/lane EML（1.6T 用）唯一规模出货商、该细分约 50-60%；高功率 CW 激光（CPO/硅光用）近垄断；产能 2024.6→2025 末 +约 80%仍供不应求"},
-        {"name": "Coherent（原 II-VI）", "ticker": "COHR", "market": "美股", "note": "InP 激光数据中心 book-to-bill >4×、售罄至 2027；垂直整合 EML/CW/VCSEL/硅光/探测器/整机自产；Sherman 6 寸 InP 产线爬坡"},
-        {"name": "Sumitomo 住友电工", "ticker": "5802.T", "market": "日股", "note": "高速 EML/InP 老牌强者"},
-        {"name": "Mitsubishi 三菱电机", "ticker": "6503.T", "market": "日股", "note": "EML 供应商之一"},
-        {"name": "源杰科技", "ticker": "688498", "market": "A股", "note": "中国高速光芯片龙头；100G EML 国内独家量产（2025.4 过验证、供旭创/新易盛）；硅光 CW 光源 70/100mW 大批量、国内份额 >60%/全球第二，300mW 送样英伟达（1.6T/CPO 用）"},
-        {"name": "仕佳光子", "ticker": "688313", "market": "A股", "note": "DFB 激光芯片 + 硅光大功率 CW-DFB 已量产（见 modulator-detector）"},
-        {"name": "长光华芯", "ticker": "688048", "market": "A股", "note": "已发单波 100G EML / 50G VCSEL / 100mW CWDFB；高速光通信芯片占比仍小，主业是泵浦/VCSEL"}
+        {
+          "name": "Lumentum",
+          "ticker": "LITE",
+          "market": "美股",
+          "note": "200G/lane EML（1.6T 用）以约 50-60% 份额主导（三菱 2024 全球首发量产、Coherent 量产中）；高功率 CW 激光（CPO/硅光用）头部；产能 2025 +40%、2026 再+40%（公司口径）仍供不应求、订单排满至 2027；NVIDIA $20 亿股权投资+多年采购承诺对象"
+        },
+        {
+          "name": "Coherent（原 II-VI）",
+          "ticker": "COHR",
+          "market": "美股",
+          "note": "InP 激光数据中心 book-to-bill >4×、售罄至 2027；垂直整合 EML/CW/VCSEL/硅光/探测器/整机自产；Sherman 6 寸 InP 产线爬坡"
+        },
+        {
+          "name": "Sumitomo 住友电工",
+          "ticker": "5802.T",
+          "market": "日股",
+          "note": "高速 EML/InP 老牌强者"
+        },
+        {
+          "name": "Mitsubishi 三菱电机",
+          "ticker": "6503.T",
+          "market": "日股",
+          "note": "EML 供应商之一"
+        },
+        {
+          "name": "源杰科技",
+          "ticker": "688498",
+          "market": "A股",
+          "note": "中国高速光芯片龙头；100G EML 已量产交付头部模块厂（非独家：索尔思/长光/云岭同段在量产或爬坡）；CW 光源 70mW 主力/100mW 小批量，灼识口径硅光高速互连细分全球第二、23.6%（旧口径'国内份额>60%'查无出处已废）；300mW（CPO 用）研发/客户对接中（'送样英伟达'为自媒体口径未证实）；2025 营收6.01亿(+138.5%)、2026Q1 单季扣非1.78亿超2025全年；第一大客户占营收53.35%"
+        },
+        {
+          "name": "仕佳光子",
+          "ticker": "688313",
+          "market": "A股",
+          "note": "DFB 激光芯片 + 硅光大功率 CW-DFB 已量产（见 modulator-detector）"
+        },
+        {
+          "name": "长光华芯",
+          "ticker": "688048",
+          "market": "A股",
+          "note": "100G EML 订单持续交付爬坡中（产能雄心为调研转述、与2025光通信收入仅4119万体量不匹配、低置信）；200G 验证中（争取26Q4）；2025 扣非仍亏、盈利靠非经常项"
+        },
+        {
+          "name": "索尔思光电（东山精密）",
+          "ticker": "002384",
+          "market": "A股",
+          "note": "2025-10 并表东山精密；100G EML 千万级发货、200G EML 国内首家宣布量产（1.6T 配套、媒体口径；晶圆制造含台湾产线、'国产'口径存疑）；芯片自供率约99%（财富号口径）、主要配套自家模块=垂直整合样本非外售；12亿美元扩产（2026-06 董事会）"
+        },
+        {
+          "name": "云岭光电（未上市）",
+          "ticker": "北交所在审",
+          "market": "一级",
+          "note": "华工科技系（持股约14%、华工正源为第一大客户占其营收近4成）；56GBaud EML 量产、112GBaud 送样；北交所 2026-06-30 受理、募9.89亿"
+        },
+        {
+          "name": "Broadcom",
+          "ticker": "AVGO",
+          "market": "美股",
+          "note": "EML 产能榜三强之一（与 Lumentum/三菱合计 72%）、CW-DFB 产能榜四强之一（TrendForce 2026-06）；同时是 PAM4 DSP 双寡头之一与 CPO 交换芯片主导者——环节内外双重身位"
+        }
       ],
       "key_numbers": [
-        {"metric": "全球 EML 芯片市场规模", "value": "约 $1.85B", "as_of": "2024", "source": "verifiedmarketresearch", "confidence": "单源（机构报告）"},
-        {"metric": "200G/lane EML 全球份额（Lumentum）", "value": "约 50–60%、唯一规模量产", "as_of": "2025", "source": "mlq.ai / trendforce", "confidence": "多源一致（机构）"},
-        {"metric": "中国高端光芯片（EML 级）国产化率", "value": "200G EML 国内 <10%（源杰一家可量产）、海外占高端 >90%；低速（≤25G）已基本国产化", "as_of": "2025", "source": "卖方研报（长城/源杰）", "confidence": "单源、口径=中国市场高端，方向可信"},
-        {"metric": "源杰科技 2025 营收/数据中心", "value": "营收 6.01 亿(+138.5%)、数据中心收入 3.93 亿(+719%)、净利 1.91 亿扭亏；全球高端光芯片份额 2024 约 3%→2025 约 8%", "as_of": "2025年报", "source": "源杰 688498 年报（一手）", "confidence": "一手"},
-        {"metric": "EML/200G 芯片供需缺口与交期、涨价", "value": "缺口约 60–70%、交期 18–24 个月；新订单涨价 10–20%（部分 30%）", "as_of": "2026-05", "source": "eastmoney 大厂调研", "confidence": "媒体调研（量级）"}
+        {
+          "metric": "全球 EML 芯片市场规模（数通口径）",
+          "value": "2025 约 $5.8-8.1 亿（三源打架：智研 41.8亿元≈$5.8亿 / 东财未署名 $6.7亿 / QYResearch $8.14亿）；CW（硅光用）$2.5-5.7 亿；旧节点卡单源数 $1.85B(2024, verifiedmarketresearch) 与三源簇矛盾、降级作废",
+          "as_of": "2025",
+          "source": "_collect_A4 第1节（三源并列）",
+          "confidence": "中低（芯片级无 LC/Yole 一手数）"
+        },
+        {
+          "metric": "产能格局（TrendForce）",
+          "value": "2026 全行业 EML+CW-DFB 月产能翻倍至约5070万颗；EML 产能72%在 Lumentum/Broadcom/三菱、CW-DFB 74%在 Broadcom/住友/Coherent/联亚——两榜均无大陆厂商",
+          "as_of": "2026-06",
+          "source": "TrendForce via semiconductor-today",
+          "confidence": "高（行业口径）"
+        },
+        {
+          "metric": "NVIDIA 锁单",
+          "value": "NVIDIA 对 Coherent/Lumentum 各 $20 亿股权投资、另有多年采购承诺与产能优先权（合并口径常写作'$40 亿锁单'）+Marvell $20 亿光 I/O 合作；媒体口径把其余买家推到 2027 后",
+          "as_of": "2026-03-02",
+          "source": "官方+The Register",
+          "confidence": "高"
+        },
+        {
+          "metric": "价格与缺口",
+          "value": "100G EML $7.5-11.5/颗、200G $10-22（长协/现货/预测三口径）；2025→2026 涨价15-20%、交期18-24月（聚合口径，TrendForce 官方仅说排到 2027 后）；EML 缺口约30%（LC：2026年底缓解；200G与100mW CW 延至2027 为券商/媒体转述）",
+          "as_of": "2026-06",
+          "source": "_collect_A2 题4 + LightCounting 转述",
+          "confidence": "中"
+        },
+        {
+          "metric": "BOM 价值锚",
+          "value": "800G EML 方案光芯片占 BOM 30-37%（8×EML $60-92）；硅光方案光源仅 $20-40（2-4×CW）；1.6T＝8×200G EML $112-144、较800G +50-90%",
+          "as_of": "2026-04",
+          "source": "_collect_A2 题1/2（双源）",
+          "confidence": "中高"
+        },
+        {
+          "metric": "硅光渗透（EML 需求改写）",
+          "value": "硅光占光模块销售额 2024 33%→2026E 过半；800G 内约50%；每模块激光器 8×EML→2-4×CW",
+          "as_of": "2025-11→2026-04",
+          "source": "LightCounting newsletter + c-light",
+          "confidence": "高（LC 官方）"
+        },
+        {
+          "metric": "国产化率（分层，'整体58%'旧口径查无出处已废）",
+          "value": "2.5G及以下>90%、10G约60%、25G约25-40%、50G以上不足10%；100G/200G 无权威百分比——事实层：100G 国产已批量（4家）、200G 索尔思首家宣布量产（媒体口径）",
+          "as_of": "2023-2026 拼图",
+          "source": "_collect_A1 第三节",
+          "confidence": "分层中、高速层 missing"
+        },
+        {
+          "metric": "反噬原型（25G）",
+          "value": "源杰 25G 系列 ASP 2021 一年 -51.92%（43.88→21.1元/颗）；整体毛利率 68%(2020)→约33%(2024)→58%(2025)——高毛利→涌入→塌方→新短缺完整轮回；注意节奏：均价腰斩当年 25G 产品线毛利率仍 85%+（规模降本硬扛）、整体塌方滞后 2-3 年且由需求口径切换触发——价格战开枪不等于利润当年塌方",
+          "as_of": "2019-2025",
+          "source": "源杰招股书+年报（一手）",
+          "confidence": "高"
+        },
+        {
+          "metric": "源杰 2025/2026Q1",
+          "value": "2025 营收6.01亿(+138.5%)/归母1.91亿/毛利率58.11%、数通3.93亿(+719%)占65%；2026Q1 营收3.55亿(+321%)、扣非1.78亿单季超2025全年",
+          "as_of": "2026-04",
+          "source": "公司年报/一季报",
+          "confidence": "高"
+        }
       ],
       "threat_timeline": [
-        {"threat": "国产 200G EML 突破改变高端供给格局", "watch_signal": "源杰/仕佳/长光 200G EML 量产+客户验证公告", "horizon": "2027+（源杰刚破 100G、慢）"},
-        {"threat": "住友/Lumentum 扩产补上缺口、短缺租金回吐", "watch_signal": "InP 激光交期回落、book-to-bill 回落到 1×", "horizon": "2027-2028"}
+        {
+          "threat": "硅光过半、EML 需求增速被结构性腰斩",
+          "watch_signal": "LightCounting 硅光份额、头部模块厂硅光出货占比",
+          "horizon": "已发生、2026-27 深化"
+        },
+        {
+          "threat": "CPO 放量、激光颗数集中化（形态变高功率少颗）",
+          "watch_signal": "Quantum-X/Spectrum-X 出货台数、ELSFP 采购量",
+          "horizon": "2027 起（LC 已把 scale-up CPO 放量上修至 2027）"
+        },
+        {
+          "threat": "供给墙落成、短缺租金回吐",
+          "watch_signal": "EML 交期从18-24月回落至≤12月、InP 现货价回落、book-to-bill 回 1×",
+          "horizon": "2027-28"
+        },
+        {
+          "threat": "100G 国产价格战（反噬开枪）",
+          "watch_signal": "100G EML 单价、国产在产家数、缺口口径收窄",
+          "horizon": "2027 前后"
+        },
+        {
+          "threat": "3.2T 世代 400G/λ 代差重置",
+          "watch_signal": "Broadcom/Lumentum/Coherent 400G EML 量产公告（OFC 2026 已演示）",
+          "horizon": "2028-29"
+        },
+        {
+          "threat": "scale-up 光化（需求上翻、全高功率 CW 形态）",
+          "watch_signal": "NVL576 机架间 CPO 实装、Feynman 光版本占比",
+          "horizon": "2027-28（对高功率 CW 是增量）"
+        }
       ],
-      "linked_indicators": ["eml-leadtime-price", "laser-localization"],
-      "applicability": "全球需求；价值在美日（Lumentum/Coherent/住友），中国在 100G 级突破、200G 仍攻坚——A 股最硬的国产替代标的（源杰/仕佳/长光）",
-      "last_reviewed": "2026-06-15"
+      "linked_indicators": [
+        "eml-leadtime-price",
+        "laser-localization",
+        "silicon-photonics-share"
+      ],
+      "applicability": "两个命题分开：全球命题（短缺租金+CPO 高功率+代差竞赛）由美国 AI capex 撑、价值主场美日五寡头；中国命题（国产替代）的需求母体=中国头部模块厂的二供战略（源杰对旭创53.35%、云岭对华工近4成）、赚替代折价+上量的钱、自带反噬基因。InP 衬底是中国握上游的例外格局（高纯铟管制+云南锗业扩产3倍）。详见 成本法_光芯片.md 第七节",
+      "last_reviewed": "2026-07-05",
+      "gate2": "成本法_光芯片.md / cost_optical_chip.html（2026-07-05）"
     },
     {
       "id": "modulator-detector",
@@ -93,22 +317,74 @@
         "rent_or_moat": "探测器=苦力到中（商品化）；TFLN 调制器=结构（但市场尚小、3.2T 才接棒）"
       },
       "players": [
-        {"name": "Fujitsu 富士通", "ticker": "6702.T", "market": "日股", "note": "电信级高速铌酸锂调制器约占全球 70%"},
-        {"name": "光库科技（含原 Lumentum 铌酸锂产线）", "ticker": "300620", "market": "A股", "note": "2020 年 $1700 万收购 Lumentum 铌酸锂高速调制器产线，掌握芯片设计/制程/封测、≥800G TFLN 能力；唯一同时供 SpaceX 与中国星网的中国厂商"},
-        {"name": "仕佳光子", "ticker": "688313", "market": "A股", "note": "IDM 全链：DFB 激光+AWG+PD；800G AWG/1.6T MT-FA 已批量、硅光大功率 CW-DFB 已量产；2025H1 营收 9.93 亿(+121%)/净利 2.17 亿(+1712%)"},
-        {"name": "Broadcom", "ticker": "AVGO", "market": "美股", "note": "InGaAs PIN/APD（含收购 Cosemi）"},
-        {"name": "Coherent", "ticker": "COHR", "market": "美股", "note": "InP 探测器/相干器件"},
-        {"name": "铌奥光电/芯思杰", "ticker": "未上市", "market": "—", "note": "铌奥=TFLN 调制器芯片（数亿元 A 轮）；芯思杰=多通道 InGaAs PIN PD"}
+        {
+          "name": "Fujitsu 富士通",
+          "ticker": "6702.T",
+          "market": "日股",
+          "note": "电信级高速铌酸锂调制器约占全球 70%"
+        },
+        {
+          "name": "光库科技（含原 Lumentum 铌酸锂产线）",
+          "ticker": "300620",
+          "market": "A股",
+          "note": "2020 年 $1700 万收购 Lumentum 铌酸锂高速调制器产线，掌握芯片设计/制程/封测、≥800G TFLN 能力；唯一同时供 SpaceX 与中国星网的中国厂商"
+        },
+        {
+          "name": "仕佳光子",
+          "ticker": "688313",
+          "market": "A股",
+          "note": "IDM 全链：DFB 激光+AWG+PD；800G AWG/1.6T MT-FA 已批量、硅光大功率 CW-DFB 已量产；2025H1 营收 9.93 亿(+121%)/净利 2.17 亿(+1712%)"
+        },
+        {
+          "name": "Broadcom",
+          "ticker": "AVGO",
+          "market": "美股",
+          "note": "InGaAs PIN/APD（含收购 Cosemi）"
+        },
+        {
+          "name": "Coherent",
+          "ticker": "COHR",
+          "market": "美股",
+          "note": "InP 探测器/相干器件"
+        },
+        {
+          "name": "铌奥光电/芯思杰",
+          "ticker": "未上市",
+          "market": "—",
+          "note": "铌奥=TFLN 调制器芯片（数亿元 A 轮）；芯思杰=多通道 InGaAs PIN PD"
+        }
       ],
       "key_numbers": [
-        {"metric": "高速铌酸锂调制器全球供应商数", "value": "仅 3 家可批量（富士通/住友/光库），富士通约 70%", "as_of": "约 2023-2025", "source": "stcn / cls（多源媒体）", "confidence": "多源一致、口径=电信级 LiNbO3"},
-        {"metric": "仕佳光芯片收入结构", "value": "AWG 42.26% / PLC 23.69% / DFB 15.24% / 连接器 14.45%", "as_of": "约 2024", "source": "国联证券研报", "confidence": "单源（卖方研报）"}
+        {
+          "metric": "高速铌酸锂调制器全球供应商数",
+          "value": "仅 3 家可批量（富士通/住友/光库），富士通约 70%",
+          "as_of": "约 2023-2025",
+          "source": "stcn / cls（多源媒体）",
+          "confidence": "多源一致、口径=电信级 LiNbO3"
+        },
+        {
+          "metric": "仕佳光芯片收入结构",
+          "value": "AWG 42.26% / PLC 23.69% / DFB 15.24% / 连接器 14.45%",
+          "as_of": "约 2024",
+          "source": "国联证券研报",
+          "confidence": "单源（卖方研报）"
+        }
       ],
       "threat_timeline": [
-        {"threat": "硅光把分立调制/探测商品化", "watch_signal": "1.6T 硅光方案份额", "horizon": "2026-2028 渐进"},
-        {"threat": "TFLN 在 3.2T 接棒、改变调制器格局", "watch_signal": "3.2T 模块 TFLN 导入证据", "horizon": "2027-2028+（远期、证据弱）"}
+        {
+          "threat": "硅光把分立调制/探测商品化",
+          "watch_signal": "1.6T 硅光方案份额",
+          "horizon": "2026-2028 渐进"
+        },
+        {
+          "threat": "TFLN 在 3.2T 接棒、改变调制器格局",
+          "watch_signal": "3.2T 模块 TFLN 导入证据",
+          "horizon": "2027-2028+（远期、证据弱）"
+        }
       ],
-      "linked_indicators": ["laser-localization"],
+      "linked_indicators": [
+        "laser-localization"
+      ],
       "applicability": "探测器中国国产化好；TFLN 高端日本主导、光库突破。上游铌酸锂晶体（福晶/天通）是另一卡点",
       "last_reviewed": "2026-06-15"
     },
@@ -125,22 +401,75 @@
         "rent_or_moat": "结构（高频模拟），中国处‘部分量产、高端未破’=第二大缺口"
       },
       "players": [
-        {"name": "Marvell", "ticker": "MRVL", "market": "美股", "note": "200G/lane TIA+激光驱动芯片组（配 1.6T LPO）"},
-        {"name": "MACOM", "ticker": "MTSI", "market": "美股", "note": "高端 400G+ driver/TIA 双雄之一"},
-        {"name": "Broadcom", "ticker": "AVGO", "market": "美股", "note": "集成 TIA+laser driver 进 DSP PHY"},
-        {"name": "Semtech", "ticker": "SMTC", "market": "美股", "note": "与博通演示 200G/lane；driver/TIA 供应商"},
-        {"name": "优迅股份", "ticker": "688807", "market": "A股", "note": "⚠正确代码 688807（非 688516）；Fabless，做 LDD/TIA/限幅放大器/收发合一，覆盖接入网/5G/数据中心"},
-        {"name": "芯耘光电/傲科光电", "ticker": "未上市", "market": "—", "note": "芯耘=400/800G driver/TIA/CDR/MZM 整套全国产化方案、已入主流光模块厂；傲科=集成收发、攻高端电芯片"},
-        {"name": "Renesas 瑞萨", "ticker": "6723.T", "market": "日股", "note": "线性 TIA 在单波 100G EML 模块成熟应用"}
+        {
+          "name": "Marvell",
+          "ticker": "MRVL",
+          "market": "美股",
+          "note": "200G/lane TIA+激光驱动芯片组（配 1.6T LPO）"
+        },
+        {
+          "name": "MACOM",
+          "ticker": "MTSI",
+          "market": "美股",
+          "note": "高端 400G+ driver/TIA 双雄之一"
+        },
+        {
+          "name": "Broadcom",
+          "ticker": "AVGO",
+          "market": "美股",
+          "note": "集成 TIA+laser driver 进 DSP PHY"
+        },
+        {
+          "name": "Semtech",
+          "ticker": "SMTC",
+          "market": "美股",
+          "note": "与博通演示 200G/lane；driver/TIA 供应商"
+        },
+        {
+          "name": "优迅股份",
+          "ticker": "688807",
+          "market": "A股",
+          "note": "⚠正确代码 688807（非 688516）；Fabless，做 LDD/TIA/限幅放大器/收发合一，覆盖接入网/5G/数据中心"
+        },
+        {
+          "name": "芯耘光电/傲科光电",
+          "ticker": "未上市",
+          "market": "—",
+          "note": "芯耘=400/800G driver/TIA/CDR/MZM 整套全国产化方案、已入主流光模块厂；傲科=集成收发、攻高端电芯片"
+        },
+        {
+          "name": "Renesas 瑞萨",
+          "ticker": "6723.T",
+          "market": "日股",
+          "note": "线性 TIA 在单波 100G EML 模块成熟应用"
+        }
       ],
       "key_numbers": [
-        {"metric": "Driver+TIA 占 800G 模块 BOM", "value": "约 $25（2×driver+2×TIA）/ $320 ≈ 7.8%（硅光 800G）", "as_of": "2026", "source": "hytoptodevice 拆解", "confidence": "单源（媒体拆解）"},
-        {"metric": "中国电芯片量产水位", "value": "主要≤10G TIA；Driver 仅少数量产；≥28GBaud 数通仅部分厂达十万级出货", "as_of": "约 2024", "source": "和弦产研", "confidence": "单源（行业媒体）、方向性"}
+        {
+          "metric": "Driver+TIA 占 800G 模块 BOM",
+          "value": "约 $25（2×driver+2×TIA）/ $320 ≈ 7.8%（硅光 800G）",
+          "as_of": "2026",
+          "source": "hytoptodevice 拆解",
+          "confidence": "单源（媒体拆解）"
+        },
+        {
+          "metric": "中国电芯片量产水位",
+          "value": "主要≤10G TIA；Driver 仅少数量产；≥28GBaud 数通仅部分厂达十万级出货",
+          "as_of": "约 2024",
+          "source": "和弦产研",
+          "confidence": "单源（行业媒体）、方向性"
+        }
       ],
       "threat_timeline": [
-        {"threat": "国产 28GBaud+ driver/TIA 突破", "watch_signal": "优迅/芯耘高端产品量产出货", "horizon": "2026-2028"}
+        {
+          "threat": "国产 28GBaud+ driver/TIA 突破",
+          "watch_signal": "优迅/芯耘高端产品量产出货",
+          "horizon": "2026-2028"
+        }
       ],
-      "linked_indicators": ["dsp-localization"],
+      "linked_indicators": [
+        "dsp-localization"
+      ],
       "applicability": "全球高端美日主导；中国中低端主流、高端待破（DSP 之外第二大缺口）",
       "last_reviewed": "2026-06-15"
     },
@@ -157,22 +486,85 @@
         "rent_or_moat": "结构卡点叠加短缺租金；2026-2027 扩产落成后短缺缓解、租金部分回吐"
       },
       "players": [
-        {"name": "Sumitomo Electric 住友电工", "ticker": "5802.T", "market": "日股", "note": "InP 衬底全球约 60%、龙头；计划 2027 年前产能 +40%"},
-        {"name": "AXT", "ticker": "AXTI", "market": "美股", "note": "InP 衬底全球约 35%，经北京通美（Tongmei，美资）生产；融资 $1 亿、2026 产能翻倍；Q3'25 InP 收入环比 +250%+"},
-        {"name": "JX Advanced Metals（JX 金属）", "ticker": "5016.T", "market": "日股", "note": "InP 衬底三巨头之一、宣布扩产 20%"}
+        {
+          "name": "Sumitomo Electric 住友电工",
+          "ticker": "5802.T",
+          "market": "日股",
+          "note": "InP 衬底全球约 60%、龙头；计划 2027 年前产能 +40%"
+        },
+        {
+          "name": "AXT",
+          "ticker": "AXTI",
+          "market": "美股",
+          "note": "InP 衬底全球约 35%，经北京通美（Tongmei，美资）生产；融资 $1 亿、2026 产能翻倍；Q3'25 InP 收入环比 +250%+"
+        },
+        {
+          "name": "JX Advanced Metals（JX 金属）",
+          "ticker": "5016.T",
+          "market": "日股",
+          "note": "InP 衬底三巨头之一、宣布扩产 20%"
+        },
+        {
+          "name": "云南锗业（鑫耀半导体）",
+          "ticker": "002428",
+          "market": "A股",
+          "note": "国内 InP 衬底龙头、纯内资中唯一量产 2-6 英寸；2026-04 公告产能 15→45 万片/年（4 寸当量）扩产——中国握上游的例外格局（高纯铟出口管制反向卡海外）"
+        }
       ],
       "key_numbers": [
-        {"metric": "InP 衬底全球 CR3", "value": "住友+AXT+JX 合计约 80–90%（住友约 60%、AXT 约 35%——两数相加+JX 超 100%，疑口径重叠/含通美双计，待回源）", "as_of": "2025", "source": "36kr / globalsemiresearch", "confidence": "多源一致、但口径需核"},
-        {"metric": "InP 衬底供需缺口", "value": "2025 全球出货约 60–70 万片 vs 需求 150–200 万片、缺口 >70%；龙头订单排满至 2026", "as_of": "2025", "source": "36kr", "confidence": "单源（媒体）、数量级"},
-        {"metric": "InP 产能扩张", "value": "住友 +40%（到 2027）、AXT 翻倍（到 2026）、JX +20%", "as_of": "2025", "source": "36kr + AXT 8-K（一手）", "confidence": "多源（含一手 8-K）"}
+        {
+          "metric": "InP 衬底全球 CR3",
+          "value": "住友+AXT+JX 合计约 80–90%（住友约 60%、AXT 约 35%——两数相加+JX 超 100%，疑口径重叠/含通美双计，待回源）",
+          "as_of": "2025",
+          "source": "36kr / globalsemiresearch",
+          "confidence": "多源一致、但口径需核"
+        },
+        {
+          "metric": "InP 衬底供需缺口",
+          "value": "2025 全球出货约 60–70 万片 vs 需求 150–200 万片、缺口 >70%；龙头订单排满至 2026",
+          "as_of": "2025",
+          "source": "36kr",
+          "confidence": "单源（媒体）、数量级"
+        },
+        {
+          "metric": "InP 产能扩张",
+          "value": "住友 +40%（到 2027）、AXT 翻倍（到 2026）、JX +20%",
+          "as_of": "2025",
+          "source": "36kr + AXT 8-K（一手）",
+          "confidence": "多源（含一手 8-K）"
+        },
+        {
+          "metric": "2026 价格暴涨",
+          "value": "2英寸 $800(2025初)→$2,300-2,500(2026-04)、急单>$3,000；6英寸 $1,400→$5,000(+250%)；高纯铟占衬底成本30-60%；2026 缺口口径：需求260-300万片 vs 有效产能约75万片（单位口径未核）",
+          "as_of": "2026-04/05",
+          "source": "钛媒体+OFweek（两家独立）",
+          "confidence": "中高"
+        },
+        {
+          "metric": "中国握上游的例外格局",
+          "value": "中国高纯铟出口管制使住友产能一度砍半、交期3-6月拉到18月+；云南锗业（国内 InP 衬底龙头、纯内资中唯一量产 2-6 英寸）产能 15万片/年→2026 扩至45万片/年（4寸当量）；Coherent 6寸平台：单片器件数约4×、die 成本降>60%（2026Q4 前内部 InP 产能翻倍）",
+          "as_of": "2026",
+          "source": "_collect_A2 3.4 + Coherent 官方",
+          "confidence": "中高"
+        }
       ],
       "threat_timeline": [
-        {"threat": "三巨头扩产落成、短缺租金回吐", "watch_signal": "InP 衬底交期/价格回落、AXT/住友新产能投产", "horizon": "2026-2027"},
-        {"threat": "纯内资 InP 衬底突破", "watch_signal": "国产 InP 衬底通过光芯片厂验证批量供货", "horizon": "2028+（极慢、纯内资几乎空白）"}
+        {
+          "threat": "三巨头扩产落成、短缺租金回吐",
+          "watch_signal": "InP 衬底交期/价格回落、AXT/住友新产能投产",
+          "horizon": "2026-2027"
+        },
+        {
+          "threat": "纯内资 InP 衬底突破",
+          "watch_signal": "国产 InP 衬底通过光芯片厂验证批量供货",
+          "horizon": "2028+（极慢、纯内资几乎空白）"
+        }
       ],
-      "linked_indicators": ["eml-leadtime-price"],
+      "linked_indicators": [
+        "eml-leadtime-price"
+      ],
       "applicability": "全球；价值在日美三巨头，纯内资空白——比 DSP 更靠上游的硬卡点（GaAs 衬底用于 VCSEL，本次未单独量化）",
-      "last_reviewed": "2026-06-15"
+      "last_reviewed": "2026-07-05"
     },
     {
       "id": "ceramic-crystal",
@@ -187,15 +579,51 @@
         "rent_or_moat": "苦力到中（国产化好的环节定价权弱）；铌酸锂晶体是 TFLN 的‘卖水人’、随 TFLN 远期放量"
       },
       "players": [
-        {"name": "三环集团", "ticker": "300408", "market": "A股", "note": "光纤陶瓷插芯/套管+陶瓷封装基座+陶瓷基板，上下游全覆盖、光模块陶瓷外壳主力国产"},
-        {"name": "中瓷电子", "ticker": "003031", "market": "A股", "note": "通信电子陶瓷外壳龙头（BOX/TO-CAN 气密封装）"},
-        {"name": "国瓷材料", "ticker": "300285", "market": "A股", "note": "氧化铝/氧化锆/氮化铝陶瓷粉体（更上游粉体，供三环/中瓷）"},
-        {"name": "福晶科技", "ticker": "002222", "market": "A股", "note": "铌酸锂晶体（TFLN 调制器上游晶体）"},
-        {"name": "天通股份", "ticker": "600330", "market": "A股", "note": "铌酸锂晶体‘卖水人’"},
-        {"name": "Kyocera 京瓷/日本特殊陶业", "ticker": "6971.T/5334.T", "market": "日股", "note": "陶瓷封装管壳海外主力"}
+        {
+          "name": "三环集团",
+          "ticker": "300408",
+          "market": "A股",
+          "note": "光纤陶瓷插芯/套管+陶瓷封装基座+陶瓷基板，上下游全覆盖、光模块陶瓷外壳主力国产"
+        },
+        {
+          "name": "中瓷电子",
+          "ticker": "003031",
+          "market": "A股",
+          "note": "通信电子陶瓷外壳龙头（BOX/TO-CAN 气密封装）"
+        },
+        {
+          "name": "国瓷材料",
+          "ticker": "300285",
+          "market": "A股",
+          "note": "氧化铝/氧化锆/氮化铝陶瓷粉体（更上游粉体，供三环/中瓷）"
+        },
+        {
+          "name": "福晶科技",
+          "ticker": "002222",
+          "market": "A股",
+          "note": "铌酸锂晶体（TFLN 调制器上游晶体）"
+        },
+        {
+          "name": "天通股份",
+          "ticker": "600330",
+          "market": "A股",
+          "note": "铌酸锂晶体‘卖水人’"
+        },
+        {
+          "name": "Kyocera 京瓷/日本特殊陶业",
+          "ticker": "6971.T/5334.T",
+          "market": "日股",
+          "note": "陶瓷封装管壳海外主力"
+        }
       ],
       "key_numbers": [
-        {"metric": "陶瓷外壳上游依赖", "value": "银浆/贵金属浆料部分依赖日本进口、化工原料部分依赖美国", "as_of": "约 2023", "source": "三环研报", "confidence": "单源（研报）、方向性"}
+        {
+          "metric": "陶瓷外壳上游依赖",
+          "value": "银浆/贵金属浆料部分依赖日本进口、化工原料部分依赖美国",
+          "as_of": "约 2023",
+          "source": "三环研报",
+          "confidence": "单源（研报）、方向性"
+        }
       ],
       "threat_timeline": [],
       "linked_indicators": [],
@@ -215,28 +643,114 @@
         "rent_or_moat": "真实但周期性——执行壁垒真、2024-25 在 800G ASP 腰斩中毛利率反升利润翻倍（mix 升级+规模+自研硅光内部化抵消杀价，所以‘出货≠利润’是远期有条件警告、非已发生）；但顶点的部分利润是会被国产二线抹平的周期租金（待 mix 红利耗尽兑现）；长期利润池被 CPO/LPO 慢侵蚀——角色升级转 CPO 光引擎是求生路径，但从系统集成商退为光引擎零件商、议价权下移，缓冲多大取决于 CPO 光引擎单价/毛利/收入占比（三个数当前为空、是假设非已知缓冲）"
       },
       "players": [
-        {"name": "中际旭创 Innolight", "ticker": "300308", "market": "A股", "note": "全球第一（连续 4 年）；2025 营收 ¥382.4 亿(+60%)/归母 ¥107.97 亿(+109%)、毛利率 42.6%；800G 全球 >40%、1.6T 约 50-70%；泰国厂主供北美；1.6T CPO 光引擎 2026Q2 量产宣称占 NVIDIA 该类约 80%"},
-        {"name": "新易盛 Eoptolink", "ticker": "300502", "market": "A股", "note": "全球第三；2025 营收 ¥248.42 亿/归母 ¥95.32 亿、净利率约 38.5%（行业最高）；已量产 1.6T、LPO 抢滩+布 CPO+硅光/TFLN 混合"},
-        {"name": "华工科技（华工正源）", "ticker": "000988", "market": "A股", "note": "⚠总营收 ¥117 亿‘全球第二’是含激光加工/感知的口径，纯光模块全球份额仅 3-5%；垂直整合芯片→TO→器件→模块；推 A+H"},
-        {"name": "光迅科技 Accelink", "ticker": "002281", "market": "A股", "note": "全球份额 8-10%、国资（武汉邮科院/烽火系）、芯片自给率较高；A 股唯一‘光芯片+光模块’全产业链；35 亿定增已获批"},
-        {"name": "剑桥科技", "ticker": "603083", "market": "A股", "note": "⚠同时有 H 股 06166.HK（2026 港 IPO 募约 46.16 亿港元）；二线模块厂，硅光方案供 Meta"},
-        {"name": "东山精密", "ticker": "002384", "market": "A股", "note": "⚠名单外新进入者：2025-06 以 59.35 亿收购索尔思光电 100%、2025-10 并表——跨界并购切入光模块/光芯片，资本周期 FOMO 代表证据"},
-        {"name": "Coherent", "ticker": "COHR", "market": "美股", "note": "全球第二（模块口径）、同时是上游 EML 供应商（垂直整合）；订单排到 2028"},
-        {"name": "Fabrinet", "ticker": "FN", "market": "美股", "note": "泰国合约制造商（EMS）——给 Coherent/Lumentum/Cisco 代工光模块"}
+        {
+          "name": "中际旭创 Innolight",
+          "ticker": "300308",
+          "market": "A股",
+          "note": "全球第一（连续 4 年）；2025 营收 ¥382.4 亿(+60%)/归母 ¥107.97 亿(+109%)、毛利率 42.6%；800G 全球 >40%、1.6T 约 50-70%；泰国厂主供北美；1.6T CPO 光引擎 2026Q2 量产宣称占 NVIDIA 该类约 80%"
+        },
+        {
+          "name": "新易盛 Eoptolink",
+          "ticker": "300502",
+          "market": "A股",
+          "note": "全球第三；2025 营收 ¥248.42 亿/归母 ¥95.32 亿、净利率约 38.5%（行业最高）；已量产 1.6T、LPO 抢滩+布 CPO+硅光/TFLN 混合"
+        },
+        {
+          "name": "华工科技（华工正源）",
+          "ticker": "000988",
+          "market": "A股",
+          "note": "⚠总营收 ¥117 亿‘全球第二’是含激光加工/感知的口径，纯光模块全球份额仅 3-5%；垂直整合芯片→TO→器件→模块；推 A+H"
+        },
+        {
+          "name": "光迅科技 Accelink",
+          "ticker": "002281",
+          "market": "A股",
+          "note": "全球份额 8-10%、国资（武汉邮科院/烽火系）、芯片自给率较高；A 股唯一‘光芯片+光模块’全产业链；35 亿定增已获批"
+        },
+        {
+          "name": "剑桥科技",
+          "ticker": "603083",
+          "market": "A股",
+          "note": "⚠同时有 H 股 06166.HK（2026 港 IPO 募约 46.16 亿港元）；二线模块厂，硅光方案供 Meta"
+        },
+        {
+          "name": "东山精密",
+          "ticker": "002384",
+          "market": "A股",
+          "note": "⚠名单外新进入者：2025-06 以 59.35 亿收购索尔思光电 100%、2025-10 并表——跨界并购切入光模块/光芯片，资本周期 FOMO 代表证据"
+        },
+        {
+          "name": "Coherent",
+          "ticker": "COHR",
+          "market": "美股",
+          "note": "全球第二（模块口径）、同时是上游 EML 供应商（垂直整合）；订单排到 2028"
+        },
+        {
+          "name": "Fabrinet",
+          "ticker": "FN",
+          "market": "美股",
+          "note": "泰国合约制造商（EMS）——给 Coherent/Lumentum/Cisco 代工光模块"
+        }
       ],
       "key_numbers": [
-        {"metric": "中国厂全球份额（模块组装）", "value": "TOP10 占 7 家、800G 约 60%（NVIDIA 增量订单口径）", "as_of": "2025", "source": "PhotonCap/LightCounting", "confidence": "多源、口径=出货量/增量订单"},
-        {"metric": "旭创 2025 业绩", "value": "营收 ¥382.4 亿(+60.25%)、归母 ¥107.97 亿(+108.78%)、毛利率 42.61%（净利率约 28%）", "as_of": "2025年报", "source": "tmtpost/wallstreetcn", "confidence": "高"},
-        {"metric": "新易盛 2025 净利率", "value": "约 38.5%（全行业最高，营收 ¥248.42 亿/归母 ¥95.32 亿）；9M2025 毛利率 47.25%", "as_of": "2025年报", "source": "新浪/搜狐（2025 年报）", "confidence": "高"},
-        {"metric": "BOM 中进口芯片占比", "value": "DSP 约 28% + 高速 EML 约 9% + driver/TIA 约 8% ≈ 模块约一半价值在进口芯片", "as_of": "2026", "source": "hytoptodevice 拆解综合", "confidence": "单源拆解、量级"},
-        {"metric": "800G ASP 趋势", "value": "下行——2026 跌破 $400；索尔思硅光供 Meta 报 $350（较 2025Q4 降 >15%、二线压价）", "as_of": "2026-01/05", "source": "eastmoney 调研", "confidence": "媒体调研"}
+        {
+          "metric": "中国厂全球份额（模块组装）",
+          "value": "TOP10 占 7 家、800G 约 60%（NVIDIA 增量订单口径）",
+          "as_of": "2025",
+          "source": "PhotonCap/LightCounting",
+          "confidence": "多源、口径=出货量/增量订单"
+        },
+        {
+          "metric": "旭创 2025 业绩",
+          "value": "营收 ¥382.4 亿(+60.25%)、归母 ¥107.97 亿(+108.78%)、毛利率 42.61%（净利率约 28%）",
+          "as_of": "2025年报",
+          "source": "tmtpost/wallstreetcn",
+          "confidence": "高"
+        },
+        {
+          "metric": "新易盛 2025 净利率",
+          "value": "约 38.5%（全行业最高，营收 ¥248.42 亿/归母 ¥95.32 亿）；9M2025 毛利率 47.25%",
+          "as_of": "2025年报",
+          "source": "新浪/搜狐（2025 年报）",
+          "confidence": "高"
+        },
+        {
+          "metric": "BOM 中进口芯片占比",
+          "value": "DSP 约 28% + 高速 EML 约 9% + driver/TIA 约 8% ≈ 模块约一半价值在进口芯片",
+          "as_of": "2026",
+          "source": "hytoptodevice 拆解综合",
+          "confidence": "单源拆解、量级"
+        },
+        {
+          "metric": "800G ASP 趋势",
+          "value": "下行——2026 跌破 $400；索尔思硅光供 Meta 报 $350（较 2025Q4 降 >15%、二线压价）",
+          "as_of": "2026-01/05",
+          "source": "eastmoney 调研",
+          "confidence": "媒体调研"
+        }
       ],
       "threat_timeline": [
-        {"threat": "CPO 在 scale-up 侧替代可插拔形态、侵蚀组装利润池", "watch_signal": "NVIDIA Rubin/Feynman CPO 注入、旭创 CPO 光引擎单价是升是降（决定角色升级护不护得住利润）", "horizon": "2027-2029（scale-up）、2028 后（scale-out）"},
-        {"threat": "800G 国产二线价格战抹平组装利润", "watch_signal": "800G ASP 跌幅、二线厂（索尔思/东山等）份额", "horizon": "2026-2027（已开始）"},
-        {"threat": "上游芯片缺货/涨价挤压组装毛利", "watch_signal": "EML/DSP 涨价向模块端传导、旭创预付款锁产能", "horizon": "2026（已现：旭创预付款 +10 倍至 14.88 亿）"}
+        {
+          "threat": "CPO 在 scale-up 侧替代可插拔形态、侵蚀组装利润池",
+          "watch_signal": "NVIDIA Rubin/Feynman CPO 注入、旭创 CPO 光引擎单价是升是降（决定角色升级护不护得住利润）",
+          "horizon": "2027-2029（scale-up）、2028 后（scale-out）"
+        },
+        {
+          "threat": "800G 国产二线价格战抹平组装利润",
+          "watch_signal": "800G ASP 跌幅、二线厂（索尔思/东山等）份额",
+          "horizon": "2026-2027（已开始）"
+        },
+        {
+          "threat": "上游芯片缺货/涨价挤压组装毛利",
+          "watch_signal": "EML/DSP 涨价向模块端传导、旭创预付款锁产能",
+          "horizon": "2026（已现：旭创预付款 +10 倍至 14.88 亿）"
+        }
       ],
-      "linked_indicators": ["module-asp", "capacity-fomo", "lpo-cpo-penetration"],
+      "linked_indicators": [
+        "module-asp",
+        "capacity-fomo",
+        "lpo-cpo-penetration"
+      ],
       "applicability": "全球需求（北美超大厂为主）；价值在中国规模执行，但久期受上游 IP+ASP 通缩+CPO 迁移三重约束。A 股最大收入/市值所在、也是久期争议最大的环节",
       "last_reviewed": "2026-06-15"
     },
@@ -253,19 +767,57 @@
         "rent_or_moat": "当下盈利质量最好（精密壁垒+解决方案绑定、毛利 54% 不杀价）；但久期待定——CPO/硅光时代 FAU/光引擎是留在精密无源厂（受益）还是被台积电 COUPE/晶圆级集成吞掉（受损），方向两可，是‘盈利最好但久期待定’、不是‘久期最好’"
       },
       "players": [
-        {"name": "天孚通信 Tianfu", "ticker": "300394", "market": "A股", "note": "A 股核心无源+光引擎；垂直整合一站式；2025 综合毛利率 54.0%（有源 63.7%/无源 46.6%）、净利率 30%+；同时切有源光引擎；CPO 时代 FAU/光引擎受益方"},
-        {"name": "太辰光", "ticker": "300570", "market": "A股", "note": "MPO 连接器/无源器件"},
-        {"name": "腾景科技", "ticker": "688195", "market": "A股", "note": "精密光学元件（透镜/滤光片）"},
-        {"name": "仕佳光子", "ticker": "688313", "market": "A股", "note": "AWG/PLC 分路器/无源芯片（兼光芯片，见上）"}
+        {
+          "name": "天孚通信 Tianfu",
+          "ticker": "300394",
+          "market": "A股",
+          "note": "A 股核心无源+光引擎；垂直整合一站式；2025 综合毛利率 54.0%（有源 63.7%/无源 46.6%）、净利率 30%+；同时切有源光引擎；CPO 时代 FAU/光引擎受益方"
+        },
+        {
+          "name": "太辰光",
+          "ticker": "300570",
+          "market": "A股",
+          "note": "MPO 连接器/无源器件"
+        },
+        {
+          "name": "腾景科技",
+          "ticker": "688195",
+          "market": "A股",
+          "note": "精密光学元件（透镜/滤光片）"
+        },
+        {
+          "name": "仕佳光子",
+          "ticker": "688313",
+          "market": "A股",
+          "note": "AWG/PLC 分路器/无源芯片（兼光芯片，见上）"
+        }
       ],
       "key_numbers": [
-        {"metric": "天孚 2025 综合毛利率", "value": "54.0%（有源 63.7%/无源 46.6%）、净利率 30%+；行业平均光器件毛利率约 30%", "as_of": "2025年报", "source": "eastmoney", "confidence": "高"},
-        {"metric": "天孚 2025 有源/无源营收", "value": "有源 ¥30.0 亿(+81.1%)/无源 ¥20.8 亿(+32.2%)；2026Q1 营收 13.30 亿(+40.82%)/归母 4.92 亿(+45.79%)", "as_of": "2025-2026Q1", "source": "eastmoney", "confidence": "高"}
+        {
+          "metric": "天孚 2025 综合毛利率",
+          "value": "54.0%（有源 63.7%/无源 46.6%）、净利率 30%+；行业平均光器件毛利率约 30%",
+          "as_of": "2025年报",
+          "source": "eastmoney",
+          "confidence": "高"
+        },
+        {
+          "metric": "天孚 2025 有源/无源营收",
+          "value": "有源 ¥30.0 亿(+81.1%)/无源 ¥20.8 亿(+32.2%)；2026Q1 营收 13.30 亿(+40.82%)/归母 4.92 亿(+45.79%)",
+          "as_of": "2025-2026Q1",
+          "source": "eastmoney",
+          "confidence": "高"
+        }
       ],
       "threat_timeline": [
-        {"threat": "CPO/硅光把分立无源集成进光引擎、压缩零件价值", "watch_signal": "天孚光引擎/FAU 在 CPO 时代的份额与单价", "horizon": "2027-2029（也可能是受益方，需核方向）"}
+        {
+          "threat": "CPO/硅光把分立无源集成进光引擎、压缩零件价值",
+          "watch_signal": "天孚光引擎/FAU 在 CPO 时代的份额与单价",
+          "horizon": "2027-2029（也可能是受益方，需核方向）"
+        }
       ],
-      "linked_indicators": ["module-asp"],
+      "linked_indicators": [
+        "module-asp"
+      ],
       "applicability": "全球需求；价值在中国（天孚精密壁垒）——A 股当下盈利质量最好、但久期待定的环节（CPO 迁移方向两可：受益 vs 受损）",
       "last_reviewed": "2026-06-15"
     },
@@ -282,18 +834,50 @@
         "rent_or_moat": "—（权力在买方；NVIDIA 推 CPO/自研网络是把利润从可插拔模块收向自家 ASIC=反互补品）"
       },
       "players": [
-        {"name": "NVIDIA", "ticker": "NVDA", "market": "美股", "note": "最大需求方（2026 1.6T 需求约 1500 万只来自其）+ CPO 交换机推动方（Quantum-X/Spectrum-X Photonics）+ 反互补品（把光商品化为 GPU 收租）"},
-        {"name": "Broadcom", "ticker": "AVGO", "market": "美股", "note": "交换 ASIC（Tomahawk）+ DSP + CPO（Bailly/Davisson）+ LPO 兼容——两头通吃，最典型反互补品玩家"},
-        {"name": "Arista/Cisco", "ticker": "ANET/CSCO", "market": "美股", "note": "交换机厂、模块大客户，已支持 LPO"},
-        {"name": "超大云厂", "ticker": "GOOGL/META/MSFT/AMZN", "market": "美股", "note": "直接采购模块、定架构（Meta 实测 CPO/LPO）；可自研、可前向整合"}
+        {
+          "name": "NVIDIA",
+          "ticker": "NVDA",
+          "market": "美股",
+          "note": "最大需求方（2026 1.6T 需求约 1500 万只来自其）+ CPO 交换机推动方（Quantum-X/Spectrum-X Photonics）+ 反互补品（把光商品化为 GPU 收租）"
+        },
+        {
+          "name": "Broadcom",
+          "ticker": "AVGO",
+          "market": "美股",
+          "note": "交换 ASIC（Tomahawk）+ DSP + CPO（Bailly/Davisson）+ LPO 兼容——两头通吃，最典型反互补品玩家"
+        },
+        {
+          "name": "Arista/Cisco",
+          "ticker": "ANET/CSCO",
+          "market": "美股",
+          "note": "交换机厂、模块大客户，已支持 LPO"
+        },
+        {
+          "name": "超大云厂",
+          "ticker": "GOOGL/META/MSFT/AMZN",
+          "market": "美股",
+          "note": "直接采购模块、定架构（Meta 实测 CPO/LPO）；可自研、可前向整合"
+        }
       ],
       "key_numbers": [
-        {"metric": "2026 1.6T 需求", "value": "约 2500 万只（英伟达约 1500 万 + 谷歌约 1000 万），实际交付受上游核心物料约束", "as_of": "2026", "source": "eastmoney 调研", "confidence": "需求预测（中低）"}
+        {
+          "metric": "2026 1.6T 需求",
+          "value": "约 2500 万只（英伟达约 1500 万 + 谷歌约 1000 万），实际交付受上游核心物料约束",
+          "as_of": "2026",
+          "source": "eastmoney 调研",
+          "confidence": "需求预测（中低）"
+        }
       ],
       "threat_timeline": [
-        {"threat": "买方前向整合（CPO/自研 ASIC）把价值从模块收走", "watch_signal": "NVIDIA/超大厂 CPO 实采、自研网络芯片放量", "horizon": "2027-2029"}
+        {
+          "threat": "买方前向整合（CPO/自研 ASIC）把价值从模块收走",
+          "watch_signal": "NVIDIA/超大厂 CPO 实采、自研网络芯片放量",
+          "horizon": "2027-2029"
+        }
       ],
-      "linked_indicators": ["capex-revenue-ratio"],
+      "linked_indicators": [
+        "capex-revenue-ratio"
+      ],
       "applicability": "需求集中在北美超大厂；权力在买方——是判断上游环节久期时必问的‘最大买方能否前向整合’那一刀",
       "last_reviewed": "2026-06-15"
     },
@@ -310,22 +894,74 @@
         "rent_or_moat": "价值迁移载体（威胁可插拔组装的长期利润池）；但四源共识=慢迁移、中国双雄角色升级（旭创转 CPO 光引擎占 NVIDIA 约 80%）"
       },
       "players": [
-        {"name": "NVIDIA", "ticker": "NVDA", "market": "美股", "note": "Quantum-X Photonics 2026H1、Spectrum-X Photonics 2026H2；约 $4B CPO 投入"},
-        {"name": "Broadcom", "ticker": "AVGO", "market": "美股", "note": "三代最成熟：Bailly(TH5，业界首个量产 CPO)→Davisson(TH6，2025-10 向早期客户出货、102.4T、用台积电 COUPE)；Meta 实测年链路失效率比可插拔少 5 倍"},
-        {"name": "台积电", "ticker": "TSM", "market": "美股/2330.TW", "note": "COUPE 封装平台（SoIC-X 电芯叠光芯）；2026 进 CoWoS-based CPO 整合量产——若 CPO 赢，先进封装最大价值承接方之一"},
-        {"name": "中际旭创/新易盛", "ticker": "300308/300502", "market": "A股", "note": "角色升级：旭创 1.6T CPO 光引擎 2026Q2 量产宣称占 NVIDIA 约 80%、3.2T 2027 放量；新易盛 LPO→CPO+TFLN"}
+        {
+          "name": "NVIDIA",
+          "ticker": "NVDA",
+          "market": "美股",
+          "note": "Quantum-X Photonics 2026H1、Spectrum-X Photonics 2026H2；约 $4B CPO 投入"
+        },
+        {
+          "name": "Broadcom",
+          "ticker": "AVGO",
+          "market": "美股",
+          "note": "三代最成熟：Bailly(TH5，业界首个量产 CPO)→Davisson(TH6，2025-10 向早期客户出货、102.4T、用台积电 COUPE)；Meta 实测年链路失效率比可插拔少 5 倍"
+        },
+        {
+          "name": "台积电",
+          "ticker": "TSM",
+          "market": "美股/2330.TW",
+          "note": "COUPE 封装平台（SoIC-X 电芯叠光芯）；2026 进 CoWoS-based CPO 整合量产——若 CPO 赢，先进封装最大价值承接方之一"
+        },
+        {
+          "name": "中际旭创/新易盛",
+          "ticker": "300308/300502",
+          "market": "A股",
+          "note": "角色升级：旭创 1.6T CPO 光引擎 2026Q2 量产宣称占 NVIDIA 约 80%、3.2T 2027 放量；新易盛 LPO→CPO+TFLN"
+        }
       ],
       "key_numbers": [
-        {"metric": "CPO 替代率（⚠三口径，必须分开标注）", "value": "替代率口径(大摩)：2026≈3%/2027≈11%；全模块份额口径(券商)：2026≈5%；AI-DC 光互联占比口径(SemiAnalysis)：2026≈0.5%→2030≈35%", "as_of": "2025-2026", "source": "Morgan Stanley/券商/SemiAnalysis（均二手转引、原 PDF 待回源）", "confidence": "中、口径不一不可混用"},
-        {"metric": "Davisson(TH6) 每端口功耗", "value": "800G 下 3.5W（比可插拔 −70%+）", "as_of": "2025-10", "source": "NextPlatform（厂商规格+Meta 背书）", "confidence": "高"},
-        {"metric": "大规模采用时点（独立机构共识）", "value": "Bernstein：大规模‘2028 之后’；InnoLight 自述：‘2026-2027 无云厂计划大规模部署 CPO’", "as_of": "2026", "source": "Bernstein/InnoLight（二手转引）", "confidence": "中、方向一致"}
+        {
+          "metric": "CPO 替代率（⚠三口径，必须分开标注）",
+          "value": "替代率口径(大摩)：2026≈3%/2027≈11%；全模块份额口径(券商)：2026≈5%；AI-DC 光互联占比口径(SemiAnalysis)：2026≈0.5%→2030≈35%",
+          "as_of": "2025-2026",
+          "source": "Morgan Stanley/券商/SemiAnalysis（均二手转引、原 PDF 待回源）",
+          "confidence": "中、口径不一不可混用"
+        },
+        {
+          "metric": "Davisson(TH6) 每端口功耗",
+          "value": "800G 下 3.5W（比可插拔 −70%+）",
+          "as_of": "2025-10",
+          "source": "NextPlatform（厂商规格+Meta 背书）",
+          "confidence": "高"
+        },
+        {
+          "metric": "大规模采用时点（独立机构共识）",
+          "value": "Bernstein：大规模‘2028 之后’；InnoLight 自述：‘2026-2027 无云厂计划大规模部署 CPO’",
+          "as_of": "2026",
+          "source": "Bernstein/InnoLight（二手转引）",
+          "confidence": "中、方向一致"
+        }
       ],
       "threat_timeline": [
-        {"threat": "CPO 在 scale-up 成终局、替代铜缆+部分可插拔", "watch_signal": "NVIDIA Rubin(2027)/Feynman 是否注入 CPO；Celestial AI+Amazon Trainium 4 放量", "horizon": "2027-2029（SemiAnalysis：scale-up CPO 是 killer app）"},
-        {"threat": "CPO 在 scale-out 小规模验证", "watch_signal": "Spectrum-X Photonics 2026H2 出货后云厂实采、Davisson 转量产", "horizon": "2026H2 起小验证、大规模 2028 之后"},
-        {"threat": "维护痛点（焊死光引擎、坏一个返厂）拖慢采用", "watch_signal": "现场可换激光器是否解决、云厂态度松动", "horizon": "持续约束"}
+        {
+          "threat": "CPO 在 scale-up 成终局、替代铜缆+部分可插拔",
+          "watch_signal": "NVIDIA Rubin(2027)/Feynman 是否注入 CPO；Celestial AI+Amazon Trainium 4 放量",
+          "horizon": "2027-2029（SemiAnalysis：scale-up CPO 是 killer app）"
+        },
+        {
+          "threat": "CPO 在 scale-out 小规模验证",
+          "watch_signal": "Spectrum-X Photonics 2026H2 出货后云厂实采、Davisson 转量产",
+          "horizon": "2026H2 起小验证、大规模 2028 之后"
+        },
+        {
+          "threat": "维护痛点（焊死光引擎、坏一个返厂）拖慢采用",
+          "watch_signal": "现场可换激光器是否解决、云厂态度松动",
+          "horizon": "持续约束"
+        }
       ],
-      "linked_indicators": ["lpo-cpo-penetration"],
+      "linked_indicators": [
+        "lpo-cpo-penetration"
+      ],
       "applicability": "全球；价值承接方=ASIC+先进封装(台积电)+激光源(美日)；对中国模块厂是角色升级（做 CPO 光引擎）而非出局，被侵蚀的是组装段长期利润池",
       "last_reviewed": "2026-06-15"
     },
@@ -342,19 +978,57 @@
         "rent_or_moat": "对中国模块厂混合影响（器件 BOM 被压=利空、但自研硅光可内部化器件利润=利好，所以旭创自建产线）；最确定的价值承接=InP 激光源（结构不可替代，但 CPO 把激光颗数集中化、非单调越值钱）"
       },
       "players": [
-        {"name": "中际旭创", "ticker": "300308", "market": "A股", "note": "自建硅光芯片产线+多元供应对冲短缺；800G 全球 30%+、1.6T 导入 NVIDIA"},
-        {"name": "Broadcom/Intel/Cisco-Acacia", "ticker": "AVGO/INTC/CSCO", "market": "美股", "note": "自有硅光平台（喂 CPO）/老牌硅光/硅光+相干垂直整合"},
-        {"name": "Lumentum/Coherent", "ticker": "LITE/COHR", "market": "美股", "note": "CW 激光近垄断（硅光/CPO 的光源）——硅光越普及越不可替代（但 CPO 时代颗数集中化、非单调越值钱）"}
+        {
+          "name": "中际旭创",
+          "ticker": "300308",
+          "market": "A股",
+          "note": "自建硅光芯片产线+多元供应对冲短缺；800G 全球 30%+、1.6T 导入 NVIDIA"
+        },
+        {
+          "name": "Broadcom/Intel/Cisco-Acacia",
+          "ticker": "AVGO/INTC/CSCO",
+          "market": "美股",
+          "note": "自有硅光平台（喂 CPO）/老牌硅光/硅光+相干垂直整合"
+        },
+        {
+          "name": "Lumentum/Coherent",
+          "ticker": "LITE/COHR",
+          "market": "美股",
+          "note": "CW 激光近垄断（硅光/CPO 的光源）——硅光越普及越不可替代（但 CPO 时代颗数集中化、非单调越值钱）"
+        }
       ],
       "key_numbers": [
-        {"metric": "800G 及以上收发器出货", "value": "2025 约 2400 万只→2026 近 6300 万只（约 2.6×）", "as_of": "2026", "source": "TrendForce", "confidence": "中高"},
-        {"metric": "硅光降本机理", "value": "一旦设计在 300mm 产线资格通过、单位成本随量陡降；InP 仍在特定应用以显著 CAGR 扩张", "as_of": "2025-2034", "source": "IndexBox", "confidence": "中"}
+        {
+          "metric": "800G 及以上收发器出货",
+          "value": "2025 约 2400 万只→2026 近 6300 万只（约 2.6×）",
+          "as_of": "2026",
+          "source": "TrendForce",
+          "confidence": "中高"
+        },
+        {
+          "metric": "硅光降本机理",
+          "value": "一旦设计在 300mm 产线资格通过、单位成本随量陡降；InP 仍在特定应用以显著 CAGR 扩张",
+          "as_of": "2025-2034",
+          "source": "IndexBox",
+          "confidence": "中"
+        }
       ],
       "threat_timeline": [
-        {"threat": "硅光商品化分立无源、压薄 TOSA/ROSA 器件价值", "watch_signal": "1.6T 硅光方案 vs InP-EML 份额、旭创自研硅光良率", "horizon": "2026-2028 渐进"},
-        {"threat": "激光源成为不可替代价值锚（硅做不了增益）", "watch_signal": "200G EML/高功率 CW 是否仍由 Lumentum/Coherent 把持", "horizon": "已发生且持续"}
+        {
+          "threat": "硅光商品化分立无源、压薄 TOSA/ROSA 器件价值",
+          "watch_signal": "1.6T 硅光方案 vs InP-EML 份额、旭创自研硅光良率",
+          "horizon": "2026-2028 渐进"
+        },
+        {
+          "threat": "激光源成为不可替代价值锚（硅做不了增益）",
+          "watch_signal": "200G EML/高功率 CW 是否仍由 Lumentum/Coherent 把持",
+          "horizon": "已发生且持续"
+        }
       ],
-      "linked_indicators": ["eml-leadtime-price", "laser-localization"],
+      "linked_indicators": [
+        "eml-leadtime-price",
+        "laser-localization"
+      ],
       "applicability": "全球；硅光对中国模块厂混合影响，最确定受益=美日激光源",
       "last_reviewed": "2026-06-15"
     },
@@ -371,21 +1045,70 @@
         "rent_or_moat": "价值迁移载体（最先打 DSP）；反互补品典型（Broadcom 一边卖 DSP 一边推 LPO 兼容、想把利润收回自家 ASIC）；对模块组装厂影响小于 CPO（只少一颗 DSP、模块壳仍在）"
       },
       "players": [
-        {"name": "Marvell", "ticker": "MRVL", "market": "美股", "note": "PAM4 DSP 主力——LPO 若赢是被消灭对象（最大输家）；但也供 200G/lane LPO 的 TIA+driver 芯片组"},
-        {"name": "Broadcom", "ticker": "AVGO", "market": "美股", "note": "既卖 DSP（被威胁）又推 LPO 兼容（受益）——两头通吃、反互补品"},
-        {"name": "新易盛/剑桥/易飞扬", "ticker": "300502/603083", "market": "A股", "note": "LPO 抢滩者，把 LPO 当渐进过渡、同步布 CPO"},
-        {"name": "Semtech/MACOM", "ticker": "SMTC/MTSI", "market": "美股", "note": "LPO 受益方：DSP 拿掉后高线性 driver/TIA 价值上升"}
+        {
+          "name": "Marvell",
+          "ticker": "MRVL",
+          "market": "美股",
+          "note": "PAM4 DSP 主力——LPO 若赢是被消灭对象（最大输家）；但也供 200G/lane LPO 的 TIA+driver 芯片组"
+        },
+        {
+          "name": "Broadcom",
+          "ticker": "AVGO",
+          "market": "美股",
+          "note": "既卖 DSP（被威胁）又推 LPO 兼容（受益）——两头通吃、反互补品"
+        },
+        {
+          "name": "新易盛/剑桥/易飞扬",
+          "ticker": "300502/603083",
+          "market": "A股",
+          "note": "LPO 抢滩者，把 LPO 当渐进过渡、同步布 CPO"
+        },
+        {
+          "name": "Semtech/MACOM",
+          "ticker": "SMTC/MTSI",
+          "market": "美股",
+          "note": "LPO 受益方：DSP 拿掉后高线性 driver/TIA 价值上升"
+        }
       ],
       "key_numbers": [
-        {"metric": "LPO 在 800G 部署占比（⚠口径打架）", "value": "乐观口径(分析师)：2026-2027 超 1/3；保守口径(Cignal AI)：100G/lane LPO 上市偏晚、长期只占可插拔一小部分", "as_of": "2026", "source": "IEEE EPS / Cignal AI", "confidence": "口径冲突、按保守取（AI 后端专用、非通杀）"},
-        {"metric": "LPO 省电", "value": "每模块功耗降 40-50%、延迟 <3ns/hop", "as_of": "2026", "source": "技术博客", "confidence": "中"},
-        {"metric": "互通障碍", "value": "主机到模块各需支持约 16dB 损耗，信号完整性是主要障碍；200G/lane 跨厂互通比 100G 更难", "as_of": "2026", "source": "IEEE EPS", "confidence": "中"}
+        {
+          "metric": "LPO 在 800G 部署占比（⚠口径打架）",
+          "value": "乐观口径(分析师)：2026-2027 超 1/3；保守口径(Cignal AI)：100G/lane LPO 上市偏晚、长期只占可插拔一小部分",
+          "as_of": "2026",
+          "source": "IEEE EPS / Cignal AI",
+          "confidence": "口径冲突、按保守取（AI 后端专用、非通杀）"
+        },
+        {
+          "metric": "LPO 省电",
+          "value": "每模块功耗降 40-50%、延迟 <3ns/hop",
+          "as_of": "2026",
+          "source": "技术博客",
+          "confidence": "中"
+        },
+        {
+          "metric": "互通障碍",
+          "value": "主机到模块各需支持约 16dB 损耗，信号完整性是主要障碍；200G/lane 跨厂互通比 100G 更难",
+          "as_of": "2026",
+          "source": "IEEE EPS",
+          "confidence": "中"
+        }
       ],
       "threat_timeline": [
-        {"threat": "LPO 在 800G AI 后端 fabric 掏空 DSP", "watch_signal": "LPO MSA 跨厂互通、超大厂 AI 后端实采 LPO 比例", "horizon": "2026-2027（专用场景）"},
-        {"threat": "LRO 作为 1.6T 折中上位（200G/lane 散热墙逼业界选 LRO）", "watch_signal": "1.6T LRO 模块量产时点", "horizon": "2026-2027"}
+        {
+          "threat": "LPO 在 800G AI 后端 fabric 掏空 DSP",
+          "watch_signal": "LPO MSA 跨厂互通、超大厂 AI 后端实采 LPO 比例",
+          "horizon": "2026-2027（专用场景）"
+        },
+        {
+          "threat": "LRO 作为 1.6T 折中上位（200G/lane 散热墙逼业界选 LRO）",
+          "watch_signal": "1.6T LRO 模块量产时点",
+          "horizon": "2026-2027"
+        }
       ],
-      "linked_indicators": ["lpo-cpo-penetration", "dsp-localization"],
+      "linked_indicators": [
+        "lpo-cpo-penetration",
+        "dsp-localization"
+      ],
       "applicability": "全球；LPO 利空美国纯 DSP（Marvell）、利好 ASIC+driver/TIA；对中国模块组装厂影响有限",
       "last_reviewed": "2026-06-15"
     },
@@ -402,17 +1125,45 @@
         "rent_or_moat": "苦力/商品（铜本身不肥），但它对光模块 TAM 是硬约束——是需求侧的釜底抽薪"
       },
       "players": [
-        {"name": "Amphenol/安费诺、立讯精密", "ticker": "APH/002475", "market": "美股/A股", "note": "高速铜缆/连接器/ACC；NVL72 铜背板供应链"},
-        {"name": "兆龙互连/沃尔核材", "ticker": "300913/002130", "market": "A股", "note": "高速铜缆/DAC（结构事实，非买卖）"}
+        {
+          "name": "Amphenol/安费诺、立讯精密",
+          "ticker": "APH/002475",
+          "market": "美股/A股",
+          "note": "高速铜缆/连接器/ACC；NVL72 铜背板供应链"
+        },
+        {
+          "name": "兆龙互连/沃尔核材",
+          "ticker": "300913/002130",
+          "market": "A股",
+          "note": "高速铜缆/DAC（结构事实，非买卖）"
+        }
       ],
       "key_numbers": [
-        {"metric": "NVL72 scale-up 域", "value": "72 GPU 走无源铜背板、机柜内零光模块；Rubin NVL144(2H26)大概率铜缆数量翻倍", "as_of": "2026", "source": "SemiAnalysis/The Register（2026-04）", "confidence": "机构、方向高置信"},
-        {"metric": "ACC 新中间市场", "value": "机柜破 100-130kW（NVL72 已 120-130kW）逼 scale-up 拆多机柜，≤3m 柜间无源铜够不着、上光太贵太耗电，ACC 补洞——抢的是光模块的潜在增量", "as_of": "2026", "source": "viksnewsletter ACC market", "confidence": "机制（中）"}
+        {
+          "metric": "NVL72 scale-up 域",
+          "value": "72 GPU 走无源铜背板、机柜内零光模块；Rubin NVL144(2H26)大概率铜缆数量翻倍",
+          "as_of": "2026",
+          "source": "SemiAnalysis/The Register（2026-04）",
+          "confidence": "机构、方向高置信"
+        },
+        {
+          "metric": "ACC 新中间市场",
+          "value": "机柜破 100-130kW（NVL72 已 120-130kW）逼 scale-up 拆多机柜，≤3m 柜间无源铜够不着、上光太贵太耗电，ACC 补洞——抢的是光模块的潜在增量",
+          "as_of": "2026",
+          "source": "viksnewsletter ACC market",
+          "confidence": "机制（中）"
+        }
       ],
       "threat_timeline": [
-        {"threat": "铜（DAC/ACC）在 scale-up 域给光模块只数封顶", "watch_signal": "Rubin NVL144 铜缆用量、ACC 在柜间 ≤3m 的渗透；CPO 何时在 scale-up 替代铜（Feynman/2028）", "horizon": "已发生→2028（CPO 才在 scale-up 替铜）"}
+        {
+          "threat": "铜（DAC/ACC）在 scale-up 域给光模块只数封顶",
+          "watch_signal": "Rubin NVL144 铜缆用量、ACC 在柜间 ≤3m 的渗透；CPO 何时在 scale-up 替代铜（Feynman/2028）",
+          "horizon": "已发生→2028（CPO 才在 scale-up 替铜）"
+        }
       ],
-      "linked_indicators": ["capex-revenue-ratio"],
+      "linked_indicators": [
+        "capex-revenue-ratio"
+      ],
       "applicability": "全球；含义有二：①需求台账‘每 GPU 配比’必须先扣掉走铜的层（这正是 1× vs 2.5× 分歧的物理根源——铜域=光配比为零）；②价值迁移不只‘光→ASIC/封装/激光’一个方向，还有‘光↔铜’在 scale-up 域的拉锯，铜赢越久、光模块只数天花板越低（直接关系全链 β）",
       "last_reviewed": "2026-06-15"
     },
@@ -430,18 +1181,49 @@
       },
       "players": [],
       "key_numbers": [
-        {"metric": "数通+总光模块市场", "value": "2024 $13.6B→2025 >$23B(+50%)→2026 $26B（数通 AI 部分约 $8-10B/约 40%）", "as_of": "2025-2026", "source": "MarketsandMarkets/LightCounting/TrendForce", "confidence": "权威机构多源"},
-        {"metric": "出货量 vs 单价（口径炸弹）", "value": "800G+ 出货 2025 约 2400 万→2026 近 6300 万只(2.6×)；但 800G ASP $1200(2023)→$450(2025)——量翻倍价腰斩，$TAM 增速≠出货增速≠利润增速", "as_of": "2025-2026", "source": "deepfundamental/TrendForce", "confidence": "中高"},
-        {"metric": "每 GPU 光模块配比（口径敏感 3-5×）", "value": "1×(只数 GPU 网卡口,SemiAnalysis) / 2.5×(含交换层 spine/leaf,DeepFundamental) / >5×(十万卡集群)——NVL72 机柜内用铜缆 DAC、只有跨机柜上光", "as_of": "2026", "source": "SemiAnalysis/DeepFundamental", "confidence": "口径不一、必须写明数哪几层"},
-        {"metric": "1.6T 2026 需求区间", "value": "8.6M-20M（2.3× 跨度=牛熊分水岭；NVIDIA >5M）", "as_of": "2026", "source": "LightCounting 等", "confidence": "中、跨度大"}
+        {
+          "metric": "数通+总光模块市场",
+          "value": "2024 $13.6B→2025 >$23B(+50%)→2026 $26B（数通 AI 部分约 $8-10B/约 40%）",
+          "as_of": "2025-2026",
+          "source": "MarketsandMarkets/LightCounting/TrendForce",
+          "confidence": "权威机构多源"
+        },
+        {
+          "metric": "出货量 vs 单价（口径炸弹）",
+          "value": "800G+ 出货 2025 约 2400 万→2026 近 6300 万只(2.6×)；但 800G ASP $1200(2023)→$450(2025)——量翻倍价腰斩，$TAM 增速≠出货增速≠利润增速",
+          "as_of": "2025-2026",
+          "source": "deepfundamental/TrendForce",
+          "confidence": "中高"
+        },
+        {
+          "metric": "每 GPU 光模块配比（口径敏感 3-5×）",
+          "value": "1×(只数 GPU 网卡口,SemiAnalysis) / 2.5×(含交换层 spine/leaf,DeepFundamental) / >5×(十万卡集群)——NVL72 机柜内用铜缆 DAC、只有跨机柜上光",
+          "as_of": "2026",
+          "source": "SemiAnalysis/DeepFundamental",
+          "confidence": "口径不一、必须写明数哪几层"
+        },
+        {
+          "metric": "1.6T 2026 需求区间",
+          "value": "8.6M-20M（2.3× 跨度=牛熊分水岭；NVIDIA >5M）",
+          "as_of": "2026",
+          "source": "LightCounting 等",
+          "confidence": "中、跨度大"
+        }
       ],
       "threat_timeline": [
-        {"threat": "AI capex 收入跟不上（与 ai-datacenter 链 13:1 裂缝共用）+ ASP 通缩双杀利润", "watch_signal": "capex/AI 收入比、800G/1.6T ASP 跌幅、超大厂资本开支指引", "horizon": "2027-2028"}
+        {
+          "threat": "AI capex 收入跟不上（与 ai-datacenter 链 13:1 裂缝共用）+ ASP 通缩双杀利润",
+          "watch_signal": "capex/AI 收入比、800G/1.6T ASP 跌幅、超大厂资本开支指引",
+          "horizon": "2027-2028"
+        }
       ],
-      "linked_indicators": ["capex-revenue-ratio", "module-asp"],
+      "linked_indicators": [
+        "capex-revenue-ratio",
+        "module-asp"
+      ],
       "applicability": "全球，capex 集中在北美超大厂；与 ai-datacenter 链共用需求母数与 13:1 裂缝",
       "last_reviewed": "2026-06-15"
     }
   ],
-  "_pending": "闸门②成本法（钻进某一环节拆 BOM/成本栈、跑第四五层）待用户选环节后做；占位公司清单已经独立 agent 联网核代码（selection_verified=true），但环节级判断后的逐家个股分析属第一阶段单股工具。"
+  "_pending": "闸门②·光芯片已做（2026-07-05，成本法_光芯片.md）；后续候选见 chain_decision.open_todo"
 }

@@ -1,13 +1,28 @@
 {
   "slug": "optical-module",
   "name": "光模块（光通信）",
-  "as_of": "2026-06",
-  "tagline": "AI 需求最猛的链之一，但价值‘中国赢规模、美日拿利润’——一块模块约一半价值压在进口的 DSP 与高速激光器；A 股持久价值在无源器件（天孚）与光芯片国产替代（源杰），组装环节高增长但处资本周期顶点、且 CPO/硅光在慢慢重排价值",
+  "as_of": "2026-07",
+  "tagline": "AI 需求最猛的链之一，价值'中国赢规模、美日拿利润'——一块模块约一半价值压在进口的 DSP 与高速激光器。成本法钻进光芯片层：厚利润是代差护城河×短缺租金的叠加态，租金 2027-28 随供给墙回吐；需求正被硅光/CPO 三级改写，25G 原型（一年-52%）给出 100G 国产替代的基准剧本——塌方滞后、渐进关窗，分水岭在 200G 与大功率 CW",
   "subchains": 6,
   "selected": 30,
-  "gates": ["图谱", "成本法", "选股"],
-  "gates_done": 1,
+  "gates": [
+    "图谱",
+    "成本法",
+    "选股"
+  ],
+  "gates_done": 2,
   "pages": [
-    {"title": "产业链全景图", "icon": "🗺️", "file": "chains/optical-module/chain_map.html", "primary": true}
+    {
+      "title": "产业链全景图",
+      "icon": "🗺️",
+      "file": "chains/optical-module/chain_map.html",
+      "primary": true
+    },
+    {
+      "title": "成本拆解：光芯片（激光器）",
+      "icon": "🔬",
+      "file": "chains/optical-module/cost_optical_chip.html",
+      "primary": false
+    }
   ]
 }

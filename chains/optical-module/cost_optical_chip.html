@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光芯片（激光器）· 成本拆解 — 光模块产业链</title>
+<style id="chain-ui">
+/* chain_ui.css —— 产业链研究页面共享主题（闸门①图谱、闸门②成本法等都 link 它） */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f3f5f8; --bg-pattern: #e8edf2; --card: #ffffff;
+  --ink: #0e2230; --text: #1f2a33; --text-muted: #5b6775; --text-light: #93a0ad;
+  --border: #e4e8ee; --border-soft: #eef1f5;
+  --primary: #0f2e3d; --accent: #1f6f8b; --accent-light: #2a93b0;
+  --gold: #c08a2d;
+  --rich: #1f8f76; --rich-bg: rgba(31,143,118,.10);
+  --mid: #1f6f8b; --mid-bg: rgba(31,111,139,.10);
+  --thin: #93a0ad; --thin-bg: rgba(147,160,173,.12);
+  --good: #1f8f76; --caution: #c8901a; --hot: #d64550;
+  --radius: 16px; --radius-sm: 10px;
+  --mono: "SF Mono","JetBrains Mono","Consolas",ui-monospace,monospace;
+  --shadow-sm: 0 1px 2px rgba(16,34,48,.05), 0 1px 3px rgba(16,34,48,.04);
+  --shadow: 0 4px 14px rgba(16,34,48,.07), 0 2px 6px rgba(16,34,48,.04);
+  --shadow-lg: 0 14px 36px rgba(16,34,48,.12), 0 6px 14px rgba(16,34,48,.06);
+  --shadow-xl: 0 24px 50px rgba(16,34,48,.16), 0 8px 18px rgba(16,34,48,.08);
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  background: linear-gradient(180deg, var(--bg-pattern) 0%, var(--bg) 440px);
+  color: var(--text); line-height: 1.62; font-size: 14px; min-height: 100vh;
+  padding: 28px 18px 90px; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+.container { max-width: 1140px; margin: 0 auto; }
+a { color: var(--accent); }
+
+.topbar { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom: 14px; flex-wrap:wrap; }
+.back-link { font-size:13px; font-weight:600; color:var(--text-muted); text-decoration:none;
+  background:#fff; border:1px solid var(--border); padding:7px 14px; border-radius:20px; box-shadow:var(--shadow-sm); }
+.back-link:hover { color:var(--accent); border-color:var(--accent); }
+.asof-pill { font-size:12px; color:var(--text-muted); font-weight:600; background:#fff; border:1px solid var(--border);
+  padding:6px 13px; border-radius:20px; font-variant-numeric:tabular-nums; }
+
+.hero { position:relative; display:flex; align-items:center; gap:18px; margin:0 0 12px; padding:26px 30px;
+  border-radius:20px; background:linear-gradient(135deg,#0f2e3d 0%,#16465a 55%,#1d6076 100%); color:#eaf2f5;
+  box-shadow:var(--shadow-xl); overflow:hidden; }
+.hero::after { content:""; position:absolute; right:-70px; top:-90px; width:280px; height:280px;
+  background:radial-gradient(circle, rgba(42,147,176,.40), rgba(42,147,176,0) 70%); pointer-events:none; }
+.hero .brand-icon { position:relative; z-index:1; width:54px; height:54px; flex:0 0 auto;
+  background:linear-gradient(135deg,var(--gold) 0%,#e0a93f 100%); border-radius:15px;
+  display:flex; align-items:center; justify-content:center; box-shadow:0 10px 22px rgba(192,138,45,.40); }
+.hero .hero-text { position:relative; z-index:1; min-width:0; }
+.hero h1 { font-size:24px; font-weight:750; color:#fff; letter-spacing:-0.4px; line-height:1.2; }
+.hero .tagline { font-size:13px; color:#b9cdd6; margin-top:4px; }
+.hero .gate-pill { display:inline-block; margin-top:8px; font-size:11.5px; font-weight:700; color:#ffe6b8;
+  background:rgba(192,138,45,.22); border:1px solid rgba(224,169,63,.4); padding:3px 11px; border-radius:20px; }
+
+.card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:24px 26px; margin:16px 0; box-shadow:var(--shadow); }
+.sec-title { font-size:18px; font-weight:750; color:var(--primary); letter-spacing:-0.3px; margin-bottom:4px; }
+.sec-sub { font-size:12.5px; color:var(--text-muted); margin-bottom:18px; }
+.lead { font-size:14.5px; color:var(--text); line-height:1.72; }
+.lead + .lead { margin-top:12px; }
+.muted { color:var(--text-muted); } .hl { color:var(--gold); font-weight:700; }
+.card b, .lead b { color:var(--primary); }
+
+/* 总览三点 + β 提示 */
+.points { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:18px 0 4px; }
+.point { background:linear-gradient(180deg,#f7fafb,#f1f5f7); border:1px solid var(--border-soft);
+  border-radius:12px; padding:15px 16px; position:relative; }
+.point::before { content:""; position:absolute; left:0; top:13px; bottom:13px; width:3px; border-radius:3px;
+  background:linear-gradient(180deg,var(--accent),var(--accent-light)); }
+.point .pn { font-size:10px; font-weight:800; color:var(--accent); letter-spacing:.6px; }
+.point .pt { font-size:13.5px; font-weight:700; color:var(--ink); margin:3px 0; }
+.point .pd { font-size:12px; color:var(--text-muted); line-height:1.55; }
+.beta { margin-top:18px; padding:13px 16px; background:rgba(214,69,80,.06); border-left:3px solid var(--hot);
+  border-radius:8px; font-size:12.5px; color:var(--text); line-height:1.6; }
+.beta b { color:var(--hot); }
+
+/* 新手指引卡（howto） */
+.howto { background:linear-gradient(135deg,#fbf7ee,#f6f0e2); border-color:#ecdcb8; }
+.howto-title { font-size:15px; font-weight:750; color:#7a5a18; margin-bottom:13px; display:flex; align-items:center; gap:8px; }
+.howto-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; font-size:12.5px; color:var(--text); line-height:1.62; }
+.howto-grid > div { background:rgba(255,255,255,.55); border:1px solid #ecdcb8; border-radius:11px; padding:13px 15px; }
+.howto-grid b { color:var(--primary); display:block; margin-bottom:4px; font-size:13px; }
+
+/* 可折叠 */
+details { background:#fff; border:1px solid var(--border); border-radius:12px; margin:12px 0; overflow:hidden; }
+details summary { cursor:pointer; padding:14px 18px; font-size:14px; font-weight:700; color:var(--primary); list-style:none;
+  display:flex; align-items:center; justify-content:space-between; }
+details summary::-webkit-details-marker { display:none; }
+details summary::after { content:"▸"; color:var(--text-light); transition:transform .2s; }
+details[open] summary::after { transform:rotate(90deg); }
+details .dc { padding:2px 18px 18px; font-size:13px; color:var(--text-muted); line-height:1.7; }
+details .dc ol, details .dc ul { padding-left:20px; } details .dc li { margin:7px 0; }
+details .dc b { color:var(--text); }
+
+footer { margin-top:40px; padding-top:18px; border-top:1px solid var(--border); text-align:center; color:var(--text-light); font-size:12px; }
+
+@media (max-width: 720px) {
+  .points, .howto-grid { grid-template-columns:1fr; }
+}
+
+</style>
+<style>
+.cost-stack { display:flex; flex-direction:column; gap:7px; margin:6px 0 4px; }
+.cs-row { display:flex; align-items:center; gap:12px; }
+.cs-name { flex:0 0 168px; font-size:12.5px; font-weight:700; color:var(--ink); text-align:right; }
+.cs-bar-wrap { flex:1; background:#f1f4f7; border-radius:7px; overflow:hidden; height:24px; position:relative; }
+.cs-bar { height:100%; border-radius:7px; background:linear-gradient(90deg,var(--accent),var(--accent-light)); }
+.cs-bar.cool { background:linear-gradient(90deg,#7a8aa0,#9aa8bc); }
+.cs-pct { flex:0 0 72px; font-size:12px; font-weight:700; color:var(--text-muted); font-variant-numeric:tabular-nums; }
+.cs-note { font-size:11px; color:var(--text-light); margin-left:4px; }
+
+table.t { width:100%; border-collapse:separate; border-spacing:0 6px; font-size:12.5px; }
+table.t th { text-align:left; font-size:10.5px; font-weight:700; color:var(--text-light); text-transform:uppercase; letter-spacing:.5px; padding:0 12px 6px; }
+table.t td { background:#fff; padding:10px 12px; border-top:1px solid var(--border-soft); border-bottom:1px solid var(--border-soft); vertical-align:top; line-height:1.55; }
+table.t tr td:first-child { border-left:1px solid var(--border-soft); border-radius:9px 0 0 9px; font-weight:700; color:var(--ink); }
+table.t tr td:last-child { border-right:1px solid var(--border-soft); border-radius:0 9px 9px 0; }
+.pill { display:inline-block; font-size:11px; font-weight:700; padding:2px 9px; border-radius:11px; white-space:nowrap; }
+.pill.moat { background:var(--rich-bg); color:var(--rich); }
+.pill.rent { background:rgba(214,69,80,.12); color:var(--hot); }
+.pill.mid { background:rgba(200,144,26,.14); color:var(--caution); }
+.pill.thin { background:var(--thin-bg); color:var(--text-muted); }
+
+.tiers { display:flex; flex-direction:column; gap:12px; }
+.tier { border-radius:12px; padding:15px 17px; border:1px solid var(--border); position:relative; }
+.tier::before { content:""; position:absolute; left:0; top:14px; bottom:14px; width:4px; border-radius:4px; }
+.tier.t1 { background:var(--rich-bg); border-color:rgba(31,143,118,.3); } .tier.t1::before { background:var(--rich); }
+.tier.t2 { background:rgba(200,144,26,.08); border-color:rgba(200,144,26,.28); } .tier.t2::before { background:var(--caution); }
+.tier.t3 { background:#f7f8fa; border-color:var(--border); } .tier.t3::before { background:var(--thin); }
+.tier .th { font-size:14px; font-weight:750; color:var(--primary); margin-bottom:4px; }
+.tier .td { font-size:12.5px; color:var(--text); line-height:1.6; }
+.tier .td b { color:var(--primary); }
+
+.mig { display:flex; flex-direction:column; gap:9px; margin-top:4px; }
+.mig-row { display:flex; align-items:baseline; gap:10px; font-size:13px; line-height:1.55; }
+.mig-from { flex:0 0 auto; color:var(--text-muted); }
+.mig-arrow { color:var(--gold); font-weight:800; }
+.mig-to { color:var(--ink); font-weight:600; }
+
+.keyline { background:linear-gradient(135deg,var(--primary),var(--accent)); color:#eaf2f5; }
+.keyline .sec-title { color:#fff; } .keyline .lead { color:#dceaef; }
+.keyline .lead b { color:#ffe6b8; }
+
+.duo { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media (max-width:760px){ .duo { grid-template-columns:1fr; } }
+.duo-box { background:#fff; border:1px solid var(--border); border-radius:11px; padding:13px 15px; }
+.duo-box .dh { font-size:13px; font-weight:800; color:var(--primary); margin-bottom:6px; }
+.duo-box .dt { font-size:12.5px; color:var(--text); line-height:1.62; }
+
+.handoff { background:linear-gradient(135deg,#f6f9fb,#eef4f7); border-color:#d6e3ea; }
+.ho-envh { font-size:12.5px; font-weight:750; color:var(--ink); margin:14px 0 2px; }
+.ho-envnote { font-size:11.5px; color:var(--text-muted); line-height:1.5; margin-bottom:8px; }
+.ho-chips { display:grid; grid-template-columns:repeat(auto-fill,minmax(252px,1fr)); gap:9px; }
+.ho-chip { background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 12px; cursor:pointer;
+  transition:transform .12s, box-shadow .12s, border-color .12s; }
+.ho-chip:hover { transform:translateY(-2px); box-shadow:var(--shadow); border-color:var(--accent); }
+.ho-chiph { display:flex; align-items:center; gap:6px; }
+.ho-star { color:var(--gold); font-size:12px; }
+.ho-cn { font-size:13.5px; font-weight:750; color:var(--primary); }
+.ho-cc { font-size:11.5px; font-weight:700; color:var(--accent); font-family:var(--mono); }
+.ho-mkt { margin-left:auto; font-size:9.5px; font-weight:700; padding:1px 6px; border-radius:9px; }
+.ho-mkt.A { background:rgba(214,69,80,.10); color:#b5333d; }
+.ho-mkt.US { background:rgba(31,111,139,.10); color:var(--mid); }
+.ho-mkt.JP { background:rgba(120,100,40,.12); color:#8a6d1f; }
+.ho-role { font-size:11px; color:var(--text-muted); line-height:1.45; margin-top:4px; }
+.ho-copyhint { font-size:9.5px; color:var(--text-light); margin-top:5px; }
+.ho-toast { position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px); opacity:0;
+  background:#0f2e3d; color:#eaf2f5; font-size:12.5px; font-weight:600; padding:10px 18px; border-radius:24px;
+  box-shadow:var(--shadow-xl); transition:opacity .2s, transform .2s; pointer-events:none; z-index:100; }
+.ho-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="topbar">
+    <a class="back-link" href="chain_map.html">← 返回产业链全景图</a>
+    <span class="asof-pill">数据时点 2026-07</span>
+  </div>
+
+  <section class="hero">
+    <div class="brand-icon">
+      <svg viewBox="0 0 32 32" width="30" height="30" fill="none">
+        <g stroke="#1a1205" stroke-width="2" stroke-linecap="round"><line x1="9" y1="6.5" x2="9" y2="25.5"/><line x1="16" y1="6.5" x2="16" y2="25.5"/><line x1="23" y1="6.5" x2="23" y2="25.5"/></g>
+        <rect x="6.6" y="17" width="4.8" height="6.5" rx="1.4" fill="#1a1205"/><rect x="13.6" y="11.5" width="4.8" height="8" rx="1.4" fill="#1a1205"/><rect x="20.6" y="8" width="4.8" height="7" rx="1.4" fill="#1a1205"/>
+      </svg>
+    </div>
+    <div class="hero-text">
+      <h1>光芯片（激光器）· 成本拆解</h1>
+      <div class="tagline">钻进激光器芯片这一节：厚利润里几成是本事、几成是缺货，国产替代的窗口有多宽</div>
+      <span class="gate-pill">成本拆解 · 环节层，不碰个股</span>
+    </div>
+  </section>
+
+  <section class="card howto">
+    <div class="howto-title">📖 这一页在干嘛</div>
+    <div class="howto-grid">
+      <div><b>① 从全景图钻进来</b>全景图判过：一块光模块约一半价值压在进口的 DSP 与高速激光器。这页把激光器芯片拆开——钱花在哪、价值留在哪、留多久。</div>
+      <div><b>② 找持久价值，不碰个股</b>这页只判断价值在这个环节的哪一档、是否持久。个股贵不贵、买不买，留给单股深度分析。</div>
+      <div><b>③ 带<span class="term-demo">虚线下划线</span>的词点一下</b>专业词都配了大白话解释，鼠标移上去或手机点一下就能看。</div>
+    </div>
+  </section>
+
+  <!-- 一、模块层 BOM -->
+  <section class="card">
+    <div class="sec-title">💵 一只 800G 模块的钱分给谁（先看清，再说价值）</div>
+    <div class="sec-sub">物料成本合计约 $315-398（2026 年两个独立来源），条越长分到的钱越多</div>
+    <div class="cost-stack" id="stack"></div>
+    <p class="lead" style="margin-top:14px;">三个立刻能读出来的事实。其一，换成硅光方案，整只模块便宜约两成——省的几乎全是激光器的钱：8 颗高价 EML（合计 $60-92）换成 2-4 颗低价 CW 光源（合计 $20-40）。头部模块厂 2025 年硅光出货已过半，意味着每多卖一只硅光模块，EML 就少收一份钱。其二，1.6T 反方向把光芯片抬回来：8 颗 200G EML 值 $112-144、比 800G 的光芯片价值量高五到九成——速率升级是光芯片价值量最陡的扩张轴。其三，DSP 仍是单件最大的一块（$80-90、三个来源一致），它是另一节的主场，但算利润池时要记住它的存在。</p>
+  </section>
+
+  <!-- 二、芯片层成本 -->
+  <section class="card">
+    <div class="sec-title">🔬 一颗激光器芯片的钱花在哪（卡脖子的物理所在）</div>
+    <div class="sec-sub">工序级的成本占比表全网找不到两个独立来源——能拼出来的是三段结构</div>
+    <table class="t">
+      <tr><th>成本块</th><th>量级</th><th>说明</th></tr>
+      <tr><td>原材料</td><td>仅占生产成本 10-20%</td><td>源杰年报口径。其中 InP 衬底占材料成本 30-40%——即涨价前衬底只占芯片总成本约 3-8%</td></tr>
+      <tr><td>设备折旧＋洁净间＋人工</td><td>大头（七八成量级）</td><td>MOCVD 外延设备交期 9-12 个月、装机到稳产一年以上、完整扩产周期两年起——供给刚性是物理的</td></tr>
+      <tr><td>良率损耗</td><td>最关键的隐性成本</td><td>EML 要做 4-6 次外延生长，每一次都可能报废前面全部工序；国产与海外的差距集中在选区外延的控制精度上。良率每提 10 个点都要大量研发与时间</td></tr>
+    </table>
+    <p class="lead muted" style="margin-top:12px;">2026 年这张成本表正被最上游重写：InP 衬底一年涨了约 3 倍（2 英寸 $800→$2,300-2,500、6 英寸 $1,400→$5,000，两家独立行业媒体互证），衬底占芯片成本的比例正从个位数向 20-30% 挤压。住友、AXT、JX 垄断高端衬底，而中国的高纯铟出口管制反过来卡了它们的料（住友产能一度砍半）——这条链上罕见的中国握上游格局：云南锗业正从 15 万片/年扩到 45 万片/年。</p>
+  </section>
+
+  <!-- 三、价值创造与占有 -->
+  <section class="card">
+    <div class="sec-title">🧲 价值怎么创造、被谁占有</div>
+    <div class="sec-sub">创造靠时间堆出来的三样东西，占有当下在五家寡头手里</div>
+    <p class="lead">创造价值的是外延生长的工艺精度、良率爬坡的手艺、可靠性数据的积累（数据中心客户要几千小时老化验证才给票）——三样都长在时间上，砸钱买不来速度，这是它和产能型环节的本质区别。</p>
+    <p class="lead">占有价值的当下是五家寡头：2026 年全行业 EML＋CW 激光器月产能翻倍至约 5,070 万颗（TrendForce），其中 EML 产能的 72% 在 Lumentum、Broadcom、三菱手里，CW 光源产能的 74% 在 Broadcom、住友、Coherent、联亚手里——两张榜单上没有大陆厂商。买方再往上一层：NVIDIA 2026 年 3 月用 40 亿美元把 Coherent、Lumentum 的产能直接锁走（各 20 亿、多年承诺＋产能优先权），把其余买家推到 2027 年之后。</p>
+    <p class="lead"><b>这笔锁单里藏着本环节最重要的动态</b>（TrendForce 原话级）：NVIDIA 锁死 EML 产能，客观上把非 NVIDIA 阵营加速推向 CW＋硅光方案——短缺正在自己制造自己的替代。EML 这侧的短缺越狠，硅光渗透越快，EML 的长期需求母数越小；而承接需求的 CW 光源，恰好是国产刚站上牌桌的那一格（源杰按灼识口径在硅光高速互连细分全球第二、份额 23.6%）。</p>
+  </section>
+
+  <!-- 四、利润池对照 -->
+  <section class="card">
+    <div class="sec-title">💰 利润池对照：今天赚多少、三五年后赚多少</div>
+    <div class="sec-sub">芯片级市场规模没有权威一手数、全是二手估计——按宽区间读、别取点值</div>
+    <table class="t">
+      <tr><th>环节</th><th>今天的收入池（2025-26）</th><th>今天的利润（毛估）</th><th>三五年后判断</th></tr>
+      <tr><td>激光器芯片（EML＋CW）</td><td>约 $8-14 亿（EML $5.8-8.1 亿＋CW $2.5-5.7 亿，三源打架）</td><td>毛利池约 $5-9 亿；正常年景芯片层毛利 60-75%、2026 短缺推高（源杰净利率 32% 为 2025 景气年；Lumentum 全公司 GAAP 净利率仅 1.6%——含亏损业务、财年止 2025-06、大部分在本轮景气前）</td><td>收入池向 $15-25 亿走（1.6T＋CW 放量＋CPO 高功率化），毛利率下台阶（供给翻倍＋国产涌入＋6 英寸衬底降本六成）——池子变大、每一美元利润的质量变差</td></tr>
+      <tr><td>对照：DSP</td><td>$50 亿以上（$80-90 × 约 6,300 万只）</td><td>链内芯片层最大单一利润池、Marvell/Broadcom 双寡头绝对主导（PAM4 合计约七成、谁第一随口径而变）</td><td>LPO/LRO 侵蚀份额、CPO 把它挪进交换芯片侧——替代技术全冲它来</td></tr>
+      <tr><td>对照：模块组装</td><td>以太网模块 $165 亿→$260 亿（LightCounting）</td><td>仅中际旭创＋新易盛 2025 年归母合计约 203 亿元——绝对值比激光器环节大一个量级</td><td>全景图已判：周期成分高、2027-28 回吐风险</td></tr>
+      <tr><td>对照：InP 衬底</td><td>小盘子（几百万片级 × 单价）</td><td>单位租金最极端：涨 3 倍、缺口约七成、住友约六成份额</td><td>扩产（住友＋40%、AXT 翻倍、云南锗业 3 倍）＋6 英寸化，2027-28 回吐</td></tr>
+    </table>
+    <p class="lead" style="margin-top:12px;">资本回报线索（本轮大半查不到、如实标注）：五家厂商的固定资产周转未采到、量化留给下次季度核对。两个可用的锚：Lumentum 上一财年 GAAP 营业利润率 −10.9%（非 GAAP +9.7%、财年止 2025-06）——海外龙头在重资产与价格周期下长期资本回报平庸，高毛利不等于高资本回报；源杰景气年毛估（2025 归母 1.91 亿对上市实募净额 13.79 亿约 14%，分母用募资额、口径粗糙仅作量级）。重资产加两年扩产周期意味着：扩产期折旧前置、资本回报系统性滞后于毛利率。</p>
+    <p class="lead muted" style="margin-top:12px;">读法：激光器芯片是这条链里单位利润率最高、绝对利润池偏小的环节——它值钱靠稀缺、不靠体量。三五年后池子大概率变大，但成色分化会极大：200G／大功率 CW 那一档留住结构溢价，100G／低功率 CW 那一档滑向大路货。</p>
+  </section>
+
+  <!-- 五、租金 vs 护城河体检 -->
+  <section class="card">
+    <div class="sec-title">⚖️ 厚利润体检：几成是本事、几成是缺货（本页最重的判断）</div>
+    <div class="sec-sub">四个问题问下来，答案是叠加态——本事打底、缺货铺面</div>
+    <table class="t">
+      <tr><th>体检问题</th><th>答案</th><th>证据</th></tr>
+      <tr><td>① 卡脖子是本事还是缺货？</td><td>两者叠加</td><td>本事是真的：100G 档国产 2025 年才走进批量、较海外主流量产晚约两三年；200G 海外 2024 年量产、国产 2026 年中在验证末期（自媒体口径）——代差约两年。缺货也是真的：2026 年涨价 15-20%、交期 18-24 个月、急单溢价 30%＋——这部分与本事无关、与扩产周期有关</td></tr>
+      <tr><td>② 未来两三年新产能有多少？</td><td>密集到罕见</td><td>全行业月产能 2026 年翻倍；Lumentum 再＋50%、Coherent 衬底产能翻倍＋德州厂翻两番、三菱到 2029 年扩 3 倍、住友＋40%；国产纯芯片扩产项目合计约 35 亿元、另有东山/索尔思 12 亿美元。供给墙 2027-28 落成</td></tr>
+      <tr><td>③ 有替代技术在逼近吗？</td><td>三条、方向不同</td><td>硅光分流 EML（进行中）、CPO 把激光颗数集中化（2027 放量）、3.2T 世代 400G 每通道把代差重置（2028-29）。但替代绕不开激光这个物理功能——被替代的是 EML 这个形态、不是激光源这个环节</td></tr>
+      <tr><td>④ 大买方会自己下场吗？</td><td>不整合、但包养＋扶二供</td><td>NVIDIA 锁单是包养；模块厂自建芯片是扶二供的极端形态（旭创自建硅光产线、东山把索尔思整个买下、芯片 99% 自供（财富号口径）、华工持股云岭定向采购）——二供战略正是国产窗口的来源，也预定了价格战的席位</td></tr>
+    </table>
+    <div class="sec-sub" style="margin-top:16px;">分速率判定：同一个环节里住着四种不同性质的利润</div>
+    <table class="t">
+      <tr><th>速率档</th><th>利润性质</th><th>保质期</th></tr>
+      <tr><td>200G／400G EML</td><td><span class="pill moat">代差本事</span>＋<span class="pill rent">缺货租金</span></td><td>本事每代保鲜 2-3 年、要连续重新挣；租金 2027-28 随供给墙回吐</td></tr>
+      <tr><td>100G EML</td><td><span class="pill rent">租金为主</span></td><td>国产五家在产/在验，缺口收窄日＝价格战起点（大概率 2027；按 25G 原型利润塌方更拖延渐进）</td></tr>
+      <tr><td>CW 70-100mW</td><td><span class="pill mid">正在变大路货</span></td><td>从 EML 手里接需求的同时自己也在被涌入，单颗 $7.5-10 已是准商品价</td></tr>
+      <tr><td>CW 200-300mW＋（CPO 用）</td><td><span class="pill moat">下一个结构高地</span></td><td>高功率＋高可靠是新门槛（单颗 $30-100），国产还在研发/对接</td></tr>
+    </table>
+  </section>
+
+  <!-- 六、资本周期与温度 -->
+  <section class="card">
+    <div class="sec-title">🌡️ 现在是什么时刻</div>
+    <div class="sec-sub">供给侧扩张早中期 × 价格侧短缺顶点 × 资本侧涌入高潮</div>
+    <p class="lead">三个坐标合起来读：这是短缺顶点＋资本倾泻的经典组合，与锂电 2021、变压器 2024 的形态同构——顶点之后不是崩塌、是回归。缺口收窄的次序大概率是 100G 和低功率 CW（2027）先于 200G（2028-29）。资本涌入的证据：A 股/准 A 股纯芯片扩产项目合计约 35 亿元、另有东山/索尔思 12 亿美元——合计百亿元级（源杰 12.51 亿二期＋赴港、仕佳 12.65 亿、云岭北交所募 9.89 亿），一级市场的上市通道也在排队打开。</p>
+    <p class="lead">环节温度计（只作环节温度、不判个股）：A 股已把 CW 全球第二＋200G 年底量产＋CPO 光源三重预期按接近全部兑现计价——环节内唯一纯标的的市值从上市时 60 亿元走到 2,212 亿元、滚动市盈率 655 倍对行业均值 65 倍，公司自己在 2026 年 6 月发布了估值风险提示。温度读数：烫。这个温度本身就是资本周期顶部的价格侧证据。</p>
+  </section>
+
+  <!-- 七、需求三级改写 -->
+  <section class="card">
+    <div class="sec-title">🔄 需求正被三级改写：颗数、功率、代差</div>
+    <div class="sec-sub">全景图时需求是一条线（模块出货 2,400 万→6,300 万只），钻进芯片层是三级改写</div>
+    <div class="mig">
+      <div class="mig-row"><span class="mig-from">第一级 · 硅光替代 EML（正在发生）</span><span class="mig-arrow">→</span><span class="mig-to">硅光占光模块销售额 2024 年 33%→2026 年过半（LightCounting）；每只模块的激光器从 8 颗 EML 换成 2-4 颗 CW。模块出货 2.6 倍的增长传导到 EML 颗数要打对折以上的折扣——EML 需求增速被结构性腰斩，这在缺货涨价的 2026 年被完全掩盖着</span></div>
+      <div class="mig-row"><span class="mig-from">第二级 · CPO 颗数集中化（2027 放量）</span><span class="mig-arrow">→</span><span class="mig-to">NVIDIA 光交换机整机只用 18 个外置光源模块、约合 1 颗大功率 CW 每 800G 等效——颗数走 8→4→1 的阶梯，单颗价值反向走 $10→$30-100（低置信）。净效应按 NVIDIA 规模价算与可插拔硅光大致持平、但两种情形都显著低于 EML 方案（较 EML 为主的世界缩约三成）——总价值池不塌是相对硅光路径而言；形态从多颗中功率变成少颗高功率、良率与可靠性门槛陡升，对头部厂是利好、对追赶者是门槛上移。另一个反向变量：LPO/LRO 延长可插拔架构寿命、拖慢集中化节奏——盯 LPO 份额就是盯这本颗数账的分母</span></div>
+      <div class="mig-row"><span class="mig-from">第三级 · 铜的封顶与代差重置</span><span class="mig-arrow">→</span><span class="mig-to">机柜内至 2026 年仍全铜，2027 年机架间光互连首次进场、2028 年铜/光双版本——铜的封顶从无期限变成有日期的倒计时，且新增的全是高功率 CW 形态。同时 3.2T 世代的 400G 每通道已在展会露头，住友自己预测 200G 每通道占需求比从 2026 年 76% 回落到 2028 年 55%——每一代 EML 的窗口就两三年，这是一台跑步机</span></div>
+    </div>
+    <p class="lead" style="margin-top:12px;">一句话收束：激光是这条链里唯一硅做不了的物理功能，需求不会消失、但形态每两三年被改写一次——环节的持久价值不在任何一代产品上，在连续跨代的能力上。</p>
+  </section>
+
+  <!-- 八、谁的命题 -->
+  <section class="card">
+    <div class="sec-title">🌏 这是谁的命题（判断持久价值前先问清）</div>
+    <div class="sec-sub">同一个环节里有两个价值逻辑完全不同的命题</div>
+    <div class="duo">
+      <div class="duo-box"><div class="dh">全球命题：短缺＋代差的钱</div><div class="dt">由美国 AI 资本开支撑着（NVIDIA 40 亿美元锁单、Meta/Google/微软的终端需求），价值主场在美日五寡头——2026 年这块高地没有松动迹象。A 股基本触达不到这个命题，少数例外通道是源杰的美国基地计划与索尔思进英伟达供应链。</div></div>
+      <div class="duo-box"><div class="dh">中国命题：替代折价＋上量的钱</div><div class="dt">国产芯片的需求母体是中国头部模块厂的二供战略——中国厂商在全球组装 TOP10 里占 7 家、800G 约六成，头部要供应链安全与降本（媒体口径：低于进口价约 15% 供货）。源杰第一大客户占营收 53.35%、云岭四成营收来自华工：国产芯片厂的命运高度绑定在两三家模块厂的采购策略上。这个命题天然带着反噬基因（见下节）。</div></div>
+    </div>
+    <p class="lead muted" style="margin-top:12px;">地缘是双向条款：若对华加税或断供收紧，国产替代在中国加速、但海外市场同时关门。InP 衬底是反向卡点——中国高纯铟出口管制已让住友产能一度砍半，云南锗业扩产三倍，是这条链上少见的中国握上游格局。</p>
+  </section>
+
+  <!-- 九、国产替代双面 -->
+  <section class="card">
+    <div class="sec-title">🎫 国产替代：窗口票，还是牌桌资格</div>
+    <div class="sec-sub">机会与反噬各自的数字都摆出来</div>
+    <div class="duo">
+      <div class="duo-box"><div class="dh">机会面（公告级或多源；索尔思 200G 为媒体口径）</div><div class="dt">100G EML 已从验证走进批量出货：源杰量产交付头部厂、索尔思千万级发货、长光华芯订单交付爬坡、云岭 56GBaud 量产。200G 索尔思首家宣布量产（媒体口径；配套 1.6T、晶圆制造含台湾产线）、源杰/长光/云岭 2026 底-2027 冲线。CW 光源源杰硅光高速互连细分全球第二（23.6%）、2026 年一季度单季扣非超 2025 全年。需求缺口约 30% 给了没有价格战的放量窗口，模块厂在主动扶二供。</div></div>
+      <div class="duo-box"><div class="dh">反噬面（25G 的完整原型，招股书口径）</div><div class="dt">25G 激光器均价 2021 年一年下跌 51.92%（43.88→21.1 元/颗），随后需求口径一变、量价双杀；同一家公司整体毛利率从 68%（2020）滑到约 33%（2024，由年报同比倒推）再被 AI 短缺拉回 58%（2025）——五年走完整圈。注意原型的节奏：均价腰斩当年 25G 产品线毛利率仍有 85%、整体塌方滞后两三年且由需求口径切换触发——价格战开枪不等于利润当年塌方。往前推：100G 国产在产/在验已五家以上，缺口收窄（约 2027）是价格战起点、利润塌方会更拖延渐进；200G 的遭遇战在 2028-29。</div></div>
+    </div>
+    <p class="lead" style="margin-top:12px;">国产替代在这个环节的正确读法：它是一张两三年期的窗口票，不是永久座位票——除非跨进 200G 与大功率 CW 那一档，把窗口票换成代差竞赛的入场资格。</p>
+  </section>
+
+  <!-- 十、日历 -->
+  <section class="card">
+    <div class="sec-title">📅 往后看的日历（每季度核对）</div>
+    <div class="sec-sub">每条变化配上该看到的信号和大致时窗</div>
+    <table class="t">
+      <tr><th>变化</th><th>该看到的信号</th><th>大致时窗</th></tr>
+      <tr><td>硅光过半、EML 需求增速腰斩</td><td>硅光份额口径、头部模块厂硅光出货占比</td><td>已发生、2026-27 深化</td></tr>
+      <tr><td>CPO 放量、颗数集中化</td><td>NVIDIA/Broadcom 光交换机出货台数、外置光源采购量</td><td>2027 起</td></tr>
+      <tr><td>供给墙落成、缺货租金回吐</td><td>EML 交期从 18-24 个月回落至 12 个月以内、InP 现货价回落</td><td>2027-28</td></tr>
+      <tr><td>100G 国产价格战开枪</td><td>100G EML 单价、国产在产家数、缺口口径消失</td><td>2027 前后</td></tr>
+      <tr><td>3.2T 世代 400G 每通道重置代差</td><td>Broadcom/Lumentum/Coherent 400G EML 量产公告</td><td>2028-29</td></tr>
+      <tr><td>机柜内光化（需求上翻、全高功率形态）</td><td>NVL576 机架间光互连实装、下一代平台光版本占比</td><td>2027-28</td></tr>
+    </table>
+  </section>
+
+  <!-- 十一、价值地图 -->
+  <section class="card">
+    <div class="sec-title">🗺️ 光芯片环节的价值地图（三档）</div>
+    <div class="tiers">
+      <div class="tier t1"><div class="th">第一档 · 持久结构价值（要连续跨代才拿得住）</div><div class="td">大功率高可靠 CW 光源（CPO 时代唯一不可替代的光功能、NVIDIA 用 40 亿美元投了票）＋ 200G/400G EML 的代差领跑位。价值主场在美日；国产的入场券是 300mW 级 CW 过头部客户验证、以及 200G EML 真量产——两张票都还没完全到手。</div></div>
+      <div class="tier t2"><div class="th">第二档 · 真实但有保质期的价值</div><div class="td">100G EML 与 70-100mW CW 的国产替代放量（2026-27 确定性增量、2027-28 遭遇战）；InP 衬底的短缺行情与中国上游的结构机会（云南锗业扩产、高纯铟管制）。</div></div>
+      <div class="tier t3"><div class="th">第三档 · 会回吐的租金</div><div class="td">2026 年的涨价、交期溢价、急单溢价——供给墙 2027-28 落成即回吐；A 股环节温度已按第一档的完全兑现计价，温度计读数本身就是周期顶部的证据。</div></div>
+    </div>
+  </section>
+
+  <section class="card keyline">
+    <div class="sec-title">一句话结论</div>
+    <p class="lead">激光器是这条链里唯一硅做不了的功能、价值真实且正往高功率集中，但 2026 年的厚利润是<b>代差本事与缺货租金的叠加态</b>：租金那一半 2027-28 随供给墙回吐，本事那一半每两三年要重新挣一次；国产替代吃的是第二档的窗口价值——<b>25G 给出了 100G 的基准剧本（一年 -52% 的方向），但原型也写了缓冲：塌方滞后两三年、渐进而非一声枪响</b>；真正的分水岭在谁能跨进 200G 与大功率 CW 那一档，把窗口票换成牌桌资格。</p>
+  </section>
+
+  <!-- 交接：单股深析候选 -->
+  <section class="card handoff">
+    <div class="sec-title">🤝 这个环节的公司（要深入哪家，点一下复制命令）</div>
+    <div class="sec-sub">这里只列谁在牌桌上、各占什么位——值不值得买、贵不贵，由单股深度分析判</div>
+    <div class="ho-envh">A 股 · 国产替代阵营</div>
+    <div class="ho-envnote">窗口期真实、反噬有日历；看点在谁能跨进 200G 与大功率 CW</div>
+    <div class="ho-chips">
+      <div class="ho-chip lead" onclick="copyCmd('688498')"><div class="ho-chiph"><span class="ho-star">★</span><span class="ho-cn">源杰科技</span><span class="ho-cc">688498</span><span class="ho-mkt A">A股</span></div><div class="ho-role">环节唯一纯标的：CW 硅光高速互连细分全球第二（23.6%）、100G EML 量产、200G 预计 2026 底、300mW 研发中；第一大客户占营收 53.35%；655 倍市盈率、公司已自发估值风险提示（环节温度读数见上文）</div><div class="ho-copyhint">点击复制：分析 688498</div></div>
+      <div class="ho-chip" onclick="copyCmd('002384')"><div class="ho-chiph"><span class="ho-cn">东山精密（索尔思）</span><span class="ho-cc">002384</span><span class="ho-mkt A">A股</span></div><div class="ho-role">索尔思 2025 年并表：100G 千万级发货、200G 首家宣布量产（媒体口径、产线含台湾）；芯片 99% 自供配自家模块＝垂直整合样本（财富号口径）；12 亿美元扩产</div><div class="ho-copyhint">点击复制：分析 002384</div></div>
+      <div class="ho-chip" onclick="copyCmd('688313')"><div class="ho-chiph"><span class="ho-cn">仕佳光子</span><span class="ho-cc">688313</span><span class="ho-mkt A">A股</span></div><div class="ho-role">CW DFB 已小批量进硅光模块、100G EML 验证中；12.65 亿扩产（约 2028 达产）；2025 营收+98%、净利率 17.5%</div><div class="ho-copyhint">点击复制：分析 688313</div></div>
+      <div class="ho-chip" onclick="copyCmd('688048')"><div class="ho-chiph"><span class="ho-cn">长光华芯</span><span class="ho-cc">688048</span><span class="ho-mkt A">A股</span></div><div class="ho-role">100G EML 订单交付爬坡、200G 争取 2026 四季度过验证；注意口径：2025 光通信收入仅 4,119 万、扣非仍亏，产能雄心全是调研转述</div><div class="ho-copyhint">点击复制：分析 688048</div></div>
+    </div>
+    <div class="ho-envh">美日 · 结构高地阵营</div>
+    <div class="ho-envnote">短缺租金与代差竞赛的价值主场；NVIDIA 锁单的两家＋产能榜三强</div>
+    <div class="ho-chips">
+      <div class="ho-chip lead" onclick="copyCmd('LITE')"><div class="ho-chiph"><span class="ho-star">★</span><span class="ho-cn">Lumentum</span><span class="ho-cc">LITE</span><span class="ho-mkt US">美股</span></div><div class="ho-role">200G EML 约 50-60% 份额、产能连年＋40-50%、订单排满至 2027；NVIDIA 20 亿美元锁单方之一</div><div class="ho-copyhint">点击复制：分析 LITE</div></div>
+      <div class="ho-chip" onclick="copyCmd('COHR')"><div class="ho-chiph"><span class="ho-cn">Coherent</span><span class="ho-cc">COHR</span><span class="ho-mkt US">美股</span></div><div class="ho-role">6 英寸 InP 平台（单片器件数 4 倍、成本降六成）、2026Q4 前产能翻倍；NVIDIA 锁单另一家</div><div class="ho-copyhint">点击复制：分析 COHR</div></div>
+      <div class="ho-chip" onclick="copyCmd('AVGO')"><div class="ho-chiph"><span class="ho-cn">Broadcom</span><span class="ho-cc">AVGO</span><span class="ho-mkt US">美股</span></div><div class="ho-role">EML 与 CW 两张产能榜都在前列，同时是 PAM4 DSP 双寡头之一（双寡头合计约七成）与 CPO 交换芯片主导者——环节内外双重身位</div><div class="ho-copyhint">点击复制：分析 AVGO</div></div>
+      <div class="ho-chip" onclick="copyCmd('6503.T')"><div class="ho-chiph"><span class="ho-cn">三菱电机</span><span class="ho-cc">6503.T</span><span class="ho-mkt JP">日股</span></div><div class="ho-role">2024 年全球首发 200G EML 量产；追加 400 亿日元、到 2029 年产能扩 3 倍以上</div><div class="ho-copyhint">点击复制：分析 6503.T</div></div>
+      <div class="ho-chip" onclick="copyCmd('5802.T')"><div class="ho-chiph"><span class="ho-cn">住友电工</span><span class="ho-cc">5802.T</span><span class="ho-mkt JP">日股</span></div><div class="ho-role">InP 衬底约六成份额＋CW 产能榜四强；衬底扩产＋40%（至 2027）</div><div class="ho-copyhint">点击复制：分析 5802.T</div></div>
+      <div class="ho-chip" onclick="copyCmd('AXTI')"><div class="ho-chiph"><span class="ho-cn">AXT</span><span class="ho-cc">AXTI</span><span class="ho-mkt US">美股</span></div><div class="ho-role">InP 衬底约 35% 份额（经北京通美生产）、2026 产能翻倍</div><div class="ho-copyhint">点击复制：分析 AXTI</div></div>
+    </div>
+    <div class="ho-envnote" style="margin-top:10px;">未上市在场者：云岭光电（华工科技系、北交所已受理）、中科光芯——上市通道排队本身就是资本涌入的温度计（武汉敏芯 IPO 已搁浅、是同一支温度计的另一端）。衬底端的云南锗业（002428，国内 InP 衬底龙头、纯内资中唯一量产 2-6 英寸）已在扩产。</div>
+  </section>
+
+  <!-- 诚实交底 -->
+  <section class="card">
+    <div class="sec-title">🚩 哪些数字要打折扣看</div>
+    <ul class="lead" style="margin:4px 0 0 18px; padding:0; line-height:1.8;">
+      <li>芯片级市场规模（EML $5.8-8.1 亿、CW $2.5-5.7 亿）全是二手估计、三个来源打架——按宽区间读、别取点值。</li>
+      <li>交期 18-24 个月为聚合口径（TrendForce 官方仅说排到 2027 之后，方向一致）。</li>
+      <li>两条显式排除：多模 VCSEL 短距（850nm）不用 EML/CW、是需求母数外的第三形态，100G 每通道以上世代在 AI 后端占比走低、不改写三级判断；相干城域（400G/800G ZR）用窄线宽激光器、亦非本页口径。</li>
+      <li>EML 市场份额有三套分母（数通高速口径前二 65-70%／特定速率段 80%＋／含电信全口径前五 75.9%），引用要带口径。</li>
+      <li>200G EML 单价 $10-22 是长协、现货、预测三种口径并存；CPO 级 CW 单颗 $30-100 只有单一来源、置信度低。</li>
+      <li>物料成本表不等于总成本、更不等于售价——别拿占比直接乘售价当利润。</li>
+      <li>良率数字有晶圆级、芯片级、模块级三层；索尔思 85-95% 为宣传口径，海外大厂良率无公开数。</li>
+      <li>长光华芯的产能雄心（月产 400-600 万颗）全部来自调研转述、与其 2025 年光通信收入仅 4,119 万元的体量不匹配；索尔思月产 2,200 万颗的传言与全行业 5,070 万颗矛盾，本页不采。</li>
+      <li>两个此前流传的数字已核销：光芯片整体国产化率 58%（2025）查无出处；硅光 CW 国内份额超 60% 与产能榜矛盾——请用分层口径与灼识口径（硅光高速互连细分全球第二、23.6%）。</li>
+    </ul>
+  </section>
+
+  <div class="ho-toast" id="toast">已复制</div>
+</div>
+
+<script>
+// BOM 成本栈（800G EML 方案，2026-04 两源口径）
+const STACK = [
+  ["光芯片（8×EML＋PD）", 34, "30-37%", "$84-116（含 PD）· 本页主角", false],
+  ["DSP（1 颗）", 26, "22-30%", "$80-90 · 三源一致最硬", false],
+  ["驱动器＋跨阻放大器", 16, "12-20%", "两源打架、并列", true],
+  ["光学组件＋无源", 10, "9-12%", "", true],
+  ["电路板／结构件／被动件", 9, "7-12%", "", true],
+  ["（对照）硅光方案光源", 8, "约 10%", "2-4 颗 CW 合计 $20-40", true]
+];
+const stackEl = document.getElementById('stack');
+STACK.forEach(([name, w, pct, note, cool]) => {
+  const row = document.createElement('div'); row.className = 'cs-row';
+  row.innerHTML = `<div class="cs-name">${name}</div>
+    <div class="cs-bar-wrap"><div class="cs-bar${cool ? ' cool' : ''}" style="width:${w * 2.4}%"></div></div>
+    <div class="cs-pct">${pct}</div><div class="cs-note">${note}</div>`;
+  stackEl.appendChild(row);
+});
+
+function copyCmd(code) {
+  const cmd = '分析 ' + code;
+  const done = () => {
+    const t = document.getElementById('toast');
+    t.textContent = '已复制：' + cmd + '（回到对话里粘贴发送）';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(cmd).then(done).catch(done);
+  } else {
+    const ta = document.createElement('textarea'); ta.value = cmd; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done();
+  }
+}
+</script>
+<script id="glossary">
+/* glossary.js —— 产业链研究各页共享：术语浮窗（点带虚线的词看大白话）。
+   页面在 body 末尾 <script src=".../glossary.js"><\/script> 即可，自动注入样式 + 给全文加虚线 + 浮窗。 */
+(function () {
+  const GLOSSARY = {
+    "斯特林发动机": "一种 1816 年发明的外燃机：靠外部加热让封闭气体（氦/氢）一冷一热地胀缩来做功。安静、能烧各种燃料，但功率密度低、密封难、成本高——所以两百年来当发电机反复商业失败，原理本身是公有领域、零专利壁垒。",
+    "斯特林循环": "斯特林发动机背后的热力学循环：等温压缩→等容吸热→等温膨胀→等容放热。1816 年就公开了、谁都能用——价值不在这个循环本身，在把它做可靠的精密制造。",
+    "斯特林制冷机": "把斯特林循环反过来跑：用电驱动、把冷指降到 40-150K 的机械式低温制冷机。是制冷型红外探测器降温的主流冷源之一——这是斯特林两百年真正赚到钱、有护城河的一面。",
+    "制冷型红外": "把红外焦平面封进真空杜瓦、用制冷机降到约 77K 来压住热噪声的高灵敏红外探测器，主用于军用导引头/远距侦察。相对的『非制冷』便宜但灵敏度低，用于车载/安防。",
+    "cryocooler": "低温制冷机的统称，把东西降到极低温。常见类型有斯特林、脉管、GM、JT——斯特林约占其中 32%（Mordor 2025）。",
+    "脉管": "脉管制冷机——一种没有低温运动部件的制冷机，零振动、寿命更长，正在长寿命场景（空间载荷/MRI）蚕食斯特林制冷机的份额。",
+    "MTTF": "平均无故障时间——设备平均能可靠运行多少小时才坏一次。制冷机的 MTTF 从早期约 4,000 小时做到军用 20,000-30,000 小时，是几十年攒出来的硬壁垒。",
+    "自由活塞斯特林": "英文 FPSE——一种没有曲柄连杆、靠气体弹簧让活塞自由往复的斯特林机，结构简单、寿命长。空间核电转换器和高端制冷机都用它。",
+    "AIP": "不依赖空气推进——让常规潜艇不上浮、不用通气管也能在水下航行数周的系统。斯特林发动机是其中一种成熟路线，但正被锂电池和燃料电池替代。",
+    "布雷顿循环": "燃气轮机用的那种热力学循环（气体压缩→加热→膨胀做功）。空间核电的大功率堆 2025 年选了它、而不是斯特林——是斯特林在空间核电的主要竞争对手。",
+    "RTG": "放射性同位素温差发电机——靠钚-238 衰变热用温差直接发电（无运动部件），是深空探测器的主力电源。效率只有约 6-7%，斯特林转换器理论上能到约 26%、但可靠性不如它。",
+    "capex": "资本开支——公司为扩产花的大钱，比如买地、建厂、买设备。云厂的 capex 主要是买 AI 芯片和建数据中心。",
+    "compute": "算力，也就是计算能力——衡量能跑多少 AI 运算。",
+    "被定价": "好消息已经反映进股价了。一个好生意如果人人都知道好、股价已经涨上去，再买就赚不到便宜。",
+    "认知差": "你对一家公司的判断和市场主流看法不一样、而且很可能是你对。价值投资真正赚大钱靠的就是这个差。",
+    "variant perception": "认知差——你的判断和市场主流不一样、而且可能是你对。",
+    "β 风险": "贝塔风险——不是某一家公司自己的问题，而是整条链、整个板块一起涨跌的大环境风险。万一 AI 投资退潮，相关股票会一起跌。",
+    "护城河": "一家公司或一个环节长期挡住竞争对手、保住高利润的本事，比如独家工艺、专利、客户离不开它。护城河越深，好日子越能持续。",
+    "结构护城河": "靠工艺/IP/良率/关系筑起、产能想扩也扩不出来的持久壁垒——能穿越周期，是真护城河。",
+    "周期租金": "只是因为眼下短缺、产能暂时不够才赚到的暴利。产能一补上就回吐，不持久。和结构护城河相对。",
+    "利润池": "整条链赚到的钱不是平均分的。利润池就是看这笔总利润堆在哪几个环节、各分到多少——堆得最多的地方最值得研究。",
+    "卡脖子": "整条链里供不应求、谁也绕不开的那个环节。卡脖子的环节最有定价权——但要分清是结构护城河还是周期租金。",
+    "资本周期": "一个行业景气时大家拼命扩产，导致产能过剩、价格崩、利润垮，再减产、又紧缺的循环。看供给（谁在扩产）往往比看需求更能提前判断利润拐点。",
+    "供给受限": "想扩产也扩不出来（技术太难、建设周期太长、或寡头不愿扩）。供给受限的环节超额利润能维持更久。",
+    "扩张顶部": "全行业都在疯狂砸钱扩产的时刻——往往利润最好、但也最危险，因为新产能一投产就会把价格打下来。",
+    "价值占有": "一个环节实际能从整条链里拿走多少利润。和价值创造（对整条链有多重要）常常是两回事。",
+    "价值创造": "一个环节给整条链帮了多大忙、有多重要。重要不等于能赚到钱（要看价值占有）。",
+    "ROIC": "投入资本回报率——每投 1 块钱能赚回多少。长期高于借钱成本，才是真正在创造价值的好生意。",
+    "WACC": "加权平均资本成本——公司融到这笔钱的平均代价。赚的（ROIC）要比这个高，才算创造了价值。",
+    "反向 DCF": "正常估值是用假设算公司值多少钱；反向 DCF 反过来——从现在的股价倒推出市场假设了它未来要增长多快，再判断这个假设是不是已经太乐观。",
+    "中周期归一化": "不要用景气最高峰那年的暴利去估值（那不可持续），而是用一个跨越好年和坏年的平均水平来算，避免在山顶上按最贵的价买。",
+    "毛利率": "卖一件东西、扣掉直接成本后还剩多少比例的钱。毛利率高通常意味着有定价权、有技术含量。",
+    "毛利": "卖一件东西、扣掉直接成本后赚的那部分。占售价的比例（毛利率）高，通常意味着有定价权。",
+    "渗透率": "新技术替代老技术的进度。比如液冷渗透率＝多少比例的数据中心已经从风冷换成了液冷。",
+    "国产替代": "原来靠进口的零件或材料，改用国产的。既是国产厂商的机会，也常因为一拥而上变成价格内卷。",
+    "寡头": "整个市场只被极少数几家公司把持的格局，通常有很强的定价权。",
+    "议价权": "谈价格时谁更有底气。是供应商求着客户买（议价权弱），还是客户排队求供应（议价权强）。",
+    "backlog": "在手订单——已签约、还没交货的订单量。backlog 越厚、锁得越远，未来几年收入越有保障。",
+    "book-to-bill": "新接订单 ÷ 当期出货。大于 1 表示订单比出货还多、需求在加速。",
+    "BOM": "物料清单——一个产品由哪些零件、各花多少钱拼成的成本明细表。成本拆解就是拆这张表。",
+    "成本栈": "把一件大工程的总花费，按各个部分拆开、看每部分占多少钱的结构表。",
+    "Bear": "熊市情景——分析时假设的最差那种情况（需求转冷、价格下跌），用来检验万一不顺时会亏多少。",
+    "attach 率": "配套比例。比如每张 GPU 平均要配几个光模块，这个比例越高、需求越大。",
+    "折旧": "贵重设备会逐年损耗、分摊成本。AI 芯片折旧按几年摊，直接影响账面利润——摊得慢、利润就显得高。",
+    "循环融资": "我投资你、你再回头买我的东西，形成的资金闭环。比如英伟达投资客户、客户再用这笔钱买英伟达芯片——好看但脆弱。",
+    "安全边际": "用保守估值减去现在的价格留出的缓冲。安全边际厚，意味着就算看错了也不容易亏本金。",
+    "GPU": "图形处理器——英伟达做的那种 AI 算力芯片，是训练大模型的主力。",
+    "ASIC": "为某一种活儿定制的专用芯片。云厂自研 ASIC（谷歌 TPU、亚马逊 Trainium）就是想绕开英伟达、降成本。",
+    "CUDA": "英伟达的软件生态（开发工具加代码库）。全世界 AI 程序员都习惯用它，换别家芯片要重写代码——这是英伟达真正的护城河。",
+    "HBM": "高带宽内存——紧贴 AI 芯片、负责高速喂数据的特种内存。被 SK 海力士等三家垄断，是当前最紧缺、最赚钱的环节之一。",
+    "CoWoS": "台积电的一种先进封装工艺，把 AI 芯片和 HBM 内存拼装在一起。产能卡死、供不应求，是过去两年的头号瓶颈。",
+    "先进封装": "把多块芯片高密度拼装在一起的工艺（CoWoS 就是其中一种），决定了 AI 芯片能不能做出来。",
+    "晶圆代工": "替别人制造芯片的工厂，台积电是绝对龙头。几乎所有 AI 芯片都在它那里生产。",
+    "EML": "光模块里负责发光的激光芯片。全球只有几家能做、英伟达砸钱锁产能，是卡脖子中的卡脖子。",
+    "光模块": "数据中心里把电信号转成光、让成千上万张 GPU 互相高速通信的器件。中国厂商（中际旭创等）全球领先。",
+    "DSP": "光模块里做信号处理的芯片，被博通和 Marvell 两家垄断，国产几乎是空白。",
+    "CPO": "共封装光学——下一代把光直接封进交换芯片的技术，2028 年后可能颠覆现在用的可插拔光模块。",
+    "硅光": "用硅基工艺做光器件的技术路线，被看作光通信的未来方向之一。",
+    "NVLink": "英伟达自家的高速互联技术，让一个机柜里的多张 GPU 像一块大芯片一样协同。",
+    "燃气轮机": "烧天然气发电的大型设备。数据中心要能马上供上的电，燃气轮机是当前唯一能大规模快速供电的来源。",
+    "单晶叶片": "燃气轮机里承受上千度高温的涡轮叶片，用单晶镍基高温合金整体铸造，全球极少数厂能做，是燃气轮机最贵、最难仿、最卡脖子的零件。",
+    "高温合金": "能在上千度高温下不变形的特种金属，用来做燃气轮机叶片、航空发动机，工艺极难、供应极集中。",
+    "LTSA": "长期服务协议——卖出燃气轮机后签的几十年维护保养合同。利润比卖设备本身还高（约两倍）、年年收、抗周期，是燃气轮机真正的利润池。",
+    "服务年金": "设备卖出后，靠几十年维保合同年年收的稳定现金流。像年金一样可预测、抗周期。",
+    "GOES": "取向硅钢——做变压器铁芯的特种钢材，全球极少数厂能产（美国只有一家），是变压器的卡脖子原料之一。",
+    "取向硅钢": "做变压器铁芯的特种钢材（英文 GOES），冶炼工艺极难、产地极少，是变压器的卡脖子原料。",
+    "变压器": "把电网的高压电升压/降压、再送进数据中心的关键设备。现在全球短缺、交期长达数年。",
+    "变电站": "把高压电网的电降压、再分配给数据中心的设施。新建一座要 5–10 年审批建设，是落地最大瓶颈之一。",
+    "并网": "新建的电厂或数据中心接入电网。美国现在并网排队要等 4–7 年，是 AI 数据中心落地的最大物理瓶颈。",
+    "开关柜": "把电分配、保护、通断的成套电气设备，数据中心中压配电的关键一环，现在交期很长。",
+    "UPS": "不间断电源——市电断了也能瞬间顶上、保证数据中心不停机的设备，里面大量用功率半导体和电池。",
+    "IGBT": "一种功率半导体开关器件，是 UPS、变频、电源里控制大电流的核心芯片。市场成熟、分散，国产已价格战。",
+    "SiC": "碳化硅——新一代功率半导体材料，比传统 IGBT 更高效省电，正在高端 UPS 和电源里替代 IGBT。",
+    "功率半导体": "专门控制大电流大电压的芯片（IGBT、SiC 等），是电源、UPS、变频的心脏。",
+    "BESS": "电池储能系统——用一堆电池给数据中心储电、削峰、备电，正在抢传统 UPS 和柴油机的活。",
+    "PCS": "储能变流器——储能系统里把电池的直流电和电网的交流电互相转换的设备。",
+    "EMS": "能量管理系统——储能 / 配电系统里负责调度、控制的软件与设备。",
+    "LFP": "磷酸铁锂——目前储能电池的主流路线，便宜、安全、循环寿命长，被宁德时代等中国厂主导。",
+    "柴油发电机": "市电断了时启动供电的备用柴油发电机组。占数据中心电气投资比例不小，但技术门槛相对低。",
+    "母线": "工厂预制的大电流导体排（铜或铝），把电从变压器送到机柜。成本几乎全是金属（铜/铝）。",
+    "能源孤岛": "数据中心不等漫长的电网排队，自己在旁边建电厂直接供电。贵，但能早几年通电——在 AI 竞赛里这几年值几十亿。",
+    "固态变压器": "用功率电子（SiC 等）替代传统铜+硅钢铁芯的新型变压器，英文 SST，2028 年后放量，是对传统变压器的远端威胁。",
+    "联合循环": "燃气发电的一种高效方式，先用燃气轮机发电、再用余热烧锅炉带蒸汽轮机再发一次电。",
+    "速度到电": "从立项到真正通上电要多久。AI 竞赛里谁先通电谁先赚钱，所以宁可多花钱也要快。",
+    "覆铜板": "做电路板（PCB）的基础材料，英文缩写 CCL。高端 AI 服务器板用的高速覆铜板是卡脖子材料。",
+    "ODM": "代工厂——按客户要求把零件组装成整机（如服务器）。活儿重要但毛利薄，是典型的搬砖环节。",
+    "IDC": "数据中心（机房）运营商，提供机柜、电力、网络给云厂和企业租用，是重资产生意。",
+    "液冷": "用液体而不是风给高功率 AI 芯片散热。新一代 AI 机柜太热、风冷散不掉，只能上液冷。"
+  };
+
+  const css = ".term{border-bottom:1px dashed #1f6f8b;cursor:help}.term:hover{color:#1f6f8b}"
+    + ".term-pop{display:none;position:absolute;z-index:80;max-width:340px;background:#0f2e3d;color:#eaf2f5;"
+    + "font-size:12.5px;line-height:1.64;padding:12px 15px;border-radius:11px;"
+    + "box-shadow:0 24px 50px rgba(16,34,48,.28);border:1px solid rgba(255,255,255,.08)}"
+    + ".term-pop::before{content:'\\1F4A1 \\5927\\767D\\8BDD';display:block;font-size:10.5px;font-weight:700;color:#ffd98a;letter-spacing:.5px;margin-bottom:5px}"
+    + ".term-demo{border-bottom:1px dashed #1f6f8b;color:#1f6f8b}";
+  const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
+
+  const pop = document.createElement("div"); pop.className = "term-pop"; document.body.appendChild(pop);
+  let pinned = false;
+  function place(el) {
+    pop.style.display = "block";
+    const r = el.getBoundingClientRect(), pw = pop.offsetWidth, ph = pop.offsetHeight;
+    let left = Math.min(r.left + window.scrollX, window.scrollX + document.documentElement.clientWidth - pw - 16);
+    left = Math.max(left, window.scrollX + 10);
+    let top = r.bottom + window.scrollY + 8;
+    if (r.bottom + 8 + ph > window.innerHeight && r.top - 8 - ph > 0) top = r.top + window.scrollY - ph - 8;
+    pop.style.left = left + "px"; pop.style.top = top + "px";
+  }
+  function show(el) { pop.textContent = el.getAttribute("data-def") || ""; place(el); }
+  document.addEventListener("mouseover", e => { const t = e.target.closest(".term"); if (t && !pinned) show(t); });
+  document.addEventListener("mouseout", e => { const t = e.target.closest(".term"); if (t && !pinned) pop.style.display = "none"; });
+  document.addEventListener("click", e => {
+    const t = e.target.closest(".term");
+    if (t) { pinned = true; show(t); e.stopPropagation(); } else { pinned = false; pop.style.display = "none"; }
+  });
+
+  try {
+    const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const keys = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
+    const parts = keys.map(k => /^[\x00-\x7f]+$/.test(k) ? "(?<![A-Za-z0-9])" + esc(k) + "(?![A-Za-z0-9])" : esc(k));
+    const RE = new RegExp(parts.join("|"), "g");
+    const SKIP = "script,style,summary,h1,.sec-title,.term,.term-pop,.term-demo,.lkt,.pill,.tier-pill,.drill-status,.gate-pill,.howto-title,.dname,.flag";
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode(n) {
+        const p = n.parentElement;
+        if (!p || p.closest(SKIP)) return NodeFilter.FILTER_REJECT;
+        if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = []; let wn; while (wn = walker.nextNode()) nodes.push(wn);
+    nodes.forEach(tn => {
+      const txt = tn.nodeValue; RE.lastIndex = 0;
+      if (!RE.test(txt)) return; RE.lastIndex = 0;
+      const frag = document.createDocumentFragment(); let last = 0, m;
+      while (m = RE.exec(txt)) {
+        const term = m[0], i = m.index;
+        if (i > last) frag.appendChild(document.createTextNode(txt.slice(last, i)));
+        const span = document.createElement("span");
+        span.className = "term"; span.tabIndex = 0;
+        span.setAttribute("data-def", GLOSSARY[term] || "");
+        span.textContent = term;
+        frag.appendChild(span); last = i + term.length;
+        if (m.index === RE.lastIndex) RE.lastIndex++;
+      }
+      if (last < txt.length) frag.appendChild(document.createTextNode(txt.slice(last)));
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  } catch (err) { /* 老浏览器不支持 lookbehind 时静默跳过 */ }
+})();
+
+</script>
+</body>
+</html>
