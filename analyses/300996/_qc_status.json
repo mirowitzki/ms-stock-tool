@@ -1,7 +1,8 @@
 {
   "report_file": "300996_公司完整报告.md",
-  "report_sha256": "1072df2d483280d226279d06b8fabdb1cdaf8103d45a01afabbd247527e41bb5",
-  "recorded_at": "2026-07-04 02:47:50",
+  "report_sha256": "efe21e75ed7abdba773768cfa8bae7bb1b57953b2e6cce50cd3af846c44cd041",
+  "inputs_sha256": "1295ef627a07869bbe5f76c8e738192b1fd770d404556bd90c7647959399b44e",
+  "recorded_at": "2026-07-05 15:04:38",
   "lines": {
     "check_numbers": "pass",
     "fact": "pass",
@@ -9,5 +10,5 @@
     "depth": "pass",
     "insight": "pass"
   },
-  "note": "五关全过（fact/depth首轮不通过、修复后经窄复核确认清零）。fact抓10🔴：最重=扣非口径系统性用错（债券附表合并5619万→归母6364万、牵动73倍/三情景/安全边际全体系）+三情景算术+并购三笔+思源商誉2636万全减+回路86%；depth抓ch5🔴漏世圭谷并购+补可比毛利率对照/人天定价薪酬对质/资本化项目层与转债募投同名；insight/discipline首轮过、三条判断升级已吸收（剔现金经营回报/牛市锁定久期钢化/资本运作税）。瘦身纪律第一次实战：约1.7万字、九卡九章脚手架全过。"
+  "note": ""
 }
